@@ -1,6 +1,13 @@
 package controlador.herramientas;
+import controlador.baseDeDatos.ConexionBD;
+import controlador.usuario.Codigos;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Esta clase contiene las expresiones regulares para poder comprobar datos
@@ -66,6 +73,44 @@ public class ComprobarDatos implements Patrones{
      */
     public static boolean comprobarFormatoPassword(String password){
         return password.matches(PATRON_FORMATO_PASSWORD);
+    }
+    /**
+     * Este metodo permite comprobar si existe un usuario con un deteminado
+     * nombre en la base de datos
+     * @param nombre es el nombre del usuario que queremos comprobar
+     * @return 1 si existe alguien con ese nombre, 0 si no
+     * @author Fernando
+     */
+    public static int existeUsuario(String nombre) {
+        ResultSet resultSet;
+        int resultado = Codigos.ERROR;
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "select * from usuarios where nombre like ?";
+
+        try {
+            conexionBD = new ConexionBD();
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombre);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                resultado = 1;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return resultado;
     }
 
 

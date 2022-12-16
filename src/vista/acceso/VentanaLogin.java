@@ -4,7 +4,15 @@
  */
 package vista.acceso;
 
+import controlador.usuario.Codigos;
+import controlador.usuario.Login;
+import vista.juego.VentanaSeleccionarModoJuego;
+
+import javax.swing.*;
 import java.awt.Color;
+
+import static controlador.usuario.Codigos.CORRECTO;
+import static controlador.usuario.Codigos.ERROR_NO_EXISTE_USUARIO;
 
 /**
  *
@@ -33,8 +41,8 @@ public class VentanaLogin extends javax.swing.JFrame {
         labelTitulo = new javax.swing.JLabel();
         labelUsername = new javax.swing.JLabel();
         labelPassword = new javax.swing.JLabel();
+        inputPassword = new javax.swing.JPasswordField();
         inputUsername = new javax.swing.JTextField();
-        inputPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -57,9 +65,9 @@ public class VentanaLogin extends javax.swing.JFrame {
         labelPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelPassword.setText("Password");
 
-        inputUsername.setBorder(null);
-
         inputPassword.setBorder(null);
+
+        inputUsername.setBorder(null);
 
         btnLogin.setBackground(new Color(72, 219, 251));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -89,8 +97,8 @@ public class VentanaLogin extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(inputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(inputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(inputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(173, 173, 173))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(102, Short.MAX_VALUE)
@@ -121,11 +129,11 @@ public class VentanaLogin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(labelUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(inputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -137,7 +145,22 @@ public class VentanaLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-
+        int resultado = Login.login(inputUsername.getText(),inputPassword.getText());
+        String mensaje = "";
+        if(resultado == ERROR_NO_EXISTE_USUARIO){
+            mensaje = "No existe el usuario";
+        }else if(resultado == Codigos.ERROR_PASSWORD_INCORRECTA){
+            mensaje = "Contraseña Incorrecta";
+        }
+        if(resultado < 0){
+            JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
+        }
+        if(resultado == CORRECTO){
+            VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
+            frame.setVisible(true);
+            dispose();
+            //TODO: guardar si la persona es admistrador o no en la clase de configuracion
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked

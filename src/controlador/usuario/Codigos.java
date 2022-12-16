@@ -4,7 +4,7 @@ public interface Codigos {
     /**
      * Este codigo se manda cuando se inserta el usuario
      */
-    int INSERTADO  = 1;
+    int CORRECTO = 1;
     /**
      * Este codigo se manda cuando algunos de los campos
      * del formulacio estan vacios
@@ -36,13 +36,29 @@ public interface Codigos {
      */
     int ERROR_TELEFONO = -6;
     /**
+     * Este error se manda cuando ya existe un usuario con ese nombre
+     * en la base de datos
+     */
+    int ERROR_EXISTE_USUARIO = -7;
+    /**
      * Este error se manda cuando el usuario pulsa el boton
      * de cancelar
      */
-    int CANCELADO = -7;
+    int CANCELADO = -8;
+    /**
+     * Este codigo se manda cuando no existe ningun usuario con ese nombre
+     */
+    int  ERROR_NO_EXISTE_USUARIO = -9;
+    int ERROR_PASSWORD_INCORRECTA = -10;
 
     /**
      * Esta cadena indica que el usuario va a ser tipo user
      */
+
     String USUARIO_NORMAL = "user";
+    /**
+     * Este codigo se manda cuando ocurre algun error
+     */
+    int ERROR = -1000;
+
 }

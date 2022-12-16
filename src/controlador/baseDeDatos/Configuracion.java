@@ -15,6 +15,14 @@ public interface Configuracion {
      */
     String DBNAME = "preguntas";
     /**
+     * Es el nombre del usuario sin privilegios
+     */
+    String USER = "user";
+    /**
+     * Es el nombre del usuario administrador
+     */
+    String ADMIN = "admin";
+    /**
      * Contraseña del usuario
      */
     String PASSWORD_ADMIN = "admin123456";

@@ -19,8 +19,8 @@ public class ConexionBD implements Configuracion {
      * Constructor sin parametros
      */
     public ConexionBD() {
-        this.usuario = "root";
-        this.password = "";
+        this.usuario = ADMIN;
+        this.password = PASSWORD_ADMIN;
     }
 
     /**

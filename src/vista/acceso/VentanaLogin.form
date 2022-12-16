@@ -32,8 +32,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="inputPassword" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
-                  <Component id="inputUsername" min="-2" pref="250" max="-2" attributes="0"/>
+                  <Component id="inputUsername" alignment="1" min="-2" pref="250" max="-2" attributes="0"/>
+                  <Component id="inputPassword" min="-2" pref="250" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
           </Group>
@@ -76,11 +76,11 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="labelUsername" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="inputPassword" min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="inputUsername" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="labelPassword" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="inputUsername" min="-2" pref="35" max="-2" attributes="0"/>
+              <Component id="inputPassword" min="-2" pref="35" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
               <Component id="btnLogin" min="-2" pref="47" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -127,14 +127,14 @@
         <Property name="text" type="java.lang.String" value="Password"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="inputUsername">
+    <Component class="javax.swing.JTextField" name="inputPassword">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="inputPassword">
+    <Component class="javax.swing.JTextField" name="inputUsername">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>

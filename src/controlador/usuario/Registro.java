@@ -19,11 +19,12 @@ import java.sql.SQLException;
 public class Registro implements Codigos {
     /**
      * Este metodo permite comprobar que los datos de registro estan correctos
-     * @param nombre es el nombre de la persona
-     * @param email es el email de la persona
+     *
+     * @param nombre    es el nombre de la persona
+     * @param email     es el email de la persona
      * @param password1 es la contraseña de la persona
      * @param password2 es la repeticion de la contraseña de la persona
-     * @param telefono es el telefono de la persona
+     * @param telefono  es el telefono de la persona
      * @return el codigo correspondiente en funcion de lo ocurrido
      * @author Fernando
      */
@@ -49,26 +50,30 @@ public class Registro implements Codigos {
             return ERROR_FORMATO_PASSWORD;
         }
         //se comprueba que el telefono
-        if(!ComprobarDatos.comprobarTelefono(telefono)){
+        if (!ComprobarDatos.comprobarTelefono(telefono)) {
             return ERROR_TELEFONO;
+        }
+        if(ComprobarDatos.existeUsuario(nombre) > 0){
+            return ERROR_EXISTE_USUARIO;
         }
         //Solo insertamos el usuario en caso de que se pulse la
         //opcion de aceptar
         if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres registrarte?") == 0) {
-            registrarUsuario(new Usuario(nombre, email, Cifrado.SHA256(password1), telefono, USUARIO_NORMAL));
-            return INSERTADO;
+            registrarUsuario(new Usuario(nombre, Cifrado.SHA256(password1), email,telefono, USUARIO_NORMAL));
+            return CORRECTO;
         }
         return CANCELADO;
     }
 
+
+
     /**
      * Este metodo inserta el usuario en la base de datos
+     *
      * @param usuario es el usuario con los datos que vamos a insertar
      * @author Fernando
-     *
      */
     private static void registrarUsuario(Usuario usuario) {
-        int resultado = 0;
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -77,14 +82,14 @@ public class Registro implements Codigos {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,usuario.getNombre());
-            sentencia.setString(2,usuario.getPassword());
-            sentencia.setString(3,usuario.getEmail());
-            sentencia.setString(4,usuario.getTelefono());
-            resultado = sentencia.executeUpdate();
+            sentencia.setString(1, usuario.getNombre());
+            sentencia.setString(2, usuario.getPassword());
+            sentencia.setString(3, usuario.getEmail());
+            sentencia.setString(4, usuario.getTelefono());
+            sentencia.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -93,7 +98,5 @@ public class Registro implements Codigos {
             }
             conexionBD.cerrarConexion();
         }
-
-
     }
 }

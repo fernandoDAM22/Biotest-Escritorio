@@ -1,7 +1,5 @@
 import com.formdev.flatlaf.FlatDarkLaf;
-import controlador.herramientas.ComprobarDatos;
 import vista.acceso.VentanaLogin;
-import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
 

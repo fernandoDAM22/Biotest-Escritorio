@@ -42,10 +42,10 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputEmail = new javax.swing.JTextField();
         panelFila3 = new javax.swing.JPanel();
         labelPassword = new javax.swing.JLabel();
-        inputPassword = new javax.swing.JTextField();
+        inputPassword = new javax.swing.JPasswordField();
         panelFila4 = new javax.swing.JPanel();
         labelPassword2 = new javax.swing.JLabel();
-        inputPassword2 = new javax.swing.JTextField();
+        inputPassword2 = new javax.swing.JPasswordField();
         panelFila5 = new javax.swing.JPanel();
         labelPhone = new javax.swing.JLabel();
         inputPhone = new javax.swing.JTextField();
@@ -184,11 +184,14 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
             .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
 
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.out.println("Pulsado");
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
@@ -214,7 +217,13 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
            case ERROR_TELEFONO:
                mensaje = "Error, el telefono no es correcto";
                break;
-           case INSERTADO:
+           case ERROR_EXISTE_USUARIO:
+               mensaje = "Error, ya existe un usuario con ese nombre";
+               break;
+           case CANCELADO:
+               mensaje = "Operacion cancelada";
+               break;
+           case CORRECTO:
                mensaje = "Usuario registrado correctamente";
                break;
        }
@@ -266,8 +275,8 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
     private javax.swing.JButton btnRegistrarse;
     private javax.swing.JTextField inputEmail;
     private javax.swing.JTextField inputName;
-    private javax.swing.JTextField inputPassword;
-    private javax.swing.JTextField inputPassword2;
+    private javax.swing.JPasswordField inputPassword;
+    private javax.swing.JPasswordField inputPassword2;
     private javax.swing.JTextField inputPhone;
     private javax.swing.JLabel labelEmail;
     private javax.swing.JLabel labelName;
