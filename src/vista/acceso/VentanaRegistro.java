@@ -192,6 +192,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed
+        //registramos el usuario pasando los datos de los inputs
        int codigo = Registro.comprobarRegistro(inputName.getText(),inputEmail.getText(),inputPassword.getText(),inputPassword2.getText(),inputPhone.getText());
        String mensaje = "";
        switch (codigo){
@@ -213,10 +214,11 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
            case ERROR_TELEFONO:
                mensaje = "Error, el telefono no es correcto";
                break;
-           case CORRECTO:
+           case INSERTADO:
                mensaje = "Usuario registrado correctamente";
                break;
        }
+       //mostramos el mensaje correspondiente
        if(codigo < 0){
            JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
        }else{

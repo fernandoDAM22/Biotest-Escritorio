@@ -6,36 +6,50 @@ import java.sql.Connection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Esta clase nos permite conectarnos a una base de datos
+ *
+ * @author Fernando
+ */
 public class ConexionBD implements Configuracion {
     Connection conexion;
     String usuario, password;
 
+    /**
+     * Constructor sin parametros
+     */
     public ConexionBD() {
         this.usuario = "root";
         this.password = "";
     }
 
-
+    /**
+     * Constructor con parametros
+     *
+     * @param usuario  es el usuario que se conecta
+     * @param password es la contraseña del usuario
+     */
     public ConexionBD(String usuario, String password) {
         // super();
         this.usuario = usuario;
         this.password = password;
     }
 
+    /**
+     * Este metodo nos permite abrir una conexion
+     * en la base de datos
+     * @return la conexion a la base de datos
+     */
     public Connection abrirConexion() {
         try {
-
             //Cargamos el driver
-            //Class.forName("com.mysql.jdbc.Driver");//Ojo!! Antiguo driver mysql-connector-java-5.1.37-bin.jar
             Class.forName("com.mysql.cj.jdbc.Driver");//actual mysql-connector-j-8.0.31.jar
 
             try {
                 conexion = (Connection) DriverManager.getConnection("jdbc:mysql://" + DBHOST + ":3306/" + DBNAME,
                         this.usuario, this.password);
             } catch (SQLException e) {
-
                 e.printStackTrace();
-                // Utils.escribirLog(Utils.FICHERO_LOG, e.getMessage());
             }
         } catch (ClassNotFoundException e) {
 
@@ -46,6 +60,10 @@ public class ConexionBD implements Configuracion {
 
     }
 
+    /**
+     * Nos permite cerrar la conexion en la base de datos
+     * @return
+     */
     public boolean cerrarConexion() {
         try {
             conexion.close();
