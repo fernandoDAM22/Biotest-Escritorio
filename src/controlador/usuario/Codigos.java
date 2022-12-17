@@ -2,6 +2,10 @@ package controlador.usuario;
 
 public interface Codigos {
     /**
+     * Este codigo se manda cuando ocurre algun error
+     */
+    int ERROR = -1000;
+    /**
      * Este codigo se manda cuando se inserta el usuario
      */
     int CORRECTO = 1;
@@ -49,6 +53,10 @@ public interface Codigos {
      * Este codigo se manda cuando no existe ningun usuario con ese nombre
      */
     int  ERROR_NO_EXISTE_USUARIO = -9;
+    /**
+     * Este error se manda cuando el la contraseña no coincide con la del
+     * usuario
+     */
     int ERROR_PASSWORD_INCORRECTA = -10;
 
     /**
@@ -56,9 +64,16 @@ public interface Codigos {
      */
 
     String USUARIO_NORMAL = "user";
+
     /**
-     * Este codigo se manda cuando ocurre algun error
+     * Con esta constante le indicamos al metodo de obtener datos,
+     * que queremos obtener la contraseña del usuario
      */
-    int ERROR = -1000;
+    String OBTENER_PASSWORD = "contrasena";
+    /**
+     * Con esta constante le indicamos al metodo de obtener datos,
+     * que queremos obtener el tipo del usuario
+     */
+    String OBTENER_TIPO = "tipo";
 
 }

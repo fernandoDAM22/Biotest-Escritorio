@@ -185,6 +185,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         );
 
 
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -199,6 +200,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
        int codigo = Registro.comprobarRegistro(inputName.getText(),inputEmail.getText(),inputPassword.getText(),inputPassword2.getText(),inputPhone.getText());
        String mensaje = "";
        switch (codigo){
+           //en funcion del codigo devuelto mostratemos un mensaje u otro
            case ERROR_CAMPOS_VACIOS:
                mensaje = "Error, rellene todos los campos";
                break;
@@ -228,9 +230,9 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
                break;
        }
        //mostramos el mensaje correspondiente
-       if(codigo < 0){
+       if(codigo < 0){ //si el codigo es negativo es un error
            JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
-       }else{
+       }else{// si no es un mensaje informativo
            JOptionPane.showMessageDialog(null,mensaje,"Correcto",JOptionPane.INFORMATION_MESSAGE);
        }
     }//GEN-LAST:event_btnRegistrarseActionPerformed

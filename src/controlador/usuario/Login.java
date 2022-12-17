@@ -3,7 +3,6 @@ package controlador.usuario;
 import controlador.baseDeDatos.Cifrado;
 import controlador.baseDeDatos.ConexionBD;
 import controlador.herramientas.ComprobarDatos;
-import modelo.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,17 +10,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Login implements Codigos {
+    /**
+     * Este metodo permite comprobar si los datos introducidos
+     * en el formulario de login son correctos
+     * @param nombre es el nombre de la persona
+     * @param password es la contraseña de la persona
+     * @return el codigo de error correspondiente
+     * @author Fernando
+     */
     public static int login(String nombre, String password) {
         if (ComprobarDatos.existeUsuario(nombre) == ERROR) {
             return ERROR_NO_EXISTE_USUARIO;
         }
-        if (Cifrado.SHA256(password).equals(obtenerPassword(nombre))) {
+        if (Cifrado.SHA256(password).equals(obtenerDatos(nombre,Codigos.OBTENER_PASSWORD))) {
             return CORRECTO;
         }
         return ERROR_PASSWORD_INCORRECTA;
     }
 
-    public static String obtenerPassword(String nombre) {
+    /**
+     * Este metodo nos permite obtener algun dato de una persona
+     * a partir de su nombre
+     * @param nombre es el nombre de la persona que estamos buscando
+     * @return el dato indicado si existe la persona, una cadena vacia si no existe
+     * @author Fernando
+     */
+    public static String obtenerDatos(String nombre,String tipoDato) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -35,7 +49,7 @@ public class Login implements Codigos {
             sentencia.setString(1, nombre);
             resultSet = sentencia.executeQuery();
             if (resultSet.next()) {
-                password = resultSet.getString("contrasena");
+                password = resultSet.getString(tipoDato);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -50,4 +64,5 @@ public class Login implements Codigos {
         }
         return password;
     }
+
 }

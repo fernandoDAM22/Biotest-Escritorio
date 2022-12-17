@@ -5,10 +5,18 @@
 package vista.administrador;
 
 import java.awt.Color;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.ArrayList;
+
+import controlador.administrador.categorias.GestionCategorias;
+import controlador.administrador.preguntas.GestionPreguntas;
 import vista.juego.VentanaSeleccionarModoJuego;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 /**
- *
  * @author fernando
  */
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
@@ -74,6 +82,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         btnModificarNombre = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
         listaCategorias = new javax.swing.JComboBox<>();
+        listaCategorias.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                jTable1ItemListener(e);
+            }
+        });
         tablaPreguntas = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         barraMenu = new javax.swing.JMenuBar();
@@ -207,14 +221,14 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         javax.swing.GroupLayout dialogoPreguntasLayout = new javax.swing.GroupLayout(dialogoPreguntas.getContentPane());
         dialogoPreguntas.getContentPane().setLayout(dialogoPreguntasLayout);
         dialogoPreguntasLayout.setHorizontalGroup(
-            dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+                dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrincipal1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
         );
         dialogoPreguntasLayout.setVerticalGroup(
-            dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogoPreguntasLayout.createSequentialGroup()
-                .addComponent(panelPrincipal1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(dialogoPreguntasLayout.createSequentialGroup()
+                                .addComponent(panelPrincipal1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         panelInformacionPregunta.setLayout(new java.awt.GridLayout(3, 1));
@@ -302,12 +316,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         javax.swing.GroupLayout dialogoInformacionPreguntaLayout = new javax.swing.GroupLayout(dialogoInformacionPregunta.getContentPane());
         dialogoInformacionPregunta.getContentPane().setLayout(dialogoInformacionPreguntaLayout);
         dialogoInformacionPreguntaLayout.setHorizontalGroup(
-            dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
+                dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
         );
         dialogoInformacionPreguntaLayout.setVerticalGroup(
-            dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -356,29 +370,29 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         jTable1.setForeground(new Color(255, 255, 255));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuessta Incorrecta 3"
-            }
+                new Object[][]{
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null}
+                },
+                new String[]{
+                        "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuessta Incorrecta 3"
+                }
         ) {
-            Class[] types = new Class [] {
-                String.class, String.class, String.class, String.class, String.class
+            Class[] types = new Class[]{
+                    String.class, String.class, String.class, String.class, String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true, false
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -437,14 +451,18 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
-
+        listaCategorias.setEditable(true);
+        for (String e : GestionCategorias.obtenerCategorias()) {
+            listaCategorias.addItem(e);
+        }
+        GestionCategorias.colocarPreguntas(jTable1,listaCategorias.getSelectedItem().toString());
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -461,19 +479,19 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionPreguntasActionPerformed
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCuestionariosActionPerformed
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCuestionariosActionPerformed
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCategoriasActionPerformed
-        VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCategoriasActionPerformed
 
     private void btnVaciarDialogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarDialogoActionPerformed
-         
+
     }//GEN-LAST:event_btnVaciarDialogoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -481,12 +499,15 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-         dialogoInformacionPregunta.setSize(1000, 500);
-         dialogoInformacionPregunta.show();
+        dialogoInformacionPregunta.setSize(1000, 500);
+        dialogoInformacionPregunta.show();
     }//GEN-LAST:event_jTable1MouseClicked
+    private void jTable1ItemListener(java.awt.event.ItemEvent evt) {
+        GestionCategorias.colocarPreguntas(jTable1,listaCategorias.getSelectedItem().toString());
+    }
 
     private void btnSalirDiaologoInformacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirDiaologoInformacion1ActionPerformed
-       dialogoInformacionPregunta.dispose();
+        dialogoInformacionPregunta.dispose();
     }//GEN-LAST:event_btnSalirDiaologoInformacion1ActionPerformed
 
     /**
@@ -496,7 +517,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

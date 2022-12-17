@@ -5,6 +5,9 @@
 package vista.juego;
 
 import java.awt.Color;
+
+import controlador.usuario.Codigos;
+import controlador.usuario.ConfiguracionUsuario;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
@@ -169,7 +172,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         barraMenu6.add(menuAdministrador);
 
         setJMenuBar(barraMenu6);
-
+        ConfiguracionUsuario.desactivarMenu(menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

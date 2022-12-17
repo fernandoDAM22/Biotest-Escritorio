@@ -77,7 +77,7 @@ public class Registro implements Codigos {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        String sql = "INSERT INTO `usuarios`(`nombre`, `contrasena`, `email`, `telefono`) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO `usuarios`(`nombre`, `contrasena`, `email`, `telefono`, `tipo`) VALUES (?,?,?,?,?)";
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();
@@ -86,6 +86,7 @@ public class Registro implements Codigos {
             sentencia.setString(2, usuario.getPassword());
             sentencia.setString(3, usuario.getEmail());
             sentencia.setString(4, usuario.getTelefono());
+            sentencia.setString(5, usuario.getTipo());
             sentencia.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

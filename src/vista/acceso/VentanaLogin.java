@@ -5,6 +5,7 @@
 package vista.acceso;
 
 import controlador.usuario.Codigos;
+import controlador.usuario.ConfiguracionUsuario;
 import controlador.usuario.Login;
 import vista.juego.VentanaSeleccionarModoJuego;
 
@@ -144,22 +145,27 @@ public class VentanaLogin extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        int resultado = Login.login(inputUsername.getText(),inputPassword.getText());
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {
+        //guardamos el nombre porque lo necesitamos despues;
+        String nombre = inputUsername.getText();
+        int resultado = Login.login(nombre,inputPassword.getText()); //le pasamos los datos al login
         String mensaje = "";
+        //en caso de error mostramos el mensaje correspondiente
         if(resultado == ERROR_NO_EXISTE_USUARIO){
             mensaje = "No existe el usuario";
         }else if(resultado == Codigos.ERROR_PASSWORD_INCORRECTA){
             mensaje = "Contraseña Incorrecta";
         }
+        //mostramos el mensaje de error en caso de que haya ocurrido
         if(resultado < 0){
             JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
         }
+        //si no ha habido errores lanzamos la ventana de seleccionar modo de juego
         if(resultado == CORRECTO){
+            ConfiguracionUsuario.setTipoUsuario(Login.obtenerDatos(nombre,Codigos.OBTENER_TIPO));
             VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
             frame.setVisible(true);
             dispose();
-            //TODO: guardar si la persona es admistrador o no en la clase de configuracion
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 
