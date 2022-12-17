@@ -142,6 +142,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                 .addContainerGap(43, Short.MAX_VALUE))
         );
 
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

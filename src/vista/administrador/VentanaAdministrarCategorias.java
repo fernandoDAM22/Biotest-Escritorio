@@ -4,10 +4,9 @@
  */
 package vista.administrador;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 
 import controlador.administrador.categorias.GestionCategorias;
 import controlador.administrador.preguntas.GestionPreguntas;
@@ -20,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
  * @author fernando
  */
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
+    DefaultTableModel modelo;
 
     /**
      * Creates new form VentanaAdministrarCategorias
@@ -89,7 +89,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             }
         });
         tablaPreguntas = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaInformacionPreguntas = new javax.swing.JTable();
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
@@ -238,13 +238,13 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         labelTextoPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelTextoPregunta.setForeground(new Color(255, 255, 255));
         labelTextoPregunta.setText("Aqui va el texto de la pregunta");
-        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(500, 30));
+        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(600, 30));
         jPanel1.add(labelTextoPregunta);
 
-        labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCategoriaPregunta.setForeground(new Color(255, 255, 255));
         labelCategoriaPregunta.setText("Categoria");
-        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(100, 30));
+        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 30));
         jPanel1.add(labelCategoriaPregunta);
 
         panelInformacionPregunta.add(jPanel1);
@@ -277,22 +277,30 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         textoRespuestaCorrecta.setEditable(false);
         textoRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        textoRespuestaCorrecta.setHorizontalAlignment(JTextField.CENTER);
         textoRespuestaCorrecta.setForeground(new Color(255, 255, 255));
+        textoRespuestaCorrecta.setBackground(new Color(50, 255, 126,100));
         jPanel2.add(textoRespuestaCorrecta);
 
         textoRespuestaIncorrecta1.setEditable(false);
         textoRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
+        textoRespuestaIncorrecta1.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaIncorrecta1.setBackground(new Color(255, 56, 56,100));
         jPanel2.add(textoRespuestaIncorrecta1);
 
         textoRespuestaIncorrecta2.setEditable(false);
         textoRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
+        textoRespuestaIncorrecta2.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaIncorrecta2.setBackground(new Color(255, 56, 56,100));
         jPanel2.add(textoRespuestaIncorrecta2);
 
         textoRespuestaIncorrecta3.setEditable(false);
         textoRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
+        textoRespuestaIncorrecta3.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaIncorrecta3.setBackground(new Color(255, 56, 56,100));
         jPanel2.add(textoRespuestaIncorrecta3);
 
         panelInformacionPregunta.add(jPanel2);
@@ -368,8 +376,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         listaCategorias.setPreferredSize(new java.awt.Dimension(200, 50));
         panelContenido.add(listaCategorias, java.awt.BorderLayout.PAGE_START);
 
-        jTable1.setForeground(new Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaInformacionPreguntas.setForeground(new Color(255, 255, 255));
+        tablaInformacionPreguntas.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {null, null, null, null, null},
                         {null, null, null, null, null},
@@ -395,12 +403,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
                 return canEdit[columnIndex];
             }
         });
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tablaInformacionPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
             }
         });
-        tablaPreguntas.setViewportView(jTable1);
+        tablaPreguntas.setViewportView(tablaInformacionPreguntas);
 
         panelContenido.add(tablaPreguntas, java.awt.BorderLayout.CENTER);
 
@@ -462,7 +470,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         for (String e : GestionCategorias.obtenerCategorias()) {
             listaCategorias.addItem(e);
         }
-        GestionCategorias.colocarPreguntas(jTable1,listaCategorias.getSelectedItem().toString());
+        GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -499,11 +507,30 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        //obtenemos la posicion de la fila que se ha pulsado
+        int posicion = tablaInformacionPreguntas.getSelectedRow();
+        //obtenemos los datos de la pregunta
+        String enunciado = (String) modelo.getValueAt(posicion,0);
+        String respuestaCorrecta = (String) modelo.getValueAt(posicion,1);
+        String respuestaIncorrecta1 = (String) modelo.getValueAt(posicion,2);
+        String respuestaIncorrecta2 = (String) modelo.getValueAt(posicion,3);
+        String respuestaIncorrecta3 = (String) modelo.getValueAt(posicion,4);
+        //colocamos el enunciado de la pregunta
+        GestionPreguntas.colocarEnunciadoPregunta(labelTextoPregunta, enunciado);
+        //colocamos la categoria en su label correspondiente
+        labelCategoriaPregunta.setText(listaCategorias.getSelectedItem().toString());
+        //colocamos las respuestas de la pregunta
+        GestionPreguntas.colocarRespuesta(textoRespuestaCorrecta,respuestaCorrecta);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta1,respuestaIncorrecta1);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta2,respuestaIncorrecta2);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta3,respuestaIncorrecta3);
+
         dialogoInformacionPregunta.setSize(1000, 500);
         dialogoInformacionPregunta.show();
     }//GEN-LAST:event_jTable1MouseClicked
+
     private void jTable1ItemListener(java.awt.event.ItemEvent evt) {
-        GestionCategorias.colocarPreguntas(jTable1,listaCategorias.getSelectedItem().toString());
+        modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
     }
 
     private void btnSalirDiaologoInformacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirDiaologoInformacion1ActionPerformed
@@ -570,7 +597,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaInformacionPreguntas;
     private javax.swing.JLabel labelCategoriaPregunta;
     private javax.swing.JLabel labelRespuestaCorrecta;
     private javax.swing.JLabel labelRespuestaIncorrecta1Informacion;

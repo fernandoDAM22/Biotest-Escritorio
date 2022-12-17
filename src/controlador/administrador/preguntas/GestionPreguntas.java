@@ -2,6 +2,8 @@ package controlador.administrador.preguntas;
 
 import controlador.baseDeDatos.ConexionBD;
 
+import javax.swing.*;
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -57,5 +59,42 @@ public class GestionPreguntas {
         }
         return preguntas;
 
+    }
+
+    /**
+     * Este metodo coloca el enunciado de una pregunta en la label
+     * del panel de informacion, en funcion de la longitud del texto
+     * establece el tamaño de letra de la label
+     * @param label es la label donde vamos a colocar el texto
+     * @param texto es el texto que vamos a colocar
+     * @author Fernando
+     */
+    public static void colocarEnunciadoPregunta(JLabel label, String texto){
+        if(texto.length() < 30){
+            label.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        }else if(texto.length() < 50 ){
+            label.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        }else if (texto.length() < 80){
+            label.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        }
+        label.setText(texto);
+    }
+
+    /**
+     * Este metodo se usa para colocar las respuestas de las preguntas,
+     * establece el tamaño de letra en funcion de la longitud del texto
+     * @param campo es el campo donde vamos a colocar el texto
+     * @param texto es el texto que vamos a colocar
+     * @author fernando
+     */
+    public static void colocarRespuesta(JTextField campo, String texto){
+        if(texto.length() <= 10){
+            campo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+        }else if(texto.length() < 20){
+            campo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        }else{
+            campo.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        }
+        campo.setText(texto);
     }
 }
