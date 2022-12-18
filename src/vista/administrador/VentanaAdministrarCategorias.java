@@ -5,11 +5,11 @@
 package vista.administrador;
 
 import java.awt.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 
 import controlador.administrador.categorias.GestionCategorias;
 import controlador.administrador.preguntas.GestionPreguntas;
+import vista.administrador.dialogos.DialogoDescripcion;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     DefaultTableModel modelo;
+    String nombreCategoria;
 
     /**
      * Creates new form VentanaAdministrarCategorias
@@ -79,13 +80,13 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         btnCrear = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
-        btnModificarNombre = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
         panelContenido = new javax.swing.JPanel();
         listaCategorias = new javax.swing.JComboBox<>();
         listaCategorias.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                jTable1ItemListener(e);
+                listaCategoriasItemListener(e);
             }
         });
         tablaPreguntas = new javax.swing.JScrollPane();
@@ -349,6 +350,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         btnCrear.setText("Crear");
         btnCrear.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCrear.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnCrearActionPerformer(evt);
+            }
+        });
         panelBotones.add(btnCrear);
 
         btnBorrar.setBackground(new Color(238, 82, 83));
@@ -359,13 +366,13 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         btnBorrar.setPreferredSize(new java.awt.Dimension(150, 50));
         panelBotones.add(btnBorrar);
 
-        btnModificarNombre.setBackground(new Color(238, 82, 83));
-        btnModificarNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnModificarNombre.setForeground(new Color(0, 0, 0));
-        btnModificarNombre.setText("Modificar Nombre");
-        btnModificarNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnModificarNombre.setPreferredSize(new java.awt.Dimension(150, 50));
-        panelBotones.add(btnModificarNombre);
+        btnModificar.setBackground(new Color(238, 82, 83));
+        btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnModificar.setForeground(new Color(0, 0, 0));
+        btnModificar.setText("Modificar");
+        btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificar.setPreferredSize(new java.awt.Dimension(150, 50));
+        panelBotones.add(btnModificar);
 
         panelPrinicipal.add(panelBotones, java.awt.BorderLayout.LINE_END);
 
@@ -474,6 +481,24 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCrearActionPerformer(ActionEvent evt) {
+        DialogoDescripcion.mostrarDialogo();
+        int resultado = 0;
+        String mensaje = "";
+        String descripcion = DialogoDescripcion.getDescripcion();
+        if(descripcion == null || nombreCategoria.length() == 0){
+            return;
+        }else{
+           resultado = GestionCategorias.insertarCategoria(nombreCategoria,descripcion);
+        }
+        if(resultado > 0){
+           JOptionPane.showMessageDialog(this,"Categoria insertada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this,"No se ha podido insertar la categoria","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
     private void opcionModoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModoJuegoActionPerformed
         VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
         ventana.setVisible(true);
@@ -529,7 +554,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         dialogoInformacionPregunta.show();
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jTable1ItemListener(java.awt.event.ItemEvent evt) {
+    private void listaCategoriasItemListener(java.awt.event.ItemEvent evt) {
+        nombreCategoria = listaCategorias.getSelectedItem().toString();
+        System.out.println(nombreCategoria);
         modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
     }
 
@@ -578,7 +605,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnInsertar;
-    private javax.swing.JButton btnModificarNombre;
+    private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSalirDiaologoInformacion1;
     private javax.swing.JButton btnVaciarDialogo;

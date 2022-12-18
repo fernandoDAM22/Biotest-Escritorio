@@ -14,12 +14,12 @@ import java.util.ArrayList;
 
 /**
  * Esta clase nos permite gestionar las categorias de las preguntas
+ *
  * @author Fernando
  */
 public class GestionCategorias {
     /**
      * Este metodo nos permite obtener un ArrayList con los nombres de las categorias
-     * que contienen al menos una pregunta
      *
      * @return un ArrayList con los nombres de las categorias que contienen al menos una pregunta
      */
@@ -29,19 +29,18 @@ public class GestionCategorias {
         Connection conexion = null;
         ResultSet resultSet = null;
         ArrayList<String> nombresCategorias = new ArrayList<>();
-        String sql = "SELECT c.nombre from preguntas p join categoria c on p.id_categoria = c.id " +
-                "GROUP by c.nombre HAVING COUNT(p.id) > 0";
+        String sql = "select nombre from categoria";
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
             resultSet = sentencia.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 nombresCategorias.add(resultSet.getString("nombre"));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -57,13 +56,13 @@ public class GestionCategorias {
      * este metodo permite colocar las preguntas de una categoria
      * en la tabla
      *
-     * @param tabla es la tabla en la que vamos a colocar las preguntas
+     * @param tabla     es la tabla en la que vamos a colocar las preguntas
      * @param categoria es la categoria de las preguntas
      * @return el modelo que se le asigna a la tabla, para poder acceder
-     *          a las preguntas desde la ventana donde se encuentra la tabla
+     * a las preguntas desde la ventana donde se encuentra la tabla
      * @author Fernando
      */
-    public static DefaultTableModel colocarPreguntas(JTable tabla,String categoria){
+    public static DefaultTableModel colocarPreguntas(JTable tabla, String categoria) {
         //obtenemos todas las preguntas de una categoria en concreto
         ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntas(categoria);
         //creamos el modelo
@@ -77,5 +76,30 @@ public class GestionCategorias {
             modelo.addRow(s);
         }
         return modelo;
+    }
+
+    public static int insertarCategoria(String nombre, String descipcion) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "insert into categoria (nombre,descripcion) values (?,?);";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombre);
+            sentencia.setString(2,descipcion);
+           return sentencia.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
     }
 }
