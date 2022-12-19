@@ -79,6 +79,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputName.setColumns(20);
         inputName.setBorder(null);
         inputName.setPreferredSize(new java.awt.Dimension(200, 30));
+        inputName.setToolTipText("El nombre solo puede tener letras y espacios");
         panelFila1.add(inputName);
 
         panelPrincipal.add(panelFila1);
@@ -94,6 +95,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputEmail.setColumns(20);
         inputEmail.setBorder(null);
         inputEmail.setPreferredSize(new java.awt.Dimension(200, 30));
+        inputEmail.setToolTipText("El email debe ser un email valido");
         panelFila2.add(inputEmail);
 
         panelPrincipal.add(panelFila2);
@@ -109,6 +111,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputPassword.setColumns(20);
         inputPassword.setBorder(null);
         inputPassword.setPreferredSize(new java.awt.Dimension(200, 30));
+        inputPassword.setToolTipText("8 caracteres de los cuales uno debe ser un numero");
         panelFila3.add(inputPassword);
 
         panelPrincipal.add(panelFila3);
@@ -119,6 +122,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         labelPassword2.setForeground(new java.awt.Color(0, 0, 0));
         labelPassword2.setText("Password 2");
         labelPassword2.setPreferredSize(new java.awt.Dimension(100, 16));
+        inputPassword2.setToolTipText("8 caracteres de los cuales uno debe ser un numero");
         panelFila4.add(labelPassword2);
 
         inputPassword2.setColumns(20);
@@ -139,6 +143,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputPhone.setColumns(20);
         inputPhone.setBorder(null);
         inputPhone.setPreferredSize(new java.awt.Dimension(200, 30));
+        inputPhone.setToolTipText("9 numeros");
         panelFila5.add(inputPhone);
 
         panelPrincipal.add(panelFila5);
@@ -148,7 +153,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         btnCancelar.setBackground(new java.awt.Color(238, 82, 83));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Volver");
         btnCancelar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnCancelar.setPreferredSize(new java.awt.Dimension(120, 40));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -156,6 +161,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
                 btnCancelarActionPerformed(evt);
             }
         });
+        btnCancelar.setToolTipText("Volver a la ventana de login");
         panelFila6.add(btnCancelar);
 
         btnRegistrarse.setBackground(new java.awt.Color(72, 219, 251));

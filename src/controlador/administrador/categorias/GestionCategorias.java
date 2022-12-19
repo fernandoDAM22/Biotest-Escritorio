@@ -78,6 +78,13 @@ public class GestionCategorias {
         return modelo;
     }
 
+    /**
+     * Este metodo permite insertar una categoria en la base de datos
+     * @param nombre es el nombre de la categoria
+     * @param descipcion es la descripcion de la categoria
+     * @return un valor mayor que 0 en caso de que se inserte la categoria
+     * @author Fernando
+     */
     public static int insertarCategoria(String nombre, String descipcion) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
