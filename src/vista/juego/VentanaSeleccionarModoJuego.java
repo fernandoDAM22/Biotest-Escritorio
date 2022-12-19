@@ -5,9 +5,12 @@
 package vista.juego;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import controlador.usuario.Codigos;
 import controlador.usuario.ConfiguracionUsuario;
+import vista.acceso.VentanaLogin;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
@@ -49,6 +52,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         labelDescripcion = new javax.swing.JLabel();
         barraMenu6 = new javax.swing.JMenuBar();
         menuUsuario6 = new javax.swing.JMenu();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionModoJuego6 = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
@@ -134,6 +138,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         menuUsuario6.setText("Usuario");
 
         opcionModoJuego6.setText("Seleccionar Modo de juego");
+
         opcionModoJuego6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuego6ActionPerformed(evt);
@@ -142,8 +147,17 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         menuUsuario6.add(opcionModoJuego6);
 
         barraMenu6.add(menuUsuario6);
+        opcionCerrarSesion.setText("Cerrar sesion");
+        opcionCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionCerrarSesionActionListener(evt);
+            }
+        });
+        menuUsuario6.add(opcionCerrarSesion);
 
         menuAdministrador.setText("Administrador");
+
 
         opcionPreguntas.setText("Preguntas");
         opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
@@ -175,6 +189,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         ConfiguracionUsuario.desactivarMenu(menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionCerrarSesionActionListener(ActionEvent evt) {
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionModoJuego6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModoJuego6ActionPerformed
         VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
@@ -251,6 +271,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego6;
+    private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelBotonesModoJuego;
     private javax.swing.JPanel panelCentro;

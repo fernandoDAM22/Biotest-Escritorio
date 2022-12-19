@@ -5,8 +5,12 @@
 package vista.administrador;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseListener;
+
+import vista.acceso.VentanaLogin;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 /**
@@ -84,6 +88,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionModoJuego = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
@@ -438,6 +443,15 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuUsuario.add(opcionModoJuego);
 
         barraMenu.add(menuUsuario);
+        opcionCerrarSesion.setText("Cerrar sesion");
+        opcionCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionCerrarSesionActionListener(evt);
+            }
+        });
+        menuUsuario.add(opcionCerrarSesion);
+
 
         menuAdministrador.setText("Administrador");
 
@@ -484,6 +498,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionCerrarSesionActionListener(ActionEvent evt) {
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
+
+    }
 
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
 
@@ -612,6 +633,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> listaPreguntasDialogo;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
+    private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;

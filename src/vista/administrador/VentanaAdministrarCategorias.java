@@ -9,7 +9,8 @@ import java.awt.event.*;
 
 import controlador.administrador.categorias.GestionCategorias;
 import controlador.administrador.preguntas.GestionPreguntas;
-import vista.administrador.dialogos.DialogoDescripcion;
+import vista.acceso.VentanaLogin;
+import vista.administrador.dialogos.DialogoDatosCategoria;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
@@ -93,6 +94,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         tablaInformacionPreguntas = new javax.swing.JTable();
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionModoJuego = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
@@ -364,6 +366,13 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         btnBorrar.setText("Borrar");
         btnBorrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrar.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnBorrarActionListener(evt);
+            }
+        });
+        btnBorrar.setToolTipText("Solo se pueden borrar categorias sin preguntas");
         panelBotones.add(btnBorrar);
 
         btnModificar.setBackground(new Color(238, 82, 83));
@@ -372,6 +381,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
         btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModificar.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnModificarActionListener(evt);
+            }
+        });
         panelBotones.add(btnModificar);
 
         panelPrinicipal.add(panelBotones, java.awt.BorderLayout.LINE_END);
@@ -429,6 +444,15 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
                 opcionModoJuegoActionPerformed(evt);
             }
         });
+        opcionCerrarSesion.setText("Cerrar sesion");
+        opcionCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionCerrarSesionActionListener(evt);
+            }
+        });
+        menuUsuario.add(opcionCerrarSesion);
+        
         menuUsuario.add(opcionModoJuego);
 
         barraMenu.add(menuUsuario);
@@ -473,7 +497,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
-        listaCategorias.setEditable(true);
         for (String e : GestionCategorias.obtenerCategorias()) {
             listaCategorias.addItem(e);
         }
@@ -481,21 +504,71 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void opcionCerrarSesionActionListener(ActionEvent evt) {
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
+
+
+    }
+
+    private void btnModificarActionListener(ActionEvent evt) {
+        DialogoDatosCategoria.mostrarDialogo();
+        String nombre = DialogoDatosCategoria.getNombre();
+        String descripcion = DialogoDatosCategoria.getDescripcion();
+        if(descripcion == null || nombre == null){ // se comprueba que los datos sean nulos
+            JOptionPane.showMessageDialog(this,"Datos Erroneos","Error",JOptionPane.ERROR_MESSAGE);
+        }else if(GestionCategorias.existeCategoria(nombre)){
+            JOptionPane.showMessageDialog(this,"Ya existe una categoria con ese nombre","Error",JOptionPane.ERROR_MESSAGE);
+        }else if(GestionCategorias.modificarCategoria(nombreCategoria,nombre,descripcion)){
+            JOptionPane.showMessageDialog(this,"Categoria Modificada Correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            listaCategorias.removeItem(nombreCategoria);
+            listaCategorias.addItem(nombre);
+        }else{
+            JOptionPane.showMessageDialog(this,"No se ha podido modificar la categoria","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnBorrarActionListener(ActionEvent evt) {
+        String nombre = listaCategorias.getSelectedItem().toString();
+        //nos aseguramos de que el usuario quiere borrar la categoria
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            return;
+        }
+        //intentamos borrar la categoria
+        if(GestionCategorias.borrarCategoria(nombre)){//si se borra
+            JOptionPane.showMessageDialog(this,"Categoria borrada correctamente","Categoria borrada",JOptionPane.INFORMATION_MESSAGE);
+            //eliminamos la categoria borrada de la lista desplegable
+            //eliminamos la categoria borrada de la lista desplegable
+            listaCategorias.removeItem(nombre);
+        }else{
+            JOptionPane.showMessageDialog(this,"No se ha podido borrar la categoria","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void btnCrearActionPerformer(ActionEvent evt) {
-        DialogoDescripcion.mostrarDialogo();
+        DialogoDatosCategoria.mostrarDialogo();
         int resultado = 0;
         String mensaje = "";
-        String descripcion = DialogoDescripcion.getDescripcion();
-        if(descripcion == null || nombreCategoria.length() == 0){
+        String nombre = DialogoDatosCategoria.getNombre();
+        String descripcion = DialogoDatosCategoria.getDescripcion();
+        if(descripcion == null || nombre == null){ // se comprueba que los datos sean nulos
+            JOptionPane.showMessageDialog(this,"Datos Erroneos","Error",JOptionPane.ERROR_MESSAGE);
             return;
-        }else{
-           resultado = GestionCategorias.insertarCategoria(nombreCategoria,descripcion);
+        }else if(GestionCategorias.existeCategoria(nombre)){ //se comprueba que la categoria no exista
+            JOptionPane.showMessageDialog(this,"Esa categoria ya existe","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }else{// si se llega aqui se puede insertar la categoria
+           resultado = GestionCategorias.insertarCategoria(nombre,descripcion);
         }
+        //mostramos el mensaje de error correspondiente
         if(resultado > 0){
            JOptionPane.showMessageDialog(this,"Categoria insertada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else{
             JOptionPane.showMessageDialog(this,"No se ha podido insertar la categoria","Error",JOptionPane.ERROR_MESSAGE);
         }
+        //Por ultimo reinicamos la lista de categorias para añadir la categoria insertada
+        listaCategorias.addItem(nombre);
     }
 
 
@@ -556,7 +629,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void listaCategoriasItemListener(java.awt.event.ItemEvent evt) {
         nombreCategoria = listaCategorias.getSelectedItem().toString();
-        System.out.println(nombreCategoria);
         modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
     }
 
@@ -636,6 +708,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> listaPreguntasDialogo;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
+    private javax.swing.JMenuItem opcionCerrarSesion;
+
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;

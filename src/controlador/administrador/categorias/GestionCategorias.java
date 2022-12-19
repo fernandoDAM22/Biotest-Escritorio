@@ -80,7 +80,8 @@ public class GestionCategorias {
 
     /**
      * Este metodo permite insertar una categoria en la base de datos
-     * @param nombre es el nombre de la categoria
+     *
+     * @param nombre     es el nombre de la categoria
      * @param descipcion es la descripcion de la categoria
      * @return un valor mayor que 0 en caso de que se inserte la categoria
      * @author Fernando
@@ -94,11 +95,81 @@ public class GestionCategorias {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,nombre);
-            sentencia.setString(2,descipcion);
-           return sentencia.executeUpdate();
+            sentencia.setString(1, nombre);
+            sentencia.setString(2, descipcion);
+            return sentencia.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite comprobar si ya existe una categoria con un determinado
+     * nombre en la base de datos
+     *
+     * @param nombre es el nombre de la categoria que queremos comprobar
+     * @return true si existe, false si no
+     * @author fernando
+     */
+    public static boolean existeCategoria(String nombre) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "select * from categoria where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, nombre);
+            resultSet = sentencia.executeQuery();
+            return resultSet.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite borrar una categoria de la base de datos
+     * @param nombre es el nombre de la categoria que queremos borrar
+     * @return true si se borra, false si no
+     * @author Fernando
+     */
+    public static boolean borrarCategoria(String nombre) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        int resultado = 0;
+        String sql = "delete from categoria where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombre);
+            resultado = sentencia.executeUpdate();
+            /*
+             * Hay que tener en cuenta que saltara una excepcion si el usuario
+             * elije borrar una categoria que tiene preguntas puesto que esto no esta permitido por la integridad referencial,
+             * si salta la excepcion retornamos false
+             */
+        } catch (SQLException e) {
+            return false;
         }finally {
             assert sentencia != null;
             try {
@@ -108,5 +179,41 @@ public class GestionCategorias {
             }
             conexionBD.cerrarConexion();
         }
+        return resultado > 0;
+    }
+
+    /**
+     * Este metodo permite modificar los datos de una categoria
+     * @param nombreAntiguo es el nombre que tiene actualmente la categoria
+     * @param nombreNuevo es el nombre nuevo que le vamos a poner a la categoria
+     * @param descripcion es la descripcion nueva que le vamos a poner a la categoria
+     * @return true si se ha modificado, false si no
+     */
+    public static boolean modificarCategoria(String nombreAntiguo, String nombreNuevo, String descripcion){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        int resultado = 0;
+        String sql = "update categoria set nombre = ?, descripcion = ? where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombreNuevo);
+            sentencia.setString(2,descripcion);
+            sentencia.setString(3,nombreAntiguo);
+            resultado = sentencia.executeUpdate();
+        } catch (SQLException e) {
+            return false;
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return resultado > 0;
     }
 }
