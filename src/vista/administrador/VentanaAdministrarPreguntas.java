@@ -303,7 +303,10 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta2, datos[2]);
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta3, datos[3]);
         } catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {
-
+            inputRespuestaCorrecta.setText("");
+            inputRespuestaIncorrecta1.setText("");
+            inputRespuestaIncorrecta2.setText("");
+            inputRespuestaIncorrecta3.setText("");
         }
     }
 
