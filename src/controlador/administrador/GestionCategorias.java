@@ -1,7 +1,5 @@
-package controlador.administrador.categorias;
+package controlador.administrador;
 
-import com.kitfox.svg.A;
-import controlador.administrador.preguntas.GestionPreguntas;
 import controlador.baseDeDatos.ConexionBD;
 
 import javax.swing.*;
@@ -215,5 +213,34 @@ public class GestionCategorias {
             conexionBD.cerrarConexion();
         }
         return resultado > 0;
+    }
+    public static int obtenerIdCategoria(String nombre){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        String sql = "select id from categoria where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombre);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("id");
+            }
+
+        } catch (SQLException e) {
+            return -1;
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return -1;
     }
 }

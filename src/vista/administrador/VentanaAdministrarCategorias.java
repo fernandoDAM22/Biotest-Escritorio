@@ -7,8 +7,8 @@ package vista.administrador;
 import java.awt.*;
 import java.awt.event.*;
 
-import controlador.administrador.categorias.GestionCategorias;
-import controlador.administrador.preguntas.GestionPreguntas;
+import controlador.administrador.GestionCategorias;
+import controlador.administrador.GestionPreguntas;
 import vista.acceso.VentanaLogin;
 import vista.administrador.dialogos.DialogoDatosCategoria;
 import vista.juego.VentanaSeleccionarModoJuego;

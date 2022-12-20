@@ -63,6 +63,15 @@ public class Pregunta implements Serializable {
         this.idCategoria = idCategoria;
     }
 
+    public Pregunta(String enunciado, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3, int idCategoria) {
+        this.enunciado = enunciado;
+        this.respuestaCorrecta = respuestaCorrecta;
+        this.respuestaIncorrecta1 = respuestaIncorrecta1;
+        this.respuestaIncorrecta2 = respuestaIncorrecta2;
+        this.respuestaIncorrecta3 = respuestaIncorrecta3;
+        this.idCategoria = idCategoria;
+    }
+
     public int getId() {
         return id;
     }

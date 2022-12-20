@@ -7,12 +7,21 @@ package vista.administrador;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
+import controlador.administrador.GestionCategorias;
+import controlador.administrador.GestionPreguntas;
+import modelo.Pregunta;
 import vista.acceso.VentanaLogin;
+import vista.administrador.dialogos.DialogoDatosPregunta;
 import vista.juego.VentanaSeleccionarModoJuego;
 
+import javax.swing.*;
+
 /**
- *
  * @author fernando
  */
 public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
@@ -37,7 +46,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        btnVaciar = new javax.swing.JButton();
         listaPreguntas = new javax.swing.JComboBox<>();
         listaCategorias = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
@@ -74,29 +82,25 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         jPanel1.add(jLabel1);
 
         panelPrincipal.add(jPanel1);
-
-        btnVaciar.setBackground(new Color(238, 82, 83));
-        btnVaciar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnVaciar.setForeground(new Color(0, 0, 0));
-        btnVaciar.setText("Vaciar");
-        btnVaciar.setBorder(null);
-        btnVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVaciar.setPreferredSize(new java.awt.Dimension(100, 40));
-        btnVaciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVaciarActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnVaciar);
-
-        listaPreguntas.setEditable(true);
         listaPreguntas.setForeground(new Color(255, 255, 255));
         listaPreguntas.setMaximumRowCount(50);
         listaPreguntas.setPreferredSize(new java.awt.Dimension(600, 40));
+        listaPreguntas.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                listaPreguntasItemStateChanged(evt);
+            }
+        });
         jPanel2.add(listaPreguntas);
 
         listaCategorias.setForeground(new Color(255, 255, 255));
         listaCategorias.setPreferredSize(new java.awt.Dimension(200, 40));
+        listaCategorias.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                listaCategoriasItemStateChanged(evt);
+            }
+        });
         jPanel2.add(listaCategorias);
 
         panelPrincipal.add(jPanel2);
@@ -130,21 +134,29 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         inputRespuestaCorrecta.setColumns(20);
         inputRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaCorrecta.setForeground(new Color(255, 255, 255));
+        inputRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
+        inputRespuestaCorrecta.setHorizontalAlignment(JTextField.CENTER);
         jPanel3.add(inputRespuestaCorrecta);
 
         inputRespuestaIncorrecta1.setColumns(20);
         inputRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta1.setHorizontalAlignment(JTextField.CENTER);
         jPanel3.add(inputRespuestaIncorrecta1);
 
         inputRespuestaIncorrecta2.setColumns(20);
         inputRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta2.setHorizontalAlignment(JTextField.CENTER);
         jPanel3.add(inputRespuestaIncorrecta2);
 
         inputRespuestaIncorrecta3.setColumns(20);
         inputRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta3.setHorizontalAlignment(JTextField.CENTER);
         jPanel3.add(inputRespuestaIncorrecta3);
 
         panelPrincipal.add(jPanel3);
@@ -158,6 +170,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         btnInsertar.setBorder(null);
         btnInsertar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInsertar.setPreferredSize(new java.awt.Dimension(200, 60));
+        btnInsertar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnInsertarActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnInsertar);
 
         btnBorrar.setBackground(new Color(238, 82, 83));
@@ -243,16 +261,77 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 844, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
         );
+        //Todo: poder las categorias
 
+        colocarCategorias();
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInsertarActionPerformed(ActionEvent evt) {
+        DialogoDatosPregunta.mostrarDialogo();
+        String enunciado = DialogoDatosPregunta.getEnunciado();
+        String respuestaCorrecta = DialogoDatosPregunta.getRespuestaCorrecta();
+        String respuestaIncorrecta1 = DialogoDatosPregunta.getRespuestaIncorrecta1();
+        String respuestaIncorrecta2 = DialogoDatosPregunta.getRespuestaIncorrecta2();
+        String respuestaIncorrecta3 = DialogoDatosPregunta.getRespuestaIncorrecta3();
+        int idCategoria = GestionCategorias.obtenerIdCategoria(listaCategorias.getSelectedItem().toString());
+        if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
+                || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
+            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.WARNING_MESSAGE);
+        }else if(GestionPreguntas.insertarPregunta(new Pregunta(enunciado,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3,idCategoria))){
+            JOptionPane.showMessageDialog(this, "Pregunta Insertada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void listaPreguntasItemStateChanged(ItemEvent evt) {
+        try {
+            String[] datos = GestionPreguntas.obtenerRespuestas(listaPreguntas.getSelectedItem().toString());
+            if (datos == null) {
+                return;
+            }
+            GestionPreguntas.colocarRespuesta(inputRespuestaCorrecta, datos[0]);
+            GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta1, datos[1]);
+            GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta2, datos[2]);
+            GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta3, datos[3]);
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {
+
+        }
+    }
+
+    /**
+     * Este metodo nos va a permitir colocar las preguntas de una categoria en la lista desplegable
+     *
+     * @author Fernando
+     */
+    private void listaCategoriasItemStateChanged(ItemEvent evt) {
+        listaPreguntas.removeAllItems();
+        ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntas(listaCategorias.getSelectedItem().toString());
+        for (String[] arr : preguntas) {
+            listaPreguntas.addItem(arr[0]);
+        }
+
+    }
+
+    /**
+     * Este metodo permite colocar las categorias en la lista desplegable
+     *
+     * @author Fernando
+     */
+    public void colocarCategorias() {
+        ArrayList<String> nombresCategorias = GestionCategorias.obtenerCategorias();
+        for (String s : nombresCategorias) {
+            listaCategorias.addItem(s);
+        }
+    }
 
     private void opcionCerrarSesionActionListener(ActionEvent evt) {
         VentanaLogin frame = new VentanaLogin();
@@ -261,7 +340,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     }
 
     private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
-         
+
     }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void opcionPreguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionPreguntasActionPerformed
@@ -277,15 +356,15 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionModoJuegoActionPerformed
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCuestionariosActionPerformed
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCuestionariosActionPerformed
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCategoriasActionPerformed
-       VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
-       ventana.setVisible(true); 
-       dispose();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
+        ventana.setVisible(true);
+        dispose();
     }//GEN-LAST:event_opcionCategoriasActionPerformed
 
     /**
@@ -295,7 +374,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -329,7 +408,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnModificar;
-    private javax.swing.JButton btnVaciar;
     private javax.swing.JTextField inputRespuestaCorrecta;
     private javax.swing.JTextField inputRespuestaIncorrecta1;
     private javax.swing.JTextField inputRespuestaIncorrecta2;
