@@ -108,7 +108,7 @@ public class GestionPreguntas {
      * @param enunciadoPregunta es el enunciado de la pregunta de la cual
      *                          queremos obtener las respuestas
      * @return un array con las cuatro respuestas de la pregunta;
-     * @author fernando
+     * @author Fernando
      */
     public static String[] obtenerRespuestas(String enunciadoPregunta) {
         PreparedStatement sentencia = null;
@@ -137,6 +137,13 @@ public class GestionPreguntas {
         }
         return null;
     }
+
+    /**
+     * Este metodo permite insertar una pregunta en la base de datos
+     * @param p es la pregunta que vamos a insertar
+     * @return true si se inserta, false si no
+     * @author Fernando
+     */
 
     public static boolean insertarPregunta(Pregunta p) {
         PreparedStatement sentencia = null;

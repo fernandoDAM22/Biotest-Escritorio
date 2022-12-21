@@ -1,4 +1,5 @@
 import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.IntelliJTheme;
 import vista.acceso.VentanaLogin;
 
 import javax.swing.*;

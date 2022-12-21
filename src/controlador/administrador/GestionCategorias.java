@@ -214,6 +214,13 @@ public class GestionCategorias {
         }
         return resultado > 0;
     }
+
+    /**
+     * Este metodo permite obtener el id de una categoria
+     * a partir de su nombre
+     * @param nombre es el nombre de la categoria que estamos buscando
+     * @return el id de la categoria, -1 si no se encuentra
+     */
     public static int obtenerIdCategoria(String nombre){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;

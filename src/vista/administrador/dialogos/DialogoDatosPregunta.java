@@ -49,19 +49,19 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         labelTitulo = new javax.swing.JLabel();
         panelFila2 = new javax.swing.JPanel();
         labelEnunciado = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        inputEnunciado = new javax.swing.JTextField();
         panelFila3 = new javax.swing.JPanel();
         labelRCorrecta = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        inputRespuestaCorrecta = new javax.swing.JTextField();
         panelFila4 = new javax.swing.JPanel();
         labelRIncorrecta1 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        inputRespuestaIncorrecta1 = new javax.swing.JTextField();
         panelFila5 = new javax.swing.JPanel();
         labelRIncorrecta2 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        inputRespuestaIncorrecta2 = new javax.swing.JTextField();
         panelFila6 = new javax.swing.JPanel();
         labelRIncorrecta3 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        inputRespuestaIncorrecta3 = new javax.swing.JTextField();
         panelFila7 = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
@@ -88,8 +88,8 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         labelEnunciado.setText("Enunciado");
         panelFila2.add(labelEnunciado);
 
-        jTextField1.setPreferredSize(new java.awt.Dimension(500, 30));
-        panelFila2.add(jTextField1);
+        inputEnunciado.setPreferredSize(new java.awt.Dimension(500, 30));
+        panelFila2.add(inputEnunciado);
 
         jPanel1.add(panelFila2);
 
@@ -101,9 +101,9 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         labelRCorrecta.setPreferredSize(new java.awt.Dimension(128, 16));
         panelFila3.add(labelRCorrecta);
 
-        jTextField2.setText("\n");
-        jTextField2.setPreferredSize(new java.awt.Dimension(250, 30));
-        panelFila3.add(jTextField2);
+        inputRespuestaCorrecta.setText("\n");
+        inputRespuestaCorrecta.setPreferredSize(new java.awt.Dimension(250, 30));
+        panelFila3.add(inputRespuestaCorrecta);
 
         jPanel1.add(panelFila3);
 
@@ -114,9 +114,9 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         labelRIncorrecta1.setText("Respuesta Incorrecta 1");
         panelFila4.add(labelRIncorrecta1);
 
-        jTextField3.setText("\n");
-        jTextField3.setPreferredSize(new java.awt.Dimension(250, 30));
-        panelFila4.add(jTextField3);
+        inputRespuestaIncorrecta1.setText("\n");
+        inputRespuestaIncorrecta1.setPreferredSize(new java.awt.Dimension(250, 30));
+        panelFila4.add(inputRespuestaIncorrecta1);
 
         jPanel1.add(panelFila4);
 
@@ -127,9 +127,9 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         labelRIncorrecta2.setText("Respuesta Incorrecta 2");
         panelFila5.add(labelRIncorrecta2);
 
-        jTextField4.setText("\n");
-        jTextField4.setPreferredSize(new java.awt.Dimension(250, 30));
-        panelFila5.add(jTextField4);
+        inputRespuestaIncorrecta2.setText("\n");
+        inputRespuestaIncorrecta2.setPreferredSize(new java.awt.Dimension(250, 30));
+        panelFila5.add(inputRespuestaIncorrecta2);
 
         jPanel1.add(panelFila5);
 
@@ -140,9 +140,9 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         labelRIncorrecta3.setText("Respuesta Incorrecta 3");
         panelFila6.add(labelRIncorrecta3);
 
-        jTextField5.setText("\n");
-        jTextField5.setPreferredSize(new java.awt.Dimension(250, 30));
-        panelFila6.add(jTextField5);
+        inputRespuestaIncorrecta3.setText("\n");
+        inputRespuestaIncorrecta3.setPreferredSize(new java.awt.Dimension(250, 30));
+        panelFila6.add(inputRespuestaIncorrecta3);
 
         jPanel1.add(panelFila6);
 
@@ -196,11 +196,11 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
     }
 
     private void btnAceptarAcionListener(ActionEvent evt) {
-        enunciado = jTextField1.getText();
-        respuestaCorrecta = jTextField2.getText();
-        respuestaIncorrecta1 = jTextField3.getText();
-        respuestaIncorrecta2 = jTextField4.getText();
-        respuestaIncorrecta3 = jTextField5.getText();
+        enunciado = inputEnunciado.getText();
+        respuestaCorrecta = inputRespuestaCorrecta.getText();
+        respuestaIncorrecta1 = inputRespuestaIncorrecta1.getText();
+        respuestaIncorrecta2 = inputRespuestaIncorrecta2.getText();
+        respuestaIncorrecta3 = inputRespuestaIncorrecta3.getText();
         if(enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
         || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")){
             JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
@@ -284,11 +284,11 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
+    private javax.swing.JTextField inputEnunciado;
+    private javax.swing.JTextField inputRespuestaCorrecta;
+    private javax.swing.JTextField inputRespuestaIncorrecta1;
+    private javax.swing.JTextField inputRespuestaIncorrecta2;
+    private javax.swing.JTextField inputRespuestaIncorrecta3;
     private javax.swing.JLabel labelEnunciado;
     private javax.swing.JLabel labelRCorrecta;
     private javax.swing.JLabel labelRIncorrecta1;

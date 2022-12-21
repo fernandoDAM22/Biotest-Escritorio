@@ -276,12 +276,14 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
     private void btnInsertarActionPerformed(ActionEvent evt) {
         DialogoDatosPregunta.mostrarDialogo();
+        //Obtenemos los datos del dialogo
         String enunciado = DialogoDatosPregunta.getEnunciado();
         String respuestaCorrecta = DialogoDatosPregunta.getRespuestaCorrecta();
         String respuestaIncorrecta1 = DialogoDatosPregunta.getRespuestaIncorrecta1();
         String respuestaIncorrecta2 = DialogoDatosPregunta.getRespuestaIncorrecta2();
         String respuestaIncorrecta3 = DialogoDatosPregunta.getRespuestaIncorrecta3();
         int idCategoria = GestionCategorias.obtenerIdCategoria(listaCategorias.getSelectedItem().toString());
+        //nos aseguramos que los campos estan rellenos
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
             JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.WARNING_MESSAGE);
@@ -302,7 +304,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta1, datos[1]);
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta2, datos[2]);
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta3, datos[3]);
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException ignored) {
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
+            /*
+             * En caso de que se seleccione una categoria sin preguntas, ocurrira una expecion
+             * porque no hay nada en la lista desplegable, entonces vaciamos las respuestas
+             * para que no se queden las respuestas de la pregunta anterior
+             */
             inputRespuestaCorrecta.setText("");
             inputRespuestaIncorrecta1.setText("");
             inputRespuestaIncorrecta2.setText("");
