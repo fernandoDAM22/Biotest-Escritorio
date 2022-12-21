@@ -63,6 +63,15 @@ public class Pregunta implements Serializable {
         this.idCategoria = idCategoria;
     }
 
+    /**
+     * Este constructor permite crear una pregunta sin especificar el id
+     * @param enunciado es el enunciado de la pregunta
+     * @param respuestaCorrecta es la respuesta correcta a la pregunta
+     * @param respuestaIncorrecta1 es la primera respuesta incorrecta de la pregunta
+     * @param respuestaIncorrecta2 es la segunda respuesta incorrecta de la pregunta
+     * @param respuestaIncorrecta3 es la tercera respuesta incorrecta de la pregunta
+     * @param idCategoria es el id de la categoria, esté id corresponde con el id de la categoria correspondiente
+     */
     public Pregunta(String enunciado, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3, int idCategoria) {
         this.enunciado = enunciado;
         this.respuestaCorrecta = respuestaCorrecta;
@@ -70,6 +79,22 @@ public class Pregunta implements Serializable {
         this.respuestaIncorrecta2 = respuestaIncorrecta2;
         this.respuestaIncorrecta3 = respuestaIncorrecta3;
         this.idCategoria = idCategoria;
+    }
+
+    /**
+     * Este constructor permite crear una pregunta sin especificar el id y la categoria
+     * @param enunciado es el enunciado de la pregunta
+     * @param respuestaCorrecta es la respuesta correcta a la pregunta
+     * @param respuestaIncorrecta1 es la primera respuesta incorrecta de la pregunta
+     * @param respuestaIncorrecta2 es la segunda respuesta incorrecta de la pregunta
+     * @param respuestaIncorrecta3 es la tercera respuesta incorrecta de la pregunta
+     */
+    public Pregunta(String enunciado, String respuestaCorrecta, String respuestaIncorrecta1, String respuestaIncorrecta2, String respuestaIncorrecta3) {
+        this.enunciado = enunciado;
+        this.respuestaCorrecta = respuestaCorrecta;
+        this.respuestaIncorrecta1 = respuestaIncorrecta1;
+        this.respuestaIncorrecta2 = respuestaIncorrecta2;
+        this.respuestaIncorrecta3 = respuestaIncorrecta3;
     }
 
     public int getId() {

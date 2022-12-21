@@ -134,6 +134,14 @@ public class GestionPreguntas {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
         }
         return null;
     }
@@ -166,8 +174,82 @@ public class GestionPreguntas {
             return estado > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
         }
+    }
 
+    /**
+     * Este metodo permite borrar una pregunta de la base de datos
+     * @param enunciado es el enunciado de la pregunta que vamos a borrar
+     * @return true si se borra, false si no
+     * @author Fernando
+     */
+    public static boolean borrarPregunta(String enunciado){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "delete from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,enunciado);
+            int estado = sentencia.executeUpdate();
+            return estado > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite modificar una pregunta de la base de datos
+     * @param p es el objeto que contiene los datos nuevos de la pregunta
+     * @param enunciado es el enunciado de la pregunta que queremos modificar
+     * @return true si se modifica la pregunta, false si no
+     */
+    public static boolean modificarPregunta(Pregunta p, String enunciado){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "UPDATE `preguntas` set enunciado = ?, respuesta_correcta = ?, respuesta_incorrecta1 = ?, respuesta_incorrecta2 = ?, respuesta_incorrecta3 = ?  WHERE enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,p.getEnunciado());
+            sentencia.setString(2,p.getRespuestaCorrecta());
+            sentencia.setString(3,p.getRespuestaIncorrecta1());
+            sentencia.setString(4,p.getRespuestaIncorrecta2());
+            sentencia.setString(5,p.getRespuestaIncorrecta3());
+            sentencia.setString(6,enunciado);
+            int estado = sentencia.executeUpdate();
+            return estado > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
     }
 
 }

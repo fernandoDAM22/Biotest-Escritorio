@@ -33,6 +33,7 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
                 reiniciarDatos();
             }
         });
+        colocarDatos();
     }
 
     /**
@@ -201,28 +202,125 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         respuestaIncorrecta1 = inputRespuestaIncorrecta1.getText();
         respuestaIncorrecta2 = inputRespuestaIncorrecta2.getText();
         respuestaIncorrecta3 = inputRespuestaIncorrecta3.getText();
-        if(enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
-        || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")){
+        //nos aseguramos de los campos no esten vacios
+        if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
+                || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")) {
             JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        }else if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        } else if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            //en caso de que el usuario quiera realizar la accion cerramos el dialogo, los demas pasos continuaran la ventana de gestion de las preguntas
             dispose();
         }
 
     }
-    public static String getEnunciado(){
+
+    /**
+     * Este metodo devuelve el enunciado de la pregunta
+     *
+     * @return el enunciado de la pregunta
+     */
+    public static String getEnunciado() {
         return enunciado;
     }
-    public static String getRespuestaCorrecta(){
+
+    /**
+     * Este metodo devuelve la respuesta correcta de la pregunta
+     *
+     * @return la respuesta correcta de la pregunta
+     */
+
+    public static String getRespuestaCorrecta() {
         return respuestaCorrecta;
     }
-    public static String getRespuestaIncorrecta1(){
+
+    /**
+     * Este metodo devuelve la primera respuesta incorrecta de la pregunta
+     *
+     * @return la primera respuesta incorrecta de la pregunta
+     */
+    public static String getRespuestaIncorrecta1() {
         return respuestaIncorrecta1;
     }
-    public static String getRespuestaIncorrecta2(){
+
+    /**
+     * Este metodo devuelve la segunda respuesta incorrecta de la pregunta
+     *
+     * @return la segunda respuesta incorrecta de la pregunta
+     */
+
+    public static String getRespuestaIncorrecta2() {
         return respuestaIncorrecta2;
     }
-    public static String getRespuestaIncorrecta3(){
+
+    /**
+     * Este metodo devuelve la tercera respuesta incorrecta de la pregunta
+     *
+     * @return la tercera respuesta incorrecta de la pregunta
+     */
+
+    public static String getRespuestaIncorrecta3() {
         return respuestaIncorrecta3;
+    }
+
+    /**
+     * Este metodo inicializa la variable enunciado
+     *
+     * @param texto es el texto con el que se inicializa el enunciado
+     */
+
+    public static void setEnunciado(String texto) {
+        enunciado = texto;
+    }
+
+    /**
+     * Este metodo inicializa la variable respuesta correcta
+     *
+     * @param texto es el texto con el que se inicializa la respuesta correcta
+     */
+
+    public static void setRespuestaCorrecta(String texto) {
+        respuestaCorrecta = texto;
+    }
+
+    /**
+     * Este metodo inicializa la variable respuestaIncorrecta1
+     *
+     * @param texto es el texto con el que se inicializa la respuesta incorrecta 1
+     */
+    public static void setRespuestaIncorrecta1(String texto) {
+        respuestaIncorrecta1 = texto;
+    }
+    /**
+     * Este metodo inicializa la variable respuestaIncorrecta2
+     *
+     * @param texto es el texto con el que se inicializa la respuesta incorrecta 2
+     */
+
+    public static void setRespuestaIncorrecta2(String texto) {
+        respuestaIncorrecta2 = texto;
+    }
+    /**
+     * Este metodo inicializa la variable respuestaIncorrecta3
+     *
+     * @param texto es el texto con el que se inicializa la respuesta incorrecta 3
+     */
+
+    public static void setRespuestaIncorrecta3(String texto) {
+        respuestaIncorrecta3 = texto;
+    }
+
+    /**
+     * Este metodo coloca los datos en las casillas correspondientes en caso de que no esten vacios
+     * @author Fernando
+     */
+    public void colocarDatos() {
+        if (!enunciado.equals("") || !respuestaCorrecta.equals("") || !respuestaIncorrecta1.equals("")
+                || !respuestaIncorrecta2.equals("") || !respuestaIncorrecta3.equals("")) {
+            inputEnunciado.setText(enunciado);
+            inputRespuestaCorrecta.setText(respuestaCorrecta);
+            inputRespuestaIncorrecta1.setText(respuestaIncorrecta1);
+            inputRespuestaIncorrecta2.setText(respuestaIncorrecta2);
+            inputRespuestaIncorrecta3.setText(respuestaIncorrecta3);
+        }
     }
 
     /**
@@ -266,15 +364,27 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
             }
         });
     }
-    public static void reiniciarDatos(){
+
+    /**
+     * este metodo restablece los datos
+     * @author Fernando
+     */
+    public static void reiniciarDatos() {
         enunciado = "";
         respuestaCorrecta = "";
         respuestaIncorrecta1 = "";
         respuestaIncorrecta2 = "";
         respuestaIncorrecta3 = "";
     }
-    public static void mostrarDialogo() {
-        reiniciarDatos();
+
+    /**
+     * Este metodo muestra el dialogo
+     * @param flag indica si se deben restablecer los datos o no
+     */
+    public static void mostrarDialogo(boolean flag) {
+        if (flag) {
+            reiniciarDatos();
+        }
         DialogoDatosPregunta dialogo = new DialogoDatosPregunta(new JFrame(), true);
         dialogo.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialogo.setVisible(true);

@@ -61,7 +61,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         btnInsertar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionCerrarSesion = new javax.swing.JMenuItem();
@@ -185,6 +184,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         btnBorrar.setBorder(null);
         btnBorrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBorrar.setPreferredSize(new java.awt.Dimension(200, 60));
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnBorrarActionPerformed(evt);
+            }
+        });
         jPanel4.add(btnBorrar);
 
         btnModificar.setBackground(new Color(238, 82, 83));
@@ -194,17 +199,13 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         btnModificar.setBorder(null);
         btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnModificar.setPreferredSize(new java.awt.Dimension(200, 60));
+        btnModificar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnModificarActionListener(evt);
+            }
+        });
         jPanel4.add(btnModificar);
-
-        btnBuscar.setBackground(new Color(29, 209, 161));
-        btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnBuscar.setForeground(new Color(0, 0, 0));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setBorder(null);
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.setPreferredSize(new java.awt.Dimension(200, 60));
-        jPanel4.add(btnBuscar);
-
         panelPrincipal.add(jPanel4);
 
         menuUsuario.setText("Usuario");
@@ -274,8 +275,68 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnModificarActionListener(ActionEvent evt) {
+        /*
+        obtenemos el enunciado antiguo de la pregunta, es importante tenerlo guardado
+        porque puede ser modificado
+         */
+        String enunciadoAntiguo = listaPreguntas.getSelectedItem().toString();
+        //Colocamos los datos de la pregunta seleccionada en los campos del dialogo
+        DialogoDatosPregunta.setEnunciado(listaPreguntas.getSelectedItem().toString());
+        DialogoDatosPregunta.setRespuestaCorrecta(inputRespuestaCorrecta.getText());
+        DialogoDatosPregunta.setRespuestaIncorrecta1(inputRespuestaIncorrecta1.getText());
+        DialogoDatosPregunta.setRespuestaIncorrecta2(inputRespuestaIncorrecta2.getText());
+        DialogoDatosPregunta.setRespuestaIncorrecta3(inputRespuestaIncorrecta3.getText());
+        //mostramos el dialogo y le indicamos que no restablezca los datos, lo hacemos pasandole un false
+        DialogoDatosPregunta.mostrarDialogo(false);
+        //obtenemos los datos una vez el usuario haya pulsado el boton de aceptar
+        String enunciado = DialogoDatosPregunta.getEnunciado();
+        String respuestaCorrecta = DialogoDatosPregunta.getRespuestaCorrecta();
+        String respuestaIncorrecta1 = DialogoDatosPregunta.getRespuestaIncorrecta1();
+        String respuestaIncorrecta2 = DialogoDatosPregunta.getRespuestaIncorrecta2();
+        String respuestaIncorrecta3 = DialogoDatosPregunta.getRespuestaIncorrecta3();
+        //creamos la pregunta con los datos recogidos
+        Pregunta p = new Pregunta(enunciado,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3);
+        //nos aseguramos de que no estan vacios
+        if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
+                || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")) {
+            //en ese caso mostramos el mensaje de error
+            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if(GestionPreguntas.modificarPregunta(p,enunciadoAntiguo)){//si se modifica la pregunta
+            JOptionPane.showMessageDialog(this, "Pregunta Modificada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            //borramos de la lista de preguntas el enunciado antiguo puesto que puede haber cambiado
+            listaPreguntas.removeItem(enunciadoAntiguo);
+            //añadimos a la lista de preguntas el enunciado nuevo
+            listaPreguntas.addItem(enunciado);
+            //seleccionamos en la lista de preguntas el enunciado nuevo para que el usuario no note el cambio
+            listaPreguntas.setSelectedItem(enunciado);
+        }else{//en caso de que no se pueda modificar la pregunta
+            JOptionPane.showMessageDialog(this, "No se ha podido Modificar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void btnBorrarActionPerformed(ActionEvent evt) {
+        try{
+            String enunciado = listaPreguntas.getSelectedItem().toString();
+            if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+                if(GestionPreguntas.borrarPregunta(enunciado)){
+                    JOptionPane.showMessageDialog(this, "Pregunta Borrada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    listaPreguntas.removeItem(enunciado);
+                }else{
+                    JOptionPane.showMessageDialog(this, "No se ha podido borrar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }catch (NullPointerException npe){
+            inputRespuestaCorrecta.setText("");
+            inputRespuestaIncorrecta1.setText("");
+            inputRespuestaIncorrecta2.setText("");
+            inputRespuestaIncorrecta3.setText("");
+        }
+    }
+
     private void btnInsertarActionPerformed(ActionEvent evt) {
-        DialogoDatosPregunta.mostrarDialogo();
+        DialogoDatosPregunta.mostrarDialogo(true);
         //Obtenemos los datos del dialogo
         String enunciado = DialogoDatosPregunta.getEnunciado();
         String respuestaCorrecta = DialogoDatosPregunta.getRespuestaCorrecta();
@@ -289,6 +350,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.WARNING_MESSAGE);
         }else if(GestionPreguntas.insertarPregunta(new Pregunta(enunciado,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3,idCategoria))){
             JOptionPane.showMessageDialog(this, "Pregunta Insertada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            listaPreguntas.addItem(enunciado);
         }else{
             JOptionPane.showMessageDialog(this, "No se ha podido insertar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -415,7 +477,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnBorrar;
-    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JTextField inputRespuestaCorrecta;
