@@ -10,7 +10,7 @@ import java.awt.event.*;
 import controlador.administrador.GestionCategorias;
 import controlador.administrador.GestionPreguntas;
 import vista.acceso.VentanaLogin;
-import vista.administrador.dialogos.DialogoDatosCategoria;
+import vista.administrador.dialogos.DialogoDatosCategoriaCuestionario;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
@@ -513,9 +513,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void btnModificarActionListener(ActionEvent evt) {
-        DialogoDatosCategoria.mostrarDialogo();
-        String nombre = DialogoDatosCategoria.getNombre();
-        String descripcion = DialogoDatosCategoria.getDescripcion();
+        DialogoDatosCategoriaCuestionario.mostrarDialogo();
+        String nombre = DialogoDatosCategoriaCuestionario.getNombre();
+        String descripcion = DialogoDatosCategoriaCuestionario.getDescripcion();
         if(descripcion == null || nombre == null){ // se comprueba que los datos sean nulos
             JOptionPane.showMessageDialog(this,"Datos Erroneos","Error",JOptionPane.ERROR_MESSAGE);
         }else if(GestionCategorias.existeCategoria(nombre)){
@@ -547,11 +547,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void btnCrearActionPerformer(ActionEvent evt) {
-        DialogoDatosCategoria.mostrarDialogo();
+        DialogoDatosCategoriaCuestionario.mostrarDialogo();
         int resultado = 0;
         String mensaje = "";
-        String nombre = DialogoDatosCategoria.getNombre();
-        String descripcion = DialogoDatosCategoria.getDescripcion();
+        String nombre = DialogoDatosCategoriaCuestionario.getNombre();
+        String descripcion = DialogoDatosCategoriaCuestionario.getDescripcion();
         if(descripcion == null || nombre == null){ // se comprueba que los datos sean nulos
             JOptionPane.showMessageDialog(this,"Datos Erroneos","Error",JOptionPane.ERROR_MESSAGE);
             return;

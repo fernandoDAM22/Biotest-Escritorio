@@ -4,17 +4,20 @@
  */
 package vista.administrador;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 
+import controlador.administrador.GestionCategorias;
+import controlador.administrador.GestionCuestionarios;
+import controlador.administrador.GestionPreguntas;
 import vista.acceso.VentanaLogin;
+import vista.administrador.dialogos.DialogoDatosCategoriaCuestionario;
 import vista.juego.VentanaSeleccionarModoJuego;
 
+import javax.swing.*;
+
 /**
- *
  * @author fernando
  */
 public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
@@ -56,7 +59,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelDialogoFila1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         panelDialogoFila2 = new javax.swing.JPanel();
-        btnVaciarDialogo = new javax.swing.JButton();
         listaPreguntasDialogo = new javax.swing.JComboBox<>();
         listaCategoriasDialogo = new javax.swing.JComboBox<>();
         panelDialogoFila3 = new javax.swing.JPanel();
@@ -75,8 +77,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         panelPrincipal = new javax.swing.JPanel();
         panelFila1 = new javax.swing.JPanel();
-        btnVaciar = new javax.swing.JButton();
-        listaPreguntas = new javax.swing.JComboBox<>();
+        listaCuestionarios = new javax.swing.JComboBox<>();
         listaCategorias = new javax.swing.JComboBox<>();
         panelFila2 = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
@@ -182,12 +183,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         javax.swing.GroupLayout dialogoInformacionPreguntaLayout = new javax.swing.GroupLayout(dialogoInformacionPregunta.getContentPane());
         dialogoInformacionPregunta.getContentPane().setLayout(dialogoInformacionPreguntaLayout);
         dialogoInformacionPreguntaLayout.setHorizontalGroup(
-            dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
+                dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE)
         );
         dialogoInformacionPreguntaLayout.setVerticalGroup(
-            dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                dialogoInformacionPreguntaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelInformacionPregunta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         panelPrincipal1.setLayout(new java.awt.GridLayout(4, 1));
@@ -201,27 +202,27 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         panelDialogoFila2.setPreferredSize(new java.awt.Dimension(1000, 50));
 
-        btnVaciarDialogo.setBackground(new Color(238, 82, 83));
-        btnVaciarDialogo.setForeground(new Color(0, 0, 0));
-        btnVaciarDialogo.setText("Vaciar");
-        btnVaciarDialogo.setBorder(null);
-        btnVaciarDialogo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVaciarDialogo.setPreferredSize(new java.awt.Dimension(100, 40));
-        btnVaciarDialogo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVaciarDialogoActionPerformed(evt);
-            }
-        });
-        panelDialogoFila2.add(btnVaciarDialogo);
-
         listaPreguntasDialogo.setEditable(true);
         listaPreguntasDialogo.setForeground(new Color(255, 255, 255));
         listaPreguntasDialogo.setMaximumRowCount(50);
         listaPreguntasDialogo.setPreferredSize(new java.awt.Dimension(600, 40));
+        listaPreguntasDialogo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                listaPreguntasDialogoItemListener(evt);
+            }
+        });
         panelDialogoFila2.add(listaPreguntasDialogo);
 
         listaCategoriasDialogo.setForeground(new Color(255, 255, 255));
         listaCategoriasDialogo.setPreferredSize(new java.awt.Dimension(200, 40));
+        listaCategoriasDialogo.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                listaCategoriasDialogoItemListener(evt);
+            }
+        });
+
         panelDialogoFila2.add(listaCategoriasDialogo);
 
         panelPrincipal1.add(panelDialogoFila2);
@@ -255,21 +256,25 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         inputRespuestaCorrecta.setColumns(20);
         inputRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaCorrecta.setForeground(new Color(255, 255, 255));
+        inputRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
         panelDialogoFila3.add(inputRespuestaCorrecta);
 
         inputRespuestaIncorrecta1.setColumns(20);
         inputRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
         panelDialogoFila3.add(inputRespuestaIncorrecta1);
 
         inputRespuestaIncorrecta2.setColumns(20);
         inputRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
         panelDialogoFila3.add(inputRespuestaIncorrecta2);
 
         inputRespuestaIncorrecta3.setColumns(20);
         inputRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
         panelDialogoFila3.add(inputRespuestaIncorrecta3);
 
         panelPrincipal1.add(panelDialogoFila3);
@@ -313,14 +318,14 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         javax.swing.GroupLayout dialogoPreguntasLayout = new javax.swing.GroupLayout(dialogoPreguntas.getContentPane());
         dialogoPreguntas.getContentPane().setLayout(dialogoPreguntasLayout);
         dialogoPreguntasLayout.setHorizontalGroup(
-            dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+                dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrincipal1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
         );
         dialogoPreguntasLayout.setVerticalGroup(
-            dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(dialogoPreguntasLayout.createSequentialGroup()
-                .addComponent(panelPrincipal1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                dialogoPreguntasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(dialogoPreguntasLayout.createSequentialGroup()
+                                .addComponent(panelPrincipal1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jTextField4.setText("jTextField4");
@@ -330,27 +335,26 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelPrincipal.setLayout(new java.awt.BorderLayout());
 
         panelFila1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
-
-        btnVaciar.setBackground(new Color(238, 82, 83));
-        btnVaciar.setForeground(new Color(0, 0, 0));
-        btnVaciar.setText("Vaciar");
-        btnVaciar.setBorder(null);
-        btnVaciar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnVaciar.setPreferredSize(new java.awt.Dimension(100, 40));
-        btnVaciar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVaciarActionPerformed(evt);
+        listaCuestionarios.setEditable(false);
+        listaCuestionarios.setForeground(new Color(0, 0, 0));
+        listaCuestionarios.setMaximumRowCount(50);
+        listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
+        listaCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        listaCuestionarios.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                listaCuestionariosItemListener(evt);
             }
         });
-        panelFila1.add(btnVaciar);
-
-        listaPreguntas.setEditable(true);
-        listaPreguntas.setForeground(new Color(0, 0, 0));
-        listaPreguntas.setMaximumRowCount(50);
-        listaPreguntas.setPreferredSize(new java.awt.Dimension(600, 40));
-        panelFila1.add(listaPreguntas);
+        panelFila1.add(listaCuestionarios);
 
         listaCategorias.setPreferredSize(new java.awt.Dimension(200, 40));
+        listaCategorias.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent evt) {
+                listaCategoriasItemListener(evt);
+            }
+        });
         panelFila1.add(listaCategorias);
 
         panelPrincipal.add(panelFila1, java.awt.BorderLayout.PAGE_START);
@@ -365,6 +369,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnCrear.setForeground(new Color(0, 0, 0));
         btnCrear.setText("Crear");
         btnCrear.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnCrear.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnCrearActionListener(evt);
+            }
+        });
         panelBotones.add(btnCrear);
 
         btnBorrar.setBackground(new Color(238, 82, 83));
@@ -396,29 +406,29 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelFila2.add(panelBotones, java.awt.BorderLayout.LINE_END);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuesta Incorrecta 3"
-            }
+                new Object[][]{
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null},
+                        {null, null, null, null, null}
+                },
+                new String[]{
+                        "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuesta Incorrecta 3"
+                }
         ) {
-            Class[] types = new Class [] {
-                String.class, String.class, String.class, String.class, String.class
+            Class[] types = new Class[]{
+                    String.class, String.class, String.class, String.class, String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, true, true
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         jTable1.addMouseListener(new MouseAdapter() {
@@ -486,18 +496,124 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
-                .addContainerGap())
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+                                .addContainerGap())
         );
-
+        for (String e : GestionCategorias.obtenerCategorias()) {
+            listaCategorias.addItem(e);
+            listaCategoriasDialogo.addItem(e);
+        }
+        actualizarCuestionarios();
+        actualizarPreguntasDialogo();
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void listaPreguntasDialogoItemListener(ItemEvent evt) {
+        try {
+            String[] datos = GestionPreguntas.obtenerRespuestas(listaPreguntasDialogo.getSelectedItem().toString());
+            if (datos == null) {
+                System.out.println("Nuloo");
+                return;
+            }
+            GestionPreguntas.colocarRespuesta(inputRespuestaCorrecta, datos[0]);
+            GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta1, datos[1]);
+            GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta2, datos[2]);
+            GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta3, datos[3]);
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
+            /*
+             * En caso de que se seleccione una categoria sin preguntas, ocurrira una expecion
+             * porque no hay nada en la lista desplegable, entonces vaciamos las respuestas
+             * para que no se queden las respuestas de la pregunta anterior
+             */
+            inputRespuestaCorrecta.setText("");
+            inputRespuestaIncorrecta1.setText("");
+            inputRespuestaIncorrecta2.setText("");
+            inputRespuestaIncorrecta3.setText("");
+        }
+    }
+
+    private void listaCategoriasDialogoItemListener(ItemEvent evt) {
+        actualizarPreguntasDialogo();
+    }
+
+    private void listaCategoriasItemListener(ItemEvent evt) {
+        listaCuestionarios.removeAllItems();
+        actualizarCuestionarios();
+    }
+
+    /**
+     * Este metodo actualiza los cuestionarios de la lista desplegable
+     *
+     * @author Fernando
+     */
+    private void actualizarCuestionarios() {
+        ArrayList<String> cuestionarios = GestionCuestionarios.obtenerCuestionarios(listaCategorias.getSelectedItem().toString());
+        for (String s : cuestionarios) {
+            if (!contieneElemento(s)) {
+                listaCuestionarios.addItem(s);
+            }
+        }
+    }
+
+    /**
+     * Este metodo actualiza las preguntas del dialogo que se muestra cuando se
+     * pulsa el boton de añadir pregunta
+     * @author Fernando
+     */
+    public void actualizarPreguntasDialogo() {
+        listaPreguntasDialogo.removeAllItems();
+        ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntas(listaCategoriasDialogo.getSelectedItem().toString());
+        for (String[] arr : preguntas) {
+            listaPreguntasDialogo.addItem(arr[0]);
+        }
+    }
+
+    /**
+     * Este metodo permite comprobar si existe un elemento en la
+     * lista de los cuestionarios
+     *
+     * @param elemento es el elemento que queremos comprobar
+     * @return true si existe, false si no
+     * @author Fernando
+     */
+    public boolean contieneElemento(String elemento) {
+        ComboBoxModel<String> modelo = listaCuestionarios.getModel();
+        for (int i = 0; i < modelo.getSize(); i++) {
+            if (modelo.getElementAt(i).equals(elemento)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void listaCuestionariosItemListener(ItemEvent evt) {
+        actualizarCuestionarios();
+    }
+
+    private void btnCrearActionListener(ActionEvent evt) {
+        DialogoDatosCategoriaCuestionario.mostrarDialogo();
+        String nombre = DialogoDatosCategoriaCuestionario.getNombre();
+        String descripcion = DialogoDatosCategoriaCuestionario.getDescripcion();
+        int id = GestionCategorias.obtenerIdCategoria(listaCategorias.getSelectedItem().toString());
+        if (descripcion == null || nombre == null) { // se comprueba que los datos sean nulos
+            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (GestionCuestionarios.existeCuestionario(nombre)) {
+            JOptionPane.showMessageDialog(this, "Ya existe un cuestionario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {
+            JOptionPane.showMessageDialog(this, "Cuestionario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar el cuestionario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        actualizarCuestionarios();
+
+    }
 
     private void opcionCerrarSesionActionListener(ActionEvent evt) {
         VentanaLogin frame = new VentanaLogin();
@@ -506,12 +622,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     }
 
-    private void btnVaciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVaciarActionPerformed
-
-    }//GEN-LAST:event_btnVaciarActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        dialogoInformacionPregunta.setSize(800,500);
+        dialogoInformacionPregunta.setSize(800, 500);
         dialogoInformacionPregunta.setLocationRelativeTo(null);
         dialogoInformacionPregunta.show();
     }//GEN-LAST:event_jTable1MouseClicked
@@ -529,13 +642,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionPreguntasActionPerformed
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCuestionariosActionPerformed
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCuestionariosActionPerformed
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCategoriasActionPerformed
-        VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCategoriasActionPerformed
@@ -564,7 +677,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -602,8 +715,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSalirDiaologoInformacion;
-    private javax.swing.JButton btnVaciar;
-    private javax.swing.JButton btnVaciarDialogo;
     private javax.swing.JDialog dialogoInformacionPregunta;
     private javax.swing.JDialog dialogoPreguntas;
     private javax.swing.JTextField inputRespuestaCorrecta;
@@ -629,7 +740,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JLabel labelTextoPregunta;
     private javax.swing.JComboBox<String> listaCategorias;
     private javax.swing.JComboBox<String> listaCategoriasDialogo;
-    private javax.swing.JComboBox<String> listaPreguntas;
+    private javax.swing.JComboBox<String> listaCuestionarios;
     private javax.swing.JComboBox<String> listaPreguntasDialogo;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;

@@ -12,14 +12,14 @@ import java.awt.event.WindowEvent;
  *
  * @author fernando
  */
-public class DialogoDatosCategoria extends javax.swing.JDialog {
+public class DialogoDatosCategoriaCuestionario extends javax.swing.JDialog {
     private static String nombre = "";
     private static String descripcion = "";
 
     /**
      * Creates new form dialogoDescripcion
      */
-    public DialogoDatosCategoria(java.awt.Frame parent, boolean modal) {
+    public DialogoDatosCategoriaCuestionario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         //en caso de que se cierre la ventana reseteamos los valores de nombre
@@ -35,7 +35,7 @@ public class DialogoDatosCategoria extends javax.swing.JDialog {
      public static void mostrarDialogo() {
         nombre = "";
         descripcion = "";
-        DialogoDatosCategoria dialogo = new DialogoDatosCategoria(new JFrame(), true);
+        DialogoDatosCategoriaCuestionario dialogo = new DialogoDatosCategoriaCuestionario(new JFrame(), true);
         dialogo.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialogo.setVisible(true);
     }
@@ -70,9 +70,9 @@ public class DialogoDatosCategoria extends javax.swing.JDialog {
         flowLayout1.setAlignOnBaseline(true);
         panelFila1.setLayout(flowLayout1);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Introduce los datos de la categoria");
+        jLabel1.setText("Introduce los datos");
         panelFila1.add(jLabel1);
 
         panelPrincipal.add(panelFila1);
@@ -180,13 +180,13 @@ public class DialogoDatosCategoria extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogoDatosCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoDatosCategoriaCuestionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogoDatosCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoDatosCategoriaCuestionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogoDatosCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoDatosCategoriaCuestionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogoDatosCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogoDatosCategoriaCuestionario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -194,7 +194,7 @@ public class DialogoDatosCategoria extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogoDatosCategoria dialog = new DialogoDatosCategoria(new JFrame(), true);
+                DialogoDatosCategoriaCuestionario dialog = new DialogoDatosCategoriaCuestionario(new JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

@@ -296,13 +296,13 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         String respuestaIncorrecta2 = DialogoDatosPregunta.getRespuestaIncorrecta2();
         String respuestaIncorrecta3 = DialogoDatosPregunta.getRespuestaIncorrecta3();
         //creamos la pregunta con los datos recogidos
-        Pregunta p = new Pregunta(enunciado,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3);
+        Pregunta p = new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
         //nos aseguramos de que no estan vacios
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")) {
             //en ese caso mostramos el mensaje de error
             JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
-        }else if(GestionPreguntas.modificarPregunta(p,enunciadoAntiguo)){//si se modifica la pregunta
+        } else if (GestionPreguntas.modificarPregunta(p, enunciadoAntiguo)) {//si se modifica la pregunta
             JOptionPane.showMessageDialog(this, "Pregunta Modificada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             //borramos de la lista de preguntas el enunciado antiguo puesto que puede haber cambiado
             listaPreguntas.removeItem(enunciadoAntiguo);
@@ -310,24 +310,24 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             listaPreguntas.addItem(enunciado);
             //seleccionamos en la lista de preguntas el enunciado nuevo para que el usuario no note el cambio
             listaPreguntas.setSelectedItem(enunciado);
-        }else{//en caso de que no se pueda modificar la pregunta
+        } else {//en caso de que no se pueda modificar la pregunta
             JOptionPane.showMessageDialog(this, "No se ha podido Modificar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
     }
 
     private void btnBorrarActionPerformed(ActionEvent evt) {
-        try{
+        try {
             String enunciado = listaPreguntas.getSelectedItem().toString();
-            if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-                if(GestionPreguntas.borrarPregunta(enunciado)){
+            if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                if (GestionPreguntas.borrarPregunta(enunciado)) {
                     JOptionPane.showMessageDialog(this, "Pregunta Borrada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     listaPreguntas.removeItem(enunciado);
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "No se ha podido borrar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }catch (NullPointerException npe){
+        } catch (NullPointerException npe) {
             inputRespuestaCorrecta.setText("");
             inputRespuestaIncorrecta1.setText("");
             inputRespuestaIncorrecta2.setText("");
@@ -348,10 +348,10 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
             JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.WARNING_MESSAGE);
-        }else if(GestionPreguntas.insertarPregunta(new Pregunta(enunciado,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3,idCategoria))){
+        } else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
             JOptionPane.showMessageDialog(this, "Pregunta Insertada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             listaPreguntas.addItem(enunciado);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No se ha podido insertar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
