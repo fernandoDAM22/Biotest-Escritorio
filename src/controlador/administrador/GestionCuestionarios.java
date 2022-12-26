@@ -1,8 +1,9 @@
 package controlador.administrador;
 
-import com.kitfox.svg.A;
 import controlador.baseDeDatos.ConexionBD;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -118,6 +119,105 @@ public class GestionCuestionarios {
                 throw new RuntimeException(e);
             }
             conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite obtener el id de un cuestionario
+     *
+     * @param nombre es el nombre del cuestionario del que queremos saber su id
+     * @return el id del cuestionario en caso de que exista, -1 si no existe
+     * @author Fernando
+     */
+    public static int obtenerId(String nombre) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        int id;
+        String sql = "select id from cuestionarios where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, nombre);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+                return id;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return -1;
+    }
+
+    /**
+     * Este metodo permite insertar una pregunta en un cuestionario
+     *
+     * @param idCuestionario es el id del cuestionario
+     * @param idPregunta     es el id de la pregunta
+     * @return true si se inserta, false si no
+     * @author Fernando
+     */
+    public static boolean insertarPregunta(int idCuestionario, int idPregunta) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        int id;
+        String sql = "insert into preguntas_cuestionarios (id_cuestionario, id_pregunta) values (?,?)";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idCuestionario);
+            sentencia.setInt(2, idPregunta);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            /*
+             En caso de querer insertar la misma pregunta dos veces en el mismo cuestionario saltara
+             esta excepcion, puesto que la base de datos no lo permite, en cuyo caso retornamos false
+             */
+            return false;
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite colocar las preguntas de un cuestionario en la tabla de preguntas
+     *
+     * @param tabla        es la tabla donde queremos colocar las preguntas
+     * @param cuestionario es el cuestionario que contiene las preguntas que le vamos a colocar a la tabla
+     * @author Fernando
+     */
+    public static void colocarPreguntas(JTable tabla, String cuestionario) {
+        //obtenemos todas las preguntas de una categoria en concreto
+        ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntasCuestionario(cuestionario);
+        //creamos el modelo
+        DefaultTableModel modelo = new DefaultTableModel(new String[]{
+                "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuessta Incorrecta 3"
+        }, 0);
+        //y se lo añadimos a la tabla
+        tabla.setModel(modelo);
+        //agragamos las preguntas al modelo
+        for (String[] s : preguntas) {
+            modelo.addRow(s);
         }
     }
 }

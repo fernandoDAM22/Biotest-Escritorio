@@ -629,7 +629,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void listaCategoriasItemListener(java.awt.event.ItemEvent evt) {
         nombreCategoria = listaCategorias.getSelectedItem().toString();
-        modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+        GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
     }
 
     private void btnSalirDiaologoInformacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirDiaologoInformacion1ActionPerformed

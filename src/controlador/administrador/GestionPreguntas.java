@@ -63,6 +63,47 @@ public class GestionPreguntas {
 
     }
 
+    public static ArrayList<String[]> obtenerPreguntasCuestionario(String cuestionario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        String sql = "SELECT p.* from ((preguntas p inner JOIN preguntas_cuestionarios pp ON p.id = pp.id_pregunta)\n" +
+                                        "INNER JOIN cuestionarios c on c.id = pp.id_cuestionario)\n" +
+                                        "WHERE c.nombre like ?;";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, cuestionario);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                //guardamos los datos de la pregunta actual en el ResulSet
+                enunciado = resultSet.getString("enunciado");
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                //agregamos la pregunta al ArrayList
+                preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3});
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return preguntas;
+
+    }
+
     /**
      * Este metodo coloca el enunciado de una pregunta en la label
      * del panel de informacion, en funcion de la longitud del texto
@@ -134,7 +175,7 @@ public class GestionPreguntas {
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -148,6 +189,7 @@ public class GestionPreguntas {
 
     /**
      * Este metodo permite insertar una pregunta en la base de datos
+     *
      * @param p es la pregunta que vamos a insertar
      * @return true si se inserta, false si no
      * @author Fernando
@@ -164,17 +206,17 @@ public class GestionPreguntas {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,p.getEnunciado());
-            sentencia.setString(2,p.getRespuestaCorrecta());
-            sentencia.setString(3,p.getRespuestaIncorrecta1());
-            sentencia.setString(4,p.getRespuestaIncorrecta2());
-            sentencia.setString(5,p.getRespuestaIncorrecta3());
-            sentencia.setInt(6,p.getIdCategoria());
+            sentencia.setString(1, p.getEnunciado());
+            sentencia.setString(2, p.getRespuestaCorrecta());
+            sentencia.setString(3, p.getRespuestaIncorrecta1());
+            sentencia.setString(4, p.getRespuestaIncorrecta2());
+            sentencia.setString(5, p.getRespuestaIncorrecta3());
+            sentencia.setInt(6, p.getIdCategoria());
             int estado = sentencia.executeUpdate();
             return estado > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -187,11 +229,12 @@ public class GestionPreguntas {
 
     /**
      * Este metodo permite borrar una pregunta de la base de datos
+     *
      * @param enunciado es el enunciado de la pregunta que vamos a borrar
      * @return true si se borra, false si no
      * @author Fernando
      */
-    public static boolean borrarPregunta(String enunciado){
+    public static boolean borrarPregunta(String enunciado) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -200,12 +243,12 @@ public class GestionPreguntas {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,enunciado);
+            sentencia.setString(1, enunciado);
             int estado = sentencia.executeUpdate();
             return estado > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -218,11 +261,12 @@ public class GestionPreguntas {
 
     /**
      * Este metodo permite modificar una pregunta de la base de datos
-     * @param p es el objeto que contiene los datos nuevos de la pregunta
+     *
+     * @param p         es el objeto que contiene los datos nuevos de la pregunta
      * @param enunciado es el enunciado de la pregunta que queremos modificar
      * @return true si se modifica la pregunta, false si no
      */
-    public static boolean modificarPregunta(Pregunta p, String enunciado){
+    public static boolean modificarPregunta(Pregunta p, String enunciado) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -231,17 +275,17 @@ public class GestionPreguntas {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,p.getEnunciado());
-            sentencia.setString(2,p.getRespuestaCorrecta());
-            sentencia.setString(3,p.getRespuestaIncorrecta1());
-            sentencia.setString(4,p.getRespuestaIncorrecta2());
-            sentencia.setString(5,p.getRespuestaIncorrecta3());
-            sentencia.setString(6,enunciado);
+            sentencia.setString(1, p.getEnunciado());
+            sentencia.setString(2, p.getRespuestaCorrecta());
+            sentencia.setString(3, p.getRespuestaIncorrecta1());
+            sentencia.setString(4, p.getRespuestaIncorrecta2());
+            sentencia.setString(5, p.getRespuestaIncorrecta3());
+            sentencia.setString(6, enunciado);
             int estado = sentencia.executeUpdate();
             return estado > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -250,6 +294,37 @@ public class GestionPreguntas {
             }
             conexionBD.cerrarConexion();
         }
+    }
+
+    public static int obtenerId(String enunciado) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        int id;
+        String sql = "select id from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, enunciado);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+                return id;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return -1;
     }
 
 }

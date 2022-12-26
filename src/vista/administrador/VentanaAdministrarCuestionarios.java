@@ -288,6 +288,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnInsertar.setBorder(null);
         btnInsertar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnInsertar.setPreferredSize(new java.awt.Dimension(200, 60));
+        btnInsertar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnInsertarActionListener(evt);
+            }
+        });
         panelDialogoFila4.add(btnInsertar);
 
         btnBuscar.setBackground(new Color(29, 209, 161));
@@ -514,6 +520,22 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnInsertarActionListener(ActionEvent evt) {
+        int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
+        int idPregunta = GestionPreguntas.obtenerId(listaPreguntasDialogo.getSelectedItem().toString());
+        if(idCuestionario == -1 || idPregunta == -1){
+            JOptionPane.showMessageDialog(this, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            if(GestionCuestionarios.insertarPregunta(idCuestionario,idPregunta)){
+                JOptionPane.showMessageDialog(this, "Pregunta insertada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            }else{
+                JOptionPane.showMessageDialog(this, "No se ha podido añadir la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        dispose();
+    }
+
     private void listaPreguntasDialogoItemListener(ItemEvent evt) {
         try {
             String[] datos = GestionPreguntas.obtenerRespuestas(listaPreguntasDialogo.getSelectedItem().toString());
@@ -594,6 +616,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void listaCuestionariosItemListener(ItemEvent evt) {
         actualizarCuestionarios();
+        GestionCuestionarios.colocarPreguntas(jTable1,listaCuestionarios.getSelectedItem().toString());
     }
 
     private void btnCrearActionListener(ActionEvent evt) {
@@ -604,9 +627,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (descripcion == null || nombre == null) { // se comprueba que los datos sean nulos
             JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (GestionCuestionarios.existeCuestionario(nombre)) {
+        } else if (GestionCuestionarios.existeCuestionario(nombre)) { // se comprueba que ya existe un cuestionario con ese nombre
             JOptionPane.showMessageDialog(this, "Ya existe un cuestionario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {
+        } else if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {// se comprueba si se ha insertado en la base de datos o no
             JOptionPane.showMessageDialog(this, "Cuestionario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, "No se ha podido insertar el cuestionario", "Error", JOptionPane.ERROR_MESSAGE);
@@ -621,7 +644,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         dispose();
 
     }
-
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         dialogoInformacionPregunta.setSize(800, 500);
