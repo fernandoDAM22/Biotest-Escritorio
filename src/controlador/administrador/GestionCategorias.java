@@ -56,9 +56,10 @@ public class GestionCategorias {
      *
      * @param tabla     es la tabla en la que vamos a colocar las preguntas
      * @param categoria es la categoria de las preguntas
+     * @return el modelo de la tabla
      * @author Fernando
      */
-    public static void colocarPreguntas(JTable tabla, String categoria) {
+    public static DefaultTableModel colocarPreguntas(JTable tabla, String categoria) {
         //obtenemos todas las preguntas de una categoria en concreto
         ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntas(categoria);
         //creamos el modelo
@@ -71,6 +72,7 @@ public class GestionCategorias {
         for (String[] s : preguntas) {
             modelo.addRow(s);
         }
+        return modelo;
     }
 
     /**
@@ -247,4 +249,5 @@ public class GestionCategorias {
         }
         return -1;
     }
+
 }

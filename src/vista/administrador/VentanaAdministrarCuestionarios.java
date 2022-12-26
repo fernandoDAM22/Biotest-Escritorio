@@ -16,11 +16,13 @@ import vista.administrador.dialogos.DialogoDatosCategoriaCuestionario;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author fernando
  */
 public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
+    DefaultTableModel modelo;
 
     /**
      * Creates new form VentanaAdministrarCuestionarios
@@ -86,7 +88,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnModificar = new javax.swing.JButton();
         btnInsertarPregunta = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaPreguntas = new javax.swing.JTable();
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionCerrarSesion = new javax.swing.JMenuItem();
@@ -145,21 +147,29 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         textoRespuestaCorrecta.setEditable(false);
         textoRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaCorrecta.setForeground(new Color(255, 255, 255));
+        textoRespuestaCorrecta.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaCorrecta.setBackground(new Color(50, 255, 126,100));
         jPanel2.add(textoRespuestaCorrecta);
 
         textoRespuestaIncorrecta1.setEditable(false);
         textoRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
+        textoRespuestaIncorrecta1.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaIncorrecta1.setBackground(new Color(255, 56, 56,100));
         jPanel2.add(textoRespuestaIncorrecta1);
 
         textoRespuestaIncorrecta2.setEditable(false);
         textoRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
+        textoRespuestaIncorrecta2.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaIncorrecta2.setBackground(new Color(255, 56, 56,100));
         jPanel2.add(textoRespuestaIncorrecta2);
 
         textoRespuestaIncorrecta3.setEditable(false);
         textoRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
+        textoRespuestaIncorrecta3.setHorizontalAlignment(JTextField.CENTER);
+        textoRespuestaIncorrecta3.setBackground(new Color(255, 56, 56,100));
         jPanel2.add(textoRespuestaIncorrecta3);
 
         panelInformacionPregunta.add(jPanel2);
@@ -386,8 +396,14 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnBorrar.setBackground(new Color(238, 82, 83));
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrar.setForeground(new Color(0, 0, 0));
-        btnBorrar.setText("Borrar");
-        btnBorrar.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnBorrar.setText("Borrar Pregunta");
+        btnBorrar.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnBorrar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnBorrarActionListener(evt);
+            }
+        });
         panelBotones.add(btnBorrar);
 
         btnModificar.setBackground(new Color(238, 82, 83));
@@ -411,7 +427,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         panelFila2.add(panelBotones, java.awt.BorderLayout.LINE_END);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaPreguntas.setModel(new javax.swing.table.DefaultTableModel(
                 new Object[][]{
                         {null, null, null, null, null},
                         {null, null, null, null, null},
@@ -437,12 +453,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 return canEdit[columnIndex];
             }
         });
-        jTable1.addMouseListener(new MouseAdapter() {
+        tablaPreguntas.addMouseListener(new MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                tablaPreguntasMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaPreguntas);
 
         panelFila2.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
@@ -520,6 +536,21 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnBorrarActionListener(ActionEvent evt) {
+        int posicion = tablaPreguntas.getSelectedRow();
+        int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion,0));
+        int idCuestionario = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            return;
+        }
+        if(GestionCuestionarios.borrarPregunta(idCuestionario,idPregunta)){
+            JOptionPane.showMessageDialog(this, "Pregunta borrada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+        }else{
+            JOptionPane.showMessageDialog(this, "No se ha podido borrar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void btnInsertarActionListener(ActionEvent evt) {
         int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
         int idPregunta = GestionPreguntas.obtenerId(listaPreguntasDialogo.getSelectedItem().toString());
@@ -529,11 +560,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         } else if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionCuestionarios.insertarPregunta(idCuestionario,idPregunta)){
                 JOptionPane.showMessageDialog(this, "Pregunta insertada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
             }else{
                 JOptionPane.showMessageDialog(this, "No se ha podido añadir la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        dispose();
+        dialogoPreguntas.dispose();
     }
 
     private void listaPreguntasDialogoItemListener(ItemEvent evt) {
@@ -616,7 +648,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void listaCuestionariosItemListener(ItemEvent evt) {
         actualizarCuestionarios();
-        GestionCuestionarios.colocarPreguntas(jTable1,listaCuestionarios.getSelectedItem().toString());
+        modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas,listaCuestionarios.getSelectedItem().toString());
     }
 
     private void btnCrearActionListener(ActionEvent evt) {
@@ -645,9 +677,26 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     }
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        dialogoInformacionPregunta.setSize(800, 500);
-        dialogoInformacionPregunta.setLocationRelativeTo(null);
+    private void tablaPreguntasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        //obtenemos la posicion de la fila que se ha pulsado
+        int posicion = tablaPreguntas.getSelectedRow();
+        //obtenemos los datos de la pregunta
+        String enunciado = (String) modelo.getValueAt(posicion,0);
+        String respuestaCorrecta = (String) modelo.getValueAt(posicion,1);
+        String respuestaIncorrecta1 = (String) modelo.getValueAt(posicion,2);
+        String respuestaIncorrecta2 = (String) modelo.getValueAt(posicion,3);
+        String respuestaIncorrecta3 = (String) modelo.getValueAt(posicion,4);
+        //colocamos el enunciado de la pregunta
+        GestionPreguntas.colocarEnunciadoPregunta(labelTextoPregunta, enunciado);
+        //colocamos la categoria en su label correspondiente
+        labelCategoriaPregunta.setText(listaCategorias.getSelectedItem().toString());
+        //colocamos las respuestas de la pregunta
+        GestionPreguntas.colocarRespuesta(textoRespuestaCorrecta,respuestaCorrecta);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta1,respuestaIncorrecta1);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta2,respuestaIncorrecta2);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta3,respuestaIncorrecta3);
+
+        dialogoInformacionPregunta.setSize(1000, 500);
         dialogoInformacionPregunta.show();
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -752,7 +801,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaPreguntas;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel labelCategoriaPregunta;
     private javax.swing.JLabel labelRespuestaCorrecta;

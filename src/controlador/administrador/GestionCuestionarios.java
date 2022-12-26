@@ -204,9 +204,10 @@ public class GestionCuestionarios {
      *
      * @param tabla        es la tabla donde queremos colocar las preguntas
      * @param cuestionario es el cuestionario que contiene las preguntas que le vamos a colocar a la tabla
+     * @return el modelo que se asigna a la tabla
      * @author Fernando
      */
-    public static void colocarPreguntas(JTable tabla, String cuestionario) {
+    public static DefaultTableModel colocarPreguntas(JTable tabla, String cuestionario) {
         //obtenemos todas las preguntas de una categoria en concreto
         ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntasCuestionario(cuestionario);
         //creamos el modelo
@@ -218,6 +219,38 @@ public class GestionCuestionarios {
         //agragamos las preguntas al modelo
         for (String[] s : preguntas) {
             modelo.addRow(s);
+        }
+        return modelo;
+    }
+
+    /**
+     * Este metodo permite borrar una pregunta de un cuestionario
+     * @param idCuestionario es el id del cuestionario al que le queremos borrar la pregunta
+     * @param idPregunta es el id de la pregunta que queremos borrar
+     * @return true si se borra, false si no
+     */
+    public static boolean borrarPregunta(int idCuestionario, int idPregunta){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "delete from preguntas_cuestionarios where id_cuestionario = ? and id_pregunta = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,idCuestionario);
+            sentencia.setInt(2,idPregunta);
+            return sentencia.executeUpdate() > 0; //retorna true si se borra, false si no
+        } catch (SQLException e) {
+            return false;
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
         }
     }
 }
