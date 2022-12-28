@@ -164,6 +164,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         //si no ha habido errores lanzamos la ventana de seleccionar modo de juego
         if(resultado == CORRECTO){
             ConfiguracionUsuario.setTipoUsuario(Login.obtenerDatos(nombre,Codigos.OBTENER_TIPO));
+            ConfiguracionUsuario.setNombreUsuario(nombre);
             VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
             frame.setVisible(true);
             dispose();

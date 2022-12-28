@@ -7,16 +7,18 @@ package vista.juego;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 
-import controlador.usuario.Codigos;
+import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
 import vista.acceso.VentanaLogin;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
 
+import javax.swing.*;
+
 /**
- *
  * @author fernando
  */
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
@@ -37,7 +39,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        grupoBotones = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         panelCentro = new javax.swing.JPanel();
         panelBotonesModoJuego = new javax.swing.JPanel();
@@ -74,7 +76,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         panelBotonesModoJuego.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 100));
 
         btnModoLibre.setBackground(new Color(72, 219, 251));
-        buttonGroup1.add(btnModoLibre);
+        grupoBotones.add(btnModoLibre);
         btnModoLibre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoLibre.setForeground(new Color(0, 0, 0));
         btnModoLibre.setText("Modo Libre");
@@ -82,7 +84,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         panelBotonesModoJuego.add(btnModoLibre);
 
         btnModoSinFallos.setBackground(new Color(72, 219, 251));
-        buttonGroup1.add(btnModoSinFallos);
+        grupoBotones.add(btnModoSinFallos);
         btnModoSinFallos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoSinFallos.setForeground(new Color(0, 0, 0));
         btnModoSinFallos.setText("Modo sin fallos");
@@ -90,7 +92,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         panelBotonesModoJuego.add(btnModoSinFallos);
 
         btnModoClasico.setBackground(new Color(72, 219, 251));
-        buttonGroup1.add(btnModoClasico);
+        grupoBotones.add(btnModoClasico);
         btnModoClasico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoClasico.setForeground(new Color(0, 0, 0));
         btnModoClasico.setText("Modo Clasico");
@@ -98,7 +100,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         panelBotonesModoJuego.add(btnModoClasico);
 
         btnModoCuestionarios.setBackground(new Color(72, 219, 251));
-        buttonGroup1.add(btnModoCuestionarios);
+        grupoBotones.add(btnModoCuestionarios);
         btnModoCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoCuestionarios.setForeground(new Color(0, 0, 0));
         btnModoCuestionarios.setText("Cuestionarios");
@@ -121,6 +123,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnJugar.setForeground(new Color(0, 0, 0));
         btnJugar.setText("Jugar");
         btnJugar.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnJugar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnJugarActionListener(evt);
+            }
+        });
         panelControles.add(btnJugar);
 
         panelCentro.add(panelControles);
@@ -189,6 +197,52 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         ConfiguracionUsuario.desactivarMenu(menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private String seleccionarPartida(){
+        ButtonModel modeloBoton = grupoBotones.getSelection();
+        JToggleButton botonSeleccionado = null;
+
+        // Iterar a través de todos los botones del grupo
+        for (Enumeration<AbstractButton> botones = grupoBotones.getElements(); botones.hasMoreElements(); ) {
+            JToggleButton boton = (JToggleButton) botones.nextElement();
+            if (boton.getModel() == modeloBoton) {
+                // Este es el botón seleccionado
+                botonSeleccionado = boton;
+                break;
+            }
+        }
+        if (botonSeleccionado != null) {
+            return botonSeleccionado.getText();
+        }else{
+            return null;
+        }
+    }
+
+    private void btnJugarActionListener(ActionEvent evt) {
+        String mensaje = seleccionarPartida();
+        TipoPartida tipoPartida = null;
+        if(mensaje == null){
+            JOptionPane.showMessageDialog(null,"Seleccione un modo de juego","Error",JOptionPane.ERROR_MESSAGE);
+        }else {
+           switch (mensaje){
+               case "Modo Libre":
+                   tipoPartida = TipoPartida.MODO_LIBRE;
+                   break;
+               case "Modo sin fallos":
+                   tipoPartida = TipoPartida.MODO_SIN_FALLOS;
+                   break;
+               case "Modo Clasico":
+                   tipoPartida = TipoPartida.MODO_CLASICO;
+                   break;
+               case "Cuestionarios":
+                   tipoPartida = TipoPartida.CUESTIONARIOS;
+                   break;
+           }
+        }
+        VentanaJugar frame = new VentanaJugar(tipoPartida);
+        frame.setSize(1000,600);
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionCerrarSesionActionListener(ActionEvent evt) {
         VentanaLogin frame = new VentanaLogin();
@@ -209,13 +263,13 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     }//GEN-LAST:event_opcionPreguntasActionPerformed
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCuestionariosActionPerformed
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCuestionariosActionPerformed
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionCategoriasActionPerformed
-        VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
     }//GEN-LAST:event_opcionCategoriasActionPerformed
@@ -227,7 +281,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -263,7 +317,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnModoCuestionarios;
     private javax.swing.JToggleButton btnModoLibre;
     private javax.swing.JToggleButton btnModoSinFallos;
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup grupoBotones;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelDescripcion;
     private javax.swing.JMenu menuAdministrador;

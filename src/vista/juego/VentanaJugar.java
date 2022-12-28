@@ -5,6 +5,13 @@
 package vista.juego;
 
 import java.awt.Color;
+
+import controlador.controlPartida.GestionPartida;
+import controlador.controlPartida.PartidaModoLibre;
+import controlador.herramientas.TipoPartida;
+import controlador.usuario.ConfiguracionUsuario;
+import controlador.usuario.GestionUsuarios;
+import modelo.Partida;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
@@ -14,6 +21,7 @@ import vista.administrador.VentanaAdministrarPreguntas;
  * @author fernando
  */
 public class VentanaJugar extends javax.swing.JFrame {
+    TipoPartida tipoPartida;
 
     /**
      * Creates new form VentanaJugar
@@ -21,6 +29,49 @@ public class VentanaJugar extends javax.swing.JFrame {
     public VentanaJugar() {
         initComponents();
     }
+
+    public VentanaJugar(TipoPartida tipoPartida) {
+        this.tipoPartida = tipoPartida;
+        initComponents();
+        jugar();
+    }
+
+    /**
+     * Este metodo permite iniciar una partida
+     * @author Fernando
+     */
+    private void jugar() {
+        switch (tipoPartida){
+            case MODO_LIBRE -> jugarModoLibre();
+            case MODO_SIN_FALLOS -> jugarModoSinFallos();
+            case MODO_CLASICO -> jugarModoClasico();
+            case CUESTIONARIOS -> jugarCuestionarios();
+        }
+    }
+
+    /**
+     * Este metodo permite jugar una partida en modo libre
+     * @author Fernando
+     */
+    private void jugarModoLibre() {
+        int idPartida = GestionPartida.obtenerId();
+        int idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+        if(idPartida == -1 || idUsuario == -1){
+            return;
+        }
+        Partida partida = new Partida(idPartida,tipoPartida.toString(),idUsuario);
+        System.out.println(partida);
+    }
+
+    private void jugarCuestionarios() {
+    }
+
+    private void jugarModoClasico() {
+    }
+
+    private void jugarModoSinFallos() {
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

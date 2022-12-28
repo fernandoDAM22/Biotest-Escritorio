@@ -27,13 +27,11 @@ public class Partida {
      * @param id es el id de la partida
      * @param tipo es el tipo de la partida
      * @param idUsuario es el id del usuario que juega la partida
-     * @param preguntas es la lista de preguntas de la partida
      */
-    public Partida(int id, String tipo, int idUsuario, ArrayList<Pregunta> preguntas) {
+    public Partida(int id, String tipo, int idUsuario) {
         this.id = id;
         this.tipo = tipo;
         this.idUsuario = idUsuario;
-        this.preguntas = preguntas;
         this.puntuacion = 0;
         this.fecha = LocalDate.now();
     }
