@@ -20,6 +20,10 @@ public class Cuestionario {
      */
     private int idCategoria;
     /**
+     * Descripcion del cuestionario
+     */
+    private String descripcion;
+    /**
      * Lista de preguntas del cuestionario
      */
     private ArrayList<Pregunta> preguntas;
@@ -42,6 +46,12 @@ public class Cuestionario {
         this.nombre = nombre;
         this.idCategoria = idCategoria;
         preguntas = new ArrayList<>();
+    }
+
+    public Cuestionario(int id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     /**
@@ -88,6 +98,14 @@ public class Cuestionario {
 
     public void setPreguntas(ArrayList<Pregunta> preguntas) {
         this.preguntas = preguntas;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override

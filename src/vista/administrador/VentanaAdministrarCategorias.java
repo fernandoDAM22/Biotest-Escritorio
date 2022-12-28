@@ -282,28 +282,28 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         textoRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaCorrecta.setHorizontalAlignment(JTextField.CENTER);
         textoRespuestaCorrecta.setForeground(new Color(255, 255, 255));
-        textoRespuestaCorrecta.setBackground(new Color(50, 255, 126,100));
+        textoRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
         jPanel2.add(textoRespuestaCorrecta);
 
         textoRespuestaIncorrecta1.setEditable(false);
         textoRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
         textoRespuestaIncorrecta1.setHorizontalAlignment(JTextField.CENTER);
-        textoRespuestaIncorrecta1.setBackground(new Color(255, 56, 56,100));
+        textoRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
         jPanel2.add(textoRespuestaIncorrecta1);
 
         textoRespuestaIncorrecta2.setEditable(false);
         textoRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
         textoRespuestaIncorrecta2.setHorizontalAlignment(JTextField.CENTER);
-        textoRespuestaIncorrecta2.setBackground(new Color(255, 56, 56,100));
+        textoRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
         jPanel2.add(textoRespuestaIncorrecta2);
 
         textoRespuestaIncorrecta3.setEditable(false);
         textoRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
         textoRespuestaIncorrecta3.setHorizontalAlignment(JTextField.CENTER);
-        textoRespuestaIncorrecta3.setBackground(new Color(255, 56, 56,100));
+        textoRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
         jPanel2.add(textoRespuestaIncorrecta3);
 
         panelInformacionPregunta.add(jPanel2);
@@ -452,7 +452,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionCerrarSesion);
-        
+
         menuUsuario.add(opcionModoJuego);
 
         barraMenu.add(menuUsuario);
@@ -513,59 +513,72 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void btnModificarActionListener(ActionEvent evt) {
-        DialogoDatosCategoriaCuestionario.mostrarDialogo();
+        String nombreAntiguo = listaCategorias.getSelectedItem().toString();
+        String descripcionAntigua = GestionCategorias.obtenerDescripcion(nombreAntiguo);
+        DialogoDatosCategoriaCuestionario.setNombre(nombreAntiguo);
+        DialogoDatosCategoriaCuestionario.setDescripcion(descripcionAntigua);
+        DialogoDatosCategoriaCuestionario.mostrarDialogo(false);
         String nombre = DialogoDatosCategoriaCuestionario.getNombre();
         String descripcion = DialogoDatosCategoriaCuestionario.getDescripcion();
-        if(descripcion == null || nombre == null){ // se comprueba que los datos sean nulos
-            JOptionPane.showMessageDialog(this,"Datos Erroneos","Error",JOptionPane.ERROR_MESSAGE);
-        }else if(GestionCategorias.existeCategoria(nombre)){
-            JOptionPane.showMessageDialog(this,"Ya existe una categoria con ese nombre","Error",JOptionPane.ERROR_MESSAGE);
-        }else if(GestionCategorias.modificarCategoria(nombreCategoria,nombre,descripcion)){
-            JOptionPane.showMessageDialog(this,"Categoria Modificada Correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
-            listaCategorias.removeItem(nombreCategoria);
-            listaCategorias.addItem(nombre);
-        }else{
-            JOptionPane.showMessageDialog(this,"No se ha podido modificar la categoria","Error",JOptionPane.ERROR_MESSAGE);
+        if (descripcion == null || nombre == null) { // se comprueba que los datos sean nulos
+            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (GestionCategorias.existeCategoria(nombre)) {
+            JOptionPane.showMessageDialog(this, "Ya existe una categoria con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (GestionCategorias.modificarCategoria(nombreCategoria, nombre, descripcion)) {
+            JOptionPane.showMessageDialog(this, "Categoria Modificada Correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            int posicion = listaCategorias.getSelectedIndex(); //obtenemos la posicion de la categoria seleccionada
+            listaCategorias.removeAllItems(); //vaciamos la lista
+            //la volvemos a llenar
+            for (String e : GestionCategorias.obtenerCategorias()) {
+                listaCategorias.addItem(e);
+            }
+            /*seleccionamos el elemento que se encuentra en la misma posicion que el que acabamos de modificar,
+             de esta manera se vera reflejada la modificacion en la lista y el usuario no notara el cambio
+            */
+            listaCategorias.setSelectedIndex(posicion);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido modificar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void btnBorrarActionListener(ActionEvent evt) {
         String nombre = listaCategorias.getSelectedItem().toString();
         //nos aseguramos de que el usuario quiere borrar la categoria
-        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         //intentamos borrar la categoria
-        if(GestionCategorias.borrarCategoria(nombre)){//si se borra
-            JOptionPane.showMessageDialog(this,"Categoria borrada correctamente","Categoria borrada",JOptionPane.INFORMATION_MESSAGE);
+        if (GestionCategorias.borrarCategoria(nombre)) {//si se borra
+            JOptionPane.showMessageDialog(this, "Categoria borrada correctamente", "Categoria borrada", JOptionPane.INFORMATION_MESSAGE);
             //eliminamos la categoria borrada de la lista desplegable
             //eliminamos la categoria borrada de la lista desplegable
             listaCategorias.removeItem(nombre);
-        }else{
-            JOptionPane.showMessageDialog(this,"No se ha podido borrar la categoria","Error",JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido borrar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void btnCrearActionPerformer(ActionEvent evt) {
-        DialogoDatosCategoriaCuestionario.mostrarDialogo();
+        //mostramos el dialogo indicando que reinicie los datos
+        DialogoDatosCategoriaCuestionario.mostrarDialogo(true);
         int resultado = 0;
-        String mensaje = "";
+        //obtenemos los datos del dialogo, aqui solo se llega cuando se pulsa el boton de aceptar
         String nombre = DialogoDatosCategoriaCuestionario.getNombre();
         String descripcion = DialogoDatosCategoriaCuestionario.getDescripcion();
-        if(descripcion == null || nombre == null){ // se comprueba que los datos sean nulos
-            JOptionPane.showMessageDialog(this,"Datos Erroneos","Error",JOptionPane.ERROR_MESSAGE);
+        if (descripcion == null || nombre == null) { // se comprueba que los datos sean nulos
+            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }else if(GestionCategorias.existeCategoria(nombre)){ //se comprueba que la categoria no exista
-            JOptionPane.showMessageDialog(this,"Esa categoria ya existe","Error",JOptionPane.ERROR_MESSAGE);
+        } else if (GestionCategorias.existeCategoria(nombre)) { //se comprueba que la categoria no exista
+            JOptionPane.showMessageDialog(this, "Esa categoria ya existe", "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        }else{// si se llega aqui se puede insertar la categoria
-           resultado = GestionCategorias.insertarCategoria(nombre,descripcion);
+        } else {// si se llega aqui se puede insertar la categoria
+            resultado = GestionCategorias.insertarCategoria(nombre, descripcion);
         }
         //mostramos el mensaje de error correspondiente
-        if(resultado > 0){
-           JOptionPane.showMessageDialog(this,"Categoria insertada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this,"No se ha podido insertar la categoria","Error",JOptionPane.ERROR_MESSAGE);
+        if (resultado > 0) {
+            JOptionPane.showMessageDialog(this, "Categoria insertada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
         }
         //Por ultimo reinicamos la lista de categorias para añadir la categoria insertada
         listaCategorias.addItem(nombre);
@@ -608,28 +621,30 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         //obtenemos la posicion de la fila que se ha pulsado
         int posicion = tablaInformacionPreguntas.getSelectedRow();
         //obtenemos los datos de la pregunta
-        String enunciado = (String) modelo.getValueAt(posicion,0);
-        String respuestaCorrecta = (String) modelo.getValueAt(posicion,1);
-        String respuestaIncorrecta1 = (String) modelo.getValueAt(posicion,2);
-        String respuestaIncorrecta2 = (String) modelo.getValueAt(posicion,3);
-        String respuestaIncorrecta3 = (String) modelo.getValueAt(posicion,4);
+        String enunciado = (String) modelo.getValueAt(posicion, 0);
+        String respuestaCorrecta = (String) modelo.getValueAt(posicion, 1);
+        String respuestaIncorrecta1 = (String) modelo.getValueAt(posicion, 2);
+        String respuestaIncorrecta2 = (String) modelo.getValueAt(posicion, 3);
+        String respuestaIncorrecta3 = (String) modelo.getValueAt(posicion, 4);
         //colocamos el enunciado de la pregunta
         GestionPreguntas.colocarEnunciadoPregunta(labelTextoPregunta, enunciado);
         //colocamos la categoria en su label correspondiente
         labelCategoriaPregunta.setText(listaCategorias.getSelectedItem().toString());
         //colocamos las respuestas de la pregunta
-        GestionPreguntas.colocarRespuesta(textoRespuestaCorrecta,respuestaCorrecta);
-        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta1,respuestaIncorrecta1);
-        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta2,respuestaIncorrecta2);
-        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta3,respuestaIncorrecta3);
+        GestionPreguntas.colocarRespuesta(textoRespuestaCorrecta, respuestaCorrecta);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta1, respuestaIncorrecta1);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta2, respuestaIncorrecta2);
+        GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta3, respuestaIncorrecta3);
 
         dialogoInformacionPregunta.setSize(1000, 500);
         dialogoInformacionPregunta.show();
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void listaCategoriasItemListener(java.awt.event.ItemEvent evt) {
-        nombreCategoria = listaCategorias.getSelectedItem().toString();
-        modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+        if (listaCategorias.getSelectedItem() != null) {
+            nombreCategoria = listaCategorias.getSelectedItem().toString();
+            modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+        }
     }
 
     private void btnSalirDiaologoInformacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirDiaologoInformacion1ActionPerformed

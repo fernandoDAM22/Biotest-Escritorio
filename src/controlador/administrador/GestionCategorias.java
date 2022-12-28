@@ -250,4 +250,39 @@ public class GestionCategorias {
         return -1;
     }
 
+    /**
+     * Este metodo permite obtener la descripcion de una categoria a partir de su nombre
+     * @param nombre es el nombre de la categoria
+     * @return la descripcion si la categoria existe, null si no
+     * @author Fernando
+     */
+    public static String obtenerDescripcion(String nombre) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        String sql = "select descripcion from categoria where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombre);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getString("descripcion");
+            }
+
+        } catch (SQLException ignored) {
+
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return null;
+    }
 }

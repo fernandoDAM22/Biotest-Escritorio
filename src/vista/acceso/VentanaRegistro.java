@@ -240,6 +240,9 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
            JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
        }else{// si no es un mensaje informativo
            JOptionPane.showMessageDialog(null,mensaje,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+           VentanaLogin frame = new VentanaLogin();
+           frame.setVisible(true);
+           dispose();
        }
     }//GEN-LAST:event_btnRegistrarseActionPerformed
 

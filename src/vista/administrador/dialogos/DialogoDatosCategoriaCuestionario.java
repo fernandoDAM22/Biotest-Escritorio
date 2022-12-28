@@ -31,10 +31,14 @@ public class DialogoDatosCategoriaCuestionario extends javax.swing.JDialog {
                 descripcion = "";
             }
         });
+        colocarDatos(); //colocamos el nombre y la descripcion en los campos correspondientes
     }
-     public static void mostrarDialogo() {
-        nombre = "";
-        descripcion = "";
+     public static void mostrarDialogo(boolean restablecer) {
+        //si se nos indica restablecer los datos los vaciamos
+        if(restablecer){
+            nombre = "";
+            descripcion = "";
+        }
         DialogoDatosCategoriaCuestionario dialogo = new DialogoDatosCategoriaCuestionario(new JFrame(), true);
         dialogo.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         dialogo.setVisible(true);
@@ -121,7 +125,6 @@ public class DialogoDatosCategoriaCuestionario extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -160,6 +163,16 @@ public class DialogoDatosCategoriaCuestionario extends javax.swing.JDialog {
             return null;
         }
         return descripcion;
+    }
+    public static void setNombre(String texto){
+        nombre = texto;
+    }
+    public static void setDescripcion(String texto){
+        descripcion = texto;
+    }
+    public void colocarDatos(){
+        inputNombre.setText(nombre);
+        inputDescripcion.setText(descripcion);
     }
 
 

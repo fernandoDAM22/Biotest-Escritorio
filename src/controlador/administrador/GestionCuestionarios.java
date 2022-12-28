@@ -1,6 +1,7 @@
 package controlador.administrador;
 
 import controlador.baseDeDatos.ConexionBD;
+import modelo.Cuestionario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -225,11 +226,12 @@ public class GestionCuestionarios {
 
     /**
      * Este metodo permite borrar una pregunta de un cuestionario
+     *
      * @param idCuestionario es el id del cuestionario al que le queremos borrar la pregunta
-     * @param idPregunta es el id de la pregunta que queremos borrar
+     * @param idPregunta     es el id de la pregunta que queremos borrar
      * @return true si se borra, false si no
      */
-    public static boolean borrarPregunta(int idCuestionario, int idPregunta){
+    public static boolean borrarPregunta(int idCuestionario, int idPregunta) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -238,12 +240,115 @@ public class GestionCuestionarios {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1,idCuestionario);
-            sentencia.setInt(2,idPregunta);
+            sentencia.setInt(1, idCuestionario);
+            sentencia.setInt(2, idPregunta);
             return sentencia.executeUpdate() > 0; //retorna true si se borra, false si no
         } catch (SQLException e) {
             return false;
-        }finally {
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite obtener la descripcion de un cuestionario a partir de su nombre
+     * @param nombre es el nombre del cuestionario del que queremos obtener la descripcion
+     * @return la descripcion si el cuestionario existe, null si no existe
+     * @author Fernando
+     */
+    public static String obtenerDescripcion(String nombre) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        String descripcion;
+        String sql = "select descripcion from cuestionarios where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, nombre);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                descripcion = resultSet.getString("descripcion");
+                return descripcion;
+            }
+        } catch (SQLException e) {
+            return null;
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return null;
+    }
+
+    /**
+     * Este metodo permite modificar los datos de un cuestionario
+     * @param c es el objeto que contiene los datos del cuestionario
+     * @return true si se modifica, false si no
+     * @author Fernando
+     */
+    public static boolean modificar(Cuestionario c) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        String descripcion;
+        String sql = "update cuestionarios set nombre = ?, descripcion = ? where id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, c.getNombre());
+            sentencia.setString(2, c.getDescripcion());
+            sentencia.setInt(3, c.getId());
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+
+    /**
+     * Este metodo permite borrar un cuestionario a partir de su id
+     * @param id es el id del cuestionario que queremos borrar
+     * @return true si se borra, false si no
+     * @author Fernando
+     */
+    public static boolean borrar(int id) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        String descripcion;
+        String sql = "delete from cuestionarios where id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,id);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();

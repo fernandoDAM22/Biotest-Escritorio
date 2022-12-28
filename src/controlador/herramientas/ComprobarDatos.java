@@ -87,7 +87,12 @@ public class ComprobarDatos implements Patrones{
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        String sql = "select * from usuarios where nombre like ?";
+        /*
+          Tenemos que usar la clausula BINARY para poder obtener el usuario que se llame exactamente
+          igual al que estamos buscando, ya que con el igual o con el like no distingue entre mayusculas
+          y minusculas
+         */
+        String sql = "SELECT * FROM usuarios WHERE BINARY nombre = ?";
 
         try {
             conexionBD = new ConexionBD();
