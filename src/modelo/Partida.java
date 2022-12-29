@@ -61,8 +61,8 @@ public class Partida {
         this.id = id;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public String getFecha() {
+        return fecha.toString();
     }
 
     public void setFecha(LocalDate fecha) {

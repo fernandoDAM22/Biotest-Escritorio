@@ -2,14 +2,16 @@ package controlador.controlPartida;
 
 import modelo.Partida;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
  * Esta clase contiene los metodos necesarios para llevar a cabo una partida
  * @author Fernando
  */
-public class GestionPartida {
+public abstract class GestionPartida {
     Partida partida;
+
 
     public GestionPartida(Partida partida) {
         this.partida = partida;
@@ -32,4 +34,6 @@ public class GestionPartida {
         }
         return numero;
     }
+    public abstract boolean fin();
+    public abstract void responder(JButton boton);
 }

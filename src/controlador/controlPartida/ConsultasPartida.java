@@ -2,6 +2,7 @@ package controlador.controlPartida;
 
 import com.kitfox.svg.A;
 import controlador.baseDeDatos.ConexionBD;
+import modelo.Partida;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -48,5 +49,33 @@ public class ConsultasPartida {
             conexionBD.cerrarConexion();
         }
         return ids;
+    }
+    public boolean insertarPartida(Partida partida){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ArrayList<Integer> ids = new ArrayList<>();
+        conexionBD = new ConexionBD();
+        String sql = "INSERT INTO partidas(id,fecha,puntuacion,id_usuario) VALUES (?,?,?,?)";
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,partida.getId());
+            sentencia.setString(2,partida.getFecha());
+            sentencia.setInt(3,0);
+            sentencia.setInt(4,partida.getIdUsuario());
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            return false;
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+
     }
 }
