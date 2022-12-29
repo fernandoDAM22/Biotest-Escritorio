@@ -311,6 +311,10 @@ public class VentanaJugar extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este metodo permite establecer la puntuacion a la partida una vez a terminado
+     * @author Fernando
+     */
     private void colocarPuntuacion() {
         int puntuacion;
         switch (tipoPartida){
@@ -332,12 +336,22 @@ public class VentanaJugar extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este metodo permite responder una pregunta
+     * @param evt es el boton que se pulsa
+     */
     private void responder(ActionEvent evt) {
         switch (tipoPartida){
             case MODO_LIBRE -> responderModoLibre(evt);
         }
     }
+
+    /**
+     * Este metodo permite responder una pregunta cuando se esta jugando una partida en modo libre
+     * @param evt es el boton que se pulsa
+     */
     private void responderModoLibre(ActionEvent evt){
+        //solo se permite pulsar un boton, hasta que se coloque otra pregunta
         if (bandera) {
             JButton button = (JButton) evt.getSource();
             boolean acertada = partidaModoLibre.responder(button);

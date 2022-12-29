@@ -50,7 +50,11 @@ public class ConsultasPartida {
         return ids;
     }
 
-
+    /**
+     * Este metodo permite insertar una partida en la base de datos
+     * @param partida es el objeto de la clase partida que contiene los datos
+     * @author Fernando
+     */
     public static void insertarPartida(Partida partida){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -78,6 +82,14 @@ public class ConsultasPartida {
         }
 
     }
+
+    /**
+     * Este metodo permite insertar una pregunta en la tabla preguntas_partida
+     * @param idPartida es el id de la partida en la que se ha respondido esa pregunta
+     * @param idPregunta es el id de la pregunta que se ha respondido
+     * @param acertada indica si la pregunta a sido acertada o no
+     * @author Fernando
+     */
     public static void insertarPregunta(int idPartida, int idPregunta, boolean acertada){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -103,6 +115,13 @@ public class ConsultasPartida {
             conexionBD.cerrarConexion();
         }
     }
+
+    /**
+     * Este metodo permite establecer una puntuacion a una partida
+     * @param idPartida es el id de la partida a la que le vamos a asignar la puntuacion
+     * @param puntuacion es la puntuacion que le vamos a asignar a la partida
+     * @author Fernando
+     */
     public static void establecerPuntuacion(int idPartida, int puntuacion){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;

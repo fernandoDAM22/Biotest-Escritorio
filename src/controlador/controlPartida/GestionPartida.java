@@ -11,8 +11,17 @@ import java.util.ArrayList;
  * @author Fernando
  */
 public abstract class GestionPartida {
+    /**
+     * Objeto partida
+     */
     Partida partida;
+    /**
+     * Boton que contiene una respuesta
+     */
     JButton btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4;
+    /**
+     * Etiqueta que contiene el enunciado de la pregunta
+     */
     JLabel enunciado;
 
 
