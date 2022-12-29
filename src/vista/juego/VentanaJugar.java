@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.kitfox.svg.A;
+import controlador.controlPartida.ConsultasPartida;
 import controlador.controlPartida.GestionPartida;
 import controlador.controlPartida.PartidaModoLibre;
 import controlador.herramientas.TipoPartida;
@@ -27,8 +28,10 @@ import javax.swing.*;
 public class VentanaJugar extends javax.swing.JFrame {
     private TipoPartida tipoPartida;
     private PartidaModoLibre partidaModoLibre;
+    private Partida partida;
     private boolean bandera;
     private boolean fin;
+    private int idPregunta;
 
     /**
      * Creates new form VentanaJugar
@@ -70,15 +73,13 @@ public class VentanaJugar extends javax.swing.JFrame {
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
-        Partida partida = new Partida(idPartida, tipoPartida.toString(), idUsuario);
-        partidaModoLibre = new PartidaModoLibre(partida, labelPregunta, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4);
-        ciclo();
+        partida = new Partida(idPartida, tipoPartida.toString(), idUsuario);
+        partidaModoLibre = new PartidaModoLibre(partida,btnOpcion1,btnOpcion2,btnOpcion3,btnOpcion4,labelPregunta);
+        idPregunta = partidaModoLibre.ciclo();
     }
-    public void ciclo(){
-        partidaModoLibre.seleccionarPregunta();
-        partidaModoLibre.obtenerDatos();
-        partidaModoLibre.restablecerColores();
-    }
+
+
+
 
 
     private void jugarCuestionarios() {
@@ -129,7 +130,6 @@ public class VentanaJugar extends javax.swing.JFrame {
 
         panelInformacion.setPreferredSize(new java.awt.Dimension(1000, 10));
         panelInformacion.setLayout(new java.awt.BorderLayout());
-
 
 
         labelRespuestasIncorrectas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -210,18 +210,24 @@ public class VentanaJugar extends javax.swing.JFrame {
 
         panelControles.setLayout(new java.awt.FlowLayout());
 
-        btnFinalizar.setBackground(new Color(72, 219, 251));
-        btnFinalizar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnFinalizar.setBackground(new Color(238, 82, 83));
+        btnFinalizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnFinalizar.setForeground(new Color(0, 0, 0));
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnFinalizar.setPreferredSize(new java.awt.Dimension(220, 50));
         btnFinalizar.setText("Finalizar");
+        btnFinalizar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnFinalizarActionListener(evt);
+            }
+        });
 
         panelControles.add(btnFinalizar);
 
         panelControles.setLayout(new java.awt.FlowLayout());
-        btnSiguiente.setBackground(new Color(72, 219, 251));
-        btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSiguiente.setBackground(new Color(29, 209, 161));
+        btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSiguiente.setForeground(new Color(0, 0, 0));
         btnSiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSiguiente.setPreferredSize(new java.awt.Dimension(220, 50));
@@ -234,10 +240,8 @@ public class VentanaJugar extends javax.swing.JFrame {
         btnSiguiente.setText("Siguiente");
 
         panelControles.add(btnSiguiente);
-        
+
         panelPrincipal.add(panelControles);
-
-
 
 
         menuUsuario6.setText("Usuario");
@@ -298,22 +302,50 @@ public class VentanaJugar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnFinalizarActionListener(ActionEvent evt) {
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            colocarPuntuacion();
+            VentanaResultado frame = new VentanaResultado();
+            frame.setVisible(true);
+            dispose();
+        }
+    }
+
+    private void colocarPuntuacion() {
+        int puntuacion;
+        switch (tipoPartida){
+            case MODO_LIBRE:
+                puntuacion = partidaModoLibre.getContadorPreguntasCorrectas();
+                ConsultasPartida.establecerPuntuacion(partida.getId(),puntuacion);
+                break;
+        }
+    }
+
     private void btnSiguienteActionListener(ActionEvent evt) {
-        if(!partidaModoLibre.fin()){
-            bandera = true;
-            ciclo();
+        switch (tipoPartida){
+            case MODO_LIBRE:
+                if (!partidaModoLibre.fin()) {
+                    bandera = true;
+                    idPregunta = partidaModoLibre.ciclo();
+                }
+                break;
         }
     }
 
     private void responder(ActionEvent evt) {
+        switch (tipoPartida){
+            case MODO_LIBRE -> responderModoLibre(evt);
+        }
+    }
+    private void responderModoLibre(ActionEvent evt){
         if (bandera) {
             JButton button = (JButton) evt.getSource();
-            partidaModoLibre.responder(button);
+            boolean acertada = partidaModoLibre.responder(button);
             bandera = false;
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoLibre.getContadorPreguntasCorrectas());
             labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoLibre.getContadorRespuestasIncorrectas());
+            ConsultasPartida.insertarPregunta(partida.getId(),idPregunta,acertada);
         }
-
     }
 
     private void opcionModoJuego6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModoJuego6ActionPerformed

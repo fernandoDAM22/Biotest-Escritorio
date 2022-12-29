@@ -21,21 +21,27 @@ import java.util.Collections;
 public class PartidaModoLibre extends GestionPartida{
     private ArrayList<Integer> idPreguntas;
     PilaSinRepetidos pila;
-    private JLabel enunciado;
-    private JButton btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4;
+
+
     Pregunta pregunta;
     private int contadorPreguntasCorrectas = 0, contadorRespuestasIncorrectas = 0;
 
-    public PartidaModoLibre(Partida partida, JLabel labelPregunta, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4) {
+    public PartidaModoLibre(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
+        super(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, enunciado);
+        idPreguntas = GestionPreguntas.obtenerIds();
+        pila = new PilaSinRepetidos();
+        ConsultasPartida.insertarPartida(partida);
+    }
+
+   /* public PartidaModoLibre(Partida partida, JLabel labelPregunta, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4) {
         super(partida);
         enunciado = labelPregunta;
         this.btnOpcion1 = btnOpcion1;
         this.btnOpcion2 = btnOpcion2;
         this.btnOpcion3 = btnOpcion3;
         this.btnOpcion4 = btnOpcion4;
-        idPreguntas = GestionPreguntas.obtenerIds();
-        pila = new PilaSinRepetidos();
-    }
+
+    }*/
 
     public void seleccionarPregunta() {
         int tam = pila.size();
@@ -45,7 +51,7 @@ public class PartidaModoLibre extends GestionPartida{
         }
     }
 
-    public void obtenerDatos() {
+    public int obtenerDatos() {
         int id = pila.pop();
         idPreguntas.removeIf(x -> x == id);
         pregunta = GestionPreguntas.obtenerDatos(id);
@@ -59,7 +65,14 @@ public class PartidaModoLibre extends GestionPartida{
             colocarRespuestas(btnOpcion3, respuestas[2]);
             colocarRespuestas(btnOpcion4, respuestas[3]);
         }
+        return id;
 
+    }
+    public int ciclo(){
+        seleccionarPregunta();
+        int numero = obtenerDatos();
+        restablecerColores();
+        return numero;
     }
 
     private void colocarEnunciado(JLabel etiqueta, String texto) {
@@ -71,10 +84,11 @@ public class PartidaModoLibre extends GestionPartida{
         boton.setText(texto);
     }
 
-    public void responder(JButton boton) {
+    public boolean responder(JButton boton) {
         if (boton.getText().equals(pregunta.getRespuestaCorrecta())) {
             boton.setBackground(Colores.correcto());
             contadorPreguntasCorrectas++;
+            return true;
         } else {
             contadorRespuestasIncorrectas++;
             boton.setBackground(Colores.Incorrecto());
@@ -90,6 +104,7 @@ public class PartidaModoLibre extends GestionPartida{
             if (btnOpcion4.getText().equals(pregunta.getRespuestaCorrecta())) {
                 btnOpcion4.setBackground(Colores.correcto());
             }
+            return false;
         }
     }
     public void restablecerColores() {

@@ -1,6 +1,5 @@
 package controlador.controlPartida;
 
-import com.kitfox.svg.A;
 import controlador.baseDeDatos.ConexionBD;
 import modelo.Partida;
 
@@ -50,7 +49,9 @@ public class ConsultasPartida {
         }
         return ids;
     }
-    public boolean insertarPartida(Partida partida){
+
+
+    public static void insertarPartida(Partida partida){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -64,9 +65,8 @@ public class ConsultasPartida {
             sentencia.setString(2,partida.getFecha());
             sentencia.setInt(3,0);
             sentencia.setInt(4,partida.getIdUsuario());
-            return sentencia.executeUpdate() > 0;
-        } catch (SQLException e) {
-            return false;
+            sentencia.executeUpdate();
+        } catch (SQLException ignored) {
         }finally {
             assert sentencia != null;
             try {
@@ -77,5 +77,54 @@ public class ConsultasPartida {
             conexionBD.cerrarConexion();
         }
 
+    }
+    public static void insertarPregunta(int idPartida, int idPregunta, boolean acertada){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        conexionBD = new ConexionBD();
+        String sql = "INSERT INTO preguntas_partida (id_pregunta, id_partida, acertada) VALUES (?,?,?)";
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,idPregunta);
+            sentencia.setInt(2,idPartida);
+            sentencia.setBoolean(3,acertada);
+            sentencia.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+    }
+    public static void establecerPuntuacion(int idPartida, int puntuacion){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        conexionBD = new ConexionBD();
+        String sql = "Update partidas set puntuacion = ? where id = ?";
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,puntuacion);
+            sentencia.setInt(2,idPartida);
+            sentencia.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
     }
 }
