@@ -1,8 +1,10 @@
 package controlador.controlPartida;
 
+import controlador.herramientas.Colores;
 import modelo.Partida;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 
 /**
@@ -51,6 +53,36 @@ public abstract class GestionPartida {
             numero++;
         }
         return numero;
+    }
+    /**
+     * Este metodo permite colocar el enunciado de una pregunta en la pantalla
+     * @param etiqueta es la etiqueta donde se coloca el enunciado
+     * @param texto es el enunciado que se coloca
+     * @author Fernando
+     */
+    public void colocarEnunciado(JLabel etiqueta, String texto) {
+        etiqueta.setText(texto);
+    }
+
+    /**
+     * Este metodo permite colocar una respuesta en un boton
+     * @param boton es el boton donde se coloca la respuesta
+     * @param texto es la respuesta donde se coloca
+     * @author Fernando
+     */
+    public void colocarRespuestas(JButton boton, String texto) {
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        boton.setText(texto);
+    }
+    /**
+     * Este metodo restablece los colores de los botones a su color inicial
+     * @author Fernando
+     */
+    public void restablecerColores() {
+        btnOpcion1.setBackground(Colores.colorInicial());
+        btnOpcion2.setBackground(Colores.colorInicial());
+        btnOpcion3.setBackground(Colores.colorInicial());
+        btnOpcion4.setBackground(Colores.colorInicial());
     }
 
     public abstract boolean fin();

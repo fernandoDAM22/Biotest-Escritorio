@@ -7,49 +7,43 @@ import modelo.Partida;
 import modelo.Pregunta;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Esta clase contiene los metodos necesarios para jugar una partida en modo libre
- *
- * @author Fernando
+ * Esta clase nos permite jugar una partida en modo sin fallos
  */
-public class PartidaModoLibre extends GestionPartida {
+public class PartidaModoSinFallos extends GestionPartida {
+    PilaSinRepetidos pila;
     /**
      * Contienen los ids de todas las preguntas de la base de datos
      */
     private ArrayList<Integer> idPreguntas;
-    /**
-     * Es la estructura de datos que usaremos para seleccionar las preguntas
-     */
-    PilaSinRepetidos pila;
-    /**
-     * Es el objeto de la clase pregunta
-     */
+
     Pregunta pregunta;
-    /**
-     * Es el contador de las preguntas correctas en la partida
-     */
-    private int contadorPreguntasCorrectas = 0;
+    private int contadorPreguntasCorrectas;
     /**
      * Es el contador de las preguntas incorrectas en la partida
      */
-    private int contadorRespuestasIncorrectas = 0;
-    int numeroPreguntas = 0;
+    private int contadorRespuestasIncorrectas;
+    private int numeroPreguntas;
+    boolean fallo;
 
-    public PartidaModoLibre(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
+    public PartidaModoSinFallos(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
         super(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, enunciado);
-        idPreguntas = GestionPreguntas.obtenerIds();
         pila = new PilaSinRepetidos();
+        idPreguntas = GestionPreguntas.obtenerIds();
+        contadorPreguntasCorrectas = 0;
+        contadorRespuestasIncorrectas = 0;
+        numeroPreguntas = 0;
+        fallo = false;
         ConsultasPartida.insertarPartida(partida);
     }
 
     /**
      * Este metodo permite seleccionar una pregunta
+     *
      * @author Fernando
      */
     public void seleccionarPregunta() {
@@ -64,6 +58,7 @@ public class PartidaModoLibre extends GestionPartida {
     /**
      * Este metodo permite obtener los datos de la pregunta seleccionada y
      * colocarlos en la pantalla
+     *
      * @return el id de la pregunta seleccionada
      */
     public int obtenerDatos() {
@@ -86,6 +81,7 @@ public class PartidaModoLibre extends GestionPartida {
 
     /**
      * Este metodo permite realizar un ciclo, (seleccionar una pregunta, obtener los datos y restablecer los colores)
+     *
      * @return el id de la pregunta que se ha seleccionado
      * @author Fernando
      */
@@ -97,10 +93,17 @@ public class PartidaModoLibre extends GestionPartida {
         return numero;
     }
 
-
+    @Override
+    public boolean fin() {
+        if(!fallo && numeroPreguntas < 100){
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Este metodo permite responder una pregunta
+     *
      * @param boton es el boton que se pulsa
      * @return true si se acierta la pregunta, false si no
      */
@@ -110,6 +113,7 @@ public class PartidaModoLibre extends GestionPartida {
             contadorPreguntasCorrectas++;
             return true;
         } else {
+            fallo = true;
             contadorRespuestasIncorrectas++;
             boton.setBackground(Colores.Incorrecto());
             if (btnOpcion1.getText().equals(pregunta.getRespuestaCorrecta())) {
@@ -127,23 +131,6 @@ public class PartidaModoLibre extends GestionPartida {
             return false;
         }
     }
-
-
-
-    /**
-     * Este metodo permite identificar cuando se termina una partida
-     * @return false si se han respondido menos de 100 preguntas, cuando se llega a las 100 retorna true
-     * @author Fernando
-     */
-    @Override
-    public boolean fin() {
-       if(numeroPreguntas <= 100){
-           return false;
-       }else {
-           return true;
-       }
-    }
-
     public int getContadorPreguntasCorrectas() {
         return contadorPreguntasCorrectas;
     }
@@ -151,6 +138,4 @@ public class PartidaModoLibre extends GestionPartida {
     public int getContadorRespuestasIncorrectas() {
         return contadorRespuestasIncorrectas;
     }
-
-
 }

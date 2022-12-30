@@ -4,14 +4,12 @@
  */
 package vista.juego;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.kitfox.svg.A;
-import controlador.controlPartida.ConsultasPartida;
-import controlador.controlPartida.GestionPartida;
-import controlador.controlPartida.PartidaModoLibre;
+import controlador.controlPartida.*;
 import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
 import controlador.usuario.GestionUsuarios;
@@ -28,9 +26,10 @@ import javax.swing.*;
 public class VentanaJugar extends javax.swing.JFrame {
     private TipoPartida tipoPartida;
     private PartidaModoLibre partidaModoLibre;
+    private PartidaModoSinFallos partidaModoSinFallos;
+    private PartidaModoClasico partidaModoClasico;
     private Partida partida;
     private boolean bandera;
-    private boolean fin;
     private int idPregunta;
 
     /**
@@ -43,7 +42,6 @@ public class VentanaJugar extends javax.swing.JFrame {
     public VentanaJugar(TipoPartida tipoPartida) {
         this.tipoPartida = tipoPartida;
         bandera = true;
-        fin = false;
         initComponents();
         jugar();
     }
@@ -54,6 +52,9 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @author Fernando
      */
     private void jugar() {
+        if(tipoPartida != TipoPartida.MODO_LIBRE){
+            panelControles.remove(btnFinalizar);
+        }
         switch (tipoPartida) {
             case MODO_LIBRE -> jugarModoLibre();
             case MODO_SIN_FALLOS -> jugarModoSinFallos();
@@ -74,21 +75,36 @@ public class VentanaJugar extends javax.swing.JFrame {
             return;
         }
         partida = new Partida(idPartida, tipoPartida.toString(), idUsuario);
-        partidaModoLibre = new PartidaModoLibre(partida,btnOpcion1,btnOpcion2,btnOpcion3,btnOpcion4,labelPregunta);
+        partidaModoLibre = new PartidaModoLibre(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, labelPregunta);
         idPregunta = partidaModoLibre.ciclo();
     }
 
-
-
-
-
-    private void jugarCuestionarios() {
+    private void jugarModoSinFallos() {
+        int idPartida = GestionPartida.obtenerId();
+        int idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+        if (idPartida == -1 || idUsuario == -1) {
+            return;
+        }
+        partida = new Partida(idPartida, tipoPartida.toString(), idUsuario);
+        partidaModoSinFallos = new PartidaModoSinFallos(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, labelPregunta);
+        idPregunta = partidaModoSinFallos.ciclo();
     }
 
     private void jugarModoClasico() {
+        int idPartida = GestionPartida.obtenerId();
+        int idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+        if (idPartida == -1 || idUsuario == -1) {
+            return;
+        }
+        partida = new Partida(idPartida, tipoPartida.toString(), idUsuario);
+        partidaModoClasico = new PartidaModoClasico(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, labelPregunta);
+        partidaModoClasico.seleccionarPregunta();
+        idPregunta = partidaModoClasico.ciclo();
+
     }
 
-    private void jugarModoSinFallos() {
+
+    private void jugarCuestionarios() {
     }
 
 
@@ -304,53 +320,116 @@ public class VentanaJugar extends javax.swing.JFrame {
 
     private void btnFinalizarActionListener(ActionEvent evt) {
         if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            colocarPuntuacion();
-            VentanaResultado frame = new VentanaResultado();
-            frame.setVisible(true);
+            lanzarVentanaResultado();
             dispose();
         }
     }
 
     /**
      * Este metodo permite establecer la puntuacion a la partida una vez a terminado
+     *
      * @author Fernando
      */
     private void colocarPuntuacion() {
         int puntuacion;
-        switch (tipoPartida){
+        switch (tipoPartida) {
             case MODO_LIBRE:
                 puntuacion = partidaModoLibre.getContadorPreguntasCorrectas();
-                ConsultasPartida.establecerPuntuacion(partida.getId(),puntuacion);
+                ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
+                break;
+            case MODO_SIN_FALLOS:
+                puntuacion = partidaModoSinFallos.getContadorPreguntasCorrectas();
+                ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
+                break;
+            case MODO_CLASICO:
+                puntuacion = partidaModoClasico.getContadorPreguntasCorrectas();
+                ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
                 break;
         }
     }
 
     private void btnSiguienteActionListener(ActionEvent evt) {
-        switch (tipoPartida){
+        if(bandera == true){
+            JOptionPane.showMessageDialog(null,"Debe responder a la pregunta antes de pasar a la siguiente","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        switch (tipoPartida) {
             case MODO_LIBRE:
                 if (!partidaModoLibre.fin()) {
                     bandera = true;
                     idPregunta = partidaModoLibre.ciclo();
+                } else {
+                    lanzarVentanaResultado();
+                }
+                break;
+            case MODO_SIN_FALLOS:
+                if (!partidaModoSinFallos.fin()) {
+                    bandera = true;
+                    idPregunta = partidaModoSinFallos.ciclo();
+                } else {
+                    lanzarVentanaResultado();
+                }
+                break;
+            case MODO_CLASICO:
+                if (partidaModoClasico.fin()) {
+                    bandera = true;
+                    idPregunta = partidaModoClasico.ciclo();
+                } else {
+                    lanzarVentanaResultado();
                 }
                 break;
         }
     }
 
+    private void lanzarVentanaResultado() {
+        colocarPuntuacion();
+        VentanaResultado frame = new VentanaResultado();
+        frame.setVisible(true);
+        dispose();
+    }
+
     /**
      * Este metodo permite responder una pregunta
+     *
      * @param evt es el boton que se pulsa
      */
     private void responder(ActionEvent evt) {
-        switch (tipoPartida){
+        switch (tipoPartida) {
             case MODO_LIBRE -> responderModoLibre(evt);
+            case MODO_SIN_FALLOS -> responderModoSinFallos(evt);
+            case MODO_CLASICO -> responderModoClasico(evt);
+        }
+    }
+
+    private void responderModoClasico(ActionEvent evt) {
+        if (bandera) {
+            JButton button = (JButton) evt.getSource();
+            boolean acertada = partidaModoClasico.responder(button);
+            bandera = false;
+            labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoClasico.getContadorPreguntasCorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoClasico.getContadorRespuestasIncorrectas());
+            ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
+        }
+    }
+
+    private void responderModoSinFallos(ActionEvent evt) {
+        if (bandera) {
+            JButton button = (JButton) evt.getSource();
+            boolean acertada = partidaModoSinFallos.responder(button);
+            bandera = false;
+            labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoSinFallos.getContadorPreguntasCorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoSinFallos.getContadorRespuestasIncorrectas());
+            ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
+
         }
     }
 
     /**
      * Este metodo permite responder una pregunta cuando se esta jugando una partida en modo libre
+     *
      * @param evt es el boton que se pulsa
      */
-    private void responderModoLibre(ActionEvent evt){
+    private void responderModoLibre(ActionEvent evt) {
         //solo se permite pulsar un boton, hasta que se coloque otra pregunta
         if (bandera) {
             JButton button = (JButton) evt.getSource();
@@ -358,7 +437,7 @@ public class VentanaJugar extends javax.swing.JFrame {
             bandera = false;
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoLibre.getContadorPreguntasCorrectas());
             labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoLibre.getContadorRespuestasIncorrectas());
-            ConsultasPartida.insertarPregunta(partida.getId(),idPregunta,acertada);
+            ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
         }
     }
 

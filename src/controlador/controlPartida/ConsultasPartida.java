@@ -61,7 +61,7 @@ public class ConsultasPartida {
         Connection conexion = null;
         ArrayList<Integer> ids = new ArrayList<>();
         conexionBD = new ConexionBD();
-        String sql = "INSERT INTO partidas(id,fecha,puntuacion,id_usuario) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO partidas(id,fecha,puntuacion,id_usuario,tipo_partida) VALUES (?,?,?,?,?)";
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
@@ -69,6 +69,7 @@ public class ConsultasPartida {
             sentencia.setString(2,partida.getFecha());
             sentencia.setInt(3,0);
             sentencia.setInt(4,partida.getIdUsuario());
+            sentencia.setString(5, partida.getTipo());
             sentencia.executeUpdate();
         } catch (SQLException ignored) {
         }finally {
