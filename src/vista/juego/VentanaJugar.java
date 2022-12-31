@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.kitfox.svg.A;
 import controlador.controlPartida.*;
 import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
@@ -31,6 +30,7 @@ public class VentanaJugar extends javax.swing.JFrame {
     private Partida partida;
     private boolean bandera;
     private int idPregunta;
+    private int idPartida, idUsuario;
 
     /**
      * Creates new form VentanaJugar
@@ -52,7 +52,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @author Fernando
      */
     private void jugar() {
-        if(tipoPartida != TipoPartida.MODO_LIBRE){
+        if (tipoPartida != TipoPartida.MODO_LIBRE) {
             panelControles.remove(btnFinalizar);
         }
         switch (tipoPartida) {
@@ -64,13 +64,20 @@ public class VentanaJugar extends javax.swing.JFrame {
     }
 
     /**
+     * Este metodo permite guardar el id de la partida y el id del usuario
+     */
+    private void iniciarPartida() {
+        idPartida = GestionPartida.obtenerId();
+        idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+    }
+
+    /**
      * Este metodo permite jugar una partida en modo libre
      *
      * @author Fernando
      */
     private void jugarModoLibre() {
-        int idPartida = GestionPartida.obtenerId();
-        int idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+        iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
@@ -80,8 +87,7 @@ public class VentanaJugar extends javax.swing.JFrame {
     }
 
     private void jugarModoSinFallos() {
-        int idPartida = GestionPartida.obtenerId();
-        int idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+        iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
@@ -91,8 +97,7 @@ public class VentanaJugar extends javax.swing.JFrame {
     }
 
     private void jugarModoClasico() {
-        int idPartida = GestionPartida.obtenerId();
-        int idUsuario = GestionUsuarios.obtenerIdUsuario(ConfiguracionUsuario.getNombreUsuario());
+        iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
@@ -131,9 +136,9 @@ public class VentanaJugar extends javax.swing.JFrame {
         btnOpcion4 = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
-        barraMenu6 = new javax.swing.JMenuBar();
-        menuUsuario6 = new javax.swing.JMenu();
-        opcionModoJuego6 = new javax.swing.JMenuItem();
+        barraMenu = new javax.swing.JMenuBar();
+        menuUsuario = new javax.swing.JMenu();
+        opcionModoJuego = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
@@ -148,13 +153,13 @@ public class VentanaJugar extends javax.swing.JFrame {
         panelInformacion.setLayout(new java.awt.BorderLayout());
 
 
-        labelRespuestasIncorrectas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelRespuestasIncorrectas.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         labelRespuestasIncorrectas.setForeground(new Color(238, 82, 83));
         labelRespuestasIncorrectas.setText("Respuestas Incorrectas: ");
         labelRespuestasIncorrectas.setPreferredSize(new java.awt.Dimension(220, 0));
         panelInformacion.add(labelRespuestasIncorrectas, java.awt.BorderLayout.LINE_START);
 
-        labelRespuestasCorrectas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelRespuestasCorrectas.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
         labelRespuestasCorrectas.setForeground(new Color(29, 209, 161));
         labelRespuestasCorrectas.setText("Respuestas Correctas: ");
         labelRespuestasCorrectas.setPreferredSize(new java.awt.Dimension(220, 0));
@@ -162,7 +167,7 @@ public class VentanaJugar extends javax.swing.JFrame {
 
         panelPrincipal.add(panelInformacion);
 
-        labelPregunta.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelPregunta.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18)); // NOI18N
         labelPregunta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelPregunta.setText("Aqui va el texto de la pregunta");
         labelPregunta.setPreferredSize(new java.awt.Dimension(1000, 50));
@@ -171,7 +176,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         panelPrincipal.add(panelPregunta);
 
         btnOpcion1.setBackground(new Color(72, 219, 251));
-        btnOpcion1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOpcion1.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 12)); // NOI18N
         btnOpcion1.setForeground(new Color(0, 0, 0));
         btnOpcion1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOpcion1.setPreferredSize(new java.awt.Dimension(220, 50));
@@ -184,7 +189,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         panelOpciones.add(btnOpcion1);
 
         btnOpcion2.setBackground(new Color(72, 219, 251));
-        btnOpcion2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnOpcion2.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 12)); // NOI18N
         btnOpcion2.setForeground(new Color(0, 0, 0));
         btnOpcion2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnOpcion2.setPreferredSize(new java.awt.Dimension(220, 50));
@@ -260,17 +265,17 @@ public class VentanaJugar extends javax.swing.JFrame {
         panelPrincipal.add(panelControles);
 
 
-        menuUsuario6.setText("Usuario");
+        menuUsuario.setText("Usuario");
 
-        opcionModoJuego6.setText("Seleccionar Modo de juego");
-        opcionModoJuego6.addActionListener(new java.awt.event.ActionListener() {
+        opcionModoJuego.setText("Seleccionar Modo de juego");
+        opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionModoJuego6ActionPerformed(evt);
+                opcionModoJuegoActionPerformed(evt);
             }
         });
-        menuUsuario6.add(opcionModoJuego6);
+        menuUsuario.add(opcionModoJuego);
 
-        barraMenu6.add(menuUsuario6);
+        barraMenu.add(menuUsuario);
 
         menuAdministrador.setText("Administrador");
 
@@ -298,9 +303,9 @@ public class VentanaJugar extends javax.swing.JFrame {
         });
         menuAdministrador.add(opcionCategorias);
 
-        barraMenu6.add(menuAdministrador);
+        barraMenu.add(menuAdministrador);
 
-        setJMenuBar(barraMenu6);
+        setJMenuBar(barraMenu);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -314,6 +319,7 @@ public class VentanaJugar extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
+        ConfiguracionUsuario.desactivarMenu(barraMenu, menuAdministrador);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -331,26 +337,24 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @author Fernando
      */
     private void colocarPuntuacion() {
-        int puntuacion;
+        int puntuacion = 0;
         switch (tipoPartida) {
             case MODO_LIBRE:
                 puntuacion = partidaModoLibre.getContadorPreguntasCorrectas();
-                ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
                 break;
             case MODO_SIN_FALLOS:
                 puntuacion = partidaModoSinFallos.getContadorPreguntasCorrectas();
-                ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
                 break;
             case MODO_CLASICO:
                 puntuacion = partidaModoClasico.getContadorPreguntasCorrectas();
-                ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
                 break;
         }
+        ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
     }
 
     private void btnSiguienteActionListener(ActionEvent evt) {
-        if(bandera == true){
-            JOptionPane.showMessageDialog(null,"Debe responder a la pregunta antes de pasar a la siguiente","Error",JOptionPane.ERROR_MESSAGE);
+        if (bandera) {
+            JOptionPane.showMessageDialog(null, "Debe responder a la pregunta antes de pasar a la siguiente", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         switch (tipoPartida) {
@@ -394,6 +398,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @param evt es el boton que se pulsa
      */
     private void responder(ActionEvent evt) {
+        boolean acertada;
         switch (tipoPartida) {
             case MODO_LIBRE -> responderModoLibre(evt);
             case MODO_SIN_FALLOS -> responderModoSinFallos(evt);
@@ -441,10 +446,13 @@ public class VentanaJugar extends javax.swing.JFrame {
         }
     }
 
-    private void opcionModoJuego6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModoJuego6ActionPerformed
-        VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
-        ventana.setVisible(true);
-        dispose();
+    private void opcionModoJuegoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionModoJuego6ActionPerformed
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres salir, no has finalizado la partida", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
+            ventana.setVisible(true);
+            dispose();
+        }
+
     }//GEN-LAST:event_opcionModoJuego6ActionPerformed
 
     private void opcionPreguntasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opcionPreguntasActionPerformed
@@ -501,7 +509,7 @@ public class VentanaJugar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar barraMenu6;
+    private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnOpcion1;
     private javax.swing.JButton btnOpcion2;
     private javax.swing.JButton btnOpcion3;
@@ -513,10 +521,10 @@ public class VentanaJugar extends javax.swing.JFrame {
     private javax.swing.JLabel labelRespuestasCorrectas;
     private javax.swing.JLabel labelRespuestasIncorrectas;
     private javax.swing.JMenu menuAdministrador;
-    private javax.swing.JMenu menuUsuario6;
+    private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
-    private javax.swing.JMenuItem opcionModoJuego6;
+    private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelInformacion;
     private javax.swing.JPanel panelControles;

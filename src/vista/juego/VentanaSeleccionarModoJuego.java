@@ -52,7 +52,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnJugar = new javax.swing.JButton();
         panelDescripcion = new javax.swing.JPanel();
         labelDescripcion = new javax.swing.JLabel();
-        barraMenu6 = new javax.swing.JMenuBar();
+        barraMenu = new javax.swing.JMenuBar();
         menuUsuario6 = new javax.swing.JMenu();
         opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionModoJuego6 = new javax.swing.JMenuItem();
@@ -154,7 +154,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         });
         menuUsuario6.add(opcionModoJuego6);
 
-        barraMenu6.add(menuUsuario6);
+        barraMenu.add(menuUsuario6);
         opcionCerrarSesion.setText("Cerrar sesion");
         opcionCerrarSesion.addActionListener(new ActionListener() {
             @Override
@@ -191,10 +191,10 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         });
         menuAdministrador.add(opcionCategorias);
 
-        barraMenu6.add(menuAdministrador);
+        barraMenu.add(menuAdministrador);
 
-        setJMenuBar(barraMenu6);
-        ConfiguracionUsuario.desactivarMenu(menuAdministrador);
+        setJMenuBar(barraMenu);
+        ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
     private String seleccionarPartida(){
@@ -310,7 +310,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar barraMenu6;
+    private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnJugar;
     private javax.swing.JToggleButton btnModoClasico;

@@ -5,6 +5,8 @@
 package vista.juego;
 
 import java.awt.Color;
+
+import controlador.usuario.ConfiguracionUsuario;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
@@ -175,7 +177,7 @@ public class VentanaResultado extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
         );
-
+        ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
 

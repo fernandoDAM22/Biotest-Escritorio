@@ -13,11 +13,21 @@ public class ConfiguracionUsuario {
      * Indica si el usuario es admin o no
      */
     private static String tipoUsuario;
+    /**
+     * Contiene el nombre del usuario logueado
+     */
     private static String nombreUsuario;
 
-    public static void desactivarMenu(JMenu menu) {
+    /**
+     * Este metodo permite eliminar un menu de la barra de menu,
+     * se usa para eliminar el menu de administrador en caso de que
+     * el usuario logueado no sea administrador
+     * @param barraMenu es la barra de menu
+     * @param menu es el menu que queremos desactivar
+     */
+    public static void desactivarMenu(JMenuBar barraMenu,JMenu menu) {
         if (tipoUsuario.equals(Codigos.USUARIO_NORMAL)) {
-            menu.setEnabled(false);
+            barraMenu.remove(menu);
         }
 
     }
