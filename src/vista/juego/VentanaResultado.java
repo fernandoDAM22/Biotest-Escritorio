@@ -10,12 +10,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import controlador.administrador.GestionCategorias;
 import controlador.administrador.GestionPreguntas;
 import controlador.controlPartida.ConsultasPartida;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -61,8 +63,8 @@ public class VentanaResultado extends javax.swing.JFrame {
         btnSalirDiaologoInformacion1 = new javax.swing.JButton();
         panelPrincipal = new javax.swing.JPanel();
         panelLateral = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jSlider1 = new javax.swing.JSlider();
+        labelPuntuacion = new javax.swing.JLabel();
+        sliderPuntuacion = new javax.swing.JSlider();
         panelBotones = new javax.swing.JPanel();
         btnMenuPrincipal = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -86,10 +88,10 @@ public class VentanaResultado extends javax.swing.JFrame {
         labelTextoPregunta.setPreferredSize(new java.awt.Dimension(500, 30));
         jPanel1.add(labelTextoPregunta);
 
-        labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCategoriaPregunta.setForeground(new java.awt.Color(255, 255, 255));
         labelCategoriaPregunta.setText("");
-        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(100, 30));
+        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 30));
         jPanel1.add(labelCategoriaPregunta);
 
         panelInformacionPregunta.add(jPanel1);
@@ -122,22 +124,26 @@ public class VentanaResultado extends javax.swing.JFrame {
 
         textoRespuestaCorrecta.setEditable(false);
         textoRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        textoRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
         textoRespuestaCorrecta.setForeground(new java.awt.Color(255, 255, 255));
         jPanel2.add(textoRespuestaCorrecta);
 
         textoRespuestaIncorrecta1.setEditable(false);
         textoRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta1.setForeground(new java.awt.Color(255, 255, 255));
+        textoRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
         jPanel2.add(textoRespuestaIncorrecta1);
 
         textoRespuestaIncorrecta2.setEditable(false);
         textoRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta2.setForeground(new java.awt.Color(255, 255, 255));
+        textoRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
         jPanel2.add(textoRespuestaIncorrecta2);
 
         textoRespuestaIncorrecta3.setEditable(false);
         textoRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta3.setForeground(new java.awt.Color(255, 255, 255));
+        textoRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
         jPanel2.add(textoRespuestaIncorrecta3);
 
         panelInformacionPregunta.add(jPanel2);
@@ -177,20 +183,20 @@ public class VentanaResultado extends javax.swing.JFrame {
         panelLateral.setPreferredSize(new java.awt.Dimension(300, 468));
         panelLateral.setLayout(new java.awt.GridLayout(3, 1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Puntuciacion: ");
-        panelLateral.add(jLabel1);
+        labelPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        labelPuntuacion.setForeground(new java.awt.Color(255, 255, 255));
+        labelPuntuacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelPuntuacion.setText("Puntuacion: ");
+        panelLateral.add(labelPuntuacion);
 
-        jSlider1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jSlider1.setMajorTickSpacing(10);
-        jSlider1.setMaximum(10);
-        jSlider1.setMinorTickSpacing(1);
-        jSlider1.setPaintLabels(true);
-        jSlider1.setPaintTicks(true);
-        jSlider1.setValue(5);
-        panelLateral.add(jSlider1);
+        sliderPuntuacion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        sliderPuntuacion.setMajorTickSpacing(10);
+        sliderPuntuacion.setMaximum(10);
+        sliderPuntuacion.setMinorTickSpacing(1);
+        sliderPuntuacion.setPaintLabels(true);
+        sliderPuntuacion.setPaintTicks(true);
+        sliderPuntuacion.setValue(5);
+        panelLateral.add(sliderPuntuacion);
 
         panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
 
@@ -303,8 +309,25 @@ public class VentanaResultado extends javax.swing.JFrame {
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
         );
         ponerPreguntas();
+        ponerPuntuacion();
+        
+        
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void ponerPuntuacion() {
+        int puntuacion = ConsultasPartida.obtenerPuntuacion(idPartida);
+        if(puntuacion == -1){
+            return;
+        }
+        labelPuntuacion.setText("Puntuacion: " + puntuacion);
+        if(puntuacion <= 10){
+            sliderPuntuacion.setValue(puntuacion);
+        }else{
+            sliderPuntuacion.setValue(10);
+        }
+        sliderPuntuacion.setEnabled(false);
+    }
 
     private void btnSalirDiaologoInformacionActionPerformed(ActionEvent evt) {
         dialogoInformacionPregunta.dispose();
@@ -321,6 +344,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         String respuestaIncorrecta3 = (String) modelo.getValueAt(posicion, 4);
         //colocamos el enunciado de la pregunta
         GestionPreguntas.colocarEnunciadoPregunta(labelTextoPregunta, enunciado);
+        labelCategoriaPregunta.setText(GestionCategorias.obtenerCategoriaPregunta(enunciado));
         //colocamos las respuestas de la pregunta
         GestionPreguntas.colocarRespuesta(textoRespuestaCorrecta, respuestaCorrecta);
         GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta1, respuestaIncorrecta1);
@@ -410,12 +434,12 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnSalirDiaologoInformacion1;
     private javax.swing.JDialog dialogoInformacionPregunta;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel labelPuntuacion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider jSlider1;
+    private javax.swing.JSlider sliderPuntuacion;
     private javax.swing.JTable tablaPreguntas;
     private javax.swing.JLabel labelCategoriaPregunta;
     private javax.swing.JLabel labelRespuestaCorrecta;

@@ -285,4 +285,33 @@ public class GestionCategorias {
         }
         return null;
     }
+    public static String obtenerCategoriaPregunta(String pregunta){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet;
+        String sql = "Select c.nombre from categoria c join preguntas p on c.id = p.id_categoria where p.enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,pregunta);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getString("nombre");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return null;
+    }
 }

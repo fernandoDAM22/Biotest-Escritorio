@@ -12,15 +12,17 @@ import java.util.ArrayList;
 /**
  * Esta clase contiene los metodos que implican consultas a la
  * base de datos relacionadas con las partidas
+ *
  * @author Fernando
  */
 public class ConsultasPartida {
     /**
      * Este metodo permite obtener todos los id de las partidas
+     *
      * @return un ArrayList con los ids de las partidas, null si ocurre algun error
      * @author Fernando
      */
-    public static ArrayList<Integer> obtenerId(){
+    public static ArrayList<Integer> obtenerId() {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -32,13 +34,13 @@ public class ConsultasPartida {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
             resultSet = sentencia.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 ids.add(resultSet.getInt("id"));
             }
 
         } catch (SQLException e) {
             return null;
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -52,10 +54,11 @@ public class ConsultasPartida {
 
     /**
      * Este metodo permite insertar una partida en la base de datos
+     *
      * @param partida es el objeto de la clase partida que contiene los datos
      * @author Fernando
      */
-    public static void insertarPartida(Partida partida){
+    public static void insertarPartida(Partida partida) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -65,14 +68,14 @@ public class ConsultasPartida {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1,partida.getId());
-            sentencia.setString(2,partida.getFecha());
-            sentencia.setInt(3,0);
-            sentencia.setInt(4,partida.getIdUsuario());
+            sentencia.setInt(1, partida.getId());
+            sentencia.setString(2, partida.getFecha());
+            sentencia.setInt(3, 0);
+            sentencia.setInt(4, partida.getIdUsuario());
             sentencia.setString(5, partida.getTipo());
             sentencia.executeUpdate();
         } catch (SQLException ignored) {
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -86,12 +89,13 @@ public class ConsultasPartida {
 
     /**
      * Este metodo permite insertar una pregunta en la tabla preguntas_partida
-     * @param idPartida es el id de la partida en la que se ha respondido esa pregunta
+     *
+     * @param idPartida  es el id de la partida en la que se ha respondido esa pregunta
      * @param idPregunta es el id de la pregunta que se ha respondido
-     * @param acertada indica si la pregunta a sido acertada o no
+     * @param acertada   indica si la pregunta a sido acertada o no
      * @author Fernando
      */
-    public static void insertarPregunta(int idPartida, int idPregunta, boolean acertada){
+    public static void insertarPregunta(int idPartida, int idPregunta, boolean acertada) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -100,13 +104,13 @@ public class ConsultasPartida {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1,idPregunta);
-            sentencia.setInt(2,idPartida);
-            sentencia.setBoolean(3,acertada);
+            sentencia.setInt(1, idPregunta);
+            sentencia.setInt(2, idPartida);
+            sentencia.setBoolean(3, acertada);
             sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -119,11 +123,12 @@ public class ConsultasPartida {
 
     /**
      * Este metodo permite establecer una puntuacion a una partida
-     * @param idPartida es el id de la partida a la que le vamos a asignar la puntuacion
+     *
+     * @param idPartida  es el id de la partida a la que le vamos a asignar la puntuacion
      * @param puntuacion es la puntuacion que le vamos a asignar a la partida
      * @author Fernando
      */
-    public static void establecerPuntuacion(int idPartida, int puntuacion){
+    public static void establecerPuntuacion(int idPartida, int puntuacion) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -132,12 +137,12 @@ public class ConsultasPartida {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1,puntuacion);
-            sentencia.setInt(2,idPartida);
+            sentencia.setInt(1, puntuacion);
+            sentencia.setInt(2, idPartida);
             sentencia.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             assert sentencia != null;
             try {
                 sentencia.close();
@@ -147,7 +152,8 @@ public class ConsultasPartida {
             conexionBD.cerrarConexion();
         }
     }
-    public static ArrayList<String[]> obtenerPreguntasPartida(int idPartida){
+
+    public static ArrayList<String[]> obtenerPreguntasPartida(int idPartida) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -183,5 +189,37 @@ public class ConsultasPartida {
             conexionBD.cerrarConexion();
         }
         return preguntas;
+    }
+
+    public static int obtenerPuntuacion(int idPartida) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        String sql = "SELECT puntuacion from partidas where id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idPartida);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("puntuacion");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return -1;
     }
 }

@@ -112,7 +112,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         labelTextoPregunta.setPreferredSize(new java.awt.Dimension(500, 30));
         jPanel1.add(labelTextoPregunta);
 
-        labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCategoriaPregunta.setForeground(new Color(255, 255, 255));
         labelCategoriaPregunta.setText("Categoria");
         labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(100, 30));
@@ -773,7 +773,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         //colocamos el enunciado de la pregunta
         GestionPreguntas.colocarEnunciadoPregunta(labelTextoPregunta, enunciado);
         //colocamos la categoria en su label correspondiente
-        labelCategoriaPregunta.setText(listaCategorias.getSelectedItem().toString());
+        labelCategoriaPregunta.setText(GestionCategorias.obtenerCategoriaPregunta(enunciado));
         //colocamos las respuestas de la pregunta
         GestionPreguntas.colocarRespuesta(textoRespuestaCorrecta, respuestaCorrecta);
         GestionPreguntas.colocarRespuesta(textoRespuestaIncorrecta1, respuestaIncorrecta1);
