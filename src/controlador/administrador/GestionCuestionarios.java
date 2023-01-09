@@ -258,6 +258,7 @@ public class GestionCuestionarios {
 
     /**
      * Este metodo permite obtener la descripcion de un cuestionario a partir de su nombre
+     *
      * @param nombre es el nombre del cuestionario del que queremos obtener la descripcion
      * @return la descripcion si el cuestionario existe, null si no existe
      * @author Fernando
@@ -295,6 +296,7 @@ public class GestionCuestionarios {
 
     /**
      * Este metodo permite modificar los datos de un cuestionario
+     *
      * @param c es el objeto que contiene los datos del cuestionario
      * @return true si se modifica, false si no
      * @author Fernando
@@ -329,6 +331,7 @@ public class GestionCuestionarios {
 
     /**
      * Este metodo permite borrar un cuestionario a partir de su id
+     *
      * @param id es el id del cuestionario que queremos borrar
      * @return true si se borra, false si no
      * @author Fernando
@@ -344,7 +347,7 @@ public class GestionCuestionarios {
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1,id);
+            sentencia.setInt(1, id);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
             return false;
@@ -358,4 +361,64 @@ public class GestionCuestionarios {
             conexionBD.cerrarConexion();
         }
     }
+
+    public static ArrayList<String> obtenerCuestionariosCompletos() {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        ArrayList<String> cuestionarios = new ArrayList<>();
+        String sql = "SELECT c.nombre from cuestionarios c join preguntas_cuestionarios p on c.id = p.id_cuestionario GROUP by c.id HAVING COUNT(id_pregunta) > 10";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                cuestionarios.add(resultSet.getString("nombre"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (sentencia != null) sentencia.close();
+                conexionBD.cerrarConexion();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return cuestionarios;
+    }
+
+    public static ArrayList<Integer> obtenerIdPreguntas(String cuestionario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        ArrayList<Integer> idPreguntas = new ArrayList<>();
+        String sql = "SELECT p.id_pregunta from cuestionarios c JOIN preguntas_cuestionarios " +
+                "p on c.id = p.id_cuestionario WHERE c.nombre like ?;";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, cuestionario);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                idPreguntas.add(resultSet.getInt("id_pregunta"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            try {
+                if (sentencia != null) sentencia.close();
+                conexionBD.cerrarConexion();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return idPreguntas;
+
+    }
 }
+

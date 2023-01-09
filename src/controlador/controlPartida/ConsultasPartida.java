@@ -147,4 +147,41 @@ public class ConsultasPartida {
             conexionBD.cerrarConexion();
         }
     }
+    public static ArrayList<String[]> obtenerPreguntasPartida(int idPartida){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        String sql = "SELECT p.enunciado,p.respuesta_correcta,p.respuesta_incorrecta1,p.respuesta_incorrecta2,p.respuesta_incorrecta3 from ((preguntas p join preguntas_partida pr on p.id = pr.id_pregunta) join partidas pa on pr.id_partida = pa.id) WHERE pa.id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idPartida);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                //guardamos los datos de la pregunta actual en el ResulSet
+                enunciado = resultSet.getString("enunciado");
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                //agregamos la pregunta al ArrayList
+                preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3});
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            assert sentencia != null;
+            try {
+                sentencia.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            conexionBD.cerrarConexion();
+        }
+        return preguntas;
+    }
 }

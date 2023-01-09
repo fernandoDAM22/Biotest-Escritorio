@@ -15,6 +15,7 @@ import vista.acceso.VentanaLogin;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
+import vista.juego.dialogos.DialogoElegirCuestionario;
 
 import javax.swing.*;
 
@@ -22,6 +23,7 @@ import javax.swing.*;
  * @author fernando
  */
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
+    boolean puedeContinuar = true;
 
     /**
      * Creates new form VentanaSeleccionarModoJuego
@@ -194,13 +196,13 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         barraMenu.add(menuAdministrador);
 
         setJMenuBar(barraMenu);
-        ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
+        ConfiguracionUsuario.desactivarMenu(barraMenu, menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private String seleccionarPartida(){
+
+    private String seleccionarPartida() {
         ButtonModel modeloBoton = grupoBotones.getSelection();
         JToggleButton botonSeleccionado = null;
-
         // Iterar a través de todos los botones del grupo
         for (Enumeration<AbstractButton> botones = grupoBotones.getElements(); botones.hasMoreElements(); ) {
             JToggleButton boton = (JToggleButton) botones.nextElement();
@@ -212,7 +214,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         }
         if (botonSeleccionado != null) {
             return botonSeleccionado.getText();
-        }else{
+        } else {
             return null;
         }
     }
@@ -220,28 +222,35 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private void btnJugarActionListener(ActionEvent evt) {
         String mensaje = seleccionarPartida();
         TipoPartida tipoPartida = null;
-        if(mensaje == null){
-            JOptionPane.showMessageDialog(null,"Seleccione un modo de juego","Error",JOptionPane.ERROR_MESSAGE);
-        }else {
-           switch (mensaje){
-               case "Modo Libre":
-                   tipoPartida = TipoPartida.MODO_LIBRE;
-                   break;
-               case "Modo sin fallos":
-                   tipoPartida = TipoPartida.MODO_SIN_FALLOS;
-                   break;
-               case "Modo Clasico":
-                   tipoPartida = TipoPartida.MODO_CLASICO;
-                   break;
-               case "Cuestionarios":
-                   tipoPartida = TipoPartida.CUESTIONARIOS;
-                   break;
-           }
+        if (mensaje == null) {
+            JOptionPane.showMessageDialog(null, "Seleccione un modo de juego", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            switch (mensaje) {
+                case "Modo Libre":
+                    tipoPartida = TipoPartida.MODO_LIBRE;
+                    break;
+                case "Modo sin fallos":
+                    tipoPartida = TipoPartida.MODO_SIN_FALLOS;
+                    break;
+                case "Modo Clasico":
+                    tipoPartida = TipoPartida.MODO_CLASICO;
+                    break;
+                case "Cuestionarios":
+                    DialogoElegirCuestionario.mostrarDialogo();
+                    boolean elegido = DialogoElegirCuestionario.obtenerEstado();
+                    if (!elegido) {
+                        return;
+                    }
+                    tipoPartida = TipoPartida.CUESTIONARIOS;
+                    break;
+            }
         }
         VentanaJugar frame = new VentanaJugar(tipoPartida);
-        frame.setSize(1000,600);
+        frame.setSize(1000, 600);
         frame.setVisible(true);
         dispose();
+
+
     }
 
     private void opcionCerrarSesionActionListener(ActionEvent evt) {

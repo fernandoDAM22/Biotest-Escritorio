@@ -19,6 +19,16 @@ public class Colores {
      * Este color se coloca a los botones inicialmente
      */
     static Color colorInicial = new Color(72, 219, 251);
+    /**
+     * Este color se le asigna a los botones que no realizan ninguna
+     * accion peligrosa, tales como cancelar, borrar modificar etc
+     */
+    static Color colorBotonSeguro = new Color(29, 209, 161);
+    /**
+     * Este color se le asigna a los botones que realizan alguna accion
+     * peligrosa tal como cancelar, borrar, modificar etc
+     */
+    static Color colorBotonPeligroso = new Color(238, 82, 83);
 
     public static Color correcto(){
         return colorCorrecto;
@@ -28,5 +38,11 @@ public class Colores {
     }
     public static Color colorInicial(){
         return colorInicial;
+    }
+    public static Color colorBotonSeguro(){
+        return colorBotonSeguro;
+    }
+    public static Color getColorBotonPeligroso(){
+        return colorBotonPeligroso;
     }
 }

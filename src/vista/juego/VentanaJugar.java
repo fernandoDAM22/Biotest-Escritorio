@@ -12,6 +12,7 @@ import controlador.controlPartida.*;
 import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
 import controlador.usuario.GestionUsuarios;
+import modelo.Cuestionario;
 import modelo.Partida;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
@@ -27,6 +28,7 @@ public class VentanaJugar extends javax.swing.JFrame {
     private PartidaModoLibre partidaModoLibre;
     private PartidaModoSinFallos partidaModoSinFallos;
     private PartidaModoClasico partidaModoClasico;
+    private PartidaCuestionario partidaCuestionario;
     private Partida partida;
     private boolean bandera;
     private int idPregunta;
@@ -110,6 +112,14 @@ public class VentanaJugar extends javax.swing.JFrame {
 
 
     private void jugarCuestionarios() {
+        iniciarPartida();
+        if (idPartida == -1 || idUsuario == -1) {
+            return;
+        }
+        partida = new Partida(idPartida,tipoPartida.toString(),idUsuario);
+        partidaCuestionario = new PartidaCuestionario(partida,btnOpcion1,btnOpcion2,btnOpcion3,btnOpcion4,labelPregunta);
+        partidaCuestionario.seleccionarPregunta();
+        idPregunta = partidaCuestionario.ciclo();
     }
 
 
@@ -348,6 +358,9 @@ public class VentanaJugar extends javax.swing.JFrame {
             case MODO_CLASICO:
                 puntuacion = partidaModoClasico.getContadorPreguntasCorrectas();
                 break;
+            case CUESTIONARIOS:
+                puntuacion = partidaCuestionario.getContadorPreguntasCorrectas();
+                break;
         }
         ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
     }
@@ -382,12 +395,20 @@ public class VentanaJugar extends javax.swing.JFrame {
                     lanzarVentanaResultado();
                 }
                 break;
+            case CUESTIONARIOS:
+                if(partidaCuestionario.fin()){
+                    bandera = true;
+                    idPregunta = partidaCuestionario.ciclo();
+                }else {
+                    lanzarVentanaResultado();
+                }
+                break;
         }
     }
 
     private void lanzarVentanaResultado() {
         colocarPuntuacion();
-        VentanaResultado frame = new VentanaResultado();
+        VentanaResultado frame = new VentanaResultado(idPartida);
         frame.setVisible(true);
         dispose();
     }
@@ -403,6 +424,7 @@ public class VentanaJugar extends javax.swing.JFrame {
             case MODO_LIBRE -> responderModoLibre(evt);
             case MODO_SIN_FALLOS -> responderModoSinFallos(evt);
             case MODO_CLASICO -> responderModoClasico(evt);
+            case CUESTIONARIOS -> responderCuestionario(evt);
         }
     }
 
@@ -425,7 +447,6 @@ public class VentanaJugar extends javax.swing.JFrame {
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoSinFallos.getContadorPreguntasCorrectas());
             labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoSinFallos.getContadorRespuestasIncorrectas());
             ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
-
         }
     }
 
@@ -442,6 +463,16 @@ public class VentanaJugar extends javax.swing.JFrame {
             bandera = false;
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoLibre.getContadorPreguntasCorrectas());
             labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoLibre.getContadorRespuestasIncorrectas());
+            ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
+        }
+    }
+    private void responderCuestionario(ActionEvent evt){
+        if(bandera){
+            JButton button = (JButton) evt.getSource();
+            boolean acertada = partidaCuestionario.responder(button);
+            bandera = false;
+            labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaCuestionario.getContadorPreguntasCorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaCuestionario.getContadorRespuestasIncorrectas());
             ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
         }
     }
