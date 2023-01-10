@@ -88,6 +88,10 @@ public class VentanaJugar extends javax.swing.JFrame {
         idPregunta = partidaModoLibre.ciclo();
     }
 
+    /**
+     * Este metodo permite jugar una partida en modo sin fallos
+     * @author Fernando
+     */
     private void jugarModoSinFallos() {
         iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {
@@ -97,7 +101,10 @@ public class VentanaJugar extends javax.swing.JFrame {
         partidaModoSinFallos = new PartidaModoSinFallos(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, labelPregunta);
         idPregunta = partidaModoSinFallos.ciclo();
     }
-
+    /**
+     * Este metodo permite jugar una partida en modo clasico
+     * @author Fernando
+     */
     private void jugarModoClasico() {
         iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {
@@ -110,7 +117,10 @@ public class VentanaJugar extends javax.swing.JFrame {
 
     }
 
-
+    /**
+     * Este metodo permite jugar una partida resolviendo un cuestionario
+     * @author Fernando
+     */
     private void jugarCuestionarios() {
         iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {

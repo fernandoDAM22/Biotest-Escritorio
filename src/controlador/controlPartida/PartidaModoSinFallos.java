@@ -93,6 +93,11 @@ public class PartidaModoSinFallos extends GestionPartida {
         return numero;
     }
 
+    /**
+     * Este metodo nos permite saber cuando se ha terminado la partida
+     * @return true si se termina la partida, false si no
+     * @author Fernando
+     */
     @Override
     public boolean fin() {
         if(!fallo && numeroPreguntas < 100){

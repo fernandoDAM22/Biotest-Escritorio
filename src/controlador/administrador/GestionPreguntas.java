@@ -265,6 +265,7 @@ public class GestionPreguntas {
      * @param p         es el objeto que contiene los datos nuevos de la pregunta
      * @param enunciado es el enunciado de la pregunta que queremos modificar
      * @return true si se modifica la pregunta, false si no
+     * @author Fernando
      */
     public static boolean modificarPregunta(Pregunta p, String enunciado) {
         PreparedStatement sentencia = null;
@@ -296,6 +297,12 @@ public class GestionPreguntas {
         }
     }
 
+    /**
+     * Este metodo permite obtener el id de una pregunta a partir de su enunciado
+     * @param enunciado es el enunciado de la pregunta de la cual queremos obtener su id
+     * @return el id de la pregunta
+     * @author Fernando
+     */
     public static int obtenerId(String enunciado) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -326,6 +333,12 @@ public class GestionPreguntas {
         }
         return -1;
     }
+
+    /**
+     * Este metodo permite obtener todos los ids de las preguntas de la base de datos
+     * @return un ArrayList con los ids de todas las preguntas de la base de datos
+     * @author Fernando
+     */
     public static ArrayList<Integer> obtenerIds(){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -354,6 +367,13 @@ public class GestionPreguntas {
         }
         return ids;
     }
+
+    /**
+     * Este metodo permite obtener los datos de una pregunta a partir de su id
+     * @param id es el id de la pregunta
+     * @return un objeto pregunta
+     * @author Fernando
+     */
     public static Pregunta obtenerDatos(int id){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;

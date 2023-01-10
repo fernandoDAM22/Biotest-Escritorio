@@ -90,6 +90,11 @@ public class PartidaModoClasico extends GestionPartida {
         return numero;
     }
 
+    /**
+     * Este metodo nos permite saber cuando se ha terminado una partida
+     * @return true si se termina, false si no
+     * @author Fernando
+     */
     @Override
     public boolean fin() {
         if (!pila.isEmpty()) {
@@ -98,7 +103,12 @@ public class PartidaModoClasico extends GestionPartida {
             return false;
         }
     }
-
+    /**
+     * Este metodo nos permite responder una pregunta
+     * @param boton es el boton que se pulsa
+     * @return true si se acierta la pregunta, false si no
+     * @author Fernando
+     */
     public boolean responder(JButton boton) {
         if (boton.getText().equals(pregunta.getRespuestaCorrecta())) {
             boton.setBackground(Colores.correcto());

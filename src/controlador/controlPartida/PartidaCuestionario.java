@@ -20,24 +20,33 @@ public class PartidaCuestionario extends GestionPartida{
      * Contienen los ids de todas las preguntas de la base de datos
      */
     private ArrayList<Integer> idPreguntas;
-
+    /**
+     * Objeto de la clase pregunta donde guardamos los datos de la pregunta
+     */
     Pregunta pregunta;
+    /**
+     * Es el contador de las respuestas correctas de la partida
+     */
     private int contadorPreguntasCorrectas;
     /**
      * Es el contador de las preguntas incorrectas en la partida
      */
     private int contadorRespuestasIncorrectas;
-    private int numeroPreguntas;
+
     public PartidaCuestionario(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
         super(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, enunciado);
         pila = new PilaSinRepetidos();
         idPreguntas = GestionCuestionarios.obtenerIdPreguntas(DialogoElegirCuestionario.obtenerCuestionarioElegido());
         contadorPreguntasCorrectas = 0;
         contadorRespuestasIncorrectas = 0;
-        numeroPreguntas = 0;
         ConsultasPartida.insertarPartida(partida);
     }
 
+    /**
+     * Este metodo nos permite saber cuando se ha terminado una partida
+     * @return true si se termina, false si no
+     * @author Fernando
+     */
     @Override
     public boolean fin() {
         if (!pila.isEmpty()) {
@@ -47,6 +56,12 @@ public class PartidaCuestionario extends GestionPartida{
         }
     }
 
+    /**
+     * Este metodo nos permite responder una pregunta
+     * @param boton es el boton que se pulsa
+     * @return true si se acierta la pregunta, false si no
+     * @author Fernando
+     */
     @Override
     public boolean responder(JButton boton) {
         if (boton.getText().equals(pregunta.getRespuestaCorrecta())) {
@@ -106,10 +121,15 @@ public class PartidaCuestionario extends GestionPartida{
             pila.push(idPreguntas.get(indice));
         }
     }
+
+    /**
+     * Este metodo nos permite realizar un ciclo en la partida, (seleccionar una
+     * nueva pregunta y restablecer los colores de los botones
+     * @return el id de la pregunta seleccionada
+     */
     public int ciclo() {
         int numero = obtenerDatos();
         restablecerColores();
-        numeroPreguntas++;
         return numero;
     }
 

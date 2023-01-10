@@ -8,10 +8,7 @@ import controlador.administrador.GestionCuestionarios;
 import controlador.herramientas.Colores;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
@@ -28,8 +25,19 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
     public DialogoElegirCuestionario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        //en caso de que cierre el dialogo en la x no pasara a jugar ningun cuestionario
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                puedeContinuar =  false;
+            }
+        });
     }
 
+    /**
+     * Este metodo permite mostrar el dialogo
+     * @author Fernando
+     */
     public static void mostrarDialogo() {
         DialogoElegirCuestionario frame = new DialogoElegirCuestionario(new JFrame(),true);
         frame.setVisible(true);

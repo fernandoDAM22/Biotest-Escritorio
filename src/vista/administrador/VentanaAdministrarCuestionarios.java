@@ -870,7 +870,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnInsertarPregunta;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton btnSalirDiaologoInformacion;
+    private javax.swing.JButton
+            btnSalirDiaologoInformacion;
     private javax.swing.JDialog dialogoInformacionPregunta;
     private javax.swing.JDialog dialogoPreguntas;
     private javax.swing.JTextField inputRespuestaCorrecta;

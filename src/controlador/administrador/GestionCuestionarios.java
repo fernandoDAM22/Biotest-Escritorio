@@ -362,6 +362,12 @@ public class GestionCuestionarios {
         }
     }
 
+    /**
+     * Este metodo nos permite obtener los cuestionarios que cuenten con 10 o
+     * mas preguntas
+     * @return un ArrayList con los nombres de los cuestionarios
+     * @author Fernando
+     */
     public static ArrayList<String> obtenerCuestionariosCompletos() {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -390,6 +396,13 @@ public class GestionCuestionarios {
         return cuestionarios;
     }
 
+    /**
+     * Este metodo permite obtener los ids de las preguntas de un cuestionario a partir
+     * de su nombre
+     * @param cuestionario es el nombre del cuestionario
+     * @return un ArrayList con los ids de las preguntas
+     * @author Fernando
+     */
     public static ArrayList<Integer> obtenerIdPreguntas(String cuestionario) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;

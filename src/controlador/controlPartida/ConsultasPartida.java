@@ -153,6 +153,14 @@ public class ConsultasPartida {
         }
     }
 
+    /**
+     * Este metodo nos permite obtener las preguntas que se han
+     * respondido en una partida a traves del id de la partida
+     *
+     * @param idPartida es el id de la partida de la cual queremos obtener sus preguntas
+     * @return un ArrayList de String con los datos de las preguntas
+     * @author Fernando
+     */
     public static ArrayList<String[]> obtenerPreguntasPartida(int idPartida) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -191,6 +199,11 @@ public class ConsultasPartida {
         return preguntas;
     }
 
+    /**
+     * Este metodo nos permite obtener la puntuacion de una partida
+     * @param idPartida es el id de la partida de la cual queremos obtener su puntuacion
+     * @return la puntuacion de la partida, -1 si ocurre algun error
+     */
     public static int obtenerPuntuacion(int idPartida) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
@@ -205,7 +218,7 @@ public class ConsultasPartida {
             sentencia = conexion.prepareStatement(sql);
             sentencia.setInt(1, idPartida);
             resultSet = sentencia.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return resultSet.getInt("puntuacion");
             }
 

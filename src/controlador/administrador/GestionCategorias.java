@@ -285,6 +285,13 @@ public class GestionCategorias {
         }
         return null;
     }
+
+    /**
+     * Este metodo nos permite obtener la categoria de una pregunta a traves su enunciado
+     * @param pregunta es el enunciado de la pregunta de la cual queremos obtener su categoria
+     * @return el nombre de la categoria de la pregunta, null si ocurre algun error
+     * @author Fernando
+     */
     public static String obtenerCategoriaPregunta(String pregunta){
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
