@@ -6,6 +6,7 @@ package vista.juego;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import controlador.administrador.GestionCategorias;
 import controlador.administrador.GestionPreguntas;
 import controlador.controlPartida.ConsultasPartida;
+import controlador.usuario.ConfiguracionUsuario;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
@@ -206,6 +208,12 @@ public class VentanaResultado extends javax.swing.JFrame {
         btnMenuPrincipal.setText("Menu Principal");
         btnMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMenuPrincipal.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnMenuPrincipal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnMenuPrincipalActionListener(evt);
+            }
+        });
         panelBotones.add(btnMenuPrincipal);
 
         btnSalir.setBackground(new Color(238, 82, 83));
@@ -214,6 +222,12 @@ public class VentanaResultado extends javax.swing.JFrame {
         btnSalir.setText("Salir");
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalir.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnSalirActionListener(evt);
+            }
+        });
         panelBotones.add(btnSalir);
 
         panelLateral.add(panelBotones);
@@ -310,10 +324,20 @@ public class VentanaResultado extends javax.swing.JFrame {
         );
         ponerPreguntas();
         ponerPuntuacion();
-        
+        ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
         
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnMenuPrincipalActionListener(ActionEvent evt) {
+        VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
+        frame.setVisible(true);
+        dispose();
+    }
+
+    private void btnSalirActionListener(ActionEvent evt) {
+        System.exit(0);
+    }
 
     private void ponerPuntuacion() {
         int puntuacion = ConsultasPartida.obtenerPuntuacion(idPartida);

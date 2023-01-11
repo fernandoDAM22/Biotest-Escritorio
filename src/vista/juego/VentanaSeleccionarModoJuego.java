@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
+import controlador.herramientas.Mensajes;
 import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
 import vista.acceso.VentanaLogin;
@@ -76,12 +77,17 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         panelCentro.setLayout(new java.awt.GridLayout(3, 1));
 
         panelBotonesModoJuego.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 100));
-
         btnModoLibre.setBackground(new Color(72, 219, 251));
         grupoBotones.add(btnModoLibre);
         btnModoLibre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoLibre.setForeground(new Color(0, 0, 0));
         btnModoLibre.setText("Modo Libre");
+        btnModoLibre.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                colocarDescripcion(evt);
+            }
+        });
         btnModoLibre.setPreferredSize(new java.awt.Dimension(150, 50));
         panelBotonesModoJuego.add(btnModoLibre);
 
@@ -90,6 +96,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoSinFallos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoSinFallos.setForeground(new Color(0, 0, 0));
         btnModoSinFallos.setText("Modo sin fallos");
+        btnModoSinFallos.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                colocarDescripcion(evt);
+            }
+        });
         btnModoSinFallos.setPreferredSize(new java.awt.Dimension(150, 50));
         panelBotonesModoJuego.add(btnModoSinFallos);
 
@@ -99,6 +111,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoClasico.setForeground(new Color(0, 0, 0));
         btnModoClasico.setText("Modo Clasico");
         btnModoClasico.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnModoClasico.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                colocarDescripcion(evt);
+            }
+        });
         panelBotonesModoJuego.add(btnModoClasico);
 
         btnModoCuestionarios.setBackground(new Color(72, 219, 251));
@@ -107,6 +125,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoCuestionarios.setForeground(new Color(0, 0, 0));
         btnModoCuestionarios.setText("Cuestionarios");
         btnModoCuestionarios.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnModoCuestionarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                colocarDescripcion(evt);
+            }
+        });
         panelBotonesModoJuego.add(btnModoCuestionarios);
 
         panelCentro.add(panelBotonesModoJuego);
@@ -117,6 +141,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnCancelarActionListener(evt);
+            }
+        });
         btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         panelControles.add(btnCancelar);
 
@@ -200,6 +230,24 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCancelarActionListener(ActionEvent evt) {
+        grupoBotones.clearSelection();
+        labelDescripcion.setText("");
+    }
+
+    private void colocarDescripcion(ActionEvent evt) {
+        JToggleButton button = (JToggleButton) evt.getSource();
+        if(button.equals(btnModoLibre)){
+            labelDescripcion.setText(Mensajes.DESCRIPCION_MODO_LIBRE);
+        }else if(button.equals(btnModoSinFallos)){
+            labelDescripcion.setText(Mensajes.DESCRIPCION_MODO_SIN_FALLOS);
+        }else if (button.equals(btnModoClasico)){
+            labelDescripcion.setText(Mensajes.DESCRIPCION_MODO_CLASICO);
+        }else{
+            labelDescripcion.setText(Mensajes.DESCRIPCION_CUESTIONARIOS);
+        }
+    }
+
     private String seleccionarPartida() {
         ButtonModel modeloBoton = grupoBotones.getSelection();
         JToggleButton botonSeleccionado = null;
@@ -249,7 +297,6 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         frame.setSize(1000, 600);
         frame.setVisible(true);
         dispose();
-
 
     }
 
