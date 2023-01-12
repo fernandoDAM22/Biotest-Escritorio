@@ -5,16 +5,14 @@
 package vista.juego;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import controlador.administrador.GestionCategorias;
 import controlador.administrador.GestionPreguntas;
 import controlador.controlPartida.ConsultasPartida;
 import controlador.usuario.ConfiguracionUsuario;
+import vista.acceso.VentanaLogin;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
@@ -75,6 +73,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
@@ -87,13 +86,17 @@ public class VentanaResultado extends javax.swing.JFrame {
         labelTextoPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelTextoPregunta.setForeground(new java.awt.Color(255, 255, 255));
         labelTextoPregunta.setText("Aqui va el texto de la pregunta");
-        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(500, 30));
+        labelTextoPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Enunciado"));
+        labelTextoPregunta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(700, 50));
         jPanel1.add(labelTextoPregunta);
 
         labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCategoriaPregunta.setForeground(new java.awt.Color(255, 255, 255));
         labelCategoriaPregunta.setText("");
-        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 30));
+        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 50));
+        labelCategoriaPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoria"));
+        labelCategoriaPregunta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         jPanel1.add(labelCategoriaPregunta);
 
         panelInformacionPregunta.add(jPanel1);
@@ -128,24 +131,28 @@ public class VentanaResultado extends javax.swing.JFrame {
         textoRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
         textoRespuestaCorrecta.setForeground(new java.awt.Color(255, 255, 255));
+        textoRespuestaCorrecta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         jPanel2.add(textoRespuestaCorrecta);
 
         textoRespuestaIncorrecta1.setEditable(false);
         textoRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta1.setForeground(new java.awt.Color(255, 255, 255));
         textoRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
+        textoRespuestaIncorrecta1.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         jPanel2.add(textoRespuestaIncorrecta1);
 
         textoRespuestaIncorrecta2.setEditable(false);
         textoRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta2.setForeground(new java.awt.Color(255, 255, 255));
         textoRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
+        textoRespuestaIncorrecta2.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         jPanel2.add(textoRespuestaIncorrecta2);
 
         textoRespuestaIncorrecta3.setEditable(false);
         textoRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         textoRespuestaIncorrecta3.setForeground(new java.awt.Color(255, 255, 255));
         textoRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
+        textoRespuestaIncorrecta3.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         jPanel2.add(textoRespuestaIncorrecta3);
 
         panelInformacionPregunta.add(jPanel2);
@@ -273,6 +280,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
+        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuegoActionPerformed(evt);
@@ -280,11 +288,22 @@ public class VentanaResultado extends javax.swing.JFrame {
         });
         menuUsuario.add(opcionModoJuego);
 
+        opcionCerrarSesion.setText("Cerrar Sesion");
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
+        opcionCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionCerrarSesionActionListener(evt);
+            }
+        });
+        menuUsuario.add(opcionCerrarSesion);
+
         barraMenu.add(menuUsuario);
 
         menuAdministrador.setText("Administrador");
 
         opcionPreguntas.setText("Preguntas");
+        opcionPreguntas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionPreguntasActionPerformed(evt);
@@ -293,6 +312,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         menuAdministrador.add(opcionPreguntas);
 
         opcionCuestionarios.setText("Cuestionarios");
+        opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCuestionariosActionPerformed(evt);
@@ -301,6 +321,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         menuAdministrador.add(opcionCuestionarios);
 
         opcionCategorias.setText("Categorias");
+        opcionCategorias.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         opcionCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCategoriasActionPerformed(evt);
@@ -328,6 +349,12 @@ public class VentanaResultado extends javax.swing.JFrame {
         
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionCerrarSesionActionListener(ActionEvent evt) {
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void btnMenuPrincipalActionListener(ActionEvent evt) {
         VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
@@ -476,6 +503,7 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
+    private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelInformacionPregunta;

@@ -241,13 +241,17 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         labelTextoPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelTextoPregunta.setForeground(new Color(255, 255, 255));
         labelTextoPregunta.setText("Aqui va el texto de la pregunta");
-        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(600, 30));
+        labelTextoPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Enunciado"));
+        labelTextoPregunta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(600, 50));
         jPanel1.add(labelTextoPregunta);
 
         labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCategoriaPregunta.setForeground(new Color(255, 255, 255));
         labelCategoriaPregunta.setText("Categoria");
-        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 30));
+        labelCategoriaPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoria"));
+        labelCategoriaPregunta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 50));
         jPanel1.add(labelCategoriaPregunta);
 
         panelInformacionPregunta.add(jPanel1);
@@ -439,12 +443,14 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
+        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuegoActionPerformed(evt);
             }
         });
         opcionCerrarSesion.setText("Cerrar sesion");
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
         opcionCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -460,6 +466,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuAdministrador.setText("Administrador");
 
         opcionPreguntas.setText("Preguntas");
+        opcionPreguntas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionPreguntasActionPerformed(evt);
@@ -468,6 +475,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuAdministrador.add(opcionPreguntas);
 
         opcionCuestionarios.setText("Cuestionarios");
+        opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCuestionariosActionPerformed(evt);
@@ -476,6 +484,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuAdministrador.add(opcionCuestionarios);
 
         opcionCategorias.setText("Categorias");
+        opcionCategorias.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         opcionCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCategoriasActionPerformed(evt);

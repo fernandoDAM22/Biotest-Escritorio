@@ -109,13 +109,17 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         labelTextoPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelTextoPregunta.setForeground(new Color(255, 255, 255));
         labelTextoPregunta.setText("Aqui va el texto de la pregunta");
-        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(500, 30));
+        labelTextoPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Enunciado"));
+        labelTextoPregunta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
+        labelTextoPregunta.setPreferredSize(new java.awt.Dimension(700, 50));
         jPanel1.add(labelTextoPregunta);
 
         labelCategoriaPregunta.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         labelCategoriaPregunta.setForeground(new Color(255, 255, 255));
         labelCategoriaPregunta.setText("Categoria");
-        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(100, 30));
+        labelCategoriaPregunta.setPreferredSize(new java.awt.Dimension(200, 50));
+        labelCategoriaPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Categoria"));
+        labelCategoriaPregunta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         jPanel1.add(labelCategoriaPregunta);
 
         panelInformacionPregunta.add(jPanel1);
@@ -270,24 +274,28 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         inputRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaCorrecta.setForeground(new Color(255, 255, 255));
         inputRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
+        inputRespuestaCorrecta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila3.add(inputRespuestaCorrecta);
 
         inputRespuestaIncorrecta1.setColumns(20);
         inputRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
         inputRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta1.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila3.add(inputRespuestaIncorrecta1);
 
         inputRespuestaIncorrecta2.setColumns(20);
         inputRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
         inputRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta2.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila3.add(inputRespuestaIncorrecta2);
 
         inputRespuestaIncorrecta3.setColumns(20);
         inputRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         inputRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
         inputRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta3.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila3.add(inputRespuestaIncorrecta3);
 
         panelPrincipal1.add(panelDialogoFila3);
@@ -492,6 +500,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
+        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuegoActionPerformed(evt);
@@ -501,6 +510,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         barraMenu.add(menuUsuario);
         opcionCerrarSesion.setText("Cerrar sesion");
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
         opcionCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -513,6 +523,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuAdministrador.setText("Administrador");
 
         opcionPreguntas.setText("Preguntas");
+        opcionPreguntas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionPreguntasActionPerformed(evt);
@@ -521,6 +532,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuAdministrador.add(opcionPreguntas);
 
         opcionCuestionarios.setText("Cuestionarios");
+        opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCuestionariosActionPerformed(evt);
@@ -529,6 +541,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuAdministrador.add(opcionCuestionarios);
 
         opcionCategorias.setText("Categorias");
+        opcionCategorias.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         opcionCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCategoriasActionPerformed(evt);
@@ -870,8 +883,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JButton btnInsertarPregunta;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JButton
-            btnSalirDiaologoInformacion;
+    private javax.swing.JButton btnSalirDiaologoInformacion;
     private javax.swing.JDialog dialogoInformacionPregunta;
     private javax.swing.JDialog dialogoPreguntas;
     private javax.swing.JTextField inputRespuestaCorrecta;

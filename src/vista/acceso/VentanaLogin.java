@@ -11,6 +11,9 @@ import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 import static controlador.usuario.Codigos.CORRECTO;
 import static controlador.usuario.Codigos.ERROR_NO_EXISTE_USUARIO;
@@ -74,6 +77,13 @@ public class VentanaLogin extends javax.swing.JFrame {
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLogin.setForeground(new Color(0, 0, 0));
         btnLogin.setText("LOGIN");
+        btnLogin.registerKeyboardAction(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        }, KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, ActionEvent.ALT_MASK), JComponent.WHEN_IN_FOCUSED_WINDOW);
+
         btnLogin.setBorder(null);
         btnLogin.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
