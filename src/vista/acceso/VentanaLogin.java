@@ -4,6 +4,7 @@
  */
 package vista.acceso;
 
+import controlador.herramientas.EventoFoco;
 import controlador.usuario.Codigos;
 import controlador.usuario.ConfiguracionUsuario;
 import controlador.usuario.Login;
@@ -70,8 +71,10 @@ public class VentanaLogin extends javax.swing.JFrame {
         labelPassword.setText("Password");
 
         inputPassword.setBorder(null);
+        inputUsername.addFocusListener(new EventoFoco());
 
         inputUsername.setBorder(null);
+        inputUsername.addFocusListener(new EventoFoco());
 
         btnLogin.setBackground(new Color(72, 219, 251));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

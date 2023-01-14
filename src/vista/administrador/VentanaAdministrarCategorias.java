@@ -752,5 +752,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JTextField textoRespuestaIncorrecta1;
     private javax.swing.JTextField textoRespuestaIncorrecta2;
     private javax.swing.JTextField textoRespuestaIncorrecta3;
+
     // End of variables declaration//GEN-END:variables
 }

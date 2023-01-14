@@ -4,6 +4,8 @@
  */
 package vista.administrador.dialogos;
 
+import controlador.herramientas.EventoFoco;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -90,6 +92,7 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
         panelFila2.add(labelEnunciado);
 
         inputEnunciado.setPreferredSize(new java.awt.Dimension(500, 30));
+        inputEnunciado.addFocusListener(new EventoFoco());
         panelFila2.add(inputEnunciado);
 
         jPanel1.add(panelFila2);
@@ -104,6 +107,7 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
 
         inputRespuestaCorrecta.setText("\n");
         inputRespuestaCorrecta.setPreferredSize(new java.awt.Dimension(250, 30));
+        inputRespuestaCorrecta.addFocusListener(new EventoFoco());
         panelFila3.add(inputRespuestaCorrecta);
 
         jPanel1.add(panelFila3);
@@ -117,6 +121,7 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
 
         inputRespuestaIncorrecta1.setText("\n");
         inputRespuestaIncorrecta1.setPreferredSize(new java.awt.Dimension(250, 30));
+        inputRespuestaIncorrecta1.addFocusListener(new EventoFoco());
         panelFila4.add(inputRespuestaIncorrecta1);
 
         jPanel1.add(panelFila4);
@@ -130,6 +135,7 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
 
         inputRespuestaIncorrecta2.setText("\n");
         inputRespuestaIncorrecta2.setPreferredSize(new java.awt.Dimension(250, 30));
+        inputRespuestaIncorrecta2.addFocusListener(new EventoFoco());
         panelFila5.add(inputRespuestaIncorrecta2);
 
         jPanel1.add(panelFila5);
@@ -143,6 +149,7 @@ public class DialogoDatosPregunta extends javax.swing.JDialog {
 
         inputRespuestaIncorrecta3.setText("\n");
         inputRespuestaIncorrecta3.setPreferredSize(new java.awt.Dimension(250, 30));
+        inputRespuestaIncorrecta3.addFocusListener(new EventoFoco());
         panelFila6.add(inputRespuestaIncorrecta3);
 
         jPanel1.add(panelFila6);

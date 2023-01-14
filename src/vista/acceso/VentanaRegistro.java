@@ -4,10 +4,16 @@
  */
 package vista.acceso;
 
+import controlador.herramientas.EventoFoco;
 import controlador.usuario.Codigos;
 import controlador.usuario.Registro;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -34,6 +40,8 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         panelPrincipal = new javax.swing.JPanel();
         panelTitulo = new javax.swing.JPanel();
         labelRegistrarse = new javax.swing.JLabel();
+        labelCerrarError = new javax.swing.JLabel();
+        labelError = new javax.swing.JLabel();
         panelFila1 = new javax.swing.JPanel();
         labelName = new javax.swing.JLabel();
         inputName = new javax.swing.JTextField();
@@ -50,12 +58,13 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         labelPhone = new javax.swing.JLabel();
         inputPhone = new javax.swing.JTextField();
         panelFila6 = new javax.swing.JPanel();
+        panelErrores = new javax.swing.JPanel();
         btnCancelar = new javax.swing.JButton();
         btnRegistrarse = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelPrincipal.setLayout(new java.awt.GridLayout(7, 1));
+        panelPrincipal.setLayout(new java.awt.GridLayout(8, 1));
 
         panelTitulo.setBackground(new java.awt.Color(29, 209, 161));
 
@@ -80,6 +89,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputName.setBorder(null);
         inputName.setPreferredSize(new java.awt.Dimension(200, 30));
         inputName.setToolTipText("El nombre solo puede tener letras y espacios");
+        inputName.addFocusListener(new EventoFoco());
         panelFila1.add(inputName);
 
         panelPrincipal.add(panelFila1);
@@ -96,6 +106,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputEmail.setBorder(null);
         inputEmail.setPreferredSize(new java.awt.Dimension(200, 30));
         inputEmail.setToolTipText("El email debe ser un email valido");
+        inputEmail.addFocusListener(new EventoFoco());
         panelFila2.add(inputEmail);
 
         panelPrincipal.add(panelFila2);
@@ -112,6 +123,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputPassword.setBorder(null);
         inputPassword.setPreferredSize(new java.awt.Dimension(200, 30));
         inputPassword.setToolTipText("8 caracteres de los cuales uno debe ser un numero");
+        inputPassword.addFocusListener(new EventoFoco());
         panelFila3.add(inputPassword);
 
         panelPrincipal.add(panelFila3);
@@ -123,6 +135,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         labelPassword2.setText("Password 2");
         labelPassword2.setPreferredSize(new java.awt.Dimension(100, 16));
         inputPassword2.setToolTipText("8 caracteres de los cuales uno debe ser un numero");
+        inputPassword2.addFocusListener(new EventoFoco());
         panelFila4.add(labelPassword2);
 
         inputPassword2.setColumns(20);
@@ -144,6 +157,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputPhone.setBorder(null);
         inputPhone.setPreferredSize(new java.awt.Dimension(200, 30));
         inputPhone.setToolTipText("9 numeros");
+        inputPhone.addFocusListener(new EventoFoco());
         panelFila5.add(inputPhone);
 
         panelPrincipal.add(panelFila5);
@@ -163,6 +177,8 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         });
         btnCancelar.setToolTipText("Volver a la ventana de login");
         panelFila6.add(btnCancelar);
+
+
 
         btnRegistrarse.setBackground(new java.awt.Color(72, 219, 251));
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -189,11 +205,36 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
+        labelError.setPreferredSize(new Dimension(250,20));
+        labelError.setText("");
+        labelError.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        labelError.setForeground(Color.RED);
+        labelCerrarError.setForeground(Color.black);
+        labelCerrarError.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        labelCerrarError.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                labelCerrarErrorMouseClicked(evt);
+            }
+        });
+        labelCerrarError.setText("X");
+        panelErrores.setBackground(new java.awt.Color(29, 209, 161));
+
+        panelErrores.add(labelError);
+        panelErrores.add(labelCerrarError);
+        labelCerrarError.setVisible(false);
+        panelPrincipal.add(panelErrores);
 
 
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+
+    private void labelCerrarErrorMouseClicked(MouseEvent evt) {
+        labelCerrarError.setVisible(false);
+        labelError.setText("");
+    }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         VentanaLogin frame = new VentanaLogin();
@@ -237,7 +278,8 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
        }
        //mostramos el mensaje correspondiente
        if(codigo < 0){ //si el codigo es negativo es un error
-           JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
+            labelError.setText(mensaje);
+            labelCerrarError.setVisible(true);
        }else{// si no es un mensaje informativo
            JOptionPane.showMessageDialog(null,mensaje,"Correcto",JOptionPane.INFORMATION_MESSAGE);
            VentanaLogin frame = new VentanaLogin();
@@ -295,12 +337,15 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
     private javax.swing.JLabel labelPassword2;
     private javax.swing.JLabel labelPhone;
     private javax.swing.JLabel labelRegistrarse;
+    private javax.swing.JLabel labelCerrarError;
+    private javax.swing.JLabel labelError;
     private javax.swing.JPanel panelFila1;
     private javax.swing.JPanel panelFila2;
     private javax.swing.JPanel panelFila3;
     private javax.swing.JPanel panelFila4;
     private javax.swing.JPanel panelFila5;
     private javax.swing.JPanel panelFila6;
+    private javax.swing.JPanel panelErrores;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelTitulo;
     // End of variables declaration//GEN-END:variables

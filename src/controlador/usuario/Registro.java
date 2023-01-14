@@ -100,4 +100,5 @@ public class Registro implements Codigos {
             conexionBD.cerrarConexion();
         }
     }
+
 }
