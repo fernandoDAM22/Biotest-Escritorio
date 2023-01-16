@@ -4,7 +4,7 @@
  */
 package vista.administrador;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -326,7 +326,13 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, "Pregunta Borrada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
                     listaPreguntas.removeItem(enunciado);
                 } else {
-                    JOptionPane.showMessageDialog(this, "No se ha podido borrar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+                    StringBuilder cadena = new StringBuilder();
+                    cadena.append("No se ha podido borrar la pregunta, las posibles causas son:\n");
+                    cadena.append("\t > Ha ocurrido un error en la conexion a la base de datos\n");
+                    cadena.append("\t > No dispones de los permisos necesarios para realizar esa accion\n");
+                    cadena.append("\t > No se pueden borrar preguntas asignadas a un cuestionario\n");
+                    cadena.append("\t> No se pueden borrar preguntas que hayan sido respondidas en alguna partida\n");
+                    JOptionPane.showMessageDialog(this, cadena.toString(), "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (NullPointerException npe) {

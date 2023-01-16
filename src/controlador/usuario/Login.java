@@ -59,13 +59,7 @@ public class Login implements Codigos {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return password;
     }

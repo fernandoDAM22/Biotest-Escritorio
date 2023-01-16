@@ -560,10 +560,15 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         if (GestionCategorias.borrarCategoria(nombre)) {//si se borra
             JOptionPane.showMessageDialog(this, "Categoria borrada correctamente", "Categoria borrada", JOptionPane.INFORMATION_MESSAGE);
             //eliminamos la categoria borrada de la lista desplegable
-            //eliminamos la categoria borrada de la lista desplegable
             listaCategorias.removeItem(nombre);
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido borrar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
+            StringBuilder cadena = new StringBuilder();
+            cadena.append("No se ha podido borrar la categoria, las posibles causas son:\n");
+
+            cadena.append("\t > Ha ocurrido un error en la conexion a la base de datos\n");
+            cadena.append("\t > No se pueden borrar categorias que contengan almenos una pregunta\n");
+            cadena.append("\t > Ha ocurrido un error en la conexion a la base de datos\n");
+            JOptionPane.showMessageDialog(this, cadena.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 

@@ -51,13 +51,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return preguntas;
 
@@ -92,13 +86,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return preguntas;
 
@@ -176,13 +164,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
     }
@@ -217,13 +199,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -247,15 +223,9 @@ public class GestionPreguntas {
             int estado = sentencia.executeUpdate();
             return estado > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+           return false;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -287,13 +257,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -307,7 +271,7 @@ public class GestionPreguntas {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         int id;
         String sql = "select id from preguntas where enunciado like ?";
         conexionBD = new ConexionBD();
@@ -323,13 +287,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
     }
@@ -343,7 +301,7 @@ public class GestionPreguntas {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         ArrayList<Integer> ids = new ArrayList<>();
         String sql = "select id from preguntas";
         conexionBD = new ConexionBD();
@@ -357,13 +315,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return ids;
     }
@@ -400,13 +352,7 @@ public class GestionPreguntas {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
     }

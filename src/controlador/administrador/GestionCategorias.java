@@ -39,13 +39,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return nombresCategorias;
     }
@@ -98,13 +92,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -132,13 +120,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
     }
 
@@ -168,13 +150,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             return false;
         }finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
         return resultado > 0;
     }
@@ -203,13 +179,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             return false;
         }finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
         return resultado > 0;
     }
@@ -224,7 +194,7 @@ public class GestionCategorias {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String sql = "select id from categoria where nombre like ?";
         conexionBD = new ConexionBD();
         try {
@@ -239,13 +209,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             return -1;
         }finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
     }
@@ -260,7 +224,7 @@ public class GestionCategorias {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String sql = "select descripcion from categoria where nombre like ?";
         conexionBD = new ConexionBD();
         try {
@@ -275,13 +239,7 @@ public class GestionCategorias {
         } catch (SQLException ignored) {
 
         }finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
     }
@@ -296,7 +254,7 @@ public class GestionCategorias {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String sql = "Select c.nombre from categoria c join preguntas p on c.id = p.id_categoria where p.enunciado like ?";
         conexionBD = new ConexionBD();
         try {
@@ -311,13 +269,7 @@ public class GestionCategorias {
         } catch (SQLException e) {
             e.printStackTrace();
         }finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+          ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
     }

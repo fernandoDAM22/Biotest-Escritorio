@@ -8,6 +8,7 @@ import modelo.Usuario;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -91,13 +92,7 @@ public class Registro implements Codigos {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 

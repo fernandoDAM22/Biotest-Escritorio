@@ -22,7 +22,7 @@ public class GestionUsuarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String sql = "select id from usuarios where nombre like ?";
         conexionBD = new ConexionBD();
         try {
@@ -36,13 +36,7 @@ public class GestionUsuarios {
         } catch (SQLException e) {
            return  -1;
         }finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
     }

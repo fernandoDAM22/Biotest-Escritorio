@@ -26,7 +26,7 @@ public class ConsultasPartida {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String sql = "select id from partidas";
         ArrayList<Integer> ids = new ArrayList<>();
         conexionBD = new ConexionBD();
@@ -41,13 +41,7 @@ public class ConsultasPartida {
         } catch (SQLException e) {
             return null;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return ids;
     }
@@ -76,13 +70,7 @@ public class ConsultasPartida {
             sentencia.executeUpdate();
         } catch (SQLException ignored) {
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
 
     }
@@ -111,13 +99,7 @@ public class ConsultasPartida {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -143,13 +125,7 @@ public class ConsultasPartida {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -188,13 +164,7 @@ public class ConsultasPartida {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return preguntas;
     }
@@ -225,13 +195,7 @@ public class ConsultasPartida {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
     }

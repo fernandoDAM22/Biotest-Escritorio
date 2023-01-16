@@ -1,8 +1,6 @@
 package controlador.baseDeDatos;
 
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Connection;
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,9 +33,11 @@ public class ConexionBD implements Configuracion {
         this.password = password;
     }
 
+
     /**
      * Este metodo nos permite abrir una conexion
      * en la base de datos
+     *
      * @return la conexion a la base de datos
      */
     public Connection abrirConexion() {
@@ -62,6 +62,7 @@ public class ConexionBD implements Configuracion {
 
     /**
      * Nos permite cerrar la conexion en la base de datos
+     *
      * @return
      */
     public boolean cerrarConexion() {
@@ -72,6 +73,50 @@ public class ConexionBD implements Configuracion {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Este metodo permite cerrar las conexiones en la base de datos
+     *
+     * @param resultSet  un objeto ResultSet
+     * @param sentencia  un objeto PreparedStatement
+     * @param conexionBD un objeto ConexionBD
+     * @author Fernando
+     */
+    public static void cerrar(ResultSet resultSet, PreparedStatement sentencia, ConexionBD conexionBD) {
+        try {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            if (sentencia != null) {
+                sentencia.close();
+            }
+            if (conexionBD != null) {
+                conexionBD.cerrarConexion();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    /**
+     * Este metodo permite cerrar las conexiones en la base de datos
+     *
+     * @param sentencia  un objeto PreparedStatement
+     * @param conexionBD un objeto ConexionBD
+     * @author Fernando
+     */
+
+    public static void cerrar(PreparedStatement sentencia, ConexionBD conexionBD) {
+        try {
+            if (sentencia != null) {
+                sentencia.close();
+            }
+            if (conexionBD != null) {
+                conexionBD.cerrarConexion();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

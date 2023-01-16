@@ -41,13 +41,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
     }
 
@@ -77,12 +71,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (sentencia != null) sentencia.close();
-                conexionBD.cerrarConexion();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return cuestionarios;
     }
@@ -100,7 +89,6 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet = null;
         String sql = "INSERT INTO cuestionarios(nombre, descripcion, id_categoria) VALUES (?,?,?);";
         conexionBD = new ConexionBD();
         try {
@@ -113,13 +101,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -150,13 +132,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
     }
@@ -173,7 +149,6 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet = null;
         int id;
         String sql = "insert into preguntas_cuestionarios (id_cuestionario, id_pregunta) values (?,?)";
         conexionBD = new ConexionBD();
@@ -190,13 +165,7 @@ public class GestionCuestionarios {
              */
             return false;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -246,13 +215,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -267,7 +230,7 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String descripcion;
         String sql = "select descripcion from cuestionarios where nombre like ?";
         conexionBD = new ConexionBD();
@@ -283,13 +246,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return null;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
     }
@@ -305,7 +262,7 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String descripcion;
         String sql = "update cuestionarios set nombre = ?, descripcion = ? where id = ?";
         conexionBD = new ConexionBD();
@@ -319,13 +276,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
     }
 
@@ -340,7 +291,7 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
-        ResultSet resultSet;
+        ResultSet resultSet = null;
         String descripcion;
         String sql = "delete from cuestionarios where id = ?";
         conexionBD = new ConexionBD();
@@ -352,13 +303,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            assert sentencia != null;
-            try {
-                sentencia.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-            conexionBD.cerrarConexion();
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
     }
 
@@ -386,12 +331,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (sentencia != null) sentencia.close();
-                conexionBD.cerrarConexion();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return cuestionarios;
     }
@@ -423,12 +363,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            try {
-                if (sentencia != null) sentencia.close();
-                conexionBD.cerrarConexion();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return idPreguntas;
 
