@@ -4,17 +4,15 @@
  */
 package vista.administrador;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import controlador.administrador.GestionCategorias;
 import controlador.administrador.GestionCuestionarios;
 import controlador.administrador.GestionPreguntas;
 import modelo.Cuestionario;
+import vista.acceso.VentanaLogin;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
@@ -99,6 +97,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         opcionModoJuego = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
 
@@ -115,9 +114,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
 
         listaPreguntasDialogo.setEditable(true);
-        listaPreguntasDialogo.setForeground(new java.awt.Color(255, 255, 255));
+        listaPreguntasDialogo.setForeground(new Color(255, 255, 255));
         listaPreguntasDialogo.setMaximumRowCount(50);
         listaPreguntasDialogo.setPreferredSize(new java.awt.Dimension(600, 40));
+
         listaPreguntasDialogo.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent evt) {
@@ -126,7 +126,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelDialogoFila6.add(listaPreguntasDialogo);
 
-        listaCategoriasDialogo.setForeground(new java.awt.Color(255, 255, 255));
+        listaCategoriasDialogo.setForeground(new Color(255, 255, 255));
         listaCategoriasDialogo.setPreferredSize(new java.awt.Dimension(200, 40));
 
         listaCategoriasDialogo.addItemListener(new ItemListener() {
@@ -260,6 +260,11 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         listaCuestionarios.setForeground(new java.awt.Color(0, 0, 0));
         listaCuestionarios.setMaximumRowCount(50);
         listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
+        listaCuestionarios.setEditable(false);
+        listaCuestionarios.setForeground(new Color(0, 0, 0));
+        listaCuestionarios.setMaximumRowCount(50);
+        listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
+        listaCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14));
         listaCuestionarios.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent evt) {
@@ -275,6 +280,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 listaCategoriasItemListener(evt);
             }
         });
+        listaCategorias.setPreferredSize(new java.awt.Dimension(200, 40));
         panelFila1.add(listaCategorias);
 
         panelPrincipal.add(panelFila1, java.awt.BorderLayout.PAGE_START);
@@ -333,11 +339,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelBotones.add(btnBorrarPregunta);
 
-        btnInsertarPregunta.setBackground(new Color(238, 82, 83));
+        btnInsertarPregunta.setBackground(new Color(29, 209, 161));
         btnInsertarPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnInsertarPregunta.setForeground(new java.awt.Color(0, 0, 0));
+        btnInsertarPregunta.setForeground(new Color(0, 0, 0));
         btnInsertarPregunta.setText("Añadir Pregunta");
         btnInsertarPregunta.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnInsertarPregunta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnInsertarPregunta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarPreguntaActionPerformed(evt);
@@ -553,6 +560,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
+        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuegoActionPerformed(evt);
@@ -565,14 +573,26 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuAdministrador.setText("Administrador");
 
         opcionPreguntas.setText("Preguntas");
+        opcionPreguntas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionPreguntasActionPerformed(evt);
             }
         });
         menuAdministrador.add(opcionPreguntas);
+        opcionCerrarSesion.setText("Cerrar sesion");
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
+        opcionCerrarSesion.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionCerrarSesionActionListener(evt);
+            }
+        });
+        menuUsuario.add(opcionCerrarSesion);
+
 
         opcionCuestionarios.setText("Cuestionarios");
+        opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCuestionariosActionPerformed(evt);
@@ -581,6 +601,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuAdministrador.add(opcionCuestionarios);
 
         opcionCategorias.setText("Categorias");
+        opcionCategorias.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         opcionCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCategoriasActionPerformed(evt);
@@ -610,6 +631,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void opcionCerrarSesionActionListener(ActionEvent evt) {
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void btnInsertarActionPerformed(ActionEvent evt) {
         int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
@@ -786,7 +813,18 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void btnBorrarPreguntaActionPerformed(java.awt.event.ActionEvent evt) {
-
+        int posicion = tablaPreguntas.getSelectedRow();
+        int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
+        int idCuestionario = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        if (GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)) {
+            JOptionPane.showMessageDialog(this, "Pregunta borrada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido borrar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void btnInsertarPreguntaActionPerformed(java.awt.event.ActionEvent evt) {
@@ -951,11 +989,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;
+    private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JPanel panelBotones;
-    private javax.swing.JPanel panelDialogoFila1;
-    private javax.swing.JPanel panelDialogoFila2;
-    private javax.swing.JPanel panelDialogoFila3;
-    private javax.swing.JPanel panelDialogoFila4;
     private javax.swing.JPanel panelDialogoFila5;
     private javax.swing.JPanel panelDialogoFila6;
     private javax.swing.JPanel panelDialogoFila7;
@@ -963,8 +998,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JPanel panelFila1;
     private javax.swing.JPanel panelFila2;
     private javax.swing.JPanel panelPrincipal;
-    private javax.swing.JPanel panelPrincipal1;
-    private javax.swing.JPanel panelPrincipal2;
     private javax.swing.JPanel panelPrincipal3;
     private javax.swing.JTextField txtCategoriaPregunta;
     private javax.swing.JTextField txtEnunciado;
