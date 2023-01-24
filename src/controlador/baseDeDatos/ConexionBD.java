@@ -67,7 +67,7 @@ public class ConexionBD implements Configuracion {
      */
     public boolean cerrarConexion() {
         try {
-            conexion.close();
+            if(conexion != null) conexion.close();
         } catch (SQLException ex) {
             Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
             return false;

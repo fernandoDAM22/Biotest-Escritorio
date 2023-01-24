@@ -6,7 +6,6 @@ package vista.administrador;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import controlador.administrador.GestionCategorias;
@@ -15,6 +14,7 @@ import modelo.Pregunta;
 import vista.acceso.VentanaLogin;
 import vista.administrador.dialogos.DialogoDatosPregunta;
 import vista.juego.VentanaSeleccionarModoJuego;
+
 
 import javax.swing.*;
 

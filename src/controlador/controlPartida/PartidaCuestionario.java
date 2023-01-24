@@ -6,7 +6,7 @@ import controlador.herramientas.Colores;
 import controlador.herramientas.PilaSinRepetidos;
 import modelo.Partida;
 import modelo.Pregunta;
-import vista.juego.dialogos.DialogoElegirCuestionario;
+import view.juego.dialogos.DialogoElegirCuestionario;
 
 import javax.swing.*;
 import java.util.ArrayList;

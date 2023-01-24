@@ -13,11 +13,11 @@ import java.util.Enumeration;
 import controlador.herramientas.Mensajes;
 import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
+import view.juego.dialogos.DialogoElegirCuestionario;
 import vista.acceso.VentanaLogin;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
-import vista.juego.dialogos.DialogoElegirCuestionario;
 
 import javax.swing.*;
 

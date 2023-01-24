@@ -17,6 +17,7 @@ import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
 
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 

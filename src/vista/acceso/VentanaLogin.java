@@ -10,6 +10,7 @@ import controlador.usuario.ConfiguracionUsuario;
 import controlador.usuario.Login;
 import vista.juego.VentanaSeleccionarModoJuego;
 
+
 import javax.swing.*;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -32,6 +33,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setBackground(new Color(29, 209, 161));
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

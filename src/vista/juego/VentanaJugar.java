@@ -12,11 +12,12 @@ import controlador.controlPartida.*;
 import controlador.herramientas.TipoPartida;
 import controlador.usuario.ConfiguracionUsuario;
 import controlador.usuario.GestionUsuarios;
-import modelo.Cuestionario;
 import modelo.Partida;
 import vista.administrador.VentanaAdministrarCategorias;
 import vista.administrador.VentanaAdministrarCuestionarios;
 import vista.administrador.VentanaAdministrarPreguntas;
+import vista.juego.*;
+
 
 import javax.swing.*;
 

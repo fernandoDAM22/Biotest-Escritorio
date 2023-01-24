@@ -2,14 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package vista.juego.dialogos;
+package view.juego.dialogos;
 
 import controlador.administrador.GestionCuestionarios;
 import controlador.herramientas.Colores;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.ArrayList;
 
 /**
  *
