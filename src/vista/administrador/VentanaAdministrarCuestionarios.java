@@ -116,6 +116,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         listaPreguntasDialogo.setEditable(true);
         listaPreguntasDialogo.setForeground(new Color(255, 255, 255));
         listaPreguntasDialogo.setMaximumRowCount(50);
+        listaPreguntasDialogo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
         listaPreguntasDialogo.setPreferredSize(new java.awt.Dimension(600, 40));
 
         listaPreguntasDialogo.addItemListener(new ItemListener() {
@@ -174,22 +176,30 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         inputRespuestaCorrecta.setColumns(20);
         inputRespuestaCorrecta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        inputRespuestaCorrecta.setForeground(new java.awt.Color(255, 255, 255));
+        inputRespuestaCorrecta.setForeground(new Color(255, 255, 255));
+        inputRespuestaCorrecta.setBackground(new Color(50, 255, 126, 100));
+        inputRespuestaCorrecta.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila7.add(inputRespuestaCorrecta);
 
         inputRespuestaIncorrecta1.setColumns(20);
         inputRespuestaIncorrecta1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        inputRespuestaIncorrecta1.setForeground(new java.awt.Color(255, 255, 255));
+        inputRespuestaIncorrecta1.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta1.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta1.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila7.add(inputRespuestaIncorrecta1);
 
         inputRespuestaIncorrecta2.setColumns(20);
         inputRespuestaIncorrecta2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        inputRespuestaIncorrecta2.setForeground(new java.awt.Color(255, 255, 255));
+        inputRespuestaIncorrecta2.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta2.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta2.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila7.add(inputRespuestaIncorrecta2);
 
         inputRespuestaIncorrecta3.setColumns(20);
         inputRespuestaIncorrecta3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        inputRespuestaIncorrecta3.setForeground(new java.awt.Color(255, 255, 255));
+        inputRespuestaIncorrecta3.setForeground(new Color(255, 255, 255));
+        inputRespuestaIncorrecta3.setBackground(new Color(255, 56, 56, 100));
+        inputRespuestaIncorrecta3.setHorizontalAlignment(SwingConstants.HORIZONTAL);
         panelDialogoFila7.add(inputRespuestaIncorrecta3);
 
         panelPrincipal3.add(panelDialogoFila7);
@@ -387,6 +397,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         tablaPreguntas.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
+                super.keyReleased(evt);
                 jTable1KeyReleased(evt);
             }
         });
@@ -666,7 +677,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         actualizarPreguntasDialogo();
         try {
             listaCuestionarios.setSelectedIndex(0);
-        }catch (IllegalArgumentException | NullPointerException ignored){
+        } catch (IllegalArgumentException | NullPointerException ignored) {
 
         }
     }
@@ -696,9 +707,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void listaCuestionariosItemListener(ItemEvent evt) {
-        actualizarCuestionarios();
+        actualizarCuestionarios(); //actualizamos los cuestionarios
         if (listaCuestionarios.getSelectedItem() != null) {
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
+            colocarDatosCuestionario(listaCuestionarios.getSelectedItem().toString());
         }
 
     }
@@ -708,12 +720,24 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         actualizarCuestionarios();
         try {
             listaCuestionarios.setSelectedIndex(0);
-        }catch (IllegalArgumentException | NullPointerException ignored){
+        } catch (IllegalArgumentException | NullPointerException ignored) {
 
         }
 
     }
 
+    private void colocarDatosCuestionario(String nombreCuestionario) {
+        String descripcion = GestionCuestionarios.obtenerDescripcion(nombreCuestionario);
+        txtNombreCuestionario.setText(nombreCuestionario);
+        txtDescripcionCuestionario.setText(descripcion);
+    }
+
+    /**
+     * Este metodo nos permite colocar las categororias en las listas desplegables tanto
+     * de la ventana principal como del dialogo
+     *
+     * @author Fernando
+     */
     private void colocarCategorias() {
         for (String e : GestionCategorias.obtenerCategorias()) {
             listaCategorias.addItem(e);
@@ -749,6 +773,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este metodo nos permite comprobar si la lista de cuestionarios
+     * contiene o no un elemento
+     * @param elemento es el elemento que queremos comprobar
+     * @return true si existe, false si no existe
+     */
     public boolean contieneElemento(String elemento) {
         ComboBoxModel<String> modelo = listaCuestionarios.getModel();
         for (int i = 0; i < modelo.getSize(); i++) {
@@ -758,16 +788,24 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         }
         return false;
     }
+
     /**
      * Este metodo actualiza las preguntas del dialogo que se muestra cuando se
      * pulsa el boton de añadir pregunta
      *
      * @author Fernando
      */
- 
+
 
     private void tablaPreguntasMouseClicked(java.awt.event.MouseEvent evt) {
         //obtenemos la posicion de la fila que se ha pulsado
+        colocarInformacionPregunta();
+    }
+
+    /**
+     * Este metodo coloca los datos de una pregunta en su casilla correspondiente
+     */
+    private void colocarInformacionPregunta() {
         int posicion = tablaPreguntas.getSelectedRow();
         if (posicion >= 0) {
             //obtenemos los datos de la pregunta
@@ -850,13 +888,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         int id = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
-        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if(GestionCuestionarios.borrar(id)){
+        if (GestionCuestionarios.borrar(id)) {
             JOptionPane.showMessageDialog(this, "Cuestionario borrado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             listaCuestionarios.removeItem(listaCuestionarios.getSelectedItem().toString());
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No se ha podido borrar el cuestionario", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -871,7 +909,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if(GestionCuestionarios.existeCuestionario(nombre) && !nombre.equals(listaCuestionarios.getSelectedItem().toString())){
+        if (GestionCuestionarios.existeCuestionario(nombre) && !nombre.equals(listaCuestionarios.getSelectedItem().toString())) {
             JOptionPane.showMessageDialog(this, "Ya existe un cuestionario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -899,7 +937,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
+        colocarInformacionPregunta();
     }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {
