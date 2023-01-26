@@ -46,6 +46,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         this.tipoPartida = tipoPartida;
         bandera = true;
         initComponents();
+        setLocationRelativeTo(null);
         jugar();
     }
 

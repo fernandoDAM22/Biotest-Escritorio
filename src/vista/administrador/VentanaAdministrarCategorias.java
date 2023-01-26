@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.event.*;
 
 import controlador.administrador.GestionCategorias;
+import vista.acceso.VentanaLogin;
 import vista.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
@@ -529,7 +530,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void opcionCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
     }
 
     /**
