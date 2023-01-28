@@ -137,11 +137,8 @@ public class PartidaModoLibre extends GestionPartida {
      */
     @Override
     public boolean fin() {
-       if(numeroPreguntas <= 100){
-           return false;
-       }else {
-           return true;
-       }
+        //si se llega a las 100 preguntas retorna true y se para la partida
+        return numeroPreguntas > 100;
     }
 
     public int getContadorPreguntasCorrectas() {

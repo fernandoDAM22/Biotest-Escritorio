@@ -243,19 +243,33 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         labelDescripcion.setText("");
     }
 
+    /**
+     * Este metodo coloca la descripcion del modo de juego en funcion
+     * de la opcion que se seleccione
+     *
+     * @param evt es el boton que se ha pulsado
+     * @author Fernando
+     */
     private void colocarDescripcion(ActionEvent evt) {
         JToggleButton button = (JToggleButton) evt.getSource();
-        if(button.equals(btnModoLibre)){
+        if (btnModoLibre.equals(button)) {
             labelDescripcion.setText(Mensajes.DESCRIPCION_MODO_LIBRE);
-        }else if(button.equals(btnModoSinFallos)){
+        } else if (btnModoSinFallos.equals(button)) {
             labelDescripcion.setText(Mensajes.DESCRIPCION_MODO_SIN_FALLOS);
-        }else if (button.equals(btnModoClasico)){
+        } else if (btnModoClasico.equals(button)) {
             labelDescripcion.setText(Mensajes.DESCRIPCION_MODO_CLASICO);
-        }else{
+        } else {
             labelDescripcion.setText(Mensajes.DESCRIPCION_CUESTIONARIOS);
         }
+
     }
 
+    /**
+     * Este metodo nos permite seleccionar una partida
+     *
+     * @return el tipo de partida seleccionada, null si ocurre algun error
+     * @author Fernando
+     */
     private String seleccionarPartida() {
         ButtonModel modeloBoton = grupoBotones.getSelection();
         JToggleButton botonSeleccionado = null;
@@ -264,15 +278,10 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
             JToggleButton boton = (JToggleButton) botones.nextElement();
             if (boton.getModel() == modeloBoton) {
                 // Este es el botón seleccionado
-                botonSeleccionado = boton;
-                break;
+                return boton.getText();
             }
         }
-        if (botonSeleccionado != null) {
-            return botonSeleccionado.getText();
-        } else {
-            return null;
-        }
+        return null;
     }
 
     private void btnJugarActionListener(ActionEvent evt) {
@@ -281,24 +290,18 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         if (mensaje == null) {
             JOptionPane.showMessageDialog(null, "Seleccione un modo de juego", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            switch (mensaje) {
-                case "Modo Libre":
-                    tipoPartida = TipoPartida.MODO_LIBRE;
-                    break;
-                case "Modo sin fallos":
-                    tipoPartida = TipoPartida.MODO_SIN_FALLOS;
-                    break;
-                case "Modo Clasico":
-                    tipoPartida = TipoPartida.MODO_CLASICO;
-                    break;
-                case "Cuestionarios":
+            switch (mensaje) { // se establece el tipo de partida elegido
+                case "Modo Libre" -> tipoPartida = TipoPartida.MODO_LIBRE;
+                case "Modo sin fallos" -> tipoPartida = TipoPartida.MODO_SIN_FALLOS;
+                case "Modo Clasico" -> tipoPartida = TipoPartida.MODO_CLASICO;
+                case "Cuestionarios" -> {
                     DialogoElegirCuestionario.mostrarDialogo();
                     boolean elegido = DialogoElegirCuestionario.obtenerEstado();
                     if (!elegido) {
                         return;
                     }
                     tipoPartida = TipoPartida.CUESTIONARIOS;
-                    break;
+                }
             }
         }
         VentanaJugar frame = new VentanaJugar(tipoPartida);

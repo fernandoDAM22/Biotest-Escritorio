@@ -26,7 +26,15 @@ public abstract class GestionPartida {
      */
     JLabel enunciado;
 
-
+    /**
+     * Constructor parametrizado
+     * @param partida es el objeto partida
+     * @param btnOpcion1 es el boton donde se coloca la primera opcion
+     * @param btnOpcion2 es el boton donde se coloca la segunda opcion
+     * @param btnOpcion3 es el boton donde se coloca la tercera opcion
+     * @param btnOpcion4 es el boton donde se coloca la cuarta opcion
+     * @param enunciado es el boton donde se coloca el enunciado de la pregunta
+     */
     public GestionPartida(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
         this.partida = partida;
         this.btnOpcion1 = btnOpcion1;
@@ -85,7 +93,21 @@ public abstract class GestionPartida {
         btnOpcion4.setBackground(Colores.colorInicial());
     }
 
+    /**
+     * Este metodo permite saber cuando se a terminado una partida,
+     * es abstracto ya que cada partida terminara en cuando se de una situacion diferente
+     *
+     * @return true si se ha terminado la partida, false si no
+     * @author Fernando
+     */
     public abstract boolean fin();
 
+    /**
+     * Este metodo permite al usuario responder a una pregunta, es abstracto
+     * ya que cada partida puede realizar una funcion a la hora de responder
+     * una pregunta
+     * @param boton es el boton que se pulsa
+     * @return true si se acierta la pregunta, false si no
+     */
     public abstract boolean responder(JButton boton);
 }

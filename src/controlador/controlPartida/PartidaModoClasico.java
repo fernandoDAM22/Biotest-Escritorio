@@ -29,7 +29,6 @@ public class PartidaModoClasico extends GestionPartida {
      * Es el contador de las preguntas incorrectas en la partida
      */
     private int contadorRespuestasIncorrectas;
-    private int numeroPreguntas;
 
     public PartidaModoClasico(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
         super(partida, btnOpcion1, btnOpcion2, btnOpcion3, btnOpcion4, enunciado);
@@ -37,7 +36,6 @@ public class PartidaModoClasico extends GestionPartida {
         idPreguntas = GestionPreguntas.obtenerIds();
         contadorPreguntasCorrectas = 0;
         contadorRespuestasIncorrectas = 0;
-        numeroPreguntas = 0;
         ConsultasPartida.insertarPartida(partida);
     }
 
@@ -86,7 +84,6 @@ public class PartidaModoClasico extends GestionPartida {
     public int ciclo() {
         int numero = obtenerDatos();
         restablecerColores();
-        numeroPreguntas++;
         return numero;
     }
 
@@ -97,11 +94,8 @@ public class PartidaModoClasico extends GestionPartida {
      */
     @Override
     public boolean fin() {
-        if (!pila.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        //negamos pila.isEmpty89, si la pila esta llena retorna false, y si esta vacia retorna true
+        return !pila.isEmpty();
     }
     /**
      * Este metodo nos permite responder una pregunta

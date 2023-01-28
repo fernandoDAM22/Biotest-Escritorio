@@ -23,7 +23,13 @@ import javax.swing.table.DefaultTableModel;
  * @author fernando
  */
 public class VentanaResultado extends javax.swing.JFrame {
+    /**
+     * Es el id de la partida que se acaba de jugar
+     */
     private int idPartida;
+    /**
+     * Es el modelo de la tabla que contiene las preguntas
+     */
     private DefaultTableModel modelo;
 
     /**
@@ -114,6 +120,12 @@ public class VentanaResultado extends javax.swing.JFrame {
         btnMenuPrincipal.setText("Menu Principal");
         btnMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMenuPrincipal.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnMenuPrincipal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnMenuPrincipalActionPerformed(evt);
+            }
+        });
         panelBotones.add(btnMenuPrincipal);
 
         btnSalir.setBackground(new Color(238, 82, 83));
@@ -122,6 +134,12 @@ public class VentanaResultado extends javax.swing.JFrame {
         btnSalir.setText("Salir");
         btnSalir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSalir.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnSalirActionPerformer(evt);
+            }
+        });
         panelBotones.add(btnSalir);
 
         panelLateral.add(panelBotones);
@@ -312,6 +330,16 @@ public class VentanaResultado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void btnMenuPrincipalActionPerformed(ActionEvent evt) {
+        VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
+        frame.setVisible(true);
+        dispose();
+    }
+
+    private void btnSalirActionPerformer(ActionEvent evt) {
+        System.exit(0);
+    }
+
     private void opcionCerrarSesionActionPerformed(ActionEvent evt) {
         VentanaLogin frame = new VentanaLogin();
         frame.setVisible(true);
@@ -326,6 +354,10 @@ public class VentanaResultado extends javax.swing.JFrame {
         colocarDatosPregunta();
     }
 
+    /**
+     * Este metodo nos permite colocar los datos de una pregunta en las casillas correspondientes
+     * @author Fernando
+     */
     private void colocarDatosPregunta() {
         //obtenemos la posicion de la fila que se ha pulsado
         int posicion = tablaPreguntas.getSelectedRow();
@@ -355,6 +387,11 @@ public class VentanaResultado extends javax.swing.JFrame {
         sliderPuntuacion.setValue(Math.min(puntuacion, 10));
         sliderPuntuacion.setEnabled(false);
     }
+
+    /**
+     * Este metodo nos permote poner las preguntas en la tabla
+     * @author Fernando
+     */
     private void ponerPreguntas() {
         ArrayList<String[]> preguntas = ConsultasPartida.obtenerPreguntasPartida(idPartida);
         //obtenemos el modelo

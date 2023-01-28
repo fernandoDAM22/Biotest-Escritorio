@@ -726,6 +726,14 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Este metodo nos permite colocar los datos de un cuestionario
+     * en sus casillas correspondientes
+     *
+     * @param nombreCuestionario es el nombre del cuestionario del que
+     *                           queremos obtener los datos
+     */
+
     private void colocarDatosCuestionario(String nombreCuestionario) {
         String descripcion = GestionCuestionarios.obtenerDescripcion(nombreCuestionario);
         txtNombreCuestionario.setText(nombreCuestionario);
@@ -776,6 +784,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     /**
      * Este metodo nos permite comprobar si la lista de cuestionarios
      * contiene o no un elemento
+     *
      * @param elemento es el elemento que queremos comprobar
      * @return true si existe, false si no existe
      */
@@ -804,6 +813,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     /**
      * Este metodo coloca los datos de una pregunta en su casilla correspondiente
+     *
+     * @author Fernando
      */
     private void colocarInformacionPregunta() {
         int posicion = tablaPreguntas.getSelectedRow();
@@ -996,14 +1007,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JTextField inputRespuestaIncorrecta1;
     private javax.swing.JTextField inputRespuestaIncorrecta2;
     private javax.swing.JTextField inputRespuestaIncorrecta3;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

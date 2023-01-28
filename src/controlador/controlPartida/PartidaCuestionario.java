@@ -49,11 +49,8 @@ public class PartidaCuestionario extends GestionPartida{
      */
     @Override
     public boolean fin() {
-        if (!pila.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        //negamos pila.isEmpty(), si la pila esta llena retorna false, y si esta vacia retorna true
+        return !pila.isEmpty();
     }
 
     /**

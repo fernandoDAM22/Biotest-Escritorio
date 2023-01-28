@@ -27,7 +27,13 @@ public class PartidaModoSinFallos extends GestionPartida {
      * Es el contador de las preguntas incorrectas en la partida
      */
     private int contadorRespuestasIncorrectas;
+    /**
+     * Numero de preguntas respondidas
+     */
     private int numeroPreguntas;
+    /**
+     * Nos indica si se acerto la pregunta o no
+     */
     boolean fallo;
 
     public PartidaModoSinFallos(Partida partida, JButton btnOpcion1, JButton btnOpcion2, JButton btnOpcion3, JButton btnOpcion4, JLabel enunciado) {
@@ -100,10 +106,8 @@ public class PartidaModoSinFallos extends GestionPartida {
      */
     @Override
     public boolean fin() {
-        if(!fallo && numeroPreguntas < 100){
-            return false;
-        }
-        return true;
+        //si se falla una pregunta o se responden mas de 100 se termina la partida
+        return fallo || numeroPreguntas >= 100;
     }
 
     /**

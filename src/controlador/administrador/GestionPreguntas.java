@@ -57,6 +57,11 @@ public class GestionPreguntas {
 
     }
 
+    /**
+     * Este metodo nos permite obtener las preguntas de un cuestionario
+     * @param cuestionario es el cuestionario del que queremos obtener las preguntas
+     * @return arrayList de String con los datos de la pregunta
+     */
     public static ArrayList<String[]> obtenerPreguntasCuestionario(String cuestionario) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;

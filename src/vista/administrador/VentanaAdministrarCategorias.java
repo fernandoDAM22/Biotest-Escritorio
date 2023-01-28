@@ -15,7 +15,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
  * @author fernando
  */
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
@@ -184,34 +183,34 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         tablaInformacionPreguntas.setForeground(new java.awt.Color(255, 255, 255));
         tablaInformacionPreguntas.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
                         {null, null, null, null, null},
                         {null, null, null, null, null},
                         {null, null, null, null, null},
                         {null, null, null, null, null}
                 },
-                new String [] {
+                new String[]{
                         "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuessta Incorrecta 3"
                 }
         ) {
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                     false, false, false, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         tablaInformacionPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-               colocarDatosPregunta();
+                colocarDatosPregunta();
             }
         });
         tablaInformacionPreguntas.addKeyListener(new KeyAdapter() {
@@ -381,21 +380,21 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
         );
-        cargarLista();
-        modelo =  GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+        cargarListaCategorias();
+        modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
 
         pack();
     }// </editor-fold>
 
     private void btnModificarActionListener(ActionEvent evt) {
-        if(txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")){
+        if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String nombreAntiguo = listaCategorias.getSelectedItem().toString();
         String nombre = txtNombreCategoria.getText();
         String descripcion = txtDescripcionCategoria.getText();
-        if(GestionCategorias.existeCategoria(nombre) && !nombre.equals(listaCategorias.getSelectedItem().toString())){
+        if (GestionCategorias.existeCategoria(nombre) && !nombre.equals(listaCategorias.getSelectedItem().toString())) {
             JOptionPane.showMessageDialog(this, "Ya existe una categoria con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -426,6 +425,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este metodo nos permite limpiar las cajas de texto
+     */
     private void limpiarCajas() {
         txtEnunciado.setText("");
         txtRespuestaCorrecta.setText("");
@@ -456,7 +458,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         }
     }
 
-    public void cargarLista(){
+    /**
+     * Este metodo nos permite cargar la lista de categorias
+     *
+     * @author Fernando
+     */
+    public void cargarListaCategorias() {
         listaCategorias.removeAllItems();
         for (String e : GestionCategorias.obtenerCategorias()) {
             listaCategorias.addItem(e);
@@ -464,15 +471,15 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void btnCrearActionListener(ActionEvent evt) {
-        if(txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")){
+        if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-        }else if(GestionCategorias.existeCategoria(txtNombreCategoria.getText())){
+        } else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) {
             JOptionPane.showMessageDialog(this, "Esa categoria ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-        }else if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-            if(GestionCategorias.insertarCategoria(txtNombreCategoria.getText(),txtDescripcionCategoria.getText()) > 0){
+        } else if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (GestionCategorias.insertarCategoria(txtNombreCategoria.getText(), txtDescripcionCategoria.getText()) > 0) {
                 JOptionPane.showMessageDialog(this, "Categoria insertada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-                cargarLista();
-            }else {
+                cargarListaCategorias();
+            } else {
                 JOptionPane.showMessageDialog(this, "Esa categoria ya existe", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -491,27 +498,32 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
     }
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
-
         colocarDatosPregunta();
     }
 
+    /**
+     * Este metodo nos permite colocar los datos de una pregunta en sus casillas
+     * correspondientes
+     *
+     * @author Fernando
+     */
     private void colocarDatosPregunta() {
         //obtenemos la posicion de la fila que se ha pulsado
         int posicion = tablaInformacionPreguntas.getSelectedRow();
         //obtenemos los datos de la pregunta
-        String enunciado = (String) modelo.getValueAt(posicion,0);
+        String enunciado = (String) modelo.getValueAt(posicion, 0);
         String respuestaCorrecta = (String) modelo.getValueAt(posicion, 1);
         String respuestaIncorrecta1 = (String) modelo.getValueAt(posicion, 2);
         String respuestaIncorrecta2 = (String) modelo.getValueAt(posicion, 3);
@@ -523,10 +535,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         txtRespuestaIncorrecta1.setText(respuestaIncorrecta1);
         txtRespuestaIncorrecta2.setText(respuestaIncorrecta2);
         txtRespuestaIncorrecta3.setText(respuestaIncorrecta3);
-    }
-
-    private void listaCategoriasKeyPressed(java.awt.event.KeyEvent evt) {
-        // TODO add your handling code here:
     }
 
     private void opcionCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {

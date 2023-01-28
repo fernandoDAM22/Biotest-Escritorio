@@ -178,6 +178,7 @@ public class ConsultasPartida {
      * Este metodo nos permite obtener la puntuacion de una partida
      * @param idPartida es el id de la partida de la cual queremos obtener su puntuacion
      * @return la puntuacion de la partida, -1 si ocurre algun error
+     * @author Fernando
      */
     public static int obtenerPuntuacion(int idPartida) {
         PreparedStatement sentencia = null;

@@ -336,6 +336,11 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException npe) {
+            /*
+            En caso de que ocurra la excepcion limpiamos las cajas porque
+            significa que la lista de preguntas esta vacia y no hay ninguna
+            seleccionada
+             */
             inputRespuestaCorrecta.setText("");
             inputRespuestaIncorrecta1.setText("");
             inputRespuestaIncorrecta2.setText("");

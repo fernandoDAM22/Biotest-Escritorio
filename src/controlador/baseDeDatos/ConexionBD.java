@@ -10,8 +10,18 @@ import java.util.logging.Logger;
  * @author Fernando
  */
 public class ConexionBD implements Configuracion {
+    /**
+     * Objeto connection a la base de datos
+     */
     Connection conexion;
-    String usuario, password;
+    /**
+     * Usuario de la base de datos
+     */
+    String usuario;
+    /**
+     * Contrasena del usuario en la base de datos
+     */
+    String password;
 
     /**
      * Constructor sin parametros
