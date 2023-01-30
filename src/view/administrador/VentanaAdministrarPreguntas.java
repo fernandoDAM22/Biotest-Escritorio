@@ -6,17 +6,19 @@ package view.administrador;/*
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
 import controller.tools.Colores;
+import controller.tools.EventoFoco;
 import model.Pregunta;
+import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
 /**
  *
- * @author fernando
+ * @author Fernando
  */
 public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     DefaultTableModel modelo;
@@ -26,6 +28,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
      */
     public VentanaAdministrarPreguntas() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -40,6 +43,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
@@ -70,6 +74,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         txtRespuestaIncorrecta2 = new javax.swing.JTextField();
         txtRespuestaIncorrecta3 = new javax.swing.JTextField();
 
+        txtEnunciado.addFocusListener(new EventoFoco());
+        txtRespuestaCorrecta.addFocusListener(new EventoFoco());
+        txtRespuestaIncorrecta1.addFocusListener(new EventoFoco());
+        txtRespuestaIncorrecta2.addFocusListener(new EventoFoco());
+        txtRespuestaIncorrecta3.addFocusListener(new EventoFoco());
+
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
@@ -79,6 +89,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionModoJuego);
+        opcionCerrarSesion.setText("Cerrar Sesion");
+        opcionCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opcionCerrarSesionActionPerformed(evt);
+            }
+        });
 
         barraMenu.add(menuUsuario);
 
@@ -109,6 +125,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         menuAdministrador.add(opcionCategorias);
 
         barraMenu.add(menuAdministrador);
+
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -323,8 +340,10 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         );
         colocarCategorias();
         modelo = (DefaultTableModel) tablaPreguntas.getModel();
+        setJMenuBar(barraMenu);
         pack();
     }// </editor-fold>
+
 
     /**
      * Este metodo permite colocar las categorias en la lista desplegable
@@ -419,6 +438,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         ventana.setVisible(true);
         dispose();
     }
+    private void opcionCerrarSesionActionPerformed(ActionEvent evt) {
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
+    }
+
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {
         String enunciado = txtEnunciado.getText();
@@ -431,10 +456,15 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
             JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.WARNING_MESSAGE);
-        } else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
+        }else if(GestionPreguntas.existePregunta(enunciado)){
+            //nos aseguramos de que no existe una pregunta con ese nombre ya
+            JOptionPane.showMessageDialog(this, "Ya existe una pregunta con ese enunciado", "Error", JOptionPane.ERROR_MESSAGE);
+        }else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
+            //en caso de que se inserte
             JOptionPane.showMessageDialog(this, "Pregunta Insertada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
         } else {
+            //en caso de que ocurra algun error
             JOptionPane.showMessageDialog(this, "No se ha podido insertar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -569,6 +599,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
+    private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelControles;

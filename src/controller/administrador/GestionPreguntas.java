@@ -362,5 +362,33 @@ public class GestionPreguntas {
         return null;
     }
 
+    /**
+     * Este metodo nos permite comprobar si ya existe una pregunta en la base de datos
+     * basandose en el enunciado
+     * @param enunciado es el enunciado de la pregunta que estamos buscando
+     * @return true si existe, false si no
+     * @author Fernando
+     */
+    public static boolean existePregunta(String enunciado){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "select * from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,enunciado);
+            resultSet = sentencia.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+    }
+
 
 }
