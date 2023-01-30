@@ -10,5 +10,6 @@
     <orderEntry type="library" name="flatlaf-demo-2.6" level="project" />
     <orderEntry type="library" name="javax.mail" level="project" />
     <orderEntry type="library" name="mysql-connector-j-8.0.31" level="project" />
+    <orderEntry type="library" name="AbsoluteLayout-RELEASE160" level="project" />
   </component>
 </module>
