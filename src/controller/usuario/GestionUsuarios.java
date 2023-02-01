@@ -1,6 +1,7 @@
 package controller.usuario;
 
 import controller.baseDeDatos.ConexionBD;
+import model.Usuario;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -38,5 +39,32 @@ public class GestionUsuarios {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
+    }
+
+    public static Usuario obtenerDatosUsuario(String nombreUsuario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "select * from usuarios where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nombreUsuario);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                return new Usuario(resultSet.getString("nombre"),
+                        resultSet.getString("contrasena"),
+                        resultSet.getString("email"),
+                        resultSet.getString("telefono"),
+                        resultSet.getString("tipo"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return null;
     }
 }
