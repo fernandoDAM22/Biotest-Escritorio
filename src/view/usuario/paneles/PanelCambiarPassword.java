@@ -4,6 +4,16 @@
  */
 package view.usuario.paneles;
 
+import controller.baseDeDatos.Cifrado;
+import controller.tools.ComprobarDatos;
+import controller.usuario.Codigos;
+import controller.usuario.ConfiguracionUsuario;
+import controller.usuario.GestionUsuarios;
+import controller.usuario.Login;
+import view.usuario.VentanaAjustesUsuario;
+
+import javax.swing.*;
+
 /**
  *
  * @author fernando
@@ -33,7 +43,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         txtNewPassword = new javax.swing.JPasswordField();
         txtNewPassword2 = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña Antigua");
@@ -53,12 +63,12 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton2.setText("Aceptar");
-        jButton2.setPreferredSize(new java.awt.Dimension(150, 50));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAceptar.setText("Aceptar");
+        btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -84,7 +94,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(65, 65, 65))))
         );
         layout.setVerticalGroup(
@@ -105,13 +115,27 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
                 .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtOldPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
+            //primero se comprueba que la contraseña antigua sea correcta
+            JOptionPane.showMessageDialog(this,"La contraseña no es correcta","Error",JOptionPane.ERROR_MESSAGE);
+        }else if(!String.valueOf(txtNewPassword.getPassword()).equals(String.valueOf(txtNewPassword2.getPassword()))){
+            //Despues comprobamos que las dos contraseñas nuevas coinciden
+            JOptionPane.showMessageDialog(this,"La contraseñas no coinciden","Error",JOptionPane.ERROR_MESSAGE);
+        }else if(!ComprobarDatos.comprobarFormatoPassword(String.valueOf(txtNewPassword.getPassword()))){
+            //Aqui se comprueba que el formato de la contraseña es el permitido
+            JOptionPane.showMessageDialog(this,"La contraseña no cumple el formato","Error",JOptionPane.ERROR_MESSAGE);
+        } else if(GestionUsuarios.cambiarPassword(ConfiguracionUsuario.getNombreUsuario(),String.valueOf(txtNewPassword.getPassword()))){
+            //aqui se entra en caso de que la contraseña se cambie correctamente
+            JOptionPane.showMessageDialog(this,"Contraseña cambiada correctamente","Error",JOptionPane.INFORMATION_MESSAGE);
+        }else{ //aqui se llega en caso de que la contraseña no se cambie
+            JOptionPane.showMessageDialog(this,"Error al cambiar la contraseña","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -121,7 +145,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

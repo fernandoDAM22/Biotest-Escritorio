@@ -52,7 +52,10 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         colocarDatos();
     }
 
-    private void colocarDatos() {
+    /**
+     * Este metodo coloca los datos del usuario en los campos correspondientes
+     */
+    public void colocarDatos() {
         Usuario usuario = GestionUsuarios.obtenerDatosUsuario(ConfiguracionUsuario.getNombreUsuario());
         if(usuario != null) {
             txtUser.setText(usuario.getNombre());

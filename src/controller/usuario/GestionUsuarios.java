@@ -1,5 +1,6 @@
 package controller.usuario;
 
+import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
 import model.Usuario;
 
@@ -66,5 +67,35 @@ public class GestionUsuarios {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
+    }
+
+    /**
+     * Este metodo permite cambiar la contraseña de un usuario
+     * @param user es el usuario al que le queremos cambiar la contraseña
+     * @param password es la nueva contraseña que le vamos a asignar (sin cifrar)
+     * @return true si se cambia, false si no
+     */
+    public static boolean cambiarPassword(String user,String password) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        /*La contraseña viene sin cifrar, por lo que aqui antes de modificarla
+        * la ciframos primero*/
+        String hash = Cifrado.SHA256(password);
+        String sql = "update usuarios set contrasena = ? where nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,hash);
+            sentencia.setString(2,user);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
     }
 }
