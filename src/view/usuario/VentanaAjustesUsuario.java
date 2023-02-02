@@ -39,13 +39,13 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         panelCambiarPassword = new PanelCambiarPassword();
         panelCambios.add(panelCambiarPassword,"password");
         //panel para cambiar el Email
-        panelCambiarEmail = new PanelCambiarEmail();
+        panelCambiarEmail = new PanelCambiarEmail(txtEmail);
         panelCambios.add(panelCambiarEmail,"email");
         //panel para cambiar el telefono
-        panelCambiarTelefono = new PanelCambiarTelefono();
+        panelCambiarTelefono = new PanelCambiarTelefono(txtTelefono);
         panelCambios.add(panelCambiarTelefono,"telefono");
         //panel para cambiar el nombre de usuario
-        panelCambiarNombreUsuario = new PanelCambiarNombreUsuario();
+        panelCambiarNombreUsuario = new PanelCambiarNombreUsuario(txtUser);
         panelCambios.add(panelCambiarNombreUsuario,"user");
 
         //colocar los datos del usuario

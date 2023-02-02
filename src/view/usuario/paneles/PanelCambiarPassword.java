@@ -130,11 +130,13 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         }else if(!ComprobarDatos.comprobarFormatoPassword(String.valueOf(txtNewPassword.getPassword()))){
             //Aqui se comprueba que el formato de la contraseña es el permitido
             JOptionPane.showMessageDialog(this,"La contraseña no cumple el formato","Error",JOptionPane.ERROR_MESSAGE);
-        } else if(GestionUsuarios.cambiarPassword(ConfiguracionUsuario.getNombreUsuario(),String.valueOf(txtNewPassword.getPassword()))){
-            //aqui se entra en caso de que la contraseña se cambie correctamente
-            JOptionPane.showMessageDialog(this,"Contraseña cambiada correctamente","Error",JOptionPane.INFORMATION_MESSAGE);
-        }else{ //aqui se llega en caso de que la contraseña no se cambie
-            JOptionPane.showMessageDialog(this,"Error al cambiar la contraseña","Error",JOptionPane.ERROR_MESSAGE);
+        } else if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            if(GestionUsuarios.cambiarPassword(ConfiguracionUsuario.getNombreUsuario(),String.valueOf(txtNewPassword.getPassword()))){
+                //aqui se entra en caso de que la contraseña se cambie correctamente
+                JOptionPane.showMessageDialog(this,"Contraseña cambiada correctamente","Error",JOptionPane.INFORMATION_MESSAGE);
+            }else{ //aqui se llega en caso de que la contraseña no se cambie
+                JOptionPane.showMessageDialog(this,"Error al cambiar la contraseña","Error",JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

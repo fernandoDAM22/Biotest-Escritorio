@@ -83,12 +83,94 @@ public class GestionUsuarios {
         /*La contraseña viene sin cifrar, por lo que aqui antes de modificarla
         * la ciframos primero*/
         String hash = Cifrado.SHA256(password);
-        String sql = "update usuarios set contrasena = ? where nombre like ?";
+        String sql = "update usuarios set contrasena = ? where BINARY nombre = ?";
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
             sentencia.setString(1,hash);
+            sentencia.setString(2,user);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
+    }
+
+    /**
+     * Este metodo permita cambier el email de un usuario
+     * @param user es el usuario al que le vamos a cambiar el nombre
+     * @param email es el email que le vamos a poner al usuario
+     * @return true si se cambia, false si no
+     * @author Fernando
+     */
+    public static boolean cambiarEmail(String user, String email) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        String sql = "update usuarios set email = ? where BINARY nombre = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,email);
+            sentencia.setString(2,user);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
+    }
+    /**
+     * Este metodo permita cambiar el telefono de un usuario
+     * @param user es el usuario al que le vamos a cambiar el nombre
+     * @param telefono es el telefono que le vamos a poner al usuario
+     * @return true si se cambia, false si no
+     * @author Fernando
+     */
+    public static boolean cambiarTelefono(String user, String telefono) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        String sql = "update usuarios set telefono = ? where BINARY nombre = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,telefono);
+            sentencia.setString(2,user);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
+    }
+    /**
+     * Este metodo permita cambiar el nombre de usuario
+     * @param user es el usuario al que le vamos a cambiar el nombre
+     * @param nuevoNombre es el que le vamos a poner al usuario
+     * @return true si se cambia, false si no
+     * @author Fernando
+     */
+    public static boolean cambiarNombre(String user, String nuevoNombre) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        String sql = "update usuarios set nombre = ? where BINARY nombre = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,nuevoNombre);
             sentencia.setString(2,user);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {

@@ -32,6 +32,7 @@ public class Login implements Codigos {
      * Este metodo nos permite obtener algun dato de una persona
      * a partir de su nombre
      * @param nombre es el nombre de la persona que estamos buscando
+     * @param tipoDato es el dato que queremos obtener del usuario
      * @return el dato indicado si existe la persona, una cadena vacia si no existe
      * @author Fernando
      */

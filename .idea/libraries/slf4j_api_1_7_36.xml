@@ -1,0 +1,24 @@
+<component name="libraryTable">
+  <library name="slf4j-api-1.7.36">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/slf4j-api-1.7.36.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/rxjava-3.1.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/rxjava-2.2.21.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/reactive-streams-1.0.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/jna-platform-5.12.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/jna-5.12.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpcore5-testing-5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpcore5-reactive-5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpcore5-h2-5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpcore5-5.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpclient5-win-5.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpclient5-testing-5.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpclient5-fluent-5.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpclient5-cache-5.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/httpclient5-5.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/apachehttpcomponents/commons-cli-1.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

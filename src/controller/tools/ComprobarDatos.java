@@ -78,7 +78,7 @@ public class ComprobarDatos implements Patrones{
      * Este metodo permite comprobar si existe un usuario con un deteminado
      * nombre en la base de datos
      * @param nombre es el nombre del usuario que queremos comprobar
-     * @return 1 si existe alguien con ese nombre, 0 si no
+     * @return Codigos.ERROR si existe alguien con ese nombre, 0 si no
      * @author Fernando
      */
     public static int existeUsuario(String nombre) {
