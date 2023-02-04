@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.controlPartida.ConsultasPartida;
 import controller.usuario.ConfiguracionUsuario;
 import view.acceso.VentanaLogin;
@@ -90,9 +91,13 @@ public class VentanaResultado extends javax.swing.JFrame {
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
+        opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        opcionImportar = new javax.swing.JMenuItem();
+        opcionExportar = new javax.swing.JMenuItem();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1200, 600));
+        setPreferredSize(new java.awt.Dimension(1200, 700));
 
         panelPrincipal.setLayout(new java.awt.BorderLayout());
 
@@ -263,12 +268,15 @@ public class VentanaResultado extends javax.swing.JFrame {
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
         opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
+
+        menuUsuario.add(opcionModoJuego);
         opcionCerrarSesion.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 opcionCerrarSesionActionPerformed(evt);
             }
         });
+        menuUsuario.add(opcionCerrarSesion);
 
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -276,7 +284,7 @@ public class VentanaResultado extends javax.swing.JFrame {
             }
         });
         opcionCerrarSesion.setText("Cerrar Sesion");
-        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
         opcionAjustesUsuario.setText("Ajustes de usuario");
         opcionAjustesUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.ALT_MASK));
         opcionAjustesUsuario.addActionListener(new ActionListener() {
@@ -286,8 +294,6 @@ public class VentanaResultado extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionAjustesUsuario);
-
-
         barraMenu.add(menuUsuario);
 
         menuAdministrador.setText("Administrador");
@@ -319,6 +325,27 @@ public class VentanaResultado extends javax.swing.JFrame {
             }
         });
         menuAdministrador.add(opcionCategorias);
+        opcionCopiasDeSeguridad.setText("Copias de seguridad");
+        opcionImportar.setText("Importar");
+        opcionImportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
+        opcionImportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionImportarActionPerformed(evt);
+            }
+        });
+        opcionExportar.setText("Exportar");
+        opcionExportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
+        opcionExportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionExportarActionPeformed(evt);
+            }
+        });
+        opcionCopiasDeSeguridad.add(opcionImportar);
+        opcionCopiasDeSeguridad.add(opcionExportar);
+        menuAdministrador.add(opcionCopiasDeSeguridad);
+
 
         barraMenu.add(menuAdministrador);
 
@@ -421,6 +448,20 @@ public class VentanaResultado extends javax.swing.JFrame {
         }
     }
 
+    private void opcionExportarActionPeformed(ActionEvent evt) {
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            return;
+        }
+        if(CopiaDeSeguridad.crearCopia()){
+            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void opcionImportarActionPerformed(ActionEvent evt) {
+
+    }
 
     private void opcionModoJuegoActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
@@ -501,6 +542,10 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
+    private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenuItem opcionExportar;
+    private javax.swing.JMenuItem opcionImportar;
+
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionAjustesUsuario;

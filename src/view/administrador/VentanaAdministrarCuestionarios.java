@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
+import controller.baseDeDatos.CopiaDeSeguridad;
 import model.Cuestionario;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
@@ -102,6 +103,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         opcionAjustesUsuario = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
+        opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        opcionImportar = new javax.swing.JMenuItem();
+        opcionExportar = new javax.swing.JMenuItem();
 
         panelPrincipal3.setLayout(new java.awt.GridLayout(4, 1));
 
@@ -631,6 +635,27 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             }
         });
         menuAdministrador.add(opcionCategorias);
+        opcionCopiasDeSeguridad.setText("Copias de seguridad");
+        opcionImportar.setText("Importar");
+        opcionImportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
+        opcionImportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionImportarActionPerformed(evt);
+            }
+        });
+        opcionExportar.setText("Exportar");
+        opcionExportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
+        opcionExportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionExportarActionPeformed(evt);
+            }
+        });
+        opcionCopiasDeSeguridad.add(opcionImportar);
+        opcionCopiasDeSeguridad.add(opcionExportar);
+        menuAdministrador.add(opcionCopiasDeSeguridad);
+
 
         barraMenu.add(menuAdministrador);
 
@@ -854,6 +879,20 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             txtCategoriaPregunta.setText(GestionCategorias.obtenerCategoriaPregunta(enunciado));
         }
     }
+    private void opcionExportarActionPeformed(ActionEvent evt) {
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            return;
+        }
+        if(CopiaDeSeguridad.crearCopia()){
+            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void opcionImportarActionPerformed(ActionEvent evt) {
+
+    }
 
     private void opcionModoJuegoActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
@@ -1052,6 +1091,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
+    private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenuItem opcionExportar;
+    private javax.swing.JMenuItem opcionImportar;
+
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JMenuItem opcionCerrarSesion;

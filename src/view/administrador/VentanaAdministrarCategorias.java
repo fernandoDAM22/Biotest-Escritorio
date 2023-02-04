@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.event.*;
 
 import controller.administrador.GestionCategorias;
+import controller.baseDeDatos.CopiaDeSeguridad;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -73,6 +74,10 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
+
+        opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        opcionImportar = new javax.swing.JMenuItem();
+        opcionExportar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -378,6 +383,26 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             }
         });
         menuAdministrador.add(opcionCategorias);
+        opcionCopiasDeSeguridad.setText("Copias de seguridad");
+        opcionImportar.setText("Importar");
+        opcionImportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
+        opcionImportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionImportarActionPerformed(evt);
+            }
+        });
+        opcionExportar.setText("Exportar");
+        opcionExportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
+        opcionExportar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionExportarActionPeformed(evt);
+            }
+        });
+        opcionCopiasDeSeguridad.add(opcionImportar);
+        opcionCopiasDeSeguridad.add(opcionExportar);
+        menuAdministrador.add(opcionCopiasDeSeguridad);
 
         barraMenu.add(menuAdministrador);
 
@@ -503,6 +528,21 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             }
         }
     }
+    private void opcionExportarActionPeformed(ActionEvent evt) {
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            return;
+        }
+        if(CopiaDeSeguridad.crearCopia()){
+            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void opcionImportarActionPerformed(ActionEvent evt) {
+
+    }
+
 
     private void opcionModoJuegoActionPerformed(java.awt.event.ActionEvent evt) {
         VentanaSeleccionarModoJuego ventana = new VentanaSeleccionarModoJuego();
@@ -623,6 +663,10 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelDatosCategoria;
+    private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenuItem opcionExportar;
+    private javax.swing.JMenuItem opcionImportar;
+
     private javax.swing.JPanel panelPrinicipal;
     private javax.swing.JScrollPane tablaPreguntas;
     private javax.swing.JTextField txtDescripcionCategoria;
