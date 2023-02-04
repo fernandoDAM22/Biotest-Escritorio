@@ -110,7 +110,7 @@ public class PartidaModoClasico extends GestionPartida {
             return true;
         } else {
             contadorRespuestasIncorrectas++;
-            boton.setBackground(Colores.Incorrecto());
+            boton.setBackground(Colores.incorrecto());
             if (btnOpcion1.getText().equals(pregunta.getRespuestaCorrecta())) {
                 btnOpcion1.setBackground(Colores.correcto());
             }

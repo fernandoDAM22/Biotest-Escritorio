@@ -4,7 +4,9 @@
  */
 package view.usuario.paneles;
 
+import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
+import controller.tools.EventoFoco;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
@@ -42,6 +44,9 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
+        txtPassword.addFocusListener(new EventoFoco());
+        txtUsername.addFocusListener(new EventoFoco());
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña");
 
@@ -50,6 +55,8 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBackground(Colores.colorBotonPeligroso());
+        btnCancelar.setForeground(Colores.colorNegro());
         btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -59,6 +66,8 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
+        btnAceptar.setBackground(Colores.colorBotonSeguro());
+        btnAceptar.setForeground(Colores.colorNegro());
         btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,10 +120,24 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        limpiarCampos();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void limpiarCampos() {
+        txtUsername.setText("");
+        txtPassword.setText("");
+    }
+
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         /*
+          antes de pasar a realizar la operacion de modificacion comprobamos que los campos no estan vacios,
+          de esta forma evitamos que al usuario se le muestren mensajes de error si pulsa el boton accidentalmente
+         */
+        if(String.valueOf(txtPassword.getPassword()).equals("") || txtUsername.getText().equals("")){
+            //simplemente, cortamos la ejecucion del metodo
+            return;
+        }
+        //ahora pasamos a realizar todas las comprobaciones necesarias antes de modificar el nombre de usuario
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
             //primero se comprueba que la contraseña antigua sea correcta
             JOptionPane.showMessageDialog(this,"La contraseña no es correcta","Error",JOptionPane.ERROR_MESSAGE);
@@ -126,6 +149,7 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
             if(GestionUsuarios.cambiarNombre(ConfiguracionUsuario.getNombreUsuario(),txtUsername.getText())){
                 JOptionPane.showMessageDialog(this,"Usuario cambiado correctamente","correcto", JOptionPane.INFORMATION_MESSAGE);
                 txtNombreUsuario.setText(txtUsername.getText());
+                limpiarCampos();
             }else{
                 JOptionPane.showMessageDialog(this,"No se ha podido cambiar el nombre de usuario","Error",JOptionPane.ERROR_MESSAGE);
             }

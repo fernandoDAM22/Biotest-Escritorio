@@ -193,6 +193,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
 
         menuUsuario.add(opcionModoJuego);
         opcionAjustesUsuario.setText("Ajustes de usuario");
+        opcionAjustesUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.ALT_MASK));
         opcionAjustesUsuario.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {

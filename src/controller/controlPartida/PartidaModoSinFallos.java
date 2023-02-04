@@ -124,7 +124,7 @@ public class PartidaModoSinFallos extends GestionPartida {
         } else {
             fallo = true;
             contadorRespuestasIncorrectas++;
-            boton.setBackground(Colores.Incorrecto());
+            boton.setBackground(Colores.incorrecto());
             if (btnOpcion1.getText().equals(pregunta.getRespuestaCorrecta())) {
                 btnOpcion1.setBackground(Colores.correcto());
             }

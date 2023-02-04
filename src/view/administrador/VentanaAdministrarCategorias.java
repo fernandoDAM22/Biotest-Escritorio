@@ -10,6 +10,7 @@ import java.awt.event.*;
 import controller.administrador.GestionCategorias;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
+import view.usuario.VentanaAjustesUsuario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -66,6 +67,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
         opcionCerrarSesion = new javax.swing.JMenuItem();
+        opcionAjustesUsuario = new javax.swing.JMenuItem();
+
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
@@ -333,6 +336,16 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionCerrarSesion);
+        opcionAjustesUsuario.setText("Ajustes de usuario");
+        opcionAjustesUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.ALT_MASK));
+        opcionAjustesUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionAjustesUsuarioActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionAjustesUsuario);
+
 
         barraMenu.add(menuUsuario);
 
@@ -385,6 +398,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void opcionAjustesUsuarioActionPerformed(ActionEvent evt) {
+        VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void btnModificarActionListener(ActionEvent evt) {
         if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
@@ -597,6 +616,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCerrarSesion;
+    private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;

@@ -86,7 +86,7 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
         panelPrincipal.add(panelFIla1);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCancelar.setBackground(Colores.getColorBotonPeligroso());
+        btnCancelar.setBackground(Colores.colorBotonPeligroso());
         btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new ActionListener() {

@@ -4,6 +4,7 @@
  */
 package view.usuario;
 
+import controller.tools.Colores;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import model.Usuario;
@@ -17,6 +18,8 @@ import view.usuario.paneles.PanelCambiarPassword;
 import view.usuario.paneles.*;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -98,6 +101,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
         opcionCerrarSesion = new javax.swing.JMenuItem();
+        opcionAjustesUsuario = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
@@ -119,6 +123,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPassword.setText("Cambiar Contraseña");
+        btnPassword.setBackground(Colores.colorInicial());
+        btnPassword.setForeground(Colores.colorNegro());
         btnPassword.setPreferredSize(new java.awt.Dimension(200, 50));
         btnPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,6 +135,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEmail.setText("Cambiar Email");
+        btnEmail.setBackground(Colores.colorInicial());
+        btnEmail.setForeground(Colores.colorNegro());
         btnEmail.setPreferredSize(new java.awt.Dimension(200, 50));
         btnEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,6 +147,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnTelefono.setText("Cambiar telefono");
+        btnTelefono.setBackground(Colores.colorInicial());
+        btnTelefono.setForeground(Colores.colorNegro());
         btnTelefono.setPreferredSize(new java.awt.Dimension(200, 50));
         btnTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,6 +159,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUser.setText("Cambiar nombre de usuario");
+        btnUser.setBackground(Colores.colorInicial());
+        btnUser.setForeground(Colores.colorNegro());
         btnUser.setPreferredSize(new java.awt.Dimension(200, 50));
         btnUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -251,6 +263,16 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
                 opcionCerrarSesionActionPerformed(evt);
             }
         });
+
+        opcionAjustesUsuario.setText("Ajustes de usuario");
+        opcionAjustesUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionAjustesUsuarioActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionAjustesUsuario);
+
         menuUsuario.add(opcionCerrarSesion);
 
         barraMenu.add(menuUsuario);
@@ -295,9 +317,16 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
         );
+        ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionAjustesUsuarioActionPerformed(ActionEvent evt) {
+        VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         cardLayout.show(panelCambios,"user");
@@ -398,6 +427,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;
+    private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JPanel paneTitulo;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelContenedor;
