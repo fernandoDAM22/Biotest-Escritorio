@@ -12,6 +12,7 @@ import controller.administrador.GestionCategorias;
 import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.usuario.Codigos;
 import model.Cuestionario;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
@@ -21,6 +22,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Esta clase permite al usuario gestionar los cuestionarios, sus funciones son:
+ * <ul>
+ *     <li>Insertar cuestionarios</li>
+ *     <li>Borrar cuestionarios</li>
+ *     <li>Modificar cuestionarios</li>
+ *     <li>Ver los datos de los cuestionarios</li>
+ *     <li>Insertar preguntas a un cuestionario</li>
+ *     <li>Borrar preguntas de un cuestionario</li>
+ *     <li>Ver las preguntas de los cuestionarios</li>
+ * </ul>
  * @author fernando
  */
 public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
@@ -891,6 +902,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 

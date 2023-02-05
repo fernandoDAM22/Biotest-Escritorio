@@ -6,6 +6,7 @@ package view.usuario;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
+import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import model.Usuario;
@@ -25,7 +26,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 /**
- *
+ * Esta clase permite al usuario gestionar su cuenta de usuario,
+ * sus funciones son:
+ * <ul>
+ *     <li>Permitir al usuario cambiar su contraseña</li>
+ *     <li>Permitir al usuario cambiar su email</li>
+ *     <li>Permitir al usuario cambiar su numero de telefono</li>
+ *     <li>Permitir al usuario cambiar su nombre de usuario</li>
+ * </ul>
  * @author fernando
  */
 public class VentanaAjustesUsuario extends javax.swing.JFrame {
@@ -418,7 +426,12 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
-
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 

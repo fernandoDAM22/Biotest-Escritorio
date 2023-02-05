@@ -30,4 +30,8 @@ public interface Configuracion {
      * Contraseña del usuario normal
      */
     String PASSWORD_USER = "user123456";
+    /**
+     * Ruta a la instacion de nuestro XAMPP
+     */
+    String XAMPP_PATH = "C:/xamppp/mysql/";
 }

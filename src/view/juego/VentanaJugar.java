@@ -21,6 +21,7 @@ import view.administrador.VentanaAdministrarPreguntas;
 import javax.swing.*;
 
 /**
+ * Esta ventana permite al usuario jugar una partida
  * @author fernando
  */
 public class VentanaJugar extends javax.swing.JFrame {

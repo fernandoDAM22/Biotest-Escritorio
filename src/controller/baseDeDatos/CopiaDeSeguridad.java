@@ -1,5 +1,9 @@
 package controller.baseDeDatos;
 
+import controller.usuario.Codigos;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -11,7 +15,7 @@ import java.util.List;
  * Este clase permite crear copias de seguridad de la base de datos mysql
  * @author Fernando
  */
-public class CopiaDeSeguridad {
+public class CopiaDeSeguridad implements Codigos {
     /**
      * Es la ruta donde se guardan las copias de seguridad
      */
@@ -28,10 +32,9 @@ public class CopiaDeSeguridad {
         comprobarCarpeta();
         try {
             List<String> command = new ArrayList<>();
-            command.add("mysqldump");
+            command.add(Configuracion.XAMPP_PATH + "bin/mysqldump");
             command.add("-u");
-            command.add("admin");
-            command.add("-p");
+            command.add("root");
             command.add("preguntas");
 
             ProcessBuilder builder = new ProcessBuilder(command);
@@ -45,10 +48,10 @@ public class CopiaDeSeguridad {
             while ((line = reader.readLine()) != null) {
                 System.out.println(line);
             }
-        } catch (Exception ignored) {
-
+        } catch (Exception e) {
+            return false;
         }
-        return comprobar(nombreCopia());
+        return true;
     }
 
     /**
@@ -87,4 +90,72 @@ public class CopiaDeSeguridad {
             carpeta.mkdirs();
         }
     }
+
+    /**
+     * Este metodo permite restaurar la copia de seguridad
+     * <hr>
+     * <h1><b>Importante</b></h1>
+     * <p>
+     *     comprobar en la interfaz configuracion que la variable XAMPP_PATH contiene la ruta
+     *     de nuestro XAMPP
+     * </p>
+     * <hr>
+     * @return CANCELADO si se cancela la operacion, CORRECTO si se restaura la copia  y ERROR si no puede restaurar la copia
+     * @author Fernando
+     */
+    public static int restaurarCopia() {
+        String nombreArchivo = elegirCopia();
+        if(nombreArchivo == null){
+            return CANCELADO;
+        }
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            System.out.println("cancelado");
+            return CANCELADO;
+        }
+        try {
+            /*
+            Importante comprobar en la interfaz configuracion que la variable XAMPP_PATH contiene la ruta
+            de nuestro XAMPP
+             */
+            List<String> command = new ArrayList<>();
+            command.add(Configuracion.XAMPP_PATH + "bin/mysql");
+            command.add("-u");
+            command.add("root");
+            command.add("preguntas");
+
+            ProcessBuilder builder = new ProcessBuilder(command);
+            builder.redirectInput(ProcessBuilder.Redirect.from(new java.io.File(RUTA_COPIA + nombreArchivo)));
+
+            Process process = builder.start();
+            process.waitFor();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (Exception e) {
+            return ERROR;
+        }
+        return CORRECTO;
+    }
+
+    /**
+     * Este metodo abre un JFileChooser para elegir en archivo que se va a importar
+     * @return el nombre del archivo si se elige, null si se cierre el JFileChooser sin elegir archivo
+     * @author Fernando
+     */
+    private static String elegirCopia() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(RUTA_COPIA));
+        fileChooser.setFileFilter(new FileNameExtensionFilter("SQL files (*.sql)", "sql"));
+        int result = fileChooser.showOpenDialog(null);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            return selectedFile.getName();
+        }
+        return null;
+    }
+
+
 }

@@ -8,6 +8,7 @@ import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
+import controller.usuario.Codigos;
 import model.Pregunta;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
@@ -21,7 +22,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 /**
- *
+ *Esta clase permite al usuario gestionar las preguntas, sus funciones son:
+ * <ul>
+ *     <li>Insertar Preguntas</li>
+ *     <li>Borrar Preguntas</li>
+ *     <li>Modificar Preguntas</li>
+ *     <li>Ver los datos de las preguntas</li>
+ * </ul>
  * @author Fernando
  */
 public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
@@ -477,7 +484,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
-
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 

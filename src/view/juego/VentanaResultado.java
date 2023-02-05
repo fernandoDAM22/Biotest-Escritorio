@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.controlPartida.ConsultasPartida;
+import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import view.acceso.VentanaLogin;
 import view.administrador.VentanaAdministrarCategorias;
@@ -21,8 +22,10 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * Esta clase permite al usuario ver el resultado de una partida, se lanza
+ * automaticamente al finalizar la partida
  * @author fernando
+ *
  */
 public class VentanaResultado extends javax.swing.JFrame {
     /**
@@ -460,7 +463,12 @@ public class VentanaResultado extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
-
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void opcionModoJuegoActionPerformed(java.awt.event.ActionEvent evt) {

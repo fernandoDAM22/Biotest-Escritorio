@@ -4,11 +4,12 @@
  */
 package view.administrador;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.*;
 
 import controller.administrador.GestionCategorias;
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.usuario.Codigos;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -17,6 +18,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Esta clase permite al usuario gestionar las categorias, entre sus funciones se encuentran:
+ * <ul>
+ *     <li>Insertar Categorias</li>
+ *     <li>Borrar Categorias</li>
+ *     <li>Modificar categorias</li>
+ *     <li>Ver las preguntas que tiene cada categoria</li>
+ * </ul>
  * @author fernando
  */
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
@@ -28,6 +36,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     public VentanaAdministrarCategorias() {
         initComponents();
         setLocationRelativeTo(null);
+        setLocationRelativeTo(null);
+        setSize(new Dimension(1300,700));
     }
 
     /**
@@ -540,7 +550,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
-
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
 

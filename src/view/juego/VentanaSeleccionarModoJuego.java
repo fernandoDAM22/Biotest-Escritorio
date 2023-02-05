@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
+import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import view.juego.dialogos.DialogoElegirCuestionario;
 import view.acceso.VentanaLogin;
@@ -24,6 +25,8 @@ import view.usuario.VentanaAjustesUsuario;
 import javax.swing.*;
 
 /**
+ * Esta clase permite al usuario seleccionar un modo de juego
+ * y pasar a la ventana jugar para jugar una partida
  * @author fernando
  */
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
@@ -287,6 +290,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
 
     }
 
