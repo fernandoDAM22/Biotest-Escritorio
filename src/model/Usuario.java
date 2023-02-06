@@ -82,6 +82,24 @@ public class Usuario {
         this.tipo = tipo;
     }
 
+    public Usuario(String nombre, String email, String telefono, String tipo) {
+        this.nombre = nombre;
+        this.email = email;
+        this.telefono = telefono;
+        this.tipo = tipo;
+    }
+
+    /**
+     * Este metodo retorna un ArrayList de String con el nombre, email, telefono y tipo de un usuario,
+     * se usa para colocar los usuarios en la tabla de la VentanaGestionUsuarios, no se incluye la contraseña
+     * en el array puesto que no se muestra en la tabla
+     * @return un Array con el nombre, email, telefono y tipo del usuario
+     * @author Fernando
+     */
+    public String[] convertir(){
+        return new String[]{nombre,email,telefono,tipo};
+    }
+
     public int getId() {
         return id;
     }

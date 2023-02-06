@@ -73,7 +73,7 @@ public class Registro implements Codigos {
      * @param usuario es el usuario con los datos que vamos a insertar
      * @author Fernando
      */
-    private static void registrarUsuario(Usuario usuario) {
+    public static boolean registrarUsuario(Usuario usuario) {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
         Connection conexion = null;
@@ -87,7 +87,7 @@ public class Registro implements Codigos {
             sentencia.setString(3, usuario.getEmail());
             sentencia.setString(4, usuario.getTelefono());
             sentencia.setString(5, usuario.getTipo());
-            sentencia.executeUpdate();
+            return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {

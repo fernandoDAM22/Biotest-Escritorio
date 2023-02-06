@@ -15,6 +15,7 @@ import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
+import view.administrador.VentanaAdministrarUsuarios;
 import view.juego.dialogos.DialogoElegirCuestionario;
 import view.acceso.VentanaLogin;
 import view.administrador.VentanaAdministrarCategorias;
@@ -72,6 +73,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        opcionUsuarios = new javax.swing.JMenuItem();
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
 
@@ -269,6 +271,14 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionImportar);
         opcionCopiasDeSeguridad.add(opcionExportar);
         menuAdministrador.add(opcionCopiasDeSeguridad);
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdministrador.add(opcionUsuarios);
 
 
         barraMenu.add(menuAdministrador);
@@ -277,6 +287,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         ConfiguracionUsuario.desactivarMenu(barraMenu, menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionUsuariosActionPerformed(ActionEvent evt) {
+        VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionExportarActionPeformed(ActionEvent evt) {
         if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
@@ -463,6 +479,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
     private javax.swing.JPanel panelBotonesModoJuego;
