@@ -13,10 +13,12 @@ import view.juego.VentanaSeleccionarModoJuego;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- *
  * @author fernando
  */
 public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
@@ -53,7 +55,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        labelTextoPassword = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
@@ -156,7 +158,15 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
         jLabel5.setText("Tipo");
 
-        jLabel6.setText("Contraseña");
+        labelTextoPassword.setText("Contraseña");
+        labelTextoPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        labelTextoPassword.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                super.mouseClicked(evt);
+                labelTextoPasswordMouseClicked(evt);
+            }
+        });
 
         radioButtonUser.setText("Usuario");
         grupoBotones.add(radioButtonUser);
@@ -176,7 +186,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
                                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE))
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(labelTextoPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(panelDatosUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 800, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,7 +221,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
                                         .addComponent(radioButtonAdmin))
                                 .addGap(26, 26, 26)
                                 .addGroup(panelDatosUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
+                                        .addComponent(labelTextoPassword)
                                         .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(47, 47, 47))
         );
@@ -219,22 +229,22 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         panelDatos.add(panelDatosUsuarios, java.awt.BorderLayout.PAGE_END);
 
         tablaUsuarios.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
                         {null, null, null, null},
                         {null, null, null, null},
                         {null, null, null, null},
                         {null, null, null, null}
                 },
-                new String [] {
+                new String[]{
                         "Nombre", "Email", "Telefono", "Tipo"
                 }
         ) {
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         });
         tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -338,6 +348,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
         );
+        txtPassword.setEnabled(false);
         modelo = (DefaultTableModel) tablaUsuarios.getModel();
         cargarTabla();
 
@@ -347,7 +358,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private void cargarTabla() {
         vaciarTabla();
         ArrayList<Usuario> usuarios = GestionUsuarios.obtenerUsuarios();
-        for(Usuario user: usuarios){
+        for (Usuario user : usuarios) {
             modelo.addRow(user.convertir());
         }
     }
@@ -358,15 +369,16 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             modelo.removeRow(0);
         }
     }
+
     private void colocarDatosUsuario() {
         int posicion = tablaUsuarios.getSelectedRow();
-        txtNombre.setText((String) modelo.getValueAt(posicion,0));
-        txtEmail.setText((String) modelo.getValueAt(posicion,1));
-        txtTelefono.setText((String) modelo.getValueAt(posicion,2));
-        String tipo = (String) modelo.getValueAt(posicion,3);
-        if(tipo.equals("admin")){
+        txtNombre.setText((String) modelo.getValueAt(posicion, 0));
+        txtEmail.setText((String) modelo.getValueAt(posicion, 1));
+        txtTelefono.setText((String) modelo.getValueAt(posicion, 2));
+        String tipo = (String) modelo.getValueAt(posicion, 3);
+        if (tipo.equals("admin")) {
             radioButtonAdmin.setSelected(true);
-        }else{
+        } else {
             radioButtonUser.setSelected(true);
         }
     }
@@ -380,9 +392,9 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         String password = txtPassword.getText();
         String tipo = "";
         //en funcion del JRadioButton Seleccionado el tipo de usuario sera uno o otro
-        if(radioButtonUser.isSelected()){
+        if (radioButtonUser.isSelected()) {
             tipo = "user";
-        }else if(radioButtonAdmin.isSelected()){
+        } else if (radioButtonAdmin.isSelected()) {
             tipo = "admin";
         }
         //comprobamos que los campos no esten vacios
@@ -396,7 +408,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             return;
         }
         //comprobamos que no exista un usuario con ese nombre ya
-        if(ComprobarDatos.existeUsuario(nombre) > 0){
+        if (ComprobarDatos.existeUsuario(nombre) > 0) {
             JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -420,18 +432,209 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             return;
         }
         //procedemos a la insercion del usuarios
-        Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password),email,telefono,tipo);
-        if(Registro.registrarUsuario(usuario)){
-            JOptionPane.showMessageDialog(this,"Usuario insertado correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password), email, telefono, tipo);
+        if (Registro.registrarUsuario(usuario)) {
+            JOptionPane.showMessageDialog(this, "Usuario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this,"No se ha podido insertar el usuario","Error",JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        /*
+        Para modificar los datos, podemos tener dos modificaciones posibles, una en la que
+        la contraseña se modifique y otra en la que no, esto ocurre porque si solo tuvieramos una modificacion
+        posible, el administrador deberia rellenar todos los campos, incluida la contraseña aunque no la quiera
+        modificar, y la contraseña no se muestra en la tabla ni se puede ver en la base de datos puesto que esta cifrada,
+        en este caso si el campo para introducir la contraseña no esta activado se realiza una modificacion del usuario sin
+        modificar su contraseña, de lo contrario si se activa el campo para introducir la contraseña si seria necesario rellenarlo
+        y si se modificaria la contraseña del usuario
+         */
+        if (txtPassword.isEnabled()) {
+            modificarUsuarioCompleto();
+        } else {
+            modificarUsuarioSinPassword();
+        }
+
     }
+
+    /**
+     * Este metodo ejecuta las instrucciones necesarias para modificar todos los datos
+     * de un usuario, incluyendo su contraseña
+     */
+    private void modificarUsuarioCompleto() {
+        //recogemos los datos del usuario
+        String nombre = txtNombre.getText();
+        String email = txtEmail.getText();
+        String telefono = txtTelefono.getText();
+        String password = txtPassword.getText();
+        String tipo = "";
+        //en funcion del JRadioButton Seleccionado el tipo de usuario sera uno o otro
+        if (radioButtonUser.isSelected()) {
+            tipo = "user";
+        } else if (radioButtonAdmin.isSelected()) {
+            tipo = "admin";
+        }
+        //comprobamos que los campos no esten vacios
+        if (nombre.equals("") || email.equals("") || telefono.equals("") || password.equals("") || tipo.equals("")) {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el nombre cumple con los requisitos
+        if (!ComprobarDatos.comprobarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        /*
+            comprobamos que no exista un usuario con ese nombre ya, necesitamos comprobar
+            que ya exista ese nombre y que ademas sea distinto al nombre que se nos muestra
+            en la tabla, esto sucede porque si solo comprobamos si existe o no, cada vez que pulsemos
+            el boton de modificar deberemos modificar tambien el nombre o nos dara error, de esta manera, con esta
+            comprobacion podemos modificar los demas datos sin necesidad de cambiar el nombre
+
+            Por otra parte es necesario el try catch para evitar la excepcion que ocurre si se pulsa
+            el boton de modificar y no se tiene seleccionado ningun usuario en la tabla
+         */
+        try {
+            if (ComprobarDatos.existeUsuario(nombre) > 0 && !nombre.equals(modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0))) {
+                JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (ArrayIndexOutOfBoundsException aioe) {
+            JOptionPane.showMessageDialog(this, "No tienes seleccionado a ningun usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el email cumple con los requisitos
+        if (!ComprobarDatos.comprobarCorreo(email)) {
+            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el telefono cumple con los requisitos
+        if (!ComprobarDatos.comprobarTelefono(telefono)) {
+            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que la contraseña cumple con los requisitos
+        if (!ComprobarDatos.comprobarFormatoPassword(password)) {
+            JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        /*
+        Obtenemos el nombre de usuario, es necesario el try catch porque si no hay
+        ningun usuario seleccionado en la tabla saltara la excepcion
+         */
+        String nombreUsuario;
+        try {
+            nombreUsuario = (String) modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0);
+        } catch (ArrayIndexOutOfBoundsException aioe) {
+            JOptionPane.showMessageDialog(this, "No tienes seleccionado ningun usuario");
+            return;
+        }
+        //nos aseguramos de que el usuario confirma la insercion del usuario
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres modificar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password), email, telefono, tipo);
+
+        if (GestionUsuarios.modificarUsuarioCompleto(usuario, nombreUsuario)) {
+            JOptionPane.showMessageDialog(this, "Usuario modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Este metodo ejecuta las instrucciones necesarias para modificar los datos
+     * de un usuario a excepcion de su contraseña
+     */
+    private void modificarUsuarioSinPassword() {
+        //recogemos los datos del usuario
+        String nombre = txtNombre.getText();
+        String email = txtEmail.getText();
+        String telefono = txtTelefono.getText();
+        String tipo = "";
+        //en funcion del JRadioButton Seleccionado el tipo de usuario sera uno o otro
+        if (radioButtonUser.isSelected()) {
+            tipo = "user";
+        } else if (radioButtonAdmin.isSelected()) {
+            tipo = "admin";
+        }
+        //comprobamos que los campos no esten vacios
+        if (nombre.equals("") || email.equals("") || telefono.equals("") || tipo.equals("")) {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el nombre cumple con los requisitos
+        if (!ComprobarDatos.comprobarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+          /*
+            comprobamos que no exista un usuario con ese nombre ya, necesitamos comprobar
+            que ya exista ese nombre y que ademas sea distinto al nombre que se nos muestra
+            en la tabla, esto sucede porque si solo comprobamos si existe o no, cada vez que pulsemos
+            el boton de modificar deberemos modificar tambien el nombre o nos dara error, de esta manera, con esta
+            comprobacion podemos modificar los demas datos sin necesidad de cambiar el nombre
+
+            Por otra parte es necesario el try catch para evitar la excepcion que ocurre si se pulsa
+            el boton de modificar y no se tiene seleccionado ningun usuario en la tabla
+            */
+        try {
+            if (ComprobarDatos.existeUsuario(nombre) > 0 && !nombre.equals(modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0))) {
+                JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } catch (ArrayIndexOutOfBoundsException aioe) {
+            JOptionPane.showMessageDialog(this, "No tienes seleccionado a ningun usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que no exista un usuario con ese nombre ya
+
+        //comprobamos que el email cumple con los requisitos
+        if (!ComprobarDatos.comprobarCorreo(email)) {
+            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el telefono cumple con los requisitos
+        if (!ComprobarDatos.comprobarTelefono(telefono)) {
+            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        /*
+        Obtenemos el nombre de usuario, es necesario el try catch porque si no hay
+        ningun usuario seleccionado en la tabla saltara la excepcion
+        */
+        String nombreUsuario;
+        try {
+            nombreUsuario = (String) modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0);
+        } catch (ArrayIndexOutOfBoundsException aioe) {
+            JOptionPane.showMessageDialog(this, "No tienes seleccionado ningun usuario");
+            return;
+        }
+        //nos aseguramos de que el usuario confirma la insercion del usuario
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres modificar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        Usuario usuario = new Usuario(nombre, email, telefono, tipo);
+        if (GestionUsuarios.modificarUsuarioSinPassword(usuario, nombreUsuario)) {
+            JOptionPane.showMessageDialog(this, "Usuario modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Este metodo activa o desactiva el campo para introducir la contraseña
+     *
+     * @param evt es la etiqueta sobre la que se pulsa
+     */
+    private void labelTextoPasswordMouseClicked(MouseEvent evt) {
+        txtPassword.setEnabled(!txtPassword.isEnabled());
+    }
+
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
@@ -462,13 +665,13 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     }
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
     }
@@ -527,7 +730,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel labelTextoPassword;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;

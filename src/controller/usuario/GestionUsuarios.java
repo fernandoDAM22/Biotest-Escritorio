@@ -1,6 +1,5 @@
 package controller.usuario;
 
-import com.kitfox.svg.A;
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
 import model.Usuario;
@@ -214,8 +213,63 @@ public class GestionUsuarios {
         return usuarios;
     }
 
-    public static boolean insertarUsuario(String nombre, String password, String email, String telefono, String tipo) {
-        Usuario usuario = new Usuario(nombre,Cifrado.SHA256(password),email,telefono,tipo);
-        return Registro.registrarUsuario(usuario);
+    /**
+     * Este metodo permite modificar los datos de un usuario a excepcion de su contraseña
+     * @param usuario Objeto de la clase usuario que contiene los nuevos datos que le vamos a asignar al usuario
+     * @param nombreUsuario es el nombre del usuario al cual le vamos a modificar los datos
+     * @return true si se modifica, false si no
+     * @author Fernando
+     */
+    public static boolean modificarUsuarioSinPassword(Usuario usuario, String nombreUsuario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        String sql = "update usuarios set nombre = ?, email = ?, telefono = ? , tipo = ? where BINARY nombre = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,usuario.getNombre());
+            sentencia.setString(2,usuario.getEmail());
+            sentencia.setString(3, usuario.getTelefono());
+            sentencia.setString(4,usuario.getTipo());
+            sentencia.setString(5,nombreUsuario);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
+    }
+    /**
+     * Este metodo permite modificar los datos de un usuario
+     * @param usuario Objeto de la clase usuario que contiene los nuevos datos que le vamos a asignar al usuario
+     * @param nombreUsuario es el nombre del usuario al cual le vamos a modificar los datos
+     * @return true si se modifica, false si no
+     * @author Fernando
+     */
+    public static boolean modificarUsuarioCompleto(Usuario usuario, String nombreUsuario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        String sql = "update usuarios set nombre = ?, email = ?, telefono = ? , tipo = ?, contrasena = ? where BINARY nombre = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,usuario.getNombre());
+            sentencia.setString(2,usuario.getEmail());
+            sentencia.setString(3, usuario.getTelefono());
+            sentencia.setString(4,usuario.getTipo());
+            sentencia.setString(5,usuario.getPassword());
+            sentencia.setString(6,nombreUsuario);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
     }
 }

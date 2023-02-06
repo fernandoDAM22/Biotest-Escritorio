@@ -71,6 +71,7 @@ public class Registro implements Codigos {
      * Este metodo inserta el usuario en la base de datos
      *
      * @param usuario es el usuario con los datos que vamos a insertar
+     * @return true si se inserta el usuario, false si no
      * @author Fernando
      */
     public static boolean registrarUsuario(Usuario usuario) {

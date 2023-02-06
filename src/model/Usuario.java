@@ -81,7 +81,13 @@ public class Usuario {
         this.telefono = telefono;
         this.tipo = tipo;
     }
-
+    /**
+     * Constructor parametrizado
+     * @param nombre es el nombre de la persona
+     * @param email es el email de la persona
+     * @param telefono es el telefono de la persona
+     * @param tipo es el tipo de usuario
+     */
     public Usuario(String nombre, String email, String telefono, String tipo) {
         this.nombre = nombre;
         this.email = email;
