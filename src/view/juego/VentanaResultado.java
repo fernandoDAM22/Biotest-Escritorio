@@ -16,6 +16,7 @@ import view.acceso.VentanaLogin;
 import view.administrador.VentanaAdministrarCategorias;
 import view.administrador.VentanaAdministrarCuestionarios;
 import view.administrador.VentanaAdministrarPreguntas;
+import view.administrador.VentanaAdministrarUsuarios;
 import view.usuario.VentanaAjustesUsuario;
 
 import javax.swing.*;
@@ -97,6 +98,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
+        opcionUsuarios = new javax.swing.JMenuItem();
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -348,6 +350,18 @@ public class VentanaResultado extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionImportar);
         opcionCopiasDeSeguridad.add(opcionExportar);
         menuAdministrador.add(opcionCopiasDeSeguridad);
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
+
+
+        opcionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdministrador.add(opcionUsuarios);
+
 
 
         barraMenu.add(menuAdministrador);
@@ -370,6 +384,13 @@ public class VentanaResultado extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void opcionUsuariosActionPerformed(ActionEvent evt) {
+
+        VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionAjustesUsuarioActionPerformed(ActionEvent evt) {
         VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
@@ -553,6 +574,7 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JMenu opcionCopiasDeSeguridad;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
+    private javax.swing.JMenuItem opcionUsuarios;
 
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionCerrarSesion;

@@ -75,6 +75,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         opcionUsuarios = new javax.swing.JMenuItem();
         opcionImportar = new javax.swing.JMenuItem();
+        opcionUsuarios = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -260,6 +261,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
                 opcionImportarActionPerformed(evt);
             }
         });
+
         opcionExportar.setText("Exportar");
         opcionExportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
         opcionExportar.addActionListener(new ActionListener() {
@@ -272,6 +274,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionExportar);
         menuAdministrador.add(opcionCopiasDeSeguridad);
         opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
         opcionUsuarios.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {

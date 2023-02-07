@@ -9,6 +9,7 @@ import java.awt.event.*;
 
 import controller.administrador.GestionCategorias;
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.tools.Colores;
 import controller.usuario.Codigos;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
@@ -89,6 +90,10 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
 
+        opcionUsuarios = new javax.swing.JMenuItem();
+
+
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panelPrinicipal.setLayout(new java.awt.BorderLayout());
@@ -141,7 +146,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         panelBotones.add(panelDatosCategoria);
 
-        btnCrear.setBackground(new Color(29, 209, 161));
+        btnCrear.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnCrear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(0, 0, 0));
         btnCrear.setText("Crear");
@@ -155,7 +160,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         });
         panelBotones.add(btnCrear);
 
-        btnBorrar.setBackground(new Color(238, 82, 83));
+        btnBorrar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrar.setForeground(new java.awt.Color(0, 0, 0));
         btnBorrar.setText("Borrar");
@@ -169,7 +174,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         });
         panelBotones.add(btnBorrar);
 
-        btnModificar.setBackground(new Color(238, 82, 83));
+        btnModificar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(0, 0, 0));
         btnModificar.setText("Modificar");
@@ -413,6 +418,18 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionImportar);
         opcionCopiasDeSeguridad.add(opcionExportar);
         menuAdministrador.add(opcionCopiasDeSeguridad);
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
+
+
+        opcionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdministrador.add(opcionUsuarios);
+
 
         barraMenu.add(menuAdministrador);
 
@@ -433,6 +450,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void opcionUsuariosActionPerformed(ActionEvent evt) {
+        VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionAjustesUsuarioActionPerformed(ActionEvent evt) {
         VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
@@ -681,7 +704,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JMenu opcionCopiasDeSeguridad;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
-
+    private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JPanel panelPrinicipal;
     private javax.swing.JScrollPane tablaPreguntas;
     private javax.swing.JTextField txtDescripcionCategoria;

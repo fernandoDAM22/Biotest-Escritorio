@@ -23,16 +23,20 @@ public class Colores {
      * Este color se le asigna a los botones que no realizan ninguna
      * accion peligrosa, tales como cancelar, borrar modificar etc
      */
-    private static final Color colorBotonSeguro = new Color(29, 209, 161);
+    public static final Color COLOR_BOTON_ACEPTAR = new Color(29, 209, 161);
     /**
      * Este color se le asigna a los botones que realizan alguna accion
      * peligrosa tal como cancelar, borrar, modificar etc
      */
-    private  static final Color colorBotonPeligroso = new Color(238, 82, 83);
+    public   static final Color COLOR_BOTON_CANCELAR = new Color(238, 82, 83);
     /**
      * Este color se le asigna a los textos
      */
-    private static  final Color colorNegro = Color.black;
+    public static  final Color COLOR_NEGRO = Color.black;
+    /**
+     * Este color se le asigna a los botones de gestion
+     */
+    public static Color COLOR_AMARILLO_BOTONES = new Color(255, 211, 42);
 
     /**
      * Este metodo retorna el color que se le asigna al boton cuando se acierta una pregunta
@@ -63,7 +67,7 @@ public class Colores {
      * @return colorSeguro
      */
     public static Color colorBotonSeguro(){
-        return colorBotonSeguro;
+        return COLOR_BOTON_ACEPTAR;
     }
 
     /**
@@ -71,7 +75,7 @@ public class Colores {
      * @return colorPeligroso
      */
     public static Color colorBotonPeligroso(){
-        return colorBotonPeligroso;
+        return COLOR_BOTON_CANCELAR;
     }
 
     /**
@@ -79,6 +83,6 @@ public class Colores {
      * @return colorNegro
      */
     public static Color colorNegro(){
-        return colorNegro;
+        return COLOR_NEGRO;
     }
 }

@@ -62,6 +62,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         opcionImportar = new javax.swing.JMenuItem();
+        opcionUsuarios = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         jPanel4 = new javax.swing.JPanel();
         panelPrincipal = new javax.swing.JPanel();
@@ -172,6 +173,16 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionImportar);
         opcionCopiasDeSeguridad.add(opcionExportar);
         menuAdministrador.add(opcionCopiasDeSeguridad);
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
+        opcionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdministrador.add(opcionUsuarios);
+
 
 
 
@@ -264,7 +275,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnModificar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnModificar.setBackground(Colores.colorBotonPeligroso());
+        btnModificar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnModificar.setForeground(Color.black);
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -275,7 +286,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         panelOperaciones.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 170, 40));
 
         btnInsertar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnInsertar.setBackground(Colores.colorBotonSeguro());
+        btnInsertar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnInsertar.setForeground(Color.black);
         btnInsertar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnInsertar.setText("Insertar");
@@ -287,7 +298,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         panelOperaciones.add(btnInsertar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 170, 40));
 
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
-        btnBorrar.setBackground(Colores.colorBotonPeligroso());
+        btnBorrar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnBorrar.setForeground(Color.black);
         btnBorrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBorrar.setText("Borrar");
@@ -395,6 +406,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         setJMenuBar(barraMenu);
         pack();
     }// </editor-fold>
+
+    private void opcionUsuariosActionPerformed(ActionEvent evt) {
+        VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionAjustesUsuarioActionPerformed(ActionEvent evt) {
         VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
@@ -681,6 +698,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private javax.swing.JMenu opcionCopiasDeSeguridad;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
+    private javax.swing.JMenuItem opcionUsuarios;
 
     private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JMenuItem opcionPreguntas;

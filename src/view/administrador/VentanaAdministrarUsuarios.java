@@ -5,17 +5,22 @@
 package view.administrador;
 
 import controller.baseDeDatos.Cifrado;
+import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
+import controller.tools.EventoFoco;
+import controller.usuario.Codigos;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Registro;
 import model.Usuario;
+import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
+import view.usuario.VentanaAjustesUsuario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
@@ -76,6 +81,12 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
+        opcionUsuarios = new javax.swing.JMenuItem();
+
+        txtNombre.addFocusListener(new EventoFoco());
+        txtPassword.addFocusListener(new EventoFoco());
+        txtTelefono.addFocusListener(new EventoFoco());
+        txtEmail.addFocusListener(new EventoFoco());
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -93,6 +104,8 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         panelOperaciones.setPreferredSize(new java.awt.Dimension(200, 626));
 
         btnInsertar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnInsertar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
+        btnInsertar.setForeground(Colores.COLOR_NEGRO);
         btnInsertar.setText("Insertar");
         btnInsertar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,6 +116,8 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrar.setText("Borrar");
+        btnBorrar.setForeground(Colores.COLOR_NEGRO);
+        btnBorrar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnBorrar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,6 +127,8 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModificar.setText("Modificar");
+        btnModificar.setForeground(Colores.COLOR_NEGRO);
+        btnModificar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnModificar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -268,6 +285,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
+        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuegoActionPerformed(evt);
@@ -276,9 +294,18 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         menuUsuario.add(opcionModoJuego);
 
         opcionAjustesUsuario.setText("Ajustes de usuario");
+        opcionAjustesUsuario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.ALT_MASK));
+        opcionAjustesUsuario.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionAjustesUsuarioActionListener(evt);
+            }
+        });
+
         menuUsuario.add(opcionAjustesUsuario);
 
         opcionCerrarSesion.setText("Cerrar Sesion");
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
         opcionCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCerrarSesionActionPerformed(evt);
@@ -291,6 +318,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         menuAdministrador.setText("Administrador");
 
         opcionPreguntas.setText("Preguntas");
+        opcionPreguntas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
         opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionPreguntasActionPerformed(evt);
@@ -299,6 +327,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         menuAdministrador.add(opcionPreguntas);
 
         opcionCuestionarios.setText("Cuestionarios");
+        opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCuestionariosActionPerformed(evt);
@@ -306,7 +335,9 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         });
         menuAdministrador.add(opcionCuestionarios);
 
+
         opcionCategorias.setText("Categorias");
+        opcionCategorias.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.ALT_MASK));
         opcionCategorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionCategoriasActionPerformed(evt);
@@ -317,14 +348,15 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.setText("Copias de seguridad");
 
         opcionImportar.setText("Importar");
+        opcionImportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
         opcionImportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionImportarActionPerformed(evt);
             }
         });
         opcionCopiasDeSeguridad.add(opcionImportar);
-
         opcionExportar.setText("Exportar");
+        opcionExportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, ActionEvent.ALT_MASK));
         opcionExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionExportarActionPerformed(evt);
@@ -333,6 +365,16 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionExportar);
 
         menuAdministrador.add(opcionCopiasDeSeguridad);
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
+        opcionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdministrador.add(opcionUsuarios);
+
 
         barraMenu.add(menuAdministrador);
 
@@ -355,6 +397,18 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void opcionAjustesUsuarioActionListener(ActionEvent evt) {
+        VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
+        frame.setVisible(true);
+        dispose();
+    }
+
+    private void opcionUsuariosActionPerformed(ActionEvent evt) {
+        VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
+        frame.setVisible(true);
+        dispose();
+    }
+
     private void cargarTabla() {
         vaciarTabla();
         ArrayList<Usuario> usuarios = GestionUsuarios.obtenerUsuarios();
@@ -372,6 +426,9 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
     private void colocarDatosUsuario() {
         int posicion = tablaUsuarios.getSelectedRow();
+        if(posicion == -1){
+            return;
+        }
         txtNombre.setText((String) modelo.getValueAt(posicion, 0));
         txtEmail.setText((String) modelo.getValueAt(posicion, 1));
         txtTelefono.setText((String) modelo.getValueAt(posicion, 2));
@@ -382,86 +439,10 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             radioButtonUser.setSelected(true);
         }
     }
-
-
-    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {
-        //recogemos los datos del usuario
-        String nombre = txtNombre.getText();
-        String email = txtEmail.getText();
-        String telefono = txtTelefono.getText();
-        String password = txtPassword.getText();
-        String tipo = "";
-        //en funcion del JRadioButton Seleccionado el tipo de usuario sera uno o otro
-        if (radioButtonUser.isSelected()) {
-            tipo = "user";
-        } else if (radioButtonAdmin.isSelected()) {
-            tipo = "admin";
-        }
-        //comprobamos que los campos no esten vacios
-        if (nombre.equals("") || email.equals("") || telefono.equals("") || password.equals("") || tipo.equals("")) {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //comprobamos que el nombre cumple con los requisitos
-        if (!ComprobarDatos.comprobarNombre(nombre)) {
-            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //comprobamos que no exista un usuario con ese nombre ya
-        if (ComprobarDatos.existeUsuario(nombre) > 0) {
-            JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //comprobamos que el email cumple con los requisitos
-        if (!ComprobarDatos.comprobarCorreo(email)) {
-            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //comprobamos que el telefono cumple con los requisitos
-        if (!ComprobarDatos.comprobarTelefono(telefono)) {
-            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //comprobamos que la contraseña cumple con los requisitos
-        if (!ComprobarDatos.comprobarFormatoPassword(password)) {
-            JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        //nos aseguramos de que el usuario confirma la insercion del usuario
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
-            return;
-        }
-        //procedemos a la insercion del usuarios
-        Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password), email, telefono, tipo);
-        if (Registro.registrarUsuario(usuario)) {
-            JOptionPane.showMessageDialog(this, "Usuario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
-            cargarTabla();
-        } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {
-        /*
-        Para modificar los datos, podemos tener dos modificaciones posibles, una en la que
-        la contraseña se modifique y otra en la que no, esto ocurre porque si solo tuvieramos una modificacion
-        posible, el administrador deberia rellenar todos los campos, incluida la contraseña aunque no la quiera
-        modificar, y la contraseña no se muestra en la tabla ni se puede ver en la base de datos puesto que esta cifrada,
-        en este caso si el campo para introducir la contraseña no esta activado se realiza una modificacion del usuario sin
-        modificar su contraseña, de lo contrario si se activa el campo para introducir la contraseña si seria necesario rellenarlo
-        y si se modificaria la contraseña del usuario
-         */
-        if (txtPassword.isEnabled()) {
-            modificarUsuarioCompleto();
-        } else {
-            modificarUsuarioSinPassword();
-        }
-
-    }
-
     /**
      * Este metodo ejecuta las instrucciones necesarias para modificar todos los datos
      * de un usuario, incluyendo su contraseña
+     * @author Fernando
      */
     private void modificarUsuarioCompleto() {
         //recogemos los datos del usuario
@@ -544,10 +525,10 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
     /**
      * Este metodo ejecuta las instrucciones necesarias para modificar los datos
      * de un usuario a excepcion de su contraseña
+     * @author Fernando
      */
     private void modificarUsuarioSinPassword() {
         //recogemos los datos del usuario
@@ -626,6 +607,83 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         }
     }
 
+
+
+    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {
+        //recogemos los datos del usuario
+        String nombre = txtNombre.getText();
+        String email = txtEmail.getText();
+        String telefono = txtTelefono.getText();
+        String password = txtPassword.getText();
+        String tipo = "";
+        //en funcion del JRadioButton Seleccionado el tipo de usuario sera uno o otro
+        if (radioButtonUser.isSelected()) {
+            tipo = "user";
+        } else if (radioButtonAdmin.isSelected()) {
+            tipo = "admin";
+        }
+        //comprobamos que los campos no esten vacios
+        if (nombre.equals("") || email.equals("") || telefono.equals("") || password.equals("") || tipo.equals("")) {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el nombre cumple con los requisitos
+        if (!ComprobarDatos.comprobarNombre(nombre)) {
+            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que no exista un usuario con ese nombre ya
+        if (ComprobarDatos.existeUsuario(nombre) > 0) {
+            JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el email cumple con los requisitos
+        if (!ComprobarDatos.comprobarCorreo(email)) {
+            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que el telefono cumple con los requisitos
+        if (!ComprobarDatos.comprobarTelefono(telefono)) {
+            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //comprobamos que la contraseña cumple con los requisitos
+        if (!ComprobarDatos.comprobarFormatoPassword(password)) {
+            JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        //nos aseguramos de que el usuario confirma la insercion del usuario
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        //procedemos a la insercion del usuarios
+        Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password), email, telefono, tipo);
+        if (Registro.registrarUsuario(usuario)) {
+            JOptionPane.showMessageDialog(this, "Usuario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            cargarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {
+        /*
+        Para modificar los datos, podemos tener dos modificaciones posibles, una en la que
+        la contraseña se modifique y otra en la que no, esto ocurre porque si solo tuvieramos una modificacion
+        posible, el administrador deberia rellenar todos los campos, incluida la contraseña aunque no la quiera
+        modificar, y la contraseña no se muestra en la tabla ni se puede ver en la base de datos puesto que esta cifrada,
+        en este caso si el campo para introducir la contraseña no esta activado se realiza una modificacion del usuario sin
+        modificar su contraseña, de lo contrario si se activa el campo para introducir la contraseña si seria necesario rellenarlo
+        y si se modificaria la contraseña del usuario
+         */
+        if (txtPassword.isEnabled()) {
+            modificarUsuarioCompleto();
+        } else {
+            modificarUsuarioSinPassword();
+        }
+
+    }
+
     /**
      * Este metodo activa o desactiva el campo para introducir la contraseña
      *
@@ -637,7 +695,21 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int posicion = tablaUsuarios.getSelectedRow();
+        if(posicion == -1){
+            JOptionPane.showMessageDialog(this,"No tienes seleccionado a ningun usuario","Error",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        if(GestionUsuarios.borrarUsuario((String) modelo.getValueAt(posicion,0))){
+            JOptionPane.showMessageDialog(this,"Usuario borrado correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            cargarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this,"No se ha podido borrar al usuario","Error",JOptionPane.ERROR_MESSAGE);
+        }
+
     }
 
     private void tablaUsuariosKeyReleased(java.awt.event.KeyEvent evt) {
@@ -655,7 +727,9 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     }
 
     private void opcionCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        VentanaLogin frame = new VentanaLogin();
+        frame.setVisible(true);
+        dispose();
     }
 
     private void opcionPreguntasActionPerformed(java.awt.event.ActionEvent evt) {
@@ -677,11 +751,23 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     }
 
     private void opcionImportarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        int estado = CopiaDeSeguridad.restaurarCopia();
+        if(estado == Codigos.CORRECTO){
+            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else if(estado == Codigos.ERROR){
+            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void opcionExportarActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
+        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+            return;
+        }
+        if(CopiaDeSeguridad.crearCopia()){
+            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -741,6 +827,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
+    private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelCentral;

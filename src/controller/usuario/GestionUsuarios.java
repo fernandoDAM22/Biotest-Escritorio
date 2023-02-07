@@ -272,4 +272,23 @@ public class GestionUsuarios {
         }
         return false;
     }
+
+    public static boolean borrarUsuario(String user) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        String sql = "delete from usuarios where BINARY nombre = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,user);
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
+        return false;
+    }
 }

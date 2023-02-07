@@ -12,6 +12,7 @@ import controller.administrador.GestionCategorias;
 import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.tools.Colores;
 import controller.usuario.Codigos;
 import model.Cuestionario;
 import view.acceso.VentanaLogin;
@@ -117,6 +118,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
+        opcionUsuarios = new javax.swing.JMenuItem();
+
 
         panelPrincipal3.setLayout(new java.awt.GridLayout(4, 1));
 
@@ -223,7 +226,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         panelDialogoFila8.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
 
-        btnInsertar.setBackground(new Color(29, 209, 161));
+        btnInsertar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnInsertar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnInsertar.setForeground(new java.awt.Color(0, 0, 0));
         btnInsertar.setText("Insertar");
@@ -238,16 +241,16 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelDialogoFila8.add(btnInsertar);
 
-        btnBuscar.setBackground(new Color(29, 209, 161));
+        btnBuscar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
         btnBuscar.setBorder(null);
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.setPreferredSize(new java.awt.Dimension(200, 60));
-        panelDialogoFila8.add(btnBuscar);
+        //panelDialogoFila8.add(btnBuscar);
 
-        btnSalir.setBackground(new Color(238, 82, 83));
+        btnSalir.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(0, 0, 0));
         btnSalir.setText("Salir");
@@ -318,7 +321,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelBotones.setPreferredSize(new java.awt.Dimension(200, 293));
         panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 10));
 
-        btnCrear.setBackground(new Color(29, 209, 161));
+        btnCrear.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnCrear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(0, 0, 0));
         btnCrear.setText("Crear");
@@ -330,7 +333,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelBotones.add(btnCrear);
 
-        btnBorrar.setBackground(new Color(238, 82, 83));
+        btnBorrar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrar.setForeground(new java.awt.Color(0, 0, 0));
         btnBorrar.setText("Borrar");
@@ -342,7 +345,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelBotones.add(btnBorrar);
 
-        btnModificar.setBackground(new Color(238, 82, 83));
+        btnModificar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(0, 0, 0));
         btnModificar.setText("Modificar");
@@ -354,7 +357,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelBotones.add(btnModificar);
 
-        btnBorrarPregunta.setBackground(new Color(238, 82, 83));
+        btnBorrarPregunta.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnBorrarPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrarPregunta.setForeground(new java.awt.Color(0, 0, 0));
         btnBorrarPregunta.setText("Borrar Pregunta");
@@ -366,7 +369,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         panelBotones.add(btnBorrarPregunta);
 
-        btnInsertarPregunta.setBackground(new Color(29, 209, 161));
+        btnInsertarPregunta.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnInsertarPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnInsertarPregunta.setForeground(new Color(0, 0, 0));
         btnInsertarPregunta.setText("Añadir Pregunta");
@@ -666,6 +669,15 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         opcionCopiasDeSeguridad.add(opcionImportar);
         opcionCopiasDeSeguridad.add(opcionExportar);
         menuAdministrador.add(opcionCopiasDeSeguridad);
+        opcionUsuarios.setText("Usuarios");
+        opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
+        opcionUsuarios.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionUsuariosActionPerformed(evt);
+            }
+        });
+        menuAdministrador.add(opcionUsuarios);
 
 
         barraMenu.add(menuAdministrador);
@@ -690,6 +702,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void opcionUsuariosActionPerformed(ActionEvent evt) {
+
+        VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionAjustesUsuarioActionPerformed(ActionEvent evt) {
         VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
@@ -1111,6 +1130,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JMenu opcionCopiasDeSeguridad;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
+    private javax.swing.JMenuItem opcionUsuarios;
 
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;
