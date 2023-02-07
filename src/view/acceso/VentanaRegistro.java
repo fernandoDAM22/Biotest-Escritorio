@@ -4,6 +4,7 @@
  */
 package view.acceso;
 
+import controller.tools.Colores;
 import controller.tools.EventoFoco;
 import controller.usuario.Codigos;
 import controller.usuario.Registro;
@@ -64,7 +65,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.setLayout(new java.awt.GridLayout(8, 1));
 
-        panelTitulo.setBackground(new java.awt.Color(29, 209, 161));
+        panelTitulo.setBackground(Colores.COLOR_FONDO_VERDE);
 
         labelRegistrarse.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         labelRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
@@ -73,7 +74,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.add(panelTitulo);
 
-        panelFila1.setBackground(new java.awt.Color(29, 209, 161));
+        panelFila1.setBackground(Colores.COLOR_FONDO_VERDE);
 
         labelNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelNombre.setForeground(new java.awt.Color(0, 0, 0));
@@ -92,7 +93,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.add(panelFila1);
 
-        panelFila2.setBackground(new java.awt.Color(29, 209, 161));
+        panelFila2.setBackground(Colores.COLOR_FONDO_VERDE);
 
         labelEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelEmail.setForeground(new java.awt.Color(0, 0, 0));
@@ -109,7 +110,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.add(panelFila2);
 
-        panelFila3.setBackground(new java.awt.Color(29, 209, 161));
+        panelFila3.setBackground(Colores.COLOR_FONDO_VERDE);
 
         labelPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelPassword.setForeground(new java.awt.Color(0, 0, 0));
@@ -126,7 +127,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.add(panelFila3);
 
-        panelFila4.setBackground(new java.awt.Color(29, 209, 161));
+        panelFila4.setBackground(Colores.COLOR_FONDO_VERDE);
 
         labelPassword2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelPassword2.setForeground(new java.awt.Color(0, 0, 0));
@@ -143,7 +144,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.add(panelFila4);
 
-        panelFila5.setBackground(new java.awt.Color(29, 209, 161));
+        panelFila5.setBackground(Colores.COLOR_FONDO_VERDE);
 
         labelTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelTelefono.setForeground(new java.awt.Color(0, 0, 0));
@@ -160,9 +161,9 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         panelPrincipal.add(panelFila5);
 
-        panelFila6.setBackground(new java.awt.Color(29, 209, 161));
+        panelFila6.setBackground(Colores.COLOR_FONDO_VERDE);
 
-        btnCancelar.setBackground(new java.awt.Color(238, 82, 83));
+        btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Volver");
@@ -178,7 +179,8 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
 
 
-        btnRegistrarse.setBackground(new java.awt.Color(72, 219, 251));
+        btnRegistrarse.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnRegistrarse.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnRegistrarse.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnRegistrarse.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarse.setText("Registrarse");
@@ -216,7 +218,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
             }
         });
         labelCerrarError.setText("X");
-        panelErrores.setBackground(new java.awt.Color(29, 209, 161));
+        panelErrores.setBackground(Colores.COLOR_FONDO_VERDE);
 
         panelErrores.add(labelError);
         panelErrores.add(labelCerrarError);

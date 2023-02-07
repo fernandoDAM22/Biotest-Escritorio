@@ -118,24 +118,24 @@ public class PartidaModoSinFallos extends GestionPartida {
      */
     public boolean responder(JButton boton) {
         if (boton.getText().equals(pregunta.getRespuestaCorrecta())) {
-            boton.setBackground(Colores.correcto());
+            boton.setBackground(Colores.COLOR_CORRECTO);
             contadorPreguntasCorrectas++;
             return true;
         } else {
             fallo = true;
             contadorRespuestasIncorrectas++;
-            boton.setBackground(Colores.incorrecto());
+            boton.setBackground(Colores.COLOR_INCORRECTO);
             if (btnOpcion1.getText().equals(pregunta.getRespuestaCorrecta())) {
-                btnOpcion1.setBackground(Colores.correcto());
+                btnOpcion1.setBackground(Colores.COLOR_CORRECTO);
             }
             if (btnOpcion2.getText().equals(pregunta.getRespuestaCorrecta())) {
-                btnOpcion2.setBackground(Colores.correcto());
+                btnOpcion2.setBackground(Colores.COLOR_CORRECTO);
             }
             if (btnOpcion3.getText().equals(pregunta.getRespuestaCorrecta())) {
-                btnOpcion3.setBackground(Colores.correcto());
+                btnOpcion3.setBackground(Colores.COLOR_CORRECTO);
             }
             if (btnOpcion4.getText().equals(pregunta.getRespuestaCorrecta())) {
-                btnOpcion4.setBackground(Colores.correcto());
+                btnOpcion4.setBackground(Colores.COLOR_CORRECTO);
             }
             return false;
         }

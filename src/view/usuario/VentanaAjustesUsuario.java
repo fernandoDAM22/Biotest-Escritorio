@@ -140,8 +140,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnPassword.setText("Cambiar Contraseña");
-        btnPassword.setBackground(Colores.colorInicial());
-        btnPassword.setForeground(Colores.colorNegro());
+        btnPassword.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnPassword.setForeground(Colores.COLOR_NEGRO);
         btnPassword.setPreferredSize(new java.awt.Dimension(200, 50));
         btnPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,8 +152,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnEmail.setText("Cambiar Email");
-        btnEmail.setBackground(Colores.colorInicial());
-        btnEmail.setForeground(Colores.colorNegro());
+        btnEmail.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnEmail.setForeground(Colores.COLOR_NEGRO);
         btnEmail.setPreferredSize(new java.awt.Dimension(200, 50));
         btnEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -164,8 +164,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnTelefono.setText("Cambiar telefono");
-        btnTelefono.setBackground(Colores.colorInicial());
-        btnTelefono.setForeground(Colores.colorNegro());
+        btnTelefono.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnTelefono.setForeground(Colores.COLOR_NEGRO);
         btnTelefono.setPreferredSize(new java.awt.Dimension(200, 50));
         btnTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,8 +176,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         btnUser.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnUser.setText("Cambiar nombre de usuario");
-        btnUser.setBackground(Colores.colorInicial());
-        btnUser.setForeground(Colores.colorNegro());
+        btnUser.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnUser.setForeground(Colores.COLOR_NEGRO);
         btnUser.setPreferredSize(new java.awt.Dimension(200, 50));
         btnUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

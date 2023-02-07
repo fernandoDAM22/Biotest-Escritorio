@@ -55,8 +55,8 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
-        btnCancelar.setBackground(Colores.colorBotonPeligroso());
-        btnCancelar.setForeground(Colores.colorNegro());
+        btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
+        btnCancelar.setForeground(Colores.COLOR_NEGRO);
         btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,8 +66,8 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
-        btnAceptar.setBackground(Colores.colorBotonSeguro());
-        btnAceptar.setForeground(Colores.colorNegro());
+        btnAceptar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
+        btnAceptar.setForeground(Colores.COLOR_NEGRO);
         btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

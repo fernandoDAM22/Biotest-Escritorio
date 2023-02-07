@@ -86,7 +86,7 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
         panelPrincipal.add(panelFIla1);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnCancelar.setBackground(Colores.colorBotonPeligroso());
+        btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setForeground(new java.awt.Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new ActionListener() {
@@ -101,7 +101,7 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
         btnConfirmar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnConfirmar.setForeground(new java.awt.Color(0, 0, 0));
         btnConfirmar.setText("Confirmar");
-        btnConfirmar.setBackground(Colores.colorBotonSeguro());
+        btnConfirmar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnConfirmar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {

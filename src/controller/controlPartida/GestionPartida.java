@@ -87,10 +87,10 @@ public abstract class GestionPartida {
      * @author Fernando
      */
     public void restablecerColores() {
-        btnOpcion1.setBackground(Colores.colorInicial());
-        btnOpcion2.setBackground(Colores.colorInicial());
-        btnOpcion3.setBackground(Colores.colorInicial());
-        btnOpcion4.setBackground(Colores.colorInicial());
+        btnOpcion1.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnOpcion2.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnOpcion3.setBackground(Colores.COLOR_AZUL_BOTONES);
+        btnOpcion4.setBackground(Colores.COLOR_AZUL_BOTONES);
     }
 
     /**

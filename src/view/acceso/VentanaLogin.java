@@ -4,6 +4,7 @@
  */
 package view.acceso;
 
+import controller.tools.Colores;
 import controller.tools.EventoFoco;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
@@ -31,7 +32,7 @@ public class VentanaLogin extends javax.swing.JFrame {
      */
     public VentanaLogin() {
         setResizable(false);
-        getContentPane().setBackground(new Color(29, 209, 161));
+        getContentPane().setBackground(Colores.COLOR_FONDO_VERDE);
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -54,8 +55,6 @@ public class VentanaLogin extends javax.swing.JFrame {
         labelRegistrarse = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new Color(255, 102, 102));
-        setForeground(new Color(0, 204, 204));
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         labelTitulo.setForeground(new Color(0, 0, 0));
@@ -78,7 +77,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         inputUsername.setBorder(null);
         inputPassword.addFocusListener(new EventoFoco());
 
-        btnLogin.setBackground(new Color(72, 219, 251));
+        btnLogin.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLogin.setForeground(new Color(0, 0, 0));
         btnLogin.setCursor(new Cursor(Cursor.HAND_CURSOR));

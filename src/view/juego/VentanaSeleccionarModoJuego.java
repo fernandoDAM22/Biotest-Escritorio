@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.util.Enumeration;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.tools.Colores;
 import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
 import controller.usuario.Codigos;
@@ -91,7 +92,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         panelCentro.setLayout(new java.awt.GridLayout(3, 1));
 
         panelBotonesModoJuego.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 100));
-        btnModoLibre.setBackground(new Color(72, 219, 251));
+        btnModoLibre.setBackground(Colores.COLOR_AZUL_BOTONES);
         grupoBotones.add(btnModoLibre);
         btnModoLibre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoLibre.setForeground(new Color(0, 0, 0));
@@ -105,7 +106,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoLibre.setPreferredSize(new java.awt.Dimension(150, 50));
         panelBotonesModoJuego.add(btnModoLibre);
 
-        btnModoSinFallos.setBackground(new Color(72, 219, 251));
+        btnModoSinFallos.setBackground(Colores.COLOR_AZUL_BOTONES);
         grupoBotones.add(btnModoSinFallos);
         btnModoSinFallos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoSinFallos.setForeground(new Color(0, 0, 0));
@@ -119,7 +120,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoSinFallos.setPreferredSize(new java.awt.Dimension(150, 50));
         panelBotonesModoJuego.add(btnModoSinFallos);
 
-        btnModoClasico.setBackground(new Color(72, 219, 251));
+        btnModoClasico.setBackground(Colores.COLOR_AZUL_BOTONES);
         grupoBotones.add(btnModoClasico);
         btnModoClasico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoClasico.setForeground(new Color(0, 0, 0));
@@ -133,7 +134,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         });
         panelBotonesModoJuego.add(btnModoClasico);
 
-        btnModoCuestionarios.setBackground(new Color(72, 219, 251));
+        btnModoCuestionarios.setBackground(Colores.COLOR_AZUL_BOTONES);
         grupoBotones.add(btnModoCuestionarios);
         btnModoCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoCuestionarios.setForeground(new Color(0, 0, 0));
@@ -151,7 +152,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
 
         panelControles.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 50));
 
-        btnCancelar.setBackground(new Color(238, 82, 83));
+        btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new Color(0, 0, 0));
         btnCancelar.setText("Cancelar");
@@ -164,7 +165,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         panelControles.add(btnCancelar);
 
-        btnJugar.setBackground(new Color(29, 209, 161));
+        btnJugar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnJugar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnJugar.setForeground(new Color(0, 0, 0));
         btnJugar.setText("Jugar");
