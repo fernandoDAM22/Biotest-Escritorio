@@ -8,6 +8,7 @@ import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import model.Pregunta;
 import view.acceso.VentanaLogin;
@@ -550,7 +551,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         //nos aseguramos que los campos estan rellenos
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
-            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.WARNING_MESSAGE);
         }else if(GestionPreguntas.existePregunta(enunciado)){
             //nos aseguramos de que no existe una pregunta con ese nombre ya
             JOptionPane.showMessageDialog(this, "Ya existe una pregunta con ese enunciado", "Error", JOptionPane.ERROR_MESSAGE);
@@ -567,6 +568,11 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             String enunciado = txtEnunciado.getText();
+
+            //Si no hay nada escrito en la casilla del enunciado cortamos la ejecucion del metodo
+            if(enunciado.equals("")){
+                return;
+            }
             if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                 if (GestionPreguntas.borrarPregunta(enunciado)) {
                     JOptionPane.showMessageDialog(this, "Pregunta Borrada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
@@ -597,11 +603,21 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {
-         /*
+
+        int posicion = tablaPreguntas.getSelectedRow();
+        /*
+        si se pulsa el boton de modificar sin tener seleccionado ningun elemento en la tabla
+        detenemos la ejecucion del metodo para que no salte excepcion al obtener el nombre
+        de la tabla
+         */
+        if(posicion == -1){
+            return;
+        }
+        /*
         obtenemos el enunciado antiguo de la pregunta, es importante tenerlo guardado
         porque puede ser modificado
          */
-        String enunciadoAntiguo = (String) modelo.getValueAt(tablaPreguntas.getSelectedRow(),0);
+        String enunciadoAntiguo = (String) modelo.getValueAt(posicion,0);
         //obtenemos los datos de la pregunta
         String enunciado = txtEnunciado.getText();
         String respuestaCorrecta = txtRespuestaCorrecta.getText();
@@ -614,7 +630,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")) {
             //en ese caso mostramos el mensaje de error
-            JOptionPane.showMessageDialog(this, "Datos Erroneos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
         } else if (GestionPreguntas.modificarPregunta(p, enunciadoAntiguo)) {//si se modifica la pregunta
             JOptionPane.showMessageDialog(this, "Pregunta Modificada Correctamente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();

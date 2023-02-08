@@ -956,6 +956,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void btnBorrarPreguntaActionPerformed(java.awt.event.ActionEvent evt) {
         int posicion = tablaPreguntas.getSelectedRow();
+        //si no hay ninguna preguna seleccionada cortamos la ejecucion del metodo para evitar excepciones
+        if(posicion == -1){
+            return;
+        }
         int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
         int idCuestionario = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
         if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {

@@ -8,8 +8,10 @@ import java.awt.*;
 import java.awt.event.*;
 
 import controller.administrador.GestionCategorias;
+import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
@@ -231,9 +233,30 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
                 return canEdit[columnIndex];
             }
         });
+        //Menu emergente
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem deleteItem = new JMenuItem("Eliminar");
+        popup.add(deleteItem);
+        deleteItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               borrarPreguntaMenuEmergente();
+            }
+        });
         tablaInformacionPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 colocarDatosPregunta();
+            }
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    int row = tablaInformacionPreguntas.rowAtPoint(e.getPoint());
+                    popup.show(tablaInformacionPreguntas, e.getX(), e.getY());
+                }
+            }
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    int row = tablaInformacionPreguntas.rowAtPoint(e.getPoint());
+                    popup.show(tablaInformacionPreguntas, e.getX(), e.getY());
+                }
             }
         });
         tablaInformacionPreguntas.addKeyListener(new KeyAdapter() {
@@ -447,9 +470,26 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         );
         cargarListaCategorias();
         modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+        //menu emergente
 
         pack();
     }// </editor-fold>
+
+    private void borrarPreguntaMenuEmergente() {
+        int posicion =  tablaInformacionPreguntas.getSelectedRow();
+        if(posicion == -1){
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la pregunta?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
+            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+        }else{
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,"Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void opcionUsuariosActionPerformed(ActionEvent evt) {
         VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
@@ -465,7 +505,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void btnModificarActionListener(ActionEvent evt) {
         if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String nombreAntiguo = listaCategorias.getSelectedItem().toString();
@@ -475,6 +515,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Ya existe una categoria con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //nos aseguramos de que el usuario confirma la insercion del usuario
+        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres modificar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+
         if (GestionCategorias.modificarCategoria(nombreAntiguo, nombre, descripcion)) {
             JOptionPane.showMessageDialog(this, "Categoria Modificada Correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
             int posicion = listaCategorias.getSelectedIndex(); //obtenemos la posicion de la categoria seleccionada
