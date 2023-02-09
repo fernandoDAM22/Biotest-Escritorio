@@ -299,22 +299,22 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     }
 
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,"Error",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -375,7 +375,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         String mensaje = seleccionarPartida();
         TipoPartida tipoPartida = null;
         if (mensaje == null) {
-            JOptionPane.showMessageDialog(null, "Seleccione un modo de juego", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Mensajes.SELECCIONE_MODO_JUEGO, "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             switch (mensaje) { // se establece el tipo de partida elegido
                 case "Modo Libre" -> tipoPartida = TipoPartida.MODO_LIBRE;

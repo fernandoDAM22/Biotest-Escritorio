@@ -7,6 +7,7 @@ package view.usuario.paneles;
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
 import controller.tools.EventoFoco;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
@@ -140,18 +141,18 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         //ahora pasamos a realizar todas las comprobaciones necesarias antes de modificar el nombre de usuario
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
             //primero se comprueba que la contraseña antigua sea correcta
-            JOptionPane.showMessageDialog(this,"La contraseña no es correcta","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,"Error",JOptionPane.ERROR_MESSAGE);
         }else if(ComprobarDatos.existeUsuario(txtUsername.getText()) > 0){
-            JOptionPane.showMessageDialog(this,"ya existe un usuario con ese nombre","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_EXISTE_USUARIO,"Error",JOptionPane.ERROR_MESSAGE);
         }else if(!ComprobarDatos.comprobarNombre(txtUsername.getText())){
-            JOptionPane.showMessageDialog(this,"el nombre no cumple con los requisitos","Error",JOptionPane.ERROR_MESSAGE);
-        }else if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_USERNAME,"Error",JOptionPane.ERROR_MESSAGE);
+        }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionUsuarios.cambiarNombre(ConfiguracionUsuario.getNombreUsuario(),txtUsername.getText())){
-                JOptionPane.showMessageDialog(this,"Usuario cambiado correctamente","correcto", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.USUARIO_CAMBIADO,"correcto", JOptionPane.INFORMATION_MESSAGE);
                 txtNombreUsuario.setText(txtUsername.getText());
                 limpiarCampos();
             }else{
-                JOptionPane.showMessageDialog(this,"No se ha podido cambiar el nombre de usuario","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_USERNAME,"Error",JOptionPane.ERROR_MESSAGE);
             }
 
         }

@@ -56,4 +56,10 @@ public interface Mensajes {
     String MENSAJE_BORRAR = "Eliminar";
     String EMAIL_CAMBIADO = "Email Cambiado correctamente";
     String ERROR_CAMBIAR_EMAIL = "No se ha podido cambiar el email";
+    String ERROR_CAMBIAR_PASSWORD = "Error al cambiar la contraseña";
+    String PASSWORD_CAMBIADA = "Contraseña cambiada correctamente";
+    String USUARIO_CAMBIADO = "Usuario cambiado correctamente";
+    String ERROR_CAMBIAR_USERNAME = "No se ha podido cambiar el nombre de usuario";
+    String TELEFONO_CAMBIADO = "Telefono cambiado correctamente";
+    String SELECCIONE_MODO_JUEGO = "Seleccione un modo de juego";
 }

@@ -7,6 +7,7 @@ package view.usuario.paneles;
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
 import controller.tools.EventoFoco;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
@@ -19,6 +20,7 @@ import javax.swing.*;
  * @author fernando
  */
 public class PanelCambiarTelefono extends javax.swing.JPanel {
+    public static final String ERROR_CAMBIAR_TELEFONO = "No se ha podido cambiar el nombre";
     private JTextField campoTelefono;
     /**
      * Creates new form PanelCambiarTelefono
@@ -139,15 +141,15 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
         //ahora pasamos a realizar todas las comprobaciones necesarias antes de modificar el nombre de usuario
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
             //primero se comprueba que la contraseña antigua sea correcta
-            JOptionPane.showMessageDialog(this,"La contraseña no es correcta","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_TELEFONO,"Error",JOptionPane.ERROR_MESSAGE);
         }else if(!ComprobarDatos.comprobarTelefono(txtTelefono.getText())){
-            JOptionPane.showMessageDialog(this,"el telefono no cumple con el formato","Error",JOptionPane.ERROR_MESSAGE);
-        }else if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_TELEFONO,"Error",JOptionPane.ERROR_MESSAGE);
+        }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionUsuarios.cambiarTelefono(ConfiguracionUsuario.getNombreUsuario(),txtTelefono.getText())){
-                JOptionPane.showMessageDialog(this,"nombre Cambiado correctamente","correcto", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.TELEFONO_CAMBIADO,"correcto", JOptionPane.INFORMATION_MESSAGE);
                 campoTelefono.setText(txtTelefono.getText());
             }else{
-                JOptionPane.showMessageDialog(this,"No se ha podido cambiar el nombre","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, ERROR_CAMBIAR_TELEFONO,"Error",JOptionPane.ERROR_MESSAGE);
             }
 
         }
