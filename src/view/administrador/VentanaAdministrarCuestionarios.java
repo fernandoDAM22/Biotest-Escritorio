@@ -13,6 +13,7 @@ import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import model.Cuestionario;
 import view.acceso.VentanaLogin;
@@ -410,9 +411,29 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 return canEdit[columnIndex];
             }
         });
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem deleteItem = new JMenuItem(Mensajes.MENSAJE_BORRAR);deleteItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+              deleteItemActionPerformed(evt);
+            }
+        });
+
+
+        popup.add(deleteItem);
+
         tablaPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaPreguntasMouseClicked(evt);
+            }
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    popup.show(tablaPreguntas, e.getX(), e.getY());
+                }
+            }
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    popup.show(tablaPreguntas, e.getX(), e.getY());
+                }
             }
         });
         tablaPreguntas.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -703,6 +724,21 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void deleteItemActionPerformed(ActionEvent evt) {
+        int posicion = tablaPreguntas.getSelectedRow();
+        if(posicion == -1){
+            return;
+        }
+        int idCuestionario  = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
+        int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion,0));
+        if(GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)){
+            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
+        }else{
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,"Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     private void opcionUsuariosActionPerformed(ActionEvent evt) {
 
         VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
@@ -726,14 +762,14 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
         int idPregunta = GestionPreguntas.obtenerId(listaPreguntasDialogo.getSelectedItem().toString());
         if (idCuestionario == -1 || idPregunta == -1) {
-            JOptionPane.showMessageDialog(null, "Ha ocurrido un error", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             if (GestionCuestionarios.insertarPregunta(idCuestionario, idPregunta)) {
-                JOptionPane.showMessageDialog(null, "Pregunta insertada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, "Correcto", JOptionPane.INFORMATION_MESSAGE);
                 GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
             } else {
-                JOptionPane.showMessageDialog(null, "No se ha podido añadir la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
             }
             dialogoPreguntas2.dispose();
         }
@@ -759,7 +795,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         try {
             String[] datos = GestionPreguntas.obtenerRespuestas(listaPreguntasDialogo.getSelectedItem().toString());
             if (datos == null) {
-                System.out.println("Nuloo");
                 return;
             }
             GestionPreguntas.colocarRespuesta(inputRespuestaCorrecta, datos[0]);
@@ -910,22 +945,22 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         }
     }
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,"Error",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -962,14 +997,14 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         }
         int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
         int idCuestionario = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if (GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)) {
-            JOptionPane.showMessageDialog(this, "Pregunta borrada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, "Correcto", JOptionPane.INFORMATION_MESSAGE);
             GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido borrar la pregunta", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -985,25 +1020,25 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (descripcion.equals("") || nombre.equals("")) { // se comprueba que los datos sean nulos
             return;
         } else if (GestionCuestionarios.existeCuestionario(nombre)) { // se comprueba que ya existe un cuestionario con ese nombre
-            JOptionPane.showMessageDialog(this, "Ya existe un cuestionario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, "Error", JOptionPane.ERROR_MESSAGE);
         } else if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {// se comprueba si se ha insertado en la base de datos o no
-            JOptionPane.showMessageDialog(this, "Cuestionario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_INSERTADO, "Correcto", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido insertar el cuestionario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_CUESTIONARIOS, "Error", JOptionPane.ERROR_MESSAGE);
         }
         actualizarCuestionarios();
     }
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         int id = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if (GestionCuestionarios.borrar(id)) {
-            JOptionPane.showMessageDialog(this, "Cuestionario borrado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_BORRADO, "Correcto", JOptionPane.INFORMATION_MESSAGE);
             listaCuestionarios.removeItem(listaCuestionarios.getSelectedItem().toString());
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido borrar el cuestionario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CUESTIONARIO, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1014,11 +1049,14 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         String nombre = txtNombreCuestionario.getText();
         String descripcion = txtDescripcionCuestionario.getText();
         if (nombre.equals("") || descripcion.equals("")) {//se comprueba que los datos no esten vacios
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if (GestionCuestionarios.existeCuestionario(nombre) && !nombre.equals(listaCuestionarios.getSelectedItem().toString())) {
-            JOptionPane.showMessageDialog(this, "Ya existe un cuestionario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         /**
@@ -1030,9 +1068,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         Cuestionario c = new Cuestionario(id, nombre, descripcion);
         //realizamos la modificacion y mostramos el mensaje correspondiente
         if (GestionCuestionarios.modificar(c)) {
-            JOptionPane.showMessageDialog(this, "Cuestionario modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CUESIONARIO_MODIFICADO, "Correcto", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido modificar el cuestionario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_CUESIONARIO, "Error", JOptionPane.ERROR_MESSAGE);
         }
         //obtenemos la posicion del cuestionario seleccionado
         int posicionCuestionario = listaCuestionarios.getSelectedIndex();

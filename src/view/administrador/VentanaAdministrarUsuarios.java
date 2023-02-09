@@ -9,6 +9,7 @@ import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
 import controller.tools.EventoFoco;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Registro;
@@ -264,9 +265,28 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
                 return types[columnIndex];
             }
         });
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem deleteItem = new JMenuItem(Mensajes.MENSAJE_BORRAR);deleteItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                deleteItemActionPerformed(evt);
+            }
+        });
+
+        popup.add(deleteItem);
+
         tablaUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaUsuariosMouseClicked(evt);
+            }
+            public void mousePressed(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    popup.show(tablaUsuarios, e.getX(), e.getY());
+                }
+            }
+            public void mouseReleased(MouseEvent e) {
+                if (e.isPopupTrigger()) {
+                    popup.show(tablaUsuarios, e.getX(), e.getY());
+                }
             }
         });
         tablaUsuarios.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -396,6 +416,23 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>
+
+    private void deleteItemActionPerformed(ActionEvent evt) {
+        int posicion = tablaUsuarios.getSelectedRow();
+        if(posicion == -1){
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        if(GestionUsuarios.borrarUsuario((String) modelo.getValueAt(posicion,0))){
+            JOptionPane.showMessageDialog(this,Mensajes.USUARIO_BORRADO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            cargarTabla();
+        }else{
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,"ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,"ERROR",JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     private void opcionAjustesUsuarioActionListener(ActionEvent evt) {
         VentanaAjustesUsuario frame = new VentanaAjustesUsuario();
@@ -704,7 +741,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             return;
         }
         if(GestionUsuarios.borrarUsuario((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this,"Usuario borrado correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.USUARIO_BORRADO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
         }else{
             JOptionPane.showMessageDialog(this,"No se ha podido borrar al usuario","Error",JOptionPane.ERROR_MESSAGE);

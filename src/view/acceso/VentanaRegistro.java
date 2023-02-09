@@ -6,6 +6,7 @@ package view.acceso;
 
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.Registro;
 
@@ -19,6 +20,9 @@ import java.awt.event.MouseEvent;
  * @author fernando
  */
 public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
+
+    public static final String ERROR_LAS_CONTRASEÑAS_NO_COINCIDEN = "Error, las contraseñas no coinciden";
+    public static final String USUARIO_REGISTRADO = "Usuario registrado correctamente";
 
     /**
      * Creates new form VentanaRegistro
@@ -249,31 +253,31 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
        switch (codigo){
            //en funcion del codigo devuelto mostratemos un mensaje u otro
            case ERROR_CAMPOS_VACIOS:
-               mensaje = "Error, rellene todos los campos";
+               mensaje = "error " + Mensajes.RELLENE_TODOS_LOS_CAMPOS;
                break;
            case ERROR_NOMBRE:
-               mensaje = "Error, el nombre no es valido";
+               mensaje = Mensajes.ERROR_USERNAME;
                break;
            case ERROR_EMAIL:
-               mensaje = "Error, el email no es valido";
+               mensaje = Mensajes.ERROR_EMAIL;
                 break;
            case ERROR_FORMATO_PASSWORD:
-               mensaje = "Error, la contraseña debe tener minino 8 caracteres y un numero";
+               mensaje = Mensajes.ERROR_FORMATO_PASSWORD;
                break;
            case ERROR_PASSWORDS:
-               mensaje = "Error, las contraseñas no coinciden";
+               mensaje = Mensajes.ERROR_PASSWORDS;
                break;
            case ERROR_TELEFONO:
-               mensaje = "Error, el telefono no es correcto";
+               mensaje = Mensajes.ERROR_TELEFONO;
                break;
            case ERROR_EXISTE_USUARIO:
-               mensaje = "Error, ya existe un usuario con ese nombre";
+               mensaje = Mensajes.ERROR_EXISTE_USUARIO;
                break;
            case CANCELADO:
-               mensaje = "Operacion cancelada";
+               mensaje = Mensajes.OPERACION_CANCELADA;
                break;
            case CORRECTO:
-               mensaje = "Usuario registrado correctamente";
+               mensaje = USUARIO_REGISTRADO;
                break;
        }
        //mostramos el mensaje correspondiente

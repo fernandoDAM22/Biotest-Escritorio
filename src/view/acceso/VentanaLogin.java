@@ -6,6 +6,7 @@ package view.acceso;
 
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.Login;
@@ -168,9 +169,9 @@ public class VentanaLogin extends javax.swing.JFrame {
         String mensaje = "";
         //en caso de error mostramos el mensaje correspondiente
         if(resultado == ERROR_NO_EXISTE_USUARIO){
-            mensaje = "No existe el usuario";
+            mensaje = Mensajes.NO_EXISTE_USUARIO;
         }else if(resultado == Codigos.ERROR_PASSWORD_INCORRECTA){
-            mensaje = "Contraseña Incorrecta";
+            mensaje = Mensajes.PASSWORD_INCORRECTA;
         }
         //mostramos el mensaje de error en caso de que haya ocurrido
         if(resultado < 0){

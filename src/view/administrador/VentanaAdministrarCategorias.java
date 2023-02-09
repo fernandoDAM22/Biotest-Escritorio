@@ -101,6 +101,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         panelPrinicipal.setLayout(new java.awt.BorderLayout());
 
         panelBotones.setAutoscrolls(true);
+        panelBotones.setBorder(javax.swing.BorderFactory.createTitledBorder("Operaciones"));
         panelBotones.setPreferredSize(new java.awt.Dimension(200, 405));
         panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
 
@@ -480,7 +481,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         if(posicion == -1){
             return;
         }
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la pregunta?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
@@ -512,16 +513,16 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         String nombre = txtNombreCategoria.getText();
         String descripcion = txtDescripcionCategoria.getText();
         if (GestionCategorias.existeCategoria(nombre) && !nombre.equals(listaCategorias.getSelectedItem().toString())) {
-            JOptionPane.showMessageDialog(this, "Ya existe una categoria con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
         //nos aseguramos de que el usuario confirma la insercion del usuario
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres modificar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
 
         if (GestionCategorias.modificarCategoria(nombreAntiguo, nombre, descripcion)) {
-            JOptionPane.showMessageDialog(this, "Categoria Modificada Correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_MODIFICADA, "Correcto", JOptionPane.INFORMATION_MESSAGE);
             int posicion = listaCategorias.getSelectedIndex(); //obtenemos la posicion de la categoria seleccionada
             listaCategorias.removeAllItems(); //vaciamos la lista
             //la volvemos a llenar
@@ -533,7 +534,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             */
             listaCategorias.setSelectedIndex(posicion);
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido modificar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -561,22 +562,16 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private void btnBorrarActionListener(ActionEvent evt) {
         String nombre = listaCategorias.getSelectedItem().toString();
         //nos aseguramos de que el usuario quiere borrar la categoria
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres borrar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         //intentamos borrar la categoria
         if (GestionCategorias.borrarCategoria(nombre)) {//si se borra
-            JOptionPane.showMessageDialog(this, "Categoria borrada correctamente", "Categoria borrada", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_BORRADA, "Categoria borrada", JOptionPane.INFORMATION_MESSAGE);
             //eliminamos la categoria borrada de la lista desplegable
             listaCategorias.removeItem(nombre);
         } else {
-            StringBuilder cadena = new StringBuilder();
-            cadena.append("No se ha podido borrar la categoria, las posibles causas son:\n");
-
-            cadena.append("\t > Ha ocurrido un error en la conexion a la base de datos\n");
-            cadena.append("\t > No se pueden borrar categorias que contengan almenos una pregunta\n");
-            cadena.append("\t > Ha ocurrido un error en la conexion a la base de datos\n");
-            JOptionPane.showMessageDialog(this, cadena.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -594,35 +589,35 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void btnCrearActionListener(ActionEvent evt) {
         if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
         } else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) {
-            JOptionPane.showMessageDialog(this, "Esa categoria ya existe", "Error", JOptionPane.ERROR_MESSAGE);
-        } else if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar la categoria?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
+        } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             if (GestionCategorias.insertarCategoria(txtNombreCategoria.getText(), txtDescripcionCategoria.getText()) > 0) {
-                JOptionPane.showMessageDialog(this, "Categoria insertada correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_INSERTADA, "Correcto", JOptionPane.INFORMATION_MESSAGE);
                 cargarListaCategorias();
             } else {
-                JOptionPane.showMessageDialog(this, "Esa categoria ya existe", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
