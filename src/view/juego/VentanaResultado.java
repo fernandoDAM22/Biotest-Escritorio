@@ -474,22 +474,22 @@ public class VentanaResultado extends javax.swing.JFrame {
     }
 
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 

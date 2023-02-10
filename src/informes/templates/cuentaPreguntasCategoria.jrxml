@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 8.1.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cuentaPreguntasCategoria" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a3fb76ae-c3ee-4025-9231-889c52907164">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="preguntas"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT c.nombre,count(p.id) as numero_preguntas from categoria c inner join preguntas p on p.id_categoria = c.id group by c.nombre]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="categorias"/>
+	</field>
+	<field name="numero_preguntas" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.name" value="numero_preguntas"/>
+		<property name="com.jaspersoft.studio.field.label" value="numero_preguntas"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="10" width="570" height="57" backcolor="#74CAF2" uuid="ed4bddd9-d454-412e-b37e-bf8d56583686"/>
+				<textElement textAlignment="Center">
+					<font size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Numero de preguntas por categoria]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="160" height="30" uuid="948716d6-fd03-49f7-bd9a-958ad1113fc2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="074cf9af-1ad4-4f17-88e0-2a37b750b329"/>
+				</reportElement>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="160" height="30" uuid="20f53f44-ffdb-4564-96ea-614657bad2ed">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5de0cc4e-d109-448d-ad2b-e9c298d1ec19"/>
+				</reportElement>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[numero preguntas]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="10" width="160" height="30" uuid="d11ef528-fa9c-4ac7-9b63-b7604335b662">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="074cf9af-1ad4-4f17-88e0-2a37b750b329"/>
+				</reportElement>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="10" width="100" height="30" uuid="73d54773-7cd8-4319-9b77-5da736e5c25d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5de0cc4e-d109-448d-ad2b-e9c298d1ec19"/>
+				</reportElement>
+				<textElement>
+					<font size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero_preguntas}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-10" y="80" width="580" height="1" uuid="a9b86378-a827-4b34-a0be-2a3c5b6ad490"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

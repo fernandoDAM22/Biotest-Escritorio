@@ -175,7 +175,7 @@ public class VentanaLogin extends javax.swing.JFrame {
         }
         //mostramos el mensaje de error en caso de que haya ocurrido
         if(resultado < 0){
-            JOptionPane.showMessageDialog(null,mensaje,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null,mensaje,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
         //si no ha habido errores lanzamos la ventana de seleccionar modo de juego
         if(resultado == CORRECTO){

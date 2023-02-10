@@ -21,8 +21,7 @@ import java.awt.event.MouseEvent;
  */
 public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
-    public static final String ERROR_LAS_CONTRASEÑAS_NO_COINCIDEN = "Error, las contraseñas no coinciden";
-    public static final String USUARIO_REGISTRADO = "Usuario registrado correctamente";
+
 
     /**
      * Creates new form VentanaRegistro
@@ -277,7 +276,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
                mensaje = Mensajes.OPERACION_CANCELADA;
                break;
            case CORRECTO:
-               mensaje = USUARIO_REGISTRADO;
+               mensaje = Mensajes.USUARIO_REGISTRADO;
                break;
        }
        //mostramos el mensaje correspondiente
@@ -285,7 +284,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
             labelError.setText(mensaje);
             labelCerrarError.setVisible(true);
        }else{// si no es un mensaje informativo
-           JOptionPane.showMessageDialog(null,mensaje,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+           JOptionPane.showMessageDialog(null,mensaje,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
            VentanaLogin frame = new VentanaLogin();
            frame.setVisible(true);
            dispose();

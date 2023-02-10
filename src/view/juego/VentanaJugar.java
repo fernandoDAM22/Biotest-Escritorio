@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controller.controlPartida.*;
+import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
@@ -347,7 +348,7 @@ public class VentanaJugar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnFinalizarActionListener(ActionEvent evt) {
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar la accion?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             lanzarVentanaResultado();
             dispose();
         }
@@ -379,7 +380,7 @@ public class VentanaJugar extends javax.swing.JFrame {
 
     private void btnSiguienteActionListener(ActionEvent evt) {
         if (bandera) {
-            JOptionPane.showMessageDialog(null, "Debe responder a la pregunta antes de pasar a la siguiente", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Debe responder a la pregunta antes de pasar a la siguiente", Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         switch (tipoPartida) {

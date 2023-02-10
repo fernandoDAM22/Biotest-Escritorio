@@ -5,12 +5,15 @@ package view.administrador;/*
 
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
+import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import model.Pregunta;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -22,6 +25,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
 import java.util.ArrayList;
 /**
  *Esta clase permite al usuario gestionar las preguntas, sus funciones son:
@@ -65,6 +69,8 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        jmenuInformes = new javax.swing.JMenu();
+        jmenuItemInforme = new javax.swing.JMenuItem();
         opcionImportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
@@ -186,12 +192,19 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             }
         });
         menuAdministrador.add(opcionUsuarios);
-
-
-
-
-
         barraMenu.add(menuAdministrador);
+        jmenuInformes.setText("Informes");
+        jmenuItemInforme.setText("Realizar informe");
+        jmenuItemInforme.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmenuItemInformeActionPerformed(evt);
+            }
+        });
+        jmenuInformes.add(jmenuItemInforme);
+        barraMenu.add(jmenuInformes);
+
+
 
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -429,19 +442,45 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void jmenuItemInformeActionPerformed(ActionEvent evt) {
+        try {
+            //Indicamos las carpetas donde se encuentra el origen y destino del informe
+            String reportSource = "src/informes/templates/datosPreguntas.jrxml";
+            String reportDest = "src/informes/resultados/datosPreguntas.html";
+            //Compilamos el informe .jrxml  para generar el .jasper
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+
+            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
+            ConexionBD cbd = new ConexionBD();
+            Connection conn = cbd.abrirConexion();
+
+            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+
+            //Exportamos el informe
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
+
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewer.setVisible(true);
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void deleteItemActionPerformed(ActionEvent evt) {
         int posicion = tablaPreguntas.getSelectedRow();
         if (posicion == -1){
             return;
         }
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
         }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -528,22 +567,22 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         txtRespuestaIncorrecta3.setText("");
     }
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_IMPORTACION,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -588,18 +627,18 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         //nos aseguramos que los campos estan rellenos
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
-            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.WARNING_MESSAGE);
         }else if(GestionPreguntas.existePregunta(enunciado)){
             //nos aseguramos de que no existe una pregunta con ese nombre ya
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
             //en caso de que se inserte
-            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_INSERTADA, "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
             vaciarCajas();
         } else {
             //en caso de que ocurra algun error
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -611,12 +650,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             if(enunciado.equals("")){
                 return;
             }
-            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                 if (GestionPreguntas.borrarPregunta(enunciado)) {
-                    JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                     actualizarTabla();
                 } else {
-                    JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 }
             }
         } catch (NullPointerException npe) {
@@ -662,12 +701,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")) {
             //en ese caso mostramos el mensaje de error
-            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         } else if (GestionPreguntas.modificarPregunta(p, enunciadoAntiguo)) {//si se modifica la pregunta
-            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_MODIFICADA, "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_MODIFICADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
         } else {//en caso de que no se pueda modificar la pregunta
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_PREGUNTA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -744,6 +783,9 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenu jmenuInformes;
+
+    private javax.swing.JMenuItem jmenuItemInforme;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
     private javax.swing.JMenuItem opcionUsuarios;

@@ -22,6 +22,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
 /**
@@ -422,15 +423,14 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         if(posicion == -1){
             return;
         }
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if(GestionUsuarios.borrarUsuario((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this,Mensajes.USUARIO_BORRADO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.USUARIO_BORRADO, Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
         }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,"ERROR",JOptionPane.ERROR_MESSAGE);
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,"ERROR",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -496,12 +496,12 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         }
         //comprobamos que los campos no esten vacios
         if (nombre.equals("") || email.equals("") || telefono.equals("") || password.equals("") || tipo.equals("")) {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el nombre cumple con los requisitos
         if (!ComprobarDatos.comprobarNombre(nombre)) {
-            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_USERNAME, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         /*
@@ -516,26 +516,26 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
          */
         try {
             if (ComprobarDatos.existeUsuario(nombre) > 0 && !nombre.equals(modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0))) {
-                JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (ArrayIndexOutOfBoundsException aioe) {
-            JOptionPane.showMessageDialog(this, "No tienes seleccionado a ningun usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_SELECCION_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el email cumple con los requisitos
         if (!ComprobarDatos.comprobarCorreo(email)) {
-            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EMAIL, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el telefono cumple con los requisitos
         if (!ComprobarDatos.comprobarTelefono(telefono)) {
-            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_TELEFONO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que la contraseña cumple con los requisitos
         if (!ComprobarDatos.comprobarFormatoPassword(password)) {
-            JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_FORMATO_PASSWORD, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         /*
@@ -546,20 +546,20 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         try {
             nombreUsuario = (String) modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0);
         } catch (ArrayIndexOutOfBoundsException aioe) {
-            JOptionPane.showMessageDialog(this, "No tienes seleccionado ningun usuario");
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_SELECCION_USUARIO);
             return;
         }
         //nos aseguramos de que el usuario confirma la insercion del usuario
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres modificar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password), email, telefono, tipo);
 
         if (GestionUsuarios.modificarUsuarioCompleto(usuario, nombreUsuario)) {
-            JOptionPane.showMessageDialog(this, "Usuario modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.USUARIO_MODIFICADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
     /**
@@ -581,12 +581,12 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         }
         //comprobamos que los campos no esten vacios
         if (nombre.equals("") || email.equals("") || telefono.equals("") || tipo.equals("")) {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el nombre cumple con los requisitos
         if (!ComprobarDatos.comprobarNombre(nombre)) {
-            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_USERNAME, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
           /*
@@ -601,23 +601,23 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             */
         try {
             if (ComprobarDatos.existeUsuario(nombre) > 0 && !nombre.equals(modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0))) {
-                JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } catch (ArrayIndexOutOfBoundsException aioe) {
-            JOptionPane.showMessageDialog(this, "No tienes seleccionado a ningun usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_SELECCION_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que no exista un usuario con ese nombre ya
 
         //comprobamos que el email cumple con los requisitos
         if (!ComprobarDatos.comprobarCorreo(email)) {
-            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EMAIL, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el telefono cumple con los requisitos
         if (!ComprobarDatos.comprobarTelefono(telefono)) {
-            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_TELEFONO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         /*
@@ -628,19 +628,19 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         try {
             nombreUsuario = (String) modelo.getValueAt(tablaUsuarios.getSelectedRow(), 0);
         } catch (ArrayIndexOutOfBoundsException aioe) {
-            JOptionPane.showMessageDialog(this, "No tienes seleccionado ningun usuario");
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_SELECCION_USUARIO);
             return;
         }
         //nos aseguramos de que el usuario confirma la insercion del usuario
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres modificar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         Usuario usuario = new Usuario(nombre, email, telefono, tipo);
         if (GestionUsuarios.modificarUsuarioSinPassword(usuario, nombreUsuario)) {
-            JOptionPane.showMessageDialog(this, "Usuario modificado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.USUARIO_MODIFICADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -661,45 +661,45 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         }
         //comprobamos que los campos no esten vacios
         if (nombre.equals("") || email.equals("") || telefono.equals("") || password.equals("") || tipo.equals("")) {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el nombre cumple con los requisitos
         if (!ComprobarDatos.comprobarNombre(nombre)) {
-            JOptionPane.showMessageDialog(this, "El nombre no cumple los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_USERNAME, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que no exista un usuario con ese nombre ya
         if (ComprobarDatos.existeUsuario(nombre) > 0) {
-            JOptionPane.showMessageDialog(this, "Ya existe un usuario con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el email cumple con los requisitos
         if (!ComprobarDatos.comprobarCorreo(email)) {
-            JOptionPane.showMessageDialog(this, "El email no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EMAIL, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que el telefono cumple con los requisitos
         if (!ComprobarDatos.comprobarTelefono(telefono)) {
-            JOptionPane.showMessageDialog(this, "El telefono no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_TELEFONO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //comprobamos que la contraseña cumple con los requisitos
         if (!ComprobarDatos.comprobarFormatoPassword(password)) {
-            JOptionPane.showMessageDialog(this, "La contraseña no cumple con los requisitos", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_FORMATO_PASSWORD, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //nos aseguramos de que el usuario confirma la insercion del usuario
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         //procedemos a la insercion del usuarios
         Usuario usuario = new Usuario(nombre, Cifrado.SHA256(password), email, telefono, tipo);
         if (Registro.registrarUsuario(usuario)) {
-            JOptionPane.showMessageDialog(this, "Usuario insertado correctamente", "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.USUARIO_REGISTRADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
         } else {
-            JOptionPane.showMessageDialog(this, "No se ha podido insertar el usuario", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -734,17 +734,17 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         int posicion = tablaUsuarios.getSelectedRow();
         if(posicion == -1){
-            JOptionPane.showMessageDialog(this,"No tienes seleccionado a ningun usuario","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_SELECCION_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres insertar al usuario?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if(GestionUsuarios.borrarUsuario((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this, Mensajes.USUARIO_BORRADO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.USUARIO_BORRADO, Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
         }else{
-            JOptionPane.showMessageDialog(this,"No se ha podido borrar al usuario","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -790,20 +790,20 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private void opcionImportarActionPerformed(java.awt.event.ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,"Copia importada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA, Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,"Error al importar la copia, consulte el manual","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionExportarActionPerformed(java.awt.event.ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,"Copia realizada correctamente","Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO, Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this,"Error al realizar la copia de seguridad","Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 

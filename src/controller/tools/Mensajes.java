@@ -11,6 +11,7 @@ public interface Mensajes {
     String DESCRIPCION_MODO_CLASICO = "En este modo de juego jugaras una partida de 10 preguntas";
     String DESCRIPCION_CUESTIONARIOS = "En este modo de juego jugaras una partida resolviendo un cuestionario";
     //-------------------------------------MENSAJES DE LOS DIAOLOGOS------------------------------------------
+    String ERROR = "Error";
     String CONFIRMACION_BACKUP = "¿Estas seguro de que quieres realizar una copia de seguridad?";
     String BACKUP_CORRECTO = "Copia realizada correctamente";
 
@@ -52,8 +53,6 @@ public interface Mensajes {
     String ERROR_BORRAR_CUESTIONARIO = "No se ha podido borrar el cuestionario";
     String CUESIONARIO_MODIFICADO = "Cuestionario modificado correctamente";
     String ERROR_MODIFICAR_CUESIONARIO = "No se ha podido modificar el cuestionario";
-    //----------------------------------BOTONES---------------------------------------------//
-    String MENSAJE_BORRAR = "Eliminar";
     String EMAIL_CAMBIADO = "Email Cambiado correctamente";
     String ERROR_CAMBIAR_EMAIL = "No se ha podido cambiar el email";
     String ERROR_CAMBIAR_PASSWORD = "Error al cambiar la contraseña";
@@ -62,4 +61,15 @@ public interface Mensajes {
     String ERROR_CAMBIAR_USERNAME = "No se ha podido cambiar el nombre de usuario";
     String TELEFONO_CAMBIADO = "Telefono cambiado correctamente";
     String SELECCIONE_MODO_JUEGO = "Seleccione un modo de juego";
+    String USUARIO_REGISTRADO = "Usuario registrado correctamente" ;
+    //----------------------------------BOTONES---------------------------------------------//
+    String MENSAJE_BORRAR = "Eliminar";
+
+
+    String ERROR_SELECCION_USUARIO = "No tienes seleccionado ningun usuario";
+    String USUARIO_MODIFICADO = "Usuario modificado correctamente";
+    String ERROR_MODIFICAR_USUARIO = "No se ha podido modificar el usuario";
+    String ERROR_INSERTAR_USUARIO = "No se ha podido insertar el usuario";
+    String CORRECTO = "Correcto";
+    String TITULO_CONFIRMACION = "¿Estas seguro?";
 }

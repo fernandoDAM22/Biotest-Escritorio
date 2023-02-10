@@ -6,13 +6,19 @@ package view.administrador;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
 
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
+import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -93,6 +99,10 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         opcionExportar = new javax.swing.JMenuItem();
 
         opcionUsuarios = new javax.swing.JMenuItem();
+        menuInformes = new javax.swing.JMenu();
+        jmenuInformePreguntas = new javax.swing.JMenuItem();
+        jmenuInformeCategorias = new javax.swing.JMenuItem();
+        jmenuPreguntasPorCategoria = new javax.swing.JMenuItem();
 
 
 
@@ -456,6 +466,35 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
 
         barraMenu.add(menuAdministrador);
+        menuInformes.setText("Informes");
+        jmenuInformePreguntas.setText("Informe Preguntas");
+        jmenuInformePreguntas.setToolTipText("Realiza un informe con las preguntas de la categoria seleccionada");
+        jmenuInformePreguntas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmenuInformePreguntasActionPerformed(evt);
+            }
+        });
+        jmenuInformeCategorias.setText("Informe Categorias");
+        jmenuInformeCategorias.setToolTipText("Crea un informe con todas las categorias");
+        jmenuInformeCategorias.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmenuInformeCategoriasActionPerformed(evt);
+            }
+        });
+        jmenuPreguntasPorCategoria.setText("Informe preguntas por categoria");
+        jmenuPreguntasPorCategoria.setToolTipText("Crea un informe con las preguntas que tiene cada categoria");
+        jmenuPreguntasPorCategoria.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                jmenuPreguntasPorCategoriaActionPerformed(evt);
+            }
+        });
+        menuInformes.add(jmenuInformeCategorias);
+        menuInformes.add(jmenuInformePreguntas);
+        menuInformes.add(jmenuPreguntasPorCategoria);
+        barraMenu.add(menuInformes);
 
         setJMenuBar(barraMenu);
 
@@ -476,19 +515,95 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void jmenuPreguntasPorCategoriaActionPerformed(ActionEvent evt) {
+        try {
+            //Indicamos las carpetas donde se encuentra el origen y destino del informe
+            String reportSource = "src/informes/templates/cuentaPreguntasCategoria.jrxml";
+            String reportDest = "src/informes/resultados/cuentaPreguntasCategoria.html";
+            //Compilamos el informe .jrxml  para generar el .jasper
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
+            ConexionBD cbd = new ConexionBD();
+            Connection conn = cbd.abrirConexion();
+            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+            //Exportamos el informe
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewer.setVisible(true);
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void jmenuInformeCategoriasActionPerformed(ActionEvent evt) {
+        try {
+            //Indicamos las carpetas donde se encuentra el origen y destino del informe
+            String reportSource = "src/informes/templates/categorias.jrxml";
+            String reportDest = "src/informes/resultados/categorias.html";
+            //Compilamos el informe .jrxml  para generar el .jasper
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
+            ConexionBD cbd = new ConexionBD();
+            Connection conn = cbd.abrirConexion();
+            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
+            //Exportamos el informe
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewer.setVisible(true);
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+        
+    }
+
+    private void jmenuInformePreguntasActionPerformed(ActionEvent evt) {
+        try {
+            //Indicamos las carpetas donde se encuentra el origen y destino del informe
+            String reportSource = "src/informes/templates/informacionPreguntas.jrxml";
+            String reportDest = "src/informes/resultados/preguntas.html";
+
+            //Crear un mapa para guardar parametros que podemos pasar al informe
+            Map<String, Object> params = new HashMap<String, Object>();
+            if(txtNombreCategoria.getText().equals("")){
+                JOptionPane.showMessageDialog(this,"Seleccione una categoria","Error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            params.put("id_categoria",GestionCategorias.obtenerIdCategoria(txtNombreCategoria.getText()));
+            //Compilamos el informe .jrxml  para generar el .jasper
+            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
+            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
+            ConexionBD cbd = new ConexionBD();
+            Connection conn = cbd.abrirConexion();
+            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
+            //Exportamos el informe
+            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
+            //Y lo visualizamos
+            JasperViewer viewer = new JasperViewer(jasperPrint, false);
+            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            viewer.setVisible(true);
+        } catch (JRException ex) {
+            ex.printStackTrace();
+        }
+    }
+
     private void borrarPreguntaMenuEmergente() {
         int posicion =  tablaInformacionPreguntas.getSelectedRow();
         if(posicion == -1){
             return;
         }
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
         }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -506,23 +621,23 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void btnModificarActionListener(ActionEvent evt) {
         if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         String nombreAntiguo = listaCategorias.getSelectedItem().toString();
         String nombre = txtNombreCategoria.getText();
         String descripcion = txtDescripcionCategoria.getText();
         if (GestionCategorias.existeCategoria(nombre) && !nombre.equals(listaCategorias.getSelectedItem().toString())) {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
         //nos aseguramos de que el usuario confirma la insercion del usuario
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
 
         if (GestionCategorias.modificarCategoria(nombreAntiguo, nombre, descripcion)) {
-            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_MODIFICADA, "Correcto", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_MODIFICADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             int posicion = listaCategorias.getSelectedIndex(); //obtenemos la posicion de la categoria seleccionada
             listaCategorias.removeAllItems(); //vaciamos la lista
             //la volvemos a llenar
@@ -534,7 +649,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             */
             listaCategorias.setSelectedIndex(posicion);
         } else {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -562,16 +677,16 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private void btnBorrarActionListener(ActionEvent evt) {
         String nombre = listaCategorias.getSelectedItem().toString();
         //nos aseguramos de que el usuario quiere borrar la categoria
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
         //intentamos borrar la categoria
         if (GestionCategorias.borrarCategoria(nombre)) {//si se borra
-            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_BORRADA, "Categoria borrada", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             //eliminamos la categoria borrada de la lista desplegable
             listaCategorias.removeItem(nombre);
         } else {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -589,35 +704,35 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void btnCrearActionListener(ActionEvent evt) {
         if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         } else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             if (GestionCategorias.insertarCategoria(txtNombreCategoria.getText(), txtDescripcionCategoria.getText()) > 0) {
-                JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_INSERTADA, "Correcto", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 cargarListaCategorias();
             } else {
-                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
         }
     }
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
             return;
         }
         if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
         if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,"Correcto",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -732,6 +847,10 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> listaCategorias;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
+    private javax.swing.JMenu menuInformes;
+    private javax.swing.JMenuItem jmenuInformePreguntas;
+    private javax.swing.JMenuItem jmenuInformeCategorias;
+    private javax.swing.JMenuItem jmenuPreguntasPorCategoria;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionAjustesUsuario;

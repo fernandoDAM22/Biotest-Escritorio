@@ -141,16 +141,16 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         //ahora pasamos a relizar todas las comprobaciones necesarias para poder cambiar el email
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
             //primero se comprueba que la contraseña antigua sea correcta
-            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(!ComprobarDatos.comprobarCorreo(txtEmail.getText())){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_EMAIL,"Error",JOptionPane.ERROR_MESSAGE);
-        }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_EMAIL,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionUsuarios.cambiarEmail(ConfiguracionUsuario.getNombreUsuario(),txtEmail.getText())){
-                JOptionPane.showMessageDialog(this, Mensajes.EMAIL_CAMBIADO,"correcto",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.EMAIL_CAMBIADO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
                 campoEmail.setText(txtEmail.getText());
                 limpiarCampos();
             }else{
-                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_EMAIL,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_EMAIL,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }
 
         }

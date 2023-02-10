@@ -141,18 +141,18 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         //ahora pasamos a realizar todas las comprobaciones necesarias antes de modificar el nombre de usuario
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
             //primero se comprueba que la contraseña antigua sea correcta
-            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(ComprobarDatos.existeUsuario(txtUsername.getText()) > 0){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_EXISTE_USUARIO,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_EXISTE_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(!ComprobarDatos.comprobarNombre(txtUsername.getText())){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_USERNAME,"Error",JOptionPane.ERROR_MESSAGE);
-        }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_USERNAME,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionUsuarios.cambiarNombre(ConfiguracionUsuario.getNombreUsuario(),txtUsername.getText())){
-                JOptionPane.showMessageDialog(this, Mensajes.USUARIO_CAMBIADO,"correcto", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.USUARIO_CAMBIADO,Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 txtNombreUsuario.setText(txtUsername.getText());
                 limpiarCampos();
             }else{
-                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_USERNAME,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_USERNAME,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }
 
         }

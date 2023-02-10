@@ -147,20 +147,20 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
 
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtOldPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
             //primero se comprueba que la contraseña antigua sea correcta
-            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(!String.valueOf(txtNewPassword.getPassword()).equals(String.valueOf(txtNewPassword2.getPassword()))){
             //Despues comprobamos que las dos contraseñas nuevas coinciden
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_PASSWORDS,"Error",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_PASSWORDS,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(!ComprobarDatos.comprobarFormatoPassword(String.valueOf(txtNewPassword.getPassword()))){
             //Aqui se comprueba que el formato de la contraseña es el permitido
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_FORMATO_PASSWORD,"Error",JOptionPane.ERROR_MESSAGE);
-        } else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_FORMATO_PASSWORD,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        } else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionUsuarios.cambiarPassword(ConfiguracionUsuario.getNombreUsuario(),String.valueOf(txtNewPassword.getPassword()))){
                 //aqui se entra en caso de que la contraseña se cambie correctamente
-                JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_CAMBIADA,"Error",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_CAMBIADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
             }else{ //aqui se llega en caso de que la contraseña no se cambie
-                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_PASSWORD,"Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_PASSWORD,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
