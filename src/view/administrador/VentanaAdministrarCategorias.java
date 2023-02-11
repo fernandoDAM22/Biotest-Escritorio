@@ -16,6 +16,7 @@ import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.Mensajes;
+import controller.tools.MyCellRenderer;
 import controller.usuario.Codigos;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -233,7 +234,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false, true, false
+                    false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -511,9 +512,21 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         cargarListaCategorias();
         modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
         //menu emergente
-
+        tintarTabla();
         pack();
     }// </editor-fold>
+    /**
+     * Este metodo nos permite cambiar el color de las filas de la tabla
+     *
+     * @author Fernando
+     */
+    private void tintarTabla() {
+        tablaInformacionPreguntas.setForeground(Colores.COLOR_NEGRO);
+        int numero = tablaInformacionPreguntas.getColumnCount();
+        for (int i = 0; i < numero; i++) {
+            tablaInformacionPreguntas.getColumnModel().getColumn(i).setCellRenderer(new MyCellRenderer());
+        }
+    }
 
     private void jmenuPreguntasPorCategoriaActionPerformed(ActionEvent evt) {
         try {
@@ -592,13 +605,17 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void borrarPreguntaMenuEmergente() {
+        //obtenemos la pregunta que se ha seleccionado
         int posicion =  tablaInformacionPreguntas.getSelectedRow();
+        //en caso de que no haya ninguna pregunta seleccionada cortamos la ejecucion del metodo, para evitar excepciones
         if(posicion == -1){
             return;
         }
+        //comprobamos que el usuario esta seguro de borrar la pregunta
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
+        //en funcion de si se borra o no mostramos un mensaje u otro
         if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
             JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
@@ -631,7 +648,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
-        //nos aseguramos de que el usuario confirma la insercion del usuario
+        //nos aseguramos de que el usuario confirma accion
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
@@ -665,6 +682,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     /**
      * Este metodo nos permite limpiar las cajas de texto
+     * @author Fernando
      */
     private void limpiarCajas() {
         txtEnunciado.setText("");
@@ -703,9 +721,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void btnCrearActionListener(ActionEvent evt) {
-        if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
+        if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {//en caso de que no rellente todos los campos
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        } else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) {
+        } else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) { //en caso de que ya exista esa categoria
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
             if (GestionCategorias.insertarCategoria(txtNombreCategoria.getText(), txtDescripcionCategoria.getText()) > 0) {
@@ -759,10 +777,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
-    }
-
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
-        colocarDatosPregunta();
     }
 
     /**

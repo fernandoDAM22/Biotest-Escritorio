@@ -10,6 +10,7 @@ import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
+import controller.tools.MyCellRenderer;
 import controller.usuario.Codigos;
 import model.Pregunta;
 import net.sf.jasperreports.engine.*;
@@ -27,14 +28,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
+
 /**
- *Esta clase permite al usuario gestionar las preguntas, sus funciones son:
+ * Esta clase permite al usuario gestionar las preguntas, sus funciones son:
  * <ul>
  *     <li>Insertar Preguntas</li>
  *     <li>Borrar Preguntas</li>
  *     <li>Modificar Preguntas</li>
  *     <li>Ver los datos de las preguntas</li>
  * </ul>
+ *
  * @author Fernando
  */
 public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
@@ -163,7 +166,8 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 opcionCategoriasActionPerformed(evt);
             }
         });
-        menuAdministrador.add(opcionCategorias);  opcionCopiasDeSeguridad.setText("Copias de seguridad");
+        menuAdministrador.add(opcionCategorias);
+        opcionCopiasDeSeguridad.setText("Copias de seguridad");
         opcionImportar.setText("Importar");
         opcionImportar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK));
         opcionImportar.addActionListener(new ActionListener() {
@@ -205,8 +209,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         barraMenu.add(jmenuInformes);
 
 
-
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -231,29 +233,29 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         panelContenido.setLayout(new java.awt.BorderLayout());
 
         tablaPreguntas.setModel(new javax.swing.table.DefaultTableModel(
-                new Object [][] {
+                new Object[][]{
                         {null, null, null, null, null},
                         {null, null, null, null, null},
                         {null, null, null, null, null},
                         {null, null, null, null, null}
                 },
-                new String [] {
+                new String[]{
                         "Enunciado", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuesta Incorrecta 3"
                 }
         ) {
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
+            boolean[] canEdit = new boolean[]{
                     false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+                return canEdit[columnIndex];
             }
         });
         JPopupMenu popup = new JPopupMenu();
@@ -268,11 +270,13 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaPreguntasMouseClicked(evt);
             }
+
             public void mousePressed(MouseEvent evt) {
                 if (evt.isPopupTrigger()) {
                     popup.show(tablaPreguntas, evt.getX(), evt.getY());
                 }
             }
+
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     popup.show(tablaPreguntas, e.getX(), e.getY());
@@ -439,8 +443,22 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         colocarCategorias();
         modelo = (DefaultTableModel) tablaPreguntas.getModel();
         setJMenuBar(barraMenu);
+        tintarTabla();
         pack();
     }// </editor-fold>
+
+    /**
+     * Este metodo nos permite cambiar el color de las filas de la tabla
+     *
+     * @author Fernando
+     */
+    private void tintarTabla() {
+        tablaPreguntas.setForeground(Colores.COLOR_NEGRO);
+        int numero = tablaPreguntas.getColumnCount();
+        for (int i = 0; i < numero; i++) {
+            tablaPreguntas.getColumnModel().getColumn(i).setCellRenderer(new MyCellRenderer());
+        }
+    }
 
     private void jmenuItemInformeActionPerformed(ActionEvent evt) {
         try {
@@ -459,7 +477,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
             //Exportamos el informe
             JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
-
+            //lo visualizamos
             JasperViewer viewer = new JasperViewer(jasperPrint, false);
             viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             viewer.setVisible(true);
@@ -470,17 +488,17 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
     private void deleteItemActionPerformed(ActionEvent evt) {
         int posicion = tablaPreguntas.getSelectedRow();
-        if (posicion == -1){
+        if (posicion == -1) {
             return;
         }
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
+        if (GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion, 0))) {
+            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
-        }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -530,12 +548,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
      */
     private void colocarDatosPregunta() {
         int posicion = tablaPreguntas.getSelectedRow();
-        if(posicion >= 0){
-            txtEnunciado.setText((String) modelo.getValueAt(posicion,0));
-            txtRespuestaCorrecta.setText((String) modelo.getValueAt(posicion,1));
-            txtRespuestaIncorrecta1.setText((String) modelo.getValueAt(posicion,2));
-            txtRespuestaIncorrecta2.setText((String) modelo.getValueAt(posicion,3));
-            txtRespuestaIncorrecta3.setText((String) modelo.getValueAt(posicion,4));
+        if (posicion >= 0) {
+            txtEnunciado.setText((String) modelo.getValueAt(posicion, 0));
+            txtRespuestaCorrecta.setText((String) modelo.getValueAt(posicion, 1));
+            txtRespuestaIncorrecta1.setText((String) modelo.getValueAt(posicion, 2));
+            txtRespuestaIncorrecta2.setText((String) modelo.getValueAt(posicion, 3));
+            txtRespuestaIncorrecta3.setText((String) modelo.getValueAt(posicion, 4));
         }
     }
 
@@ -549,7 +567,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private void actualizarTabla() {
         vaciarModeloTabla();
         ArrayList<String[]> datos = GestionPreguntas.obtenerPreguntas(listaCategorias.getSelectedItem().toString());
-        for(String[] arr: datos){
+        for (String[] arr : datos) {
             modelo.addRow(arr);
         }
     }
@@ -559,30 +577,31 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
      *
      * @author Fernando
      */
-    private void vaciarCajas(){
+    private void vaciarCajas() {
         txtEnunciado.setText("");
         txtRespuestaCorrecta.setText("");
         txtRespuestaIncorrecta1.setText("");
         txtRespuestaIncorrecta2.setText("");
         txtRespuestaIncorrecta3.setText("");
     }
+
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if (JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (CopiaDeSeguridad.crearCopia()) {
+            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
-        if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (estado == Codigos.CORRECTO) {
+            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else if (estado == Codigos.ERROR) {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_IMPORTACION, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -600,16 +619,17 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     }
 
     private void opcionCuestionariosActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaAdministrarCuestionarios ventana =  new VentanaAdministrarCuestionarios();
+        VentanaAdministrarCuestionarios ventana = new VentanaAdministrarCuestionarios();
         ventana.setVisible(true);
         dispose();
     }
 
     private void opcionCategoriasActionPerformed(java.awt.event.ActionEvent evt) {
-        VentanaAdministrarCategorias ventana =  new VentanaAdministrarCategorias();
+        VentanaAdministrarCategorias ventana = new VentanaAdministrarCategorias();
         ventana.setVisible(true);
         dispose();
     }
+
     private void opcionCerrarSesionActionPerformed(ActionEvent evt) {
         VentanaLogin frame = new VentanaLogin();
         frame.setVisible(true);
@@ -628,10 +648,10 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.WARNING_MESSAGE);
-        }else if(GestionPreguntas.existePregunta(enunciado)){
+        } else if (GestionPreguntas.existePregunta(enunciado)) {
             //nos aseguramos de que no existe una pregunta con ese nombre ya
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        }else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
+        } else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
             //en caso de que se inserte
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
@@ -647,13 +667,14 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             String enunciado = txtEnunciado.getText();
 
             //Si no hay nada escrito en la casilla del enunciado cortamos la ejecucion del metodo
-            if(enunciado.equals("")){
+            if (enunciado.equals("")) {
                 return;
             }
             if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
                 if (GestionPreguntas.borrarPregunta(enunciado)) {
                     JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                     actualizarTabla();
+                    vaciarCajas();
                 } else {
                     JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 }
@@ -681,14 +702,14 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         detenemos la ejecucion del metodo para que no salte excepcion al obtener el nombre
         de la tabla
          */
-        if(posicion == -1){
+        if (posicion == -1) {
             return;
         }
         /*
         obtenemos el enunciado antiguo de la pregunta, es importante tenerlo guardado
         porque puede ser modificado
          */
-        String enunciadoAntiguo = (String) modelo.getValueAt(posicion,0);
+        String enunciadoAntiguo = (String) modelo.getValueAt(posicion, 0);
         //obtenemos los datos de la pregunta
         String enunciado = txtEnunciado.getText();
         String respuestaCorrecta = txtRespuestaCorrecta.getText();
@@ -705,6 +726,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         } else if (GestionPreguntas.modificarPregunta(p, enunciadoAntiguo)) {//si se modifica la pregunta
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_MODIFICADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
+            vaciarCajas();
         } else {//en caso de que no se pueda modificar la pregunta
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
@@ -719,7 +741,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private void tablaPreguntasMouseClicked(java.awt.event.MouseEvent evt) {
         colocarDatosPregunta();
     }
-
 
 
     private void tablaPreguntasKeyReleased(java.awt.event.KeyEvent evt) {

@@ -31,6 +31,7 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
                 puedeContinuar =  false;
             }
         });
+        setLocationRelativeTo(null);
     }
 
     /**

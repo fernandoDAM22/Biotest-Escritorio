@@ -183,10 +183,15 @@ public class GestionCuestionarios {
         //creamos el modelo
         DefaultTableModel modelo = new DefaultTableModel(new String[]{
                 "Pregunta", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuessta Incorrecta 3"
-        }, 0);
+        }, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         //y se lo añadimos a la tabla
         tabla.setModel(modelo);
-        //agragamos las preguntas al modelo
+        //agregamos las preguntas al modelo
         for (String[] s : preguntas) {
             modelo.addRow(s);
         }

@@ -43,4 +43,5 @@ public interface Colores {
      * Este color se le asigna de fondo a las ventanas de login y registro
      */
      Color COLOR_FONDO_VERDE = new Color(29, 209, 161);
+     Color COLOR_VERDE_TABLA = new Color(85, 239, 196);
 }
