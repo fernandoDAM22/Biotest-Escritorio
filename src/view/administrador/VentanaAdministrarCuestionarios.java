@@ -14,6 +14,7 @@ import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
 import controller.tools.Mensajes;
+import controller.tools.MyCellRenderer;
 import controller.usuario.Codigos;
 import model.Cuestionario;
 import view.acceso.VentanaLogin;
@@ -34,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
  *     <li>Borrar preguntas de un cuestionario</li>
  *     <li>Ver las preguntas de los cuestionarios</li>
  * </ul>
+ * <hr>
  * @author fernando
  */
 public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
@@ -247,6 +249,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
         btnBuscar.setBorder(null);
+        btnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnBuscar.setPreferredSize(new java.awt.Dimension(200, 60));
         //panelDialogoFila8.add(btnBuscar);
@@ -326,6 +329,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnCrear.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCrear.setForeground(new java.awt.Color(0, 0, 0));
         btnCrear.setText("Crear");
+        btnCrear.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCrear.setPreferredSize(new java.awt.Dimension(100, 40));
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -338,6 +342,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrar.setForeground(new java.awt.Color(0, 0, 0));
         btnBorrar.setText("Borrar");
+        btnBorrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBorrar.setPreferredSize(new java.awt.Dimension(100, 40));
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,6 +355,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnModificar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModificar.setForeground(new java.awt.Color(0, 0, 0));
         btnModificar.setText("Modificar");
+        btnModificar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnModificar.setPreferredSize(new java.awt.Dimension(100, 40));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,6 +368,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnBorrarPregunta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrarPregunta.setForeground(new java.awt.Color(0, 0, 0));
         btnBorrarPregunta.setText("Borrar Pregunta");
+        btnBorrarPregunta.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBorrarPregunta.setPreferredSize(new java.awt.Dimension(150, 40));
         btnBorrarPregunta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -400,7 +407,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean[]{
-                    false, false, false, true, true
+                    false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -720,9 +727,21 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         colocarCategorias();
         actualizarCuestionarios();
         actualizarPreguntasDialogo();
-
+        tintarTabla();
         pack();
     }// </editor-fold>
+    /**
+     * Este metodo nos permite cambiar el color de las filas de la tabla
+     *
+     * @author Fernando
+     */
+    private void tintarTabla() {
+        tablaPreguntas.setForeground(Colores.COLOR_NEGRO);
+        int numero = tablaPreguntas.getColumnCount();
+        for (int i = 0; i < numero; i++) {
+            tablaPreguntas.getColumnModel().getColumn(i).setCellRenderer(new MyCellRenderer());
+        }
+    }
 
     private void deleteItemActionPerformed(ActionEvent evt) {
         int posicion = tablaPreguntas.getSelectedRow();
@@ -740,7 +759,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void opcionUsuariosActionPerformed(ActionEvent evt) {
-
         VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
         frame.setVisible(true);
         dispose();
@@ -777,12 +795,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void listaCategoriasDialogoItemListener(ItemEvent evt) {
-        //listaPreguntasDialogo.removeAllItems();
+        //vaciamos la lista
         ComboBoxModel<String> model = listaPreguntasDialogo.getModel();
         for (int i = 0; i < model.getSize(); i++) {
             String element = model.getElementAt(i);
             listaPreguntasDialogo.removeItem(element);
         }
+        //actualizamos las preguntas del dialogo
         actualizarPreguntasDialogo();
         try {
             listaCuestionarios.setSelectedIndex(0);

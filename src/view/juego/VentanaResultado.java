@@ -10,7 +10,9 @@ import java.util.ArrayList;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.controlPartida.ConsultasPartida;
+import controller.tools.Colores;
 import controller.tools.Mensajes;
+import controller.tools.MyCellRenderer;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import view.acceso.VentanaLogin;
@@ -382,9 +384,21 @@ public class VentanaResultado extends javax.swing.JFrame {
         ponerPreguntas();
         ponerPuntuacion();
         ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
-
+        tintarTabla();
         pack();
     }// </editor-fold>
+    /**
+     * Este metodo nos permite cambiar el color de las filas de la tabla
+     *
+     * @author Fernando
+     */
+    private void tintarTabla() {
+        tablaPreguntas.setForeground(Colores.COLOR_NEGRO);
+        int numero = tablaPreguntas.getColumnCount();
+        for (int i = 0; i < numero; i++) {
+            tablaPreguntas.getColumnModel().getColumn(i).setCellRenderer(new MyCellRenderer());
+        }
+    }
 
     private void opcionUsuariosActionPerformed(ActionEvent evt) {
 
@@ -447,6 +461,11 @@ public class VentanaResultado extends javax.swing.JFrame {
         txtCategoria.setText(categoria);
     }
 
+    /**
+     * Este metodo pone la puntuacion en el slider que muestra la puntuacion
+     * y en la label
+     * @author Fernando
+     */
     private void ponerPuntuacion() {
         int puntuacion = ConsultasPartida.obtenerPuntuacion(idPartida);
         if(puntuacion == -1){

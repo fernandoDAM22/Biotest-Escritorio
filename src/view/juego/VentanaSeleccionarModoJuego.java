@@ -4,7 +4,7 @@
  */
 package view.juego;
 
-import java.awt.Color;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -97,6 +97,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoLibre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoLibre.setForeground(new Color(0, 0, 0));
         btnModoLibre.setText("Modo Libre");
+        btnModoLibre.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnModoLibre.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -111,6 +112,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoSinFallos.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoSinFallos.setForeground(new Color(0, 0, 0));
         btnModoSinFallos.setText("Modo sin fallos");
+        btnModoSinFallos.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnModoSinFallos.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -125,6 +127,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoClasico.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoClasico.setForeground(new Color(0, 0, 0));
         btnModoClasico.setText("Modo Clasico");
+        btnModoSinFallos.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnModoClasico.setPreferredSize(new java.awt.Dimension(150, 50));
         btnModoClasico.addActionListener(new ActionListener() {
             @Override
@@ -139,6 +142,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnModoCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoCuestionarios.setForeground(new Color(0, 0, 0));
         btnModoCuestionarios.setText("Cuestionarios");
+        btnModoCuestionarios.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnModoCuestionarios.setPreferredSize(new java.awt.Dimension(150, 50));
         btnModoCuestionarios.addActionListener(new ActionListener() {
             @Override
@@ -155,6 +159,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setForeground(new Color(0, 0, 0));
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new ActionListener() {
             @Override
@@ -169,6 +174,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         btnJugar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnJugar.setForeground(new Color(0, 0, 0));
         btnJugar.setText("Jugar");
+        btnJugar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnJugar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnJugar.addActionListener(new ActionListener() {
             @Override

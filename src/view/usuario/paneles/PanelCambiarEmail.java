@@ -14,6 +14,8 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.logging.Handler;
 
 /**
  *
@@ -58,6 +60,7 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         btnCancelar.setText("Cancelar");
         btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setForeground(Colores.COLOR_NEGRO);
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +72,7 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         btnAceptar.setText("Aceptar");
         btnAceptar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnAceptar.setForeground(Colores.COLOR_NEGRO);
+        btnAceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

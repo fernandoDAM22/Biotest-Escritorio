@@ -14,6 +14,7 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  *
@@ -59,6 +60,7 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
         btnCancelar.setText("Cancelar");
         btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setForeground(Colores.COLOR_NEGRO);
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +72,7 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
         btnAceptar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnAceptar.setForeground(Colores.COLOR_NEGRO);
         btnAceptar.setText("Aceptar");
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

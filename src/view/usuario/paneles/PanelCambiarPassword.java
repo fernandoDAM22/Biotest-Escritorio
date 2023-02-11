@@ -14,6 +14,8 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.logging.Handler;
 
 /**
  *
@@ -63,6 +65,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setForeground(Colores.COLOR_NEGRO);
 
@@ -76,6 +79,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
         btnAceptar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
+        btnAceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnAceptar.setForeground(Colores.COLOR_NEGRO);
         btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {

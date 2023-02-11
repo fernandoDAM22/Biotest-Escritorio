@@ -144,6 +144,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         btnPassword.setText("Cambiar Contraseña");
         btnPassword.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnPassword.setForeground(Colores.COLOR_NEGRO);
+        btnPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnPassword.setPreferredSize(new java.awt.Dimension(200, 50));
         btnPassword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,6 +157,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         btnEmail.setText("Cambiar Email");
         btnEmail.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnEmail.setForeground(Colores.COLOR_NEGRO);
+        btnEmail.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnEmail.setPreferredSize(new java.awt.Dimension(200, 50));
         btnEmail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -168,6 +170,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         btnTelefono.setText("Cambiar telefono");
         btnTelefono.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnTelefono.setForeground(Colores.COLOR_NEGRO);
+        btnTelefono.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnTelefono.setPreferredSize(new java.awt.Dimension(200, 50));
         btnTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,6 +183,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         btnUser.setText("Cambiar nombre de usuario");
         btnUser.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnUser.setForeground(Colores.COLOR_NEGRO);
+        btnUser.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnUser.setPreferredSize(new java.awt.Dimension(200, 50));
         btnUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

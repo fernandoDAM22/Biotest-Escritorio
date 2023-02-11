@@ -6,10 +6,7 @@ package view.administrador;
 
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.CopiaDeSeguridad;
-import controller.tools.Colores;
-import controller.tools.ComprobarDatos;
-import controller.tools.EventoFoco;
-import controller.tools.Mensajes;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Registro;
@@ -108,6 +105,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         btnInsertar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnInsertar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
         btnInsertar.setForeground(Colores.COLOR_NEGRO);
+        btnInsertar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnInsertar.setText("Insertar");
         btnInsertar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnInsertar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,6 +118,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         btnBorrar.setText("Borrar");
         btnBorrar.setForeground(Colores.COLOR_NEGRO);
         btnBorrar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
+        btnBorrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnBorrar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +130,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
         btnModificar.setForeground(Colores.COLOR_NEGRO);
         btnModificar.setBackground(Colores.COLOR_AMARILLO_BOTONES);
+        btnModificar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnModificar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,13 +257,20 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
                 new String[]{
                         "Nombre", "Email", "Telefono", "Tipo"
                 }
+
         ) {
             Class[] types = new Class[]{
                     java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
+            boolean[] canEdit = new boolean[]{
+                    false, false, false, false
+            };
 
             public Class getColumnClass(int columnIndex) {
                 return types[columnIndex];
+            }
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit[columnIndex];
             }
         });
         JPopupMenu popup = new JPopupMenu();
@@ -414,9 +421,21 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         txtPassword.setEnabled(false);
         modelo = (DefaultTableModel) tablaUsuarios.getModel();
         cargarTabla();
-
+        tintarTabla();
         pack();
     }// </editor-fold>
+    /**
+     * Este metodo nos permite cambiar el color de las filas de la tabla
+     *
+     * @author Fernando
+     */
+    private void tintarTabla() {
+        tablaUsuarios.setForeground(Colores.COLOR_NEGRO);
+        int numero = tablaUsuarios.getColumnCount();
+        for (int i = 0; i < numero; i++) {
+            tablaUsuarios.getColumnModel().getColumn(i).setCellRenderer(new MyCellRenderer());
+        }
+    }
 
     private void deleteItemActionPerformed(ActionEvent evt) {
         int posicion = tablaUsuarios.getSelectedRow();
@@ -558,6 +577,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         if (GestionUsuarios.modificarUsuarioCompleto(usuario, nombreUsuario)) {
             JOptionPane.showMessageDialog(this, Mensajes.USUARIO_MODIFICADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
+            vaciarCajas();
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
@@ -639,11 +659,22 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         if (GestionUsuarios.modificarUsuarioSinPassword(usuario, nombreUsuario)) {
             JOptionPane.showMessageDialog(this, Mensajes.USUARIO_MODIFICADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
+            vaciarCajas();
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
+    /**
+     * Este metodo permite vaciar los campos de texto
+     * @author Fernando
+     */
+    private void vaciarCajas() {
+        txtEmail.setText("");
+        txtNombre.setText("");
+        txtPassword.setText("");
+        txtTelefono.setText("");
+    }
 
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {
@@ -698,6 +729,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         if (Registro.registrarUsuario(usuario)) {
             JOptionPane.showMessageDialog(this, Mensajes.USUARIO_REGISTRADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
+            vaciarCajas();
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_USUARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
@@ -743,6 +775,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         if(GestionUsuarios.borrarUsuario((String) modelo.getValueAt(posicion,0))){
             JOptionPane.showMessageDialog(this, Mensajes.USUARIO_BORRADO, Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
             cargarTabla();
+            vaciarCajas();
         }else{
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
