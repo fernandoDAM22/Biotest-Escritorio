@@ -1,5 +1,5 @@
 package test;
-import com.kitfox.svg.A;
+
 import controller.administrador.GestionCategorias;
 import model.Categoria;
 import org.junit.*;

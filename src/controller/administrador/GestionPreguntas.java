@@ -130,7 +130,6 @@ public class GestionPreguntas {
         Connection conexion = null;
         ResultSet resultSet = null;
         String respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
-        ArrayList<String[]> preguntas = new ArrayList<>();
         String sql = "SELECT respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
                 "from preguntas where enunciado like ?";
         conexionBD = new ConexionBD();
@@ -182,7 +181,7 @@ public class GestionPreguntas {
             int estado = sentencia.executeUpdate();
             return estado > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         } finally {
             ConexionBD.cerrar(sentencia,conexionBD);
         }
