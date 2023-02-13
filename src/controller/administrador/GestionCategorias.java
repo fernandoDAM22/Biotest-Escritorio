@@ -1,6 +1,7 @@
 package controller.administrador;
 
 import controller.baseDeDatos.ConexionBD;
+import org.junit.Test;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -273,4 +274,5 @@ public class GestionCategorias {
         }
         return null;
     }
+
 }

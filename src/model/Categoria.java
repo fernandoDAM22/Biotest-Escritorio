@@ -42,6 +42,11 @@ public class Categoria implements Serializable {
         this.descripcion = descripcion;
     }
 
+    public Categoria(String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+
     public int getId() {
         return id;
     }
