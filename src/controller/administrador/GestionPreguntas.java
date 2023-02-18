@@ -370,4 +370,28 @@ public class GestionPreguntas {
     }
 
 
+    public static boolean preguntaAcertada(int idPartida, int idPregunta) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "select acertada from preguntas_partida where id_partida = ? and id_pregunta = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,idPartida);
+            sentencia.setInt(2,idPregunta);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                return resultSet.getInt("acertada") != 0;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return false;
+    }
 }

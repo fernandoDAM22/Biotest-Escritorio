@@ -63,5 +63,24 @@ public class GestionPreguntasTest {
         }
         assertArrayEquals(esperado,resultado);
     }
+    @Test
+    public void existePregunta(){
+        ArrayList<String> preguntas = new ArrayList<>();
+        preguntas.add("¿Cual es el mamifero mas grande del mundo?");
+        preguntas.add("Primate que tiene el pelo rojizo");
+        preguntas.add("Animal que Hiberna");
+        preguntas.add("prueba");
+        preguntas.add("aaaaaaaaaa");
+        boolean[] esperado = {true,true,true,false,false};
+        boolean[] resultado = new boolean[esperado.length];
+        for (int i = 0; i < preguntas.size(); i++) {
+            resultado[i] = GestionPreguntas.existePregunta(preguntas.get(i));
+        }
+        assertArrayEquals(esperado,resultado);
+
+
+
+    }
+
 
 }

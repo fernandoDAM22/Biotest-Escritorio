@@ -13,6 +13,7 @@ import controller.controlPartida.ConsultasPartida;
 import controller.tools.Colores;
 import controller.tools.Mensajes;
 import controller.tools.MyCellRenderer;
+import controller.tools.TableCellRenderResultado;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import view.acceso.VentanaLogin;
@@ -396,7 +397,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         tablaPreguntas.setForeground(Colores.COLOR_NEGRO);
         int numero = tablaPreguntas.getColumnCount();
         for (int i = 0; i < numero; i++) {
-            tablaPreguntas.getColumnModel().getColumn(i).setCellRenderer(new MyCellRenderer());
+            tablaPreguntas.getColumnModel().getColumn(i).setCellRenderer(new TableCellRenderResultado(idPartida));
         }
     }
 

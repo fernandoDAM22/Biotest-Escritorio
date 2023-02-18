@@ -786,6 +786,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             if (GestionCuestionarios.insertarPregunta(idCuestionario, idPregunta)) {
                 JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+                tintarTabla();
             } else {
                 JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
@@ -839,6 +840,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
             colocarDatosCuestionario(listaCuestionarios.getSelectedItem().toString());
         }
+        tintarTabla();
 
     }
 
@@ -902,6 +904,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
      * @author Fernando
      */
     public void actualizarPreguntasDialogo() {
+        listaPreguntasDialogo.removeAllItems();
         ArrayList<String[]> preguntas = GestionPreguntas.obtenerPreguntas(listaCategoriasDialogo.getSelectedItem().toString());
         for (String[] arr : preguntas) {
             listaPreguntasDialogo.addItem(arr[0]);
@@ -1009,6 +1012,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void btnBorrarPreguntaActionPerformed(java.awt.event.ActionEvent evt) {
+        modelo = (DefaultTableModel) tablaPreguntas.getModel();
         int posicion = tablaPreguntas.getSelectedRow();
         //si no hay ninguna preguna seleccionada cortamos la ejecucion del metodo para evitar excepciones
         if(posicion == -1){
@@ -1022,6 +1026,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)) {
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+            tintarTabla();
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }

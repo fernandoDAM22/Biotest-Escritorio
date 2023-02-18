@@ -678,6 +678,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             txtDescripcionCategoria.setText(GestionCategorias.obtenerDescripcion(listaCategorias.getSelectedItem().toString()));
             txtDescripcionCategoria.moveCaretPosition(0);
         }
+        tintarTabla();
     }
 
     /**
