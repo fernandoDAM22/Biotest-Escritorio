@@ -1,15 +1,23 @@
 package controller.administrador;
 
+import com.google.gson.Gson;
 import controller.baseDeDatos.ConexionBD;
+import controller.baseDeDatos.Constantes;
+import controller.baseDeDatos.HttpRequest;
 import model.Pregunta;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import com.google.gson.reflect.TypeToken;
+import java.util.List;
 
 /**
  * Esta clase nos permite gestionar las preguntas
@@ -24,34 +32,22 @@ public class GestionPreguntas {
      * @return un ArrayList de String con los datos de las preguntas
      */
     public static ArrayList<String[]> obtenerPreguntas(String categoria) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
-        ArrayList<String[]> preguntas = new ArrayList<>();
-        String sql = "SELECT enunciado,respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
-                "from preguntas p JOIN categoria c on p.id_categoria = c.id WHERE c.nombre like ?";
-        conexionBD = new ConexionBD();
+        String url = Constantes.URL_PREGUNTAS_CATEGORIA;
+        String valores = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, categoria);
-            resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
-                //guardamos los datos de la pregunta actual en el ResulSet
-                enunciado = resultSet.getString("enunciado");
-                respuestaCorrecta = resultSet.getString("respuesta_correcta");
-                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
-                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
-                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
-                //agregamos la pregunta al ArrayList
-                preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3});
-            }
-        } catch (SQLException e) {
+            valores = "categoria=" + URLEncoder.encode(categoria, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        ;
+        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
+
+        Gson gson = new Gson();
+        List<String[]> listaPreguntas = gson.fromJson(jsonResultado, new TypeToken<List<String[]>>(){}.getType());
+
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        for (String[] pregunta : listaPreguntas) {
+           preguntas.add(new String[]{pregunta[0],pregunta[1],pregunta[2],pregunta[3],pregunta[4]});
         }
         return preguntas;
 
@@ -63,35 +59,21 @@ public class GestionPreguntas {
      * @return arrayList de String con los datos de la pregunta
      */
     public static ArrayList<String[]> obtenerPreguntasCuestionario(String cuestionario) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
-        ArrayList<String[]> preguntas = new ArrayList<>();
-        String sql = "SELECT p.* from ((preguntas p inner JOIN preguntas_cuestionarios pp ON p.id = pp.id_pregunta)\n" +
-                                        "INNER JOIN cuestionarios c on c.id = pp.id_cuestionario)\n" +
-                                        "WHERE c.nombre like ?;";
-        conexionBD = new ConexionBD();
+        String url = Constantes.URL_PREGUNTAS_CUESTIONARIO;
+        String valores = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, cuestionario);
-            resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
-                //guardamos los datos de la pregunta actual en el ResulSet
-                enunciado = resultSet.getString("enunciado");
-                respuestaCorrecta = resultSet.getString("respuesta_correcta");
-                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
-                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
-                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
-                //agregamos la pregunta al ArrayList
-                preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3});
-            }
-        } catch (SQLException e) {
+            valores = "cuestionario=" + URLEncoder.encode(cuestionario, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
+
+        Gson gson = new Gson();
+        List<String[]> listaPreguntas = gson.fromJson(jsonResultado, new TypeToken<List<String[]>>(){}.getType());
+
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        for (String[] pregunta : listaPreguntas) {
+            preguntas.add(new String[]{pregunta[0],pregunta[1],pregunta[2],pregunta[3],pregunta[4]});
         }
         return preguntas;
 
@@ -125,32 +107,21 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static String[] obtenerRespuestas(String enunciadoPregunta) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
-        String sql = "SELECT respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
-                "from preguntas where enunciado like ?";
-        conexionBD = new ConexionBD();
+        String url = Constantes.URL_OBTENER_RESPUESTAS;
+        String valores = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, enunciadoPregunta);
-            resultSet = sentencia.executeQuery();
-            if (resultSet.next()) {
-                respuestaCorrecta = resultSet.getString("respuesta_correcta");
-                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
-                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
-                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
-                return new String[]{respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3};
-            }
-        } catch (SQLException e) {
+            valores = "enunciado=" + URLEncoder.encode(enunciadoPregunta, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
-        return null;
+        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
+
+        Gson gson = new Gson();
+        String[] listaPreguntas = gson.fromJson(jsonResultado, new TypeToken<>(){}.getType());
+
+        ArrayList<String[]> preguntas = new ArrayList<>();
+
+        return listaPreguntas;
     }
 
     /**

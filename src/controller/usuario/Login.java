@@ -7,8 +7,12 @@ import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.Constantes;
 import controller.baseDeDatos.HttpRequest;
 import controller.tools.ComprobarDatos;
+import model.Pregunta;
 import model.Usuario;
 import com.google.gson.JsonParser;
+
+import java.awt.*;
+import java.lang.reflect.Type;
 
 public class Login implements Codigos {
     /**
