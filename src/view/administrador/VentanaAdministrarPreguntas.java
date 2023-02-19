@@ -551,8 +551,8 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (posicion >= 0) {
             txtEnunciado.setText((String) modelo.getValueAt(posicion, 0));
             txtRespuestaCorrecta.setText((String) modelo.getValueAt(posicion, 1));
-            txtRespuestaIncorrecta1.setText((String) modelo.getValueAt(posicion, 2));
-            txtRespuestaIncorrecta2.setText((String) modelo.getValueAt(posicion, 3));
+            txtRespuestaIncorrecta1.setText((String) modelo.getValueAt(posicion, 3));
+            txtRespuestaIncorrecta2.setText((String) modelo.getValueAt(posicion, 2));
             txtRespuestaIncorrecta3.setText((String) modelo.getValueAt(posicion, 4));
         }
     }
