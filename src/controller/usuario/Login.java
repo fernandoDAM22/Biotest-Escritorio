@@ -1,13 +1,14 @@
 package controller.usuario;
 
+import com.google.gson.*;
+import com.google.gson.reflect.TypeToken;
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
+import controller.baseDeDatos.Constantes;
+import controller.baseDeDatos.HttpRequest;
 import controller.tools.ComprobarDatos;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import model.Usuario;
+import com.google.gson.JsonParser;
 
 public class Login implements Codigos {
     /**
@@ -37,32 +38,29 @@ public class Login implements Codigos {
      * @author Fernando
      */
     public static String obtenerDatos(String nombre,String tipoDato) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-           /*
-          Tenemos que usar la clausula BINARY para poder obtener el usuario que se llame exactamente
-          igual al que estamos buscando, ya que con el igual o con el like no distingue entre mayusculas
-          y minusculas
-         */
-        String sql = "SELECT * FROM usuarios WHERE BINARY nombre = ?";
-        String password = "";
-        conexionBD = new ConexionBD();
-        try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            resultSet = sentencia.executeQuery();
-            if (resultSet.next()) {
-                password = resultSet.getString(tipoDato);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        String url = Constantes.URL_LOGIN;
+        String valores = "nombre=" + nombre;
+        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
+
+        Gson gson = new Gson();
+        JsonElement jsonElement = gson.fromJson(jsonResultado, JsonElement.class);
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+
+        int id = jsonArray.get(0).getAsInt();
+        String name = jsonArray.get(1).getAsString();
+        String contrasena = jsonArray.get(2).getAsString();
+        String email = jsonArray.get(3).getAsString();
+        String telefono = jsonArray.get(4).getAsString();
+        String tipo = jsonArray.get(5).getAsString();
+
+        Usuario usuario = new Usuario(id, name, contrasena, email, telefono, tipo);
+        if (tipoDato.equals(Codigos.OBTENER_PASSWORD)) {
+            return usuario.getPassword();
+        } else if (tipoDato.equals(Codigos.OBTENER_TIPO)) {
+            return usuario.getTipo();
         }
-        return password;
+
+        return null;
     }
 
 }
