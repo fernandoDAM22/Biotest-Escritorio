@@ -92,7 +92,7 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static int insertarCategoria(String nombre, String descripcion) {
-        String values = null;
+        String values;
         try {
             values = "nombre=" + URLEncoder.encode(nombre, "UTF-8") + "&desc=" + URLEncoder.encode(descripcion, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -114,8 +114,7 @@ public class GestionCategorias {
      * @author fernando
      */
     public static boolean existeCategoria(String nombre) {
-        Gson gson = new Gson();
-        String values = null;
+        String values;
         try {
             values = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -134,13 +133,14 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static boolean borrarCategoria(String nombre) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("nombre",nombre);
-        String query = String.join("&", params.entrySet().stream()
-                .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.toList()));
+        String param;
         try {
-            String response = HttpRequest.GET_REQUEST(Constantes.URL_BORRAR_CATEGORIA,query);
+            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_CATEGORIA, param);
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(response);
             return element.getAsBoolean();
@@ -148,6 +148,7 @@ public class GestionCategorias {
             e.printStackTrace();
             return false;
         }
+
     }
 
     /**
@@ -197,7 +198,6 @@ public class GestionCategorias {
         }
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_CATEGORIA,param);
-            JsonParser parser = new JsonParser();
             JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class); // convertimos la respuesta en un objeto JsonArray
              return jsonArray.get(0).getAsInt();
         } catch (Exception e) {
@@ -226,7 +226,7 @@ public class GestionCategorias {
             return jsonArray.get(0).getAsString();
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
+            return null;
         }
     }
 

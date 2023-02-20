@@ -35,5 +35,16 @@ public interface Constantes {
 	String URL_OBTENER_ID_CATEGORIA = SERVER + "admin/categorias/obtenerIdCategoria.php";
 	String URL_OBTENER_DESCRIPCION = SERVER + "admin/categorias/obtenerDescripcion.php";
 	String URL_OBTENER_CATEGORIA_PREGUNTA = SERVER + "admin/categorias/obtenerCategoriaPregunta.php";
+	String URL_EXISTE_CUESTIONARIO = SERVER + "admin/cuestionarios/existeCuestionario.php";
+	String URL_OBTENER_CUESTIONARIOS = SERVER + "admin/cuestionarios/obtenerCuesionarios.php";
+	String URL_INSERTAR_CUESTIONARIO = SERVER + "admin/cuestionarios/insertarCuestionario.php";
+	String URL_OBTENER_ID_CUESTIONARIO = SERVER + "admin/cuestionarios/obtenerId.php";
+	String URL_INSERTAR_PREGUNTA_CUESTIONARIO = SERVER + "admin/cuestionarios/insertarPregunta.php";
+	String URL_BORRAR_PREGUNTA_CUESTIONARIO = SERVER + "admin/cuestionarios/borrarPregunta.php";
+	String URL_OBTENER_DESCRIPCION_CUESTIONARIO = SERVER + "admin/cuestionarios/obtenerDescripcion.php";
+	String URL_MODIFICAR_CUESTIONARIO = SERVER + "admin/cuestionarios/modificarCuestionario.php";
+	String URL_BORRAR_CUESTIONARIO = SERVER + "admin/cuestionarios/borrarCuestionario.php";
 
-}
+	String URL_OBTENER_CUESTIONARIOS_COMPLETOS = SERVER + "admin/cuestionarios/obtenerCuestionariosCompletos.php";
+	String URL_OBTENER_ID_PREGUNTAS_CUESTIONARIOS  = SERVER + "admin/cuestionarios/obtenerIdPreguntas.php";
+ }

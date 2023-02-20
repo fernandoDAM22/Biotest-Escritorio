@@ -1,15 +1,29 @@
 package controller.administrador;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import controller.baseDeDatos.ConexionBD;
+import controller.baseDeDatos.Constantes;
+import controller.baseDeDatos.HttpRequest;
 import model.Cuestionario;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static controller.baseDeDatos.HttpRequest.POST_REQUEST;
 
 /**
  * Esta clase contiene los metodos necesarios para gestionar los cuestionarios
@@ -26,23 +40,16 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static boolean existeCuestionario(String nombre) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String sql = "select *  from cuestionarios where nombre like ?";
-        conexionBD = new ConexionBD();
+        String values;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            resultSet = sentencia.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
+            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
+        String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_CUESTIONARIO, values);
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(respuesta);
+        return element.getAsBoolean();
     }
 
     /**
@@ -53,27 +60,22 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static ArrayList<String> obtenerCuestionarios(String categoria) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        ArrayList<String> cuestionarios = new ArrayList<>();
-        String sql = "select cu.nombre from cuestionarios cu join categoria cat on cu.id_categoria = cat.id where cat.nombre like ?";
-        conexionBD = new ConexionBD();
+        String param;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, categoria);
-            resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
-                cuestionarios.add(resultSet.getString("nombre"));
-            }
-        } catch (SQLException e) {
+            param = "categoria="+URLEncoder.encode(categoria, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
-        return cuestionarios;
+        String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_CUESTIONARIOS,param);
+        Gson gson = new Gson();
+        JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class);
+        ArrayList<String> data = new ArrayList<>();
+
+        for (JsonElement element : jsonArray) {
+            data.add(element.getAsString());
+        }
+
+        return data;
     }
 
     /**
@@ -86,23 +88,20 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static int insertarCuestionario(int idCategoria, String nombre, String descripcion) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        String sql = "INSERT INTO cuestionarios(nombre, descripcion, id_categoria) VALUES (?,?,?);";
-        conexionBD = new ConexionBD();
+        String values = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            sentencia.setString(2, descripcion);
-            sentencia.setInt(3, idCategoria);
-            return sentencia.executeUpdate();
-        } catch (SQLException e) {
+            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8")
+                    + "&desc=" + URLEncoder.encode(descripcion, "UTF-8")
+                    + "&idcategoria=" + idCategoria;
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
         }
+
+        String response = POST_REQUEST(Constantes.URL_INSERTAR_CUESTIONARIO, values);
+        System.out.println(response);
+        Gson gson = new Gson();
+        return gson.fromJson(response, Integer.class);
+
     }
 
     /**
@@ -113,28 +112,20 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static int obtenerId(String nombre) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        int id;
-        String sql = "select id from cuestionarios where nombre like ?";
-        conexionBD = new ConexionBD();
+        String param = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            resultSet = sentencia.executeQuery();
-            if (resultSet.next()) {
-                id = resultSet.getInt("id");
-                return id;
-            }
-        } catch (SQLException e) {
+            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
-        return -1;
+        try {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_CUESTIONARIO,param);
+            JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class); // convertimos la respuesta en un objeto JsonArray
+            return jsonArray.get(0).getAsInt();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     /**
@@ -146,26 +137,21 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static boolean insertarPregunta(int idCuestionario, int idPregunta) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        int id;
-        String sql = "insert into preguntas_cuestionarios (id_cuestionario, id_pregunta) values (?,?)";
-        conexionBD = new ConexionBD();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("cuestionario", String.valueOf(idCuestionario));
+        params.put("pregunta", String.valueOf(idPregunta));
+        String query = String.join("&", params.entrySet().stream()
+                .map(e -> e.getKey() + "=" + e.getValue())
+                .collect(Collectors.toList()));
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1, idCuestionario);
-            sentencia.setInt(2, idPregunta);
-            return sentencia.executeUpdate() > 0;
-        } catch (SQLException e) {
-            /*
-             En caso de querer insertar la misma pregunta dos veces en el mismo cuestionario saltara
-             esta excepcion, puesto que la base de datos no lo permite, en cuyo caso retornamos false
-             */
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_INSERTAR_PREGUNTA_CUESTIONARIO,query);
+            System.out.println(response);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(response);
+            return element.getAsBoolean();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
-        } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -206,21 +192,21 @@ public class GestionCuestionarios {
      * @return true si se borra, false si no
      */
     public static boolean borrarPregunta(int idCuestionario, int idPregunta) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        String sql = "delete from preguntas_cuestionarios where id_cuestionario = ? and id_pregunta = ?";
-        conexionBD = new ConexionBD();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("cuestionario", String.valueOf(idCuestionario));
+        params.put("pregunta", String.valueOf(idPregunta));
+        String query = String.join("&", params.entrySet().stream()
+                .map(e -> e.getKey() + "=" + e.getValue())
+                .collect(Collectors.toList()));
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1, idCuestionario);
-            sentencia.setInt(2, idPregunta);
-            return sentencia.executeUpdate() > 0; //retorna true si se borra, false si no
-        } catch (SQLException e) {
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_PREGUNTA_CUESTIONARIO,query);
+            System.out.println(response);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(response);
+            return element.getAsBoolean();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
-        } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -232,28 +218,21 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static String obtenerDescripcion(String nombre) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String descripcion;
-        String sql = "select descripcion from cuestionarios where nombre like ?";
-        conexionBD = new ConexionBD();
+        String param = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            resultSet = sentencia.executeQuery();
-            if (resultSet.next()) {
-                descripcion = resultSet.getString("descripcion");
-                return descripcion;
-            }
-        } catch (SQLException e) {
-            return null;
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+        try {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_DESCRIPCION_CUESTIONARIO,param);
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.fromJson(response, JsonArray.class);
+            return jsonArray.get(0).getAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -264,25 +243,19 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static boolean modificar(Cuestionario c) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String descripcion;
-        String sql = "update cuestionarios set nombre = ?, descripcion = ? where id = ?";
-        conexionBD = new ConexionBD();
+        String values = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, c.getNombre());
-            sentencia.setString(2, c.getDescripcion());
-            sentencia.setInt(3, c.getId());
-            return sentencia.executeUpdate() > 0;
-        } catch (SQLException e) {
-            return false;
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            values = "nombre=" + URLEncoder.encode(c.getNombre(), "UTF-8")
+                    + "&desc=" + URLEncoder.encode(c.getDescripcion(), "UTF-8")
+                    + "&id=" + c.getId();
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
+
+        String response = POST_REQUEST(Constantes.URL_MODIFICAR_CUESTIONARIO, values);
+        Gson gson = new Gson();
+        return gson.fromJson(response, Boolean.class);
+
     }
 
     /**
@@ -293,22 +266,15 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static boolean borrar(int id) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String descripcion;
-        String sql = "delete from cuestionarios where id = ?";
-        conexionBD = new ConexionBD();
+        String values = "id=" + id;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1, id);
-            return sentencia.executeUpdate() > 0;
-        } catch (SQLException e) {
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_CUESTIONARIO, values);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(response);
+            return element.getAsBoolean();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
     }
 
@@ -319,26 +285,15 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static ArrayList<String> obtenerCuestionariosCompletos() {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        ArrayList<String> cuestionarios = new ArrayList<>();
-        String sql = "SELECT c.nombre from cuestionarios c join preguntas_cuestionarios p on c.id = p.id_cuestionario GROUP by c.id HAVING COUNT(id_pregunta) > 10";
-        conexionBD = new ConexionBD();
-        try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
-                cuestionarios.add(resultSet.getString("nombre"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_CUESTIONARIOS_COMPLETOS,"");
+        Gson gson = new Gson();
+        JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class);
+        ArrayList<String> data = new ArrayList<>();
+
+        for (JsonElement element : jsonArray) {
+            data.add(element.getAsString());
         }
-        return cuestionarios;
+        return data;
     }
 
     /**
@@ -349,28 +304,30 @@ public class GestionCuestionarios {
      * @author Fernando
      */
     public static ArrayList<Integer> obtenerIdPreguntas(String cuestionario) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        ArrayList<Integer> idPreguntas = new ArrayList<>();
-        String sql = "SELECT p.id_pregunta from cuestionarios c JOIN preguntas_cuestionarios " +
-                "p on c.id = p.id_cuestionario WHERE c.nombre like ?;";
-        conexionBD = new ConexionBD();
+        String param = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, cuestionario);
-            resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
-                idPreguntas.add(resultSet.getInt("id_pregunta"));
-            }
-        } catch (SQLException e) {
+            param = "nombre=" +  URLEncoder.encode(cuestionario, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
-        return idPreguntas;
+        try {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_PREGUNTAS_CUESTIONARIOS,param);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(response);
+            if (element.isJsonArray()) {
+                ArrayList<Integer> list = new ArrayList<>();
+                JsonArray jsonArray = element.getAsJsonArray();
+                for (JsonElement jsonElement : jsonArray) {
+                    list.add(jsonElement.getAsInt());
+                }
+                return list;
+            } else {
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
 
     }
 }

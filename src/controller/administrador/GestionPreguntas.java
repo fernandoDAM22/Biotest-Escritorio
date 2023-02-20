@@ -150,13 +150,14 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static boolean borrarPregunta(String enunciado) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("enunciado", enunciado);
-        String query = String.join("&", params.entrySet().stream()
-                .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.toList()));
+        String query = null;
         try {
-            String response = HttpRequest.GET_REQUEST(Constantes.URL_BORRAR_PREGUNTA,query);
+            query = "enunciado=" + URLEncoder.encode(enunciado, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_PREGUNTA, query);
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(response);
             return element.getAsBoolean();
@@ -187,7 +188,7 @@ public class GestionPreguntas {
                 .map(e -> e.getKey() + "=" + e.getValue())
                 .collect(Collectors.toList()));
         try {
-            String response = HttpRequest.GET_REQUEST(Constantes.URL_MODIFICAR_PREGUNTA,query);
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_MODIFICAR_PREGUNTA,query);
             System.out.println(response);
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(response);
