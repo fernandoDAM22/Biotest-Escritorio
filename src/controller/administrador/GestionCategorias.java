@@ -1,15 +1,31 @@
 package controller.administrador;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import controller.baseDeDatos.ConexionBD;
+import controller.baseDeDatos.Constantes;
+import controller.baseDeDatos.HttpRequest;
+import model.Categoria;
 import org.junit.Test;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import static controller.baseDeDatos.HttpRequest.POST_REQUEST;
 
 /**
  * Esta clase nos permite gestionar las categorias de las preguntas
@@ -23,26 +39,23 @@ public class GestionCategorias {
      * @return un ArrayList con los nombres de las categorias que contienen al menos una pregunta
      */
     public static ArrayList<String> obtenerCategorias() {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
+        String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_CATEGORIAS, "");
+        Gson gson = new Gson();
+
+        // Parsear la respuesta del servidor en una lista de listas de strings
+        List<List<String>> categorias = gson.fromJson(response, new TypeToken<List<List<String>>>() {}.getType());
+
+        // Crear un ArrayList para guardar los nombres de las categorías
         ArrayList<String> nombresCategorias = new ArrayList<>();
-        String sql = "select nombre from categoria";
-        conexionBD = new ConexionBD();
-        try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
-                nombresCategorias.add(resultSet.getString("nombre"));
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+
+        // Recorrer la lista de categorías, obtener el nombre de cada categoría y añadirlo al ArrayList correspondiente
+        for (List<String> categoria : categorias) {
+            nombresCategorias.add(categoria.get(0));
         }
+
         return nombresCategorias;
+
+
     }
 
     /**
@@ -74,27 +87,22 @@ public class GestionCategorias {
      * Este metodo permite insertar una categoria en la base de datos
      *
      * @param nombre     es el nombre de la categoria
-     * @param descipcion es la descripcion de la categoria
+     * @param descripcion es la descripcion de la categoria
      * @return un valor mayor que 0 en caso de que se inserte la categoria
      * @author Fernando
      */
-    public static int insertarCategoria(String nombre, String descipcion) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        String sql = "insert into categoria (nombre,descripcion) values (?,?);";
-        conexionBD = new ConexionBD();
+    public static int insertarCategoria(String nombre, String descripcion) {
+        String values = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            sentencia.setString(2, descipcion);
-            return sentencia.executeUpdate();
-        } catch (SQLException e) {
+            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8") + "&desc=" + URLEncoder.encode(descripcion, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
         }
+
+        String response = POST_REQUEST(Constantes.URL_INSERTAR_CATEGORIA, values);
+        Gson gson = new Gson();
+        return gson.fromJson(response, Integer.class);
+
     }
 
     /**
@@ -106,23 +114,17 @@ public class GestionCategorias {
      * @author fernando
      */
     public static boolean existeCategoria(String nombre) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String sql = "select * from categoria where nombre like ?";
-        conexionBD = new ConexionBD();
+        Gson gson = new Gson();
+        String values = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1, nombre);
-            resultSet = sentencia.executeQuery();
-            return resultSet.next();
-        } catch (SQLException e) {
+            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
-        } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
+        String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_CATEGORIA, values);
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(respuesta);
+        return element.getAsBoolean();
     }
 
     /**
@@ -132,28 +134,20 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static boolean borrarCategoria(String nombre) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        int resultado = 0;
-        String sql = "delete from categoria where nombre like ?";
-        conexionBD = new ConexionBD();
+        HashMap<String, String> params = new HashMap<>();
+        params.put("nombre",nombre);
+        String query = String.join("&", params.entrySet().stream()
+                .map(e -> e.getKey() + "=" + e.getValue())
+                .collect(Collectors.toList()));
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,nombre);
-            resultado = sentencia.executeUpdate();
-            /*
-             * Hay que tener en cuenta que saltara una excepcion si el usuario
-             * elije borrar una categoria que tiene preguntas puesto que esto no esta permitido por la integridad referencial,
-             * si salta la excepcion retornamos false
-             */
-        } catch (SQLException e) {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_BORRAR_CATEGORIA,query);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(response);
+            return element.getAsBoolean();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
-        }finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
         }
-        return resultado > 0;
     }
 
     /**
@@ -164,25 +158,28 @@ public class GestionCategorias {
      * @return true si se ha modificado, false si no
      */
     public static boolean modificarCategoria(String nombreAntiguo, String nombreNuevo, String descripcion){
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        int resultado = 0;
-        String sql = "update categoria set nombre = ?, descripcion = ? where nombre like ?";
-        conexionBD = new ConexionBD();
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,nombreNuevo);
-            sentencia.setString(2,descripcion);
-            sentencia.setString(3,nombreAntiguo);
-            resultado = sentencia.executeUpdate();
-        } catch (SQLException e) {
+            // Crear un mapa con los parámetros a enviar
+            Map<String, String> params = new HashMap<>();
+            params.put("nombre", nombreNuevo);
+            params.put("desc", descripcion);
+            params.put("nombreant", nombreAntiguo);
+
+            // Convertir el mapa en una cadena de consulta (query string)
+            String query = params.entrySet().stream()
+                    .map(e -> e.getKey() + "=" + e.getValue())
+                    .collect(Collectors.joining("&"));
+
+            // Hacer la petición POST
+            String response = HttpRequest.POST_REQUEST(Constantes.URL_MODIFICAR_CATEGORIA, query);
+            System.out.println(response);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(response);
+            return element.getAsBoolean();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
-        }finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
         }
-        return resultado > 0;
     }
 
     /**
@@ -192,27 +189,21 @@ public class GestionCategorias {
      * @return el id de la categoria, -1 si no se encuentra
      */
     public static int obtenerIdCategoria(String nombre){
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String sql = "select id from categoria where nombre like ?";
-        conexionBD = new ConexionBD();
+        String param = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,nombre);
-            resultSet = sentencia.executeQuery();
-            if(resultSet.next()){
-                return resultSet.getInt("id");
-            }
-
-        } catch (SQLException e) {
-            return -1;
-        }finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        return -1;
+        try {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_CATEGORIA,param);
+            JsonParser parser = new JsonParser();
+            JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class); // convertimos la respuesta en un objeto JsonArray
+             return jsonArray.get(0).getAsInt();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
     }
 
     /**
@@ -222,27 +213,21 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static String obtenerDescripcion(String nombre) {
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String sql = "select descripcion from categoria where nombre like ?";
-        conexionBD = new ConexionBD();
+        String param = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,nombre);
-            resultSet = sentencia.executeQuery();
-            if(resultSet.next()){
-                return resultSet.getString("descripcion");
-            }
-
-        } catch (SQLException ignored) {
-
-        }finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+        try {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_DESCRIPCION,param);
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.fromJson(response, JsonArray.class);
+            return jsonArray.get(0).getAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
     /**
@@ -252,27 +237,21 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static String obtenerCategoriaPregunta(String pregunta){
-        PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        ResultSet resultSet = null;
-        String sql = "Select c.nombre from categoria c join preguntas p on c.id = p.id_categoria where p.enunciado like ?";
-        conexionBD = new ConexionBD();
+        String param = null;
         try {
-            conexion = conexionBD.abrirConexion();
-            sentencia = conexion.prepareStatement(sql);
-            sentencia.setString(1,pregunta);
-            resultSet = sentencia.executeQuery();
-            if(resultSet.next()){
-                return resultSet.getString("nombre");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }finally {
-          ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            param = "pregunta=" + URLEncoder.encode(pregunta, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         }
-        return null;
+        try {
+            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_CATEGORIA_PREGUNTA,param);
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.fromJson(response, JsonArray.class);
+            return jsonArray.get(0).getAsString();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 
 }

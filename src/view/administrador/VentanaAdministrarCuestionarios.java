@@ -839,6 +839,11 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (listaCuestionarios.getSelectedItem() != null) {
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
             colocarDatosCuestionario(listaCuestionarios.getSelectedItem().toString());
+        }else{
+            int filas = modelo.getRowCount();
+            for (int i = 0; i < filas; i++) {
+                modelo.removeRow(0);
+            }
         }
         tintarTabla();
 
