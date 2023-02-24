@@ -7,10 +7,7 @@ import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
-import controller.tools.Colores;
-import controller.tools.EventoFoco;
-import controller.tools.Mensajes;
-import controller.tools.MyCellRenderer;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import model.Pregunta;
 import net.sf.jasperreports.engine.*;
@@ -28,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Esta clase permite al usuario gestionar las preguntas, sus funciones son:

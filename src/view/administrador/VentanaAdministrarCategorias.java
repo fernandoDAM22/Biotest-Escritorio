@@ -15,6 +15,7 @@ import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
+import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
 import controller.tools.MyCellRenderer;
 import controller.usuario.Codigos;
@@ -122,6 +123,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jLabel1.setText("Nombre");
 
         jLabel12.setText("Descripcion");
+        txtNombreCategoria.addFocusListener(new EventoFoco());
+        txtDescripcionCategoria.addFocusListener(new EventoFoco());
 
         javax.swing.GroupLayout panelDatosCategoriaLayout = new javax.swing.GroupLayout(panelDatosCategoria);
         panelDatosCategoria.setLayout(panelDatosCategoriaLayout);

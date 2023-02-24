@@ -72,4 +72,5 @@ public interface Mensajes {
     String ERROR_INSERTAR_USUARIO = "No se ha podido insertar el usuario";
     String CORRECTO = "Correcto";
     String TITULO_CONFIRMACION = "¿Estas seguro?";
+    Object ERROR_CUESTIONARIO_SELECCIONADO = "Error, no tienes seleccionado ningun cuestionario";
 }

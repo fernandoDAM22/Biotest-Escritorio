@@ -7,12 +7,15 @@ package view.administrador;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
+import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
 import controller.tools.MyCellRenderer;
 import controller.usuario.Codigos;
@@ -36,9 +39,11 @@ import javax.swing.table.DefaultTableModel;
  *     <li>Ver las preguntas de los cuestionarios</li>
  * </ul>
  * <hr>
+ *
  * @author fernando
  */
 public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
+    private static final Logger logger = LoggerUtil.getLogger(VentanaAdministrarCuestionarios.class);
     DefaultTableModel modelo;
 
     /**
@@ -419,9 +424,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             }
         });
         JPopupMenu popup = new JPopupMenu();
-        JMenuItem deleteItem = new JMenuItem(Mensajes.MENSAJE_BORRAR);deleteItem.addActionListener(new ActionListener() {
+        JMenuItem deleteItem = new JMenuItem(Mensajes.MENSAJE_BORRAR);
+        deleteItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-              deleteItemActionPerformed(evt);
+                deleteItemActionPerformed(evt);
             }
         });
 
@@ -432,11 +438,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tablaPreguntasMouseClicked(evt);
             }
+
             public void mousePressed(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     popup.show(tablaPreguntas, e.getX(), e.getY());
                 }
             }
+
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     popup.show(tablaPreguntas, e.getX(), e.getY());
@@ -659,7 +667,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         menuUsuario.add(opcionAjustesUsuario);
 
 
-
         opcionCuestionarios.setText("Cuestionarios");
         opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
         opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
@@ -730,6 +737,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
     /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
      *
@@ -745,16 +753,16 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void deleteItemActionPerformed(ActionEvent evt) {
         int posicion = tablaPreguntas.getSelectedRow();
-        if(posicion == -1){
+        if (posicion == -1) {
             return;
         }
-        int idCuestionario  = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
-        int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion,0));
-        if(GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)){
-            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
+        int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
+        int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
+        if (GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)) {
+            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
-        }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -777,21 +785,27 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void btnInsertarActionPerformed(ActionEvent evt) {
-        int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
-        int idPregunta = GestionPreguntas.obtenerId(listaPreguntasDialogo.getSelectedItem().toString());
-        if (idCuestionario == -1 || idPregunta == -1) {
-            JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            if (GestionCuestionarios.insertarPregunta(idCuestionario, idPregunta)) {
-                JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-                GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
-                tintarTabla();
-            } else {
+        try {
+            int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
+            int idPregunta = GestionPreguntas.obtenerId(listaPreguntasDialogo.getSelectedItem().toString());
+            if (idCuestionario == -1 || idPregunta == -1) {
                 JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+                return;
+            } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
+                if (GestionCuestionarios.insertarPregunta(idCuestionario, idPregunta)) {
+                    JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+                    GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+                    tintarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+                }
+                dialogoPreguntas2.dispose();
             }
-            dialogoPreguntas2.dispose();
+        }catch (NullPointerException npe){
+            logger.log(Level.SEVERE, "Se produjo una excepción al insertar una pregunta", npe);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_CUESTIONARIO_SELECCIONADO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
+
 
     }
 
@@ -839,7 +853,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (listaCuestionarios.getSelectedItem() != null) {
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
             colocarDatosCuestionario(listaCuestionarios.getSelectedItem().toString());
-        }else{
+        } else {
             int filas = modelo.getRowCount();
             for (int i = 0; i < filas; i++) {
                 modelo.removeRow(0);
@@ -971,23 +985,24 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             txtCategoriaPregunta.setText(GestionCategorias.obtenerCategoriaPregunta(enunciado));
         }
     }
+
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if (JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (CopiaDeSeguridad.crearCopia()) {
+            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
-        if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (estado == Codigos.CORRECTO) {
+            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else if (estado == Codigos.ERROR) {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_IMPORTACION, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -1020,7 +1035,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         modelo = (DefaultTableModel) tablaPreguntas.getModel();
         int posicion = tablaPreguntas.getSelectedRow();
         //si no hay ninguna preguna seleccionada cortamos la ejecucion del metodo para evitar excepciones
-        if(posicion == -1){
+        if (posicion == -1) {
             return;
         }
         int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
@@ -1050,7 +1065,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             return;
         } else if (GestionCuestionarios.existeCuestionario(nombre)) { // se comprueba que ya existe un cuestionario con ese nombre
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        } else if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {// se comprueba si se ha insertado en la base de datos o no
+            return;
+        }
+        //se comprueba que el usuario esta seguro de querer realizar la accion
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {// se comprueba si se ha insertado en la base de datos o no
             JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_INSERTADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_CUESTIONARIOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
@@ -1059,56 +1080,65 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
-        int id = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
-            return;
+        try {
+            int id = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
+            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+                return;
+            }
+            if (GestionCuestionarios.borrar(id)) {
+                JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_BORRADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+                listaCuestionarios.removeItem(listaCuestionarios.getSelectedItem().toString());
+            } else {
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (NullPointerException npe) {
+            logger.log(Level.SEVERE, "Se produjo una excepción al borrar el cuestionario", npe);
         }
-        if (GestionCuestionarios.borrar(id)) {
-            JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_BORRADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-            listaCuestionarios.removeItem(listaCuestionarios.getSelectedItem().toString());
-        } else {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        }
+
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {
-        //obtenemos el id del cuestionario
-        int id = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
+        try {
+            //obtenemos el id del cuestionario
+            int id = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
 
-        String nombre = txtNombreCuestionario.getText();
-        String descripcion = txtDescripcionCuestionario.getText();
-        if (nombre.equals("") || descripcion.equals("")) {//se comprueba que los datos no esten vacios
-            JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
-            return;
-        }
-        if (GestionCuestionarios.existeCuestionario(nombre) && !nombre.equals(listaCuestionarios.getSelectedItem().toString())) {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        /**
-         * Creamos el objeto cuestionario que contiene:
-         *      el id del cuestionario que vamos a modificar
-         *      el nombre nuevo del cuestionario
-         *      la nueva descripcion del cuestionario
-         */
-        Cuestionario c = new Cuestionario(id, nombre, descripcion);
-        //realizamos la modificacion y mostramos el mensaje correspondiente
-        if (GestionCuestionarios.modificar(c)) {
-            JOptionPane.showMessageDialog(this, Mensajes.CUESIONARIO_MODIFICADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_CUESIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        }
-        //obtenemos la posicion del cuestionario seleccionado
-        int posicionCuestionario = listaCuestionarios.getSelectedIndex();
-        listaCuestionarios.removeAllItems(); // vaciamos la lista
-        actualizarCuestionarios(); //la volvemos a llenar
+            String nombre = txtNombreCuestionario.getText();
+            String descripcion = txtDescripcionCuestionario.getText();
+            if (nombre.equals("") || descripcion.equals("")) {//se comprueba que los datos no esten vacios
+                JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+                return;
+            }
+            if (GestionCuestionarios.existeCuestionario(nombre) && !nombre.equals(listaCuestionarios.getSelectedItem().toString())) {
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            /**
+             * Creamos el objeto cuestionario que contiene:
+             *      el id del cuestionario que vamos a modificar
+             *      el nombre nuevo del cuestionario
+             *      la nueva descripcion del cuestionario
+             */
+            Cuestionario c = new Cuestionario(id, nombre, descripcion);
+            //realizamos la modificacion y mostramos el mensaje correspondiente
+            if (GestionCuestionarios.modificar(c)) {
+                JOptionPane.showMessageDialog(this, Mensajes.CUESIONARIO_MODIFICADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_MODIFICAR_CUESIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+            }
+            //obtenemos la posicion del cuestionario seleccionado
+            int posicionCuestionario = listaCuestionarios.getSelectedIndex();
+            listaCuestionarios.removeAllItems(); // vaciamos la lista
+            actualizarCuestionarios(); //la volvemos a llenar
         /*seleccionamos el elemento que se encuentra en la misma posicion que el que acabamos de modificar,
           de esta manera se vera reflejada la modificacion en la lista y el usuario no notara el cambio
          */
-        listaCuestionarios.setSelectedIndex(posicionCuestionario);
+            listaCuestionarios.setSelectedIndex(posicionCuestionario);
+        } catch (NullPointerException ignored) {
+
+        }
     }
 
     private void jTable1KeyReleased(java.awt.event.KeyEvent evt) {
