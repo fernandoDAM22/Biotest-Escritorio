@@ -45,7 +45,6 @@ public interface Mensajes {
     String ERROR_BORRAR_CATEGORIA = "No se ha podido borrar la categoria, consulte el manual";
     String CATEGORIA_INSERTADA = "Categoria insertada correctamente";
 
-
     String ERROR_EXISTE_CUESTIONARIO = "Ya existe un cuestionario con ese nombre";
     String CUESTIONARIO_INSERTADO = "Cuestionario insertado correctamente";
     String ERROR_INSERTAR_CUESTIONARIOS = "No se ha podido insertar el cuestionario";
@@ -64,7 +63,8 @@ public interface Mensajes {
     String USUARIO_REGISTRADO = "Usuario registrado correctamente" ;
     //----------------------------------BOTONES---------------------------------------------//
     String MENSAJE_BORRAR = "Eliminar";
-
+    //-----------------------------------LOGGER--------------------------------------------//
+    //mensajes para registrar las excepciones en el archivo log
 
     String ERROR_SELECCION_USUARIO = "No tienes seleccionado ningun usuario";
     String USUARIO_MODIFICADO = "Usuario modificado correctamente";
@@ -73,4 +73,9 @@ public interface Mensajes {
     String CORRECTO = "Correcto";
     String TITULO_CONFIRMACION = "¿Estas seguro?";
     Object ERROR_CUESTIONARIO_SELECCIONADO = "Error, no tienes seleccionado ningun cuestionario";
+    String ERROR_ENCODING = "Se produjo una excepción al insertar una pregunta";
+    String ERROR_EXCEPTION = "Se produjo una excepcion";
+    String ERROR_SQL_EXCEPTION = "Se produjo una excepcion de sql";
+    String ERROR_ENTRADA_SALIDA = "Se produjo un error en la entrada/salida";
+    String ERROR_NULL_POINTER_EXCEPCION = "Se produjo un error de puntero nulo";
 }

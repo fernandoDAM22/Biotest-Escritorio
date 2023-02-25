@@ -1,6 +1,9 @@
 package controller.controlPartida;
 
 import controller.baseDeDatos.ConexionBD;
+import controller.baseDeDatos.HttpRequest;
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
 import model.Partida;
 
 import java.sql.Connection;
@@ -8,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase contiene los metodos que implican consultas a la
@@ -16,6 +21,7 @@ import java.util.ArrayList;
  * @author Fernando
  */
 public class ConsultasPartida {
+    private static final Logger logger = LoggerUtil.getLogger(ConsultasPartida.class);
     /**
      * Este metodo permite obtener todos los id de las partidas
      *
@@ -39,6 +45,7 @@ public class ConsultasPartida {
             }
 
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             return null;
         } finally {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
@@ -68,7 +75,8 @@ public class ConsultasPartida {
             sentencia.setInt(4, partida.getIdUsuario());
             sentencia.setString(5, partida.getTipo());
             sentencia.executeUpdate();
-        } catch (SQLException ignored) {
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         } finally {
             ConexionBD.cerrar(sentencia,conexionBD);
         }
@@ -97,7 +105,7 @@ public class ConsultasPartida {
             sentencia.setBoolean(3, acertada);
             sentencia.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         } finally {
             ConexionBD.cerrar(sentencia,conexionBD);
         }
@@ -123,7 +131,7 @@ public class ConsultasPartida {
             sentencia.setInt(2, idPartida);
             sentencia.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         } finally {
             ConexionBD.cerrar(sentencia,conexionBD);
         }
@@ -167,7 +175,7 @@ public class ConsultasPartida {
                 preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3,categoria});
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         } finally {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
@@ -199,7 +207,7 @@ public class ConsultasPartida {
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         } finally {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }

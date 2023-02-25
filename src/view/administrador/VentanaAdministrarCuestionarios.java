@@ -802,7 +802,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 dialogoPreguntas2.dispose();
             }
         }catch (NullPointerException npe){
-            logger.log(Level.SEVERE, "Se produjo una excepción al insertar una pregunta", npe);
+            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_CUESTIONARIO_SELECCIONADO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
 
@@ -820,8 +820,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         actualizarPreguntasDialogo();
         try {
             listaCuestionarios.setSelectedIndex(0);
-        } catch (IllegalArgumentException | NullPointerException ignored) {
-
+        } catch (IllegalArgumentException | NullPointerException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, e);
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_CUESTIONARIO_SELECCIONADO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -868,8 +869,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         actualizarCuestionarios();
         try {
             listaCuestionarios.setSelectedIndex(0);
-        } catch (IllegalArgumentException | NullPointerException ignored) {
+        } catch (IllegalArgumentException ignored){
 
+        }catch (NullPointerException npe){
+            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
         }
 
     }
@@ -1092,7 +1095,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
         } catch (NullPointerException npe) {
-            logger.log(Level.SEVERE, "Se produjo una excepción al borrar el cuestionario", npe);
+            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
         }
 
     }
@@ -1136,8 +1139,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
           de esta manera se vera reflejada la modificacion en la lista y el usuario no notara el cambio
          */
             listaCuestionarios.setSelectedIndex(posicionCuestionario);
-        } catch (NullPointerException ignored) {
-
+        } catch (NullPointerException npe) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
         }
     }
 

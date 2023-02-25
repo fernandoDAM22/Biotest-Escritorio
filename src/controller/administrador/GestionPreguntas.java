@@ -4,25 +4,23 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.Constantes;
 import controller.baseDeDatos.HttpRequest;
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
 import model.Pregunta;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import com.google.gson.reflect.TypeToken;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -31,6 +29,7 @@ import java.util.stream.Collectors;
  * @author fernando
  */
 public class GestionPreguntas {
+    private static final Logger logger = LoggerUtil.getLogger(GestionPreguntas.class);
     /**
      * Este metodo permite obtener las preguntas de una categoria concreta
      *
@@ -69,7 +68,7 @@ public class GestionPreguntas {
         try {
             valores = "cuestionario=" + URLEncoder.encode(cuestionario, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
         String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
 
@@ -117,7 +116,7 @@ public class GestionPreguntas {
         try {
             valores = "enunciado=" + URLEncoder.encode(enunciadoPregunta, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
         String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
 
@@ -154,7 +153,7 @@ public class GestionPreguntas {
         try {
             query = "enunciado=" + URLEncoder.encode(enunciado, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
         try {
             String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_PREGUNTA, query);
@@ -194,7 +193,7 @@ public class GestionPreguntas {
             JsonElement element = parser.parse(response);
             return element.getAsBoolean();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return false;
         }
     }
@@ -219,7 +218,7 @@ public class GestionPreguntas {
             String result = element.toString().replaceAll("\"","");
             return Integer.parseInt(result);
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return -1;
         }
     }
@@ -246,7 +245,7 @@ public class GestionPreguntas {
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return null;
         }
     }
@@ -283,12 +282,11 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static boolean existePregunta(String enunciado){
-        Gson gson = new Gson();
         String values = null;
         try {
             values = "enunciado=" + URLEncoder.encode(enunciado, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
         }
         String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_PREGUNTA, values);
         JsonParser parser = new JsonParser();
@@ -315,7 +313,7 @@ public class GestionPreguntas {
             int numero = parser.parse(response).getAsInt();
             return numero != 0;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return false;
         }
     }

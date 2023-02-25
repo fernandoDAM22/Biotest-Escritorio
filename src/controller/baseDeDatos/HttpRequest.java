@@ -2,6 +2,9 @@ package controller.baseDeDatos;
 
 
 
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,6 +12,8 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Clase HttpRequest: permite enviar (INSERT,DELETE,UPDATE) y recibir (SELECT) datos del WebService
@@ -19,6 +24,7 @@ import java.net.URLConnection;
  */
 
 public final class HttpRequest {
+    private static final Logger logger = LoggerUtil.getLogger(HttpRequest.class);
 
 	/**
 	 * Enviar peticiones de ACTUALIZACIÓN
@@ -43,8 +49,8 @@ public final class HttpRequest {
             wr.close();
             rd.close();
             return result.toString();
-
         } catch (IOException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENTRADA_SALIDA, e);
             return e.toString();
         }
     }
@@ -69,8 +75,8 @@ public final class HttpRequest {
                 result.append(inputLine);
             }
             return result.toString();
-
         }catch (IOException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENTRADA_SALIDA, e);
             return e.toString();
         }
     }

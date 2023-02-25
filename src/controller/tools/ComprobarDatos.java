@@ -1,5 +1,6 @@
 package controller.tools;
 import controller.baseDeDatos.ConexionBD;
+import controller.controlPartida.ConsultasPartida;
 import controller.usuario.Codigos;
 
 import javax.mail.internet.AddressException;
@@ -8,12 +9,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase contiene las expresiones regulares para poder comprobar datos
  * @author Fernando
  */
 public class ComprobarDatos implements Patrones{
+    private static final Logger logger = LoggerUtil.getLogger(ComprobarDatos.class);
     /**
      * Este metodo permite comprobar que el nombre del usuario cumple con
      * los requisitos adecuados
@@ -111,7 +115,7 @@ public class ComprobarDatos implements Patrones{
             try {
                 sentencia.close();
             } catch (SQLException e) {
-                throw new RuntimeException(e);
+                logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             }
             conexionBD.cerrarConexion();
         }

@@ -1,5 +1,8 @@
 package controller.baseDeDatos;
 
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
+
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +13,7 @@ import java.util.logging.Logger;
  * @author Fernando
  */
 public class ConexionBD implements Configuracion {
+    private static final Logger logger = LoggerUtil.getLogger(ConexionBD.class);
     /**
      * Objeto connection a la base de datos
      */
@@ -59,10 +63,10 @@ public class ConexionBD implements Configuracion {
                 conexion = (Connection) DriverManager.getConnection("jdbc:mysql://" + DBHOST + ":3306/" + DBNAME,
                         this.usuario, this.password);
             } catch (SQLException e) {
+                logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
                 e.printStackTrace();
             }
         } catch (ClassNotFoundException e) {
-
             e.printStackTrace();
         }
 
@@ -79,7 +83,7 @@ public class ConexionBD implements Configuracion {
         try {
             if(conexion != null) conexion.close();
         } catch (SQLException ex) {
-            Logger.getLogger(ConexionBD.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, ex);
             return false;
         }
         return true;
@@ -105,7 +109,7 @@ public class ConexionBD implements Configuracion {
                 conexionBD.cerrarConexion();
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         }
     }
     /**
@@ -125,7 +129,7 @@ public class ConexionBD implements Configuracion {
                 conexionBD.cerrarConexion();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         }
     }
 

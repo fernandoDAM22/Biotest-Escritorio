@@ -25,6 +25,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -42,6 +43,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
 
     DefaultTableModel modelo;
+    private static final Logger logger = LoggerUtil.getLogger(VentanaAdministrarPreguntas.class);
 
     /**
      * Creates new form VentanaAdministrarPreguntas
@@ -678,6 +680,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 }
             }
         } catch (NullPointerException npe) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
             /*
             En caso de que ocurra la excepcion limpiamos las cajas porque
             significa que la tabla de preguntas esta vacia y no hay ninguna

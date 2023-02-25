@@ -2,6 +2,8 @@ package controller.usuario;
 
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
 import model.Usuario;
 
 import java.sql.Connection;
@@ -9,12 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase contiene los metodos necesarios para la gestion de los usuarios
  * @author Fernando
  */
 public class GestionUsuarios {
+    private static final Logger logger = LoggerUtil.getLogger(ConexionBD.class);
     /**
      * Este metodo permite obtener el id de un usuario a partir de su nombre
      * @param nombreUsuario es el usuario del que queremos saber el id
@@ -36,6 +41,7 @@ public class GestionUsuarios {
                 return resultSet.getInt("id");
             }
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
            return  -1;
         }finally {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
@@ -63,6 +69,7 @@ public class GestionUsuarios {
                         resultSet.getString("tipo"));
             }
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
@@ -93,6 +100,7 @@ public class GestionUsuarios {
             sentencia.setString(2,user);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -121,6 +129,7 @@ public class GestionUsuarios {
             sentencia.setString(2,user);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -148,6 +157,7 @@ public class GestionUsuarios {
             sentencia.setString(2,user);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -175,6 +185,7 @@ public class GestionUsuarios {
             sentencia.setString(2,user);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -206,6 +217,7 @@ public class GestionUsuarios {
                         resultSet.getString("tipo")));
             }
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -236,6 +248,7 @@ public class GestionUsuarios {
             sentencia.setString(5,nombreUsuario);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -266,6 +279,7 @@ public class GestionUsuarios {
             sentencia.setString(6,nombreUsuario);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);
@@ -285,6 +299,7 @@ public class GestionUsuarios {
             sentencia.setString(1,user);
             return sentencia.executeUpdate() > 0;
         } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
             e.printStackTrace();
         }finally {
             ConexionBD.cerrar(sentencia,conexionBD);

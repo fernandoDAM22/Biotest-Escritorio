@@ -5,24 +5,21 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
-import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.Constantes;
 import controller.baseDeDatos.HttpRequest;
-import model.Categoria;
-import org.junit.Test;
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static controller.baseDeDatos.HttpRequest.POST_REQUEST;
@@ -33,6 +30,7 @@ import static controller.baseDeDatos.HttpRequest.POST_REQUEST;
  * @author Fernando
  */
 public class GestionCategorias {
+    private static final Logger logger = LoggerUtil.getLogger(GestionCategorias.class);
     /**
      * Este metodo nos permite obtener un ArrayList con los nombres de las categorias
      *
@@ -92,11 +90,11 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static int insertarCategoria(String nombre, String descripcion) {
-        String values;
+        String values = null;
         try {
             values = "nombre=" + URLEncoder.encode(nombre, "UTF-8") + "&desc=" + URLEncoder.encode(descripcion, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
 
         String response = POST_REQUEST(Constantes.URL_INSERTAR_CATEGORIA, values);
@@ -115,10 +113,11 @@ public class GestionCategorias {
      */
     public static boolean existeCategoria(String nombre) {
         String values;
+        values = null;
         try {
             values = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
         String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_CATEGORIA, values);
         JsonParser parser = new JsonParser();
@@ -133,11 +132,11 @@ public class GestionCategorias {
      * @author Fernando
      */
     public static boolean borrarCategoria(String nombre) {
-        String param;
+        String param = null;
         try {
             param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
         try {
             String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_CATEGORIA, param);
@@ -178,7 +177,7 @@ public class GestionCategorias {
             JsonElement element = parser.parse(response);
             return element.getAsBoolean();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return false;
         }
     }
@@ -201,7 +200,7 @@ public class GestionCategorias {
             JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class); // convertimos la respuesta en un objeto JsonArray
              return jsonArray.get(0).getAsInt();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return -1;
         }
     }
@@ -225,7 +224,7 @@ public class GestionCategorias {
             JsonArray jsonArray = gson.fromJson(response, JsonArray.class);
             return jsonArray.get(0).getAsString();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return null;
         }
     }
@@ -249,7 +248,7 @@ public class GestionCategorias {
             JsonArray jsonArray = gson.fromJson(response, JsonArray.class);
             return jsonArray.get(0).getAsString();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return "";
         }
     }

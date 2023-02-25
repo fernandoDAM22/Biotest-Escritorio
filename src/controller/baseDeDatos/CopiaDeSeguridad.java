@@ -1,5 +1,7 @@
 package controller.baseDeDatos;
 
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 
 import javax.swing.*;
@@ -10,12 +12,15 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Este clase permite crear copias de seguridad de la base de datos mysql
  * @author Fernando
  */
 public class CopiaDeSeguridad implements Codigos {
+    private static final Logger logger = LoggerUtil.getLogger(CopiaDeSeguridad.class);
     /**
      * Es la ruta donde se guardan las copias de seguridad
      */
@@ -49,6 +54,7 @@ public class CopiaDeSeguridad implements Codigos {
                 System.out.println(line);
             }
         } catch (Exception e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return false;
         }
         return true;
@@ -135,6 +141,7 @@ public class CopiaDeSeguridad implements Codigos {
                 System.out.println(line);
             }
         } catch (Exception e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
             return ERROR;
         }
         return CORRECTO;
