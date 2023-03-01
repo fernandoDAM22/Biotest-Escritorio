@@ -36,13 +36,9 @@ public class CopiaDeSeguridad implements Codigos {
     public static boolean crearCopia(){
         comprobarCarpeta();
         try {
-            List<String> command = new ArrayList<>();
-            command.add(Configuracion.XAMPP_PATH + "bin/mysqldump");
-            command.add("-u");
-            command.add("root");
-            command.add("preguntas");
 
-            ProcessBuilder builder = new ProcessBuilder(command);
+
+            ProcessBuilder builder = new ProcessBuilder(comandoCrear());
             builder.redirectOutput(ProcessBuilder.Redirect.to(new java.io.File(nombreCopia())));
 
             Process process = builder.start();
@@ -61,6 +57,19 @@ public class CopiaDeSeguridad implements Codigos {
     }
 
     /**
+     * Este metodo crear el comando para crear la copia de seguridad
+     * @return el comando
+     */
+    public static List<String> comandoCrear(){
+        List<String> command = new ArrayList<>();
+        command.add(Configuracion.XAMPP_PATH + "bin/mysqldump");
+        command.add("-u");
+        command.add("root");
+        command.add("preguntas");
+        return command;
+    }
+
+    /**
      * Este metodo genera el nombre del copia de seguridad, basicamente crea un
      * StringBuilder, en el que añade la ruta de la copia de seguridad, la fecha actual
      * y el nombre de la copia, esto para generar el nombre completo del fichero
@@ -68,22 +77,9 @@ public class CopiaDeSeguridad implements Codigos {
      * @author Fernando
      */
     private static String nombreCopia(){
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(RUTA_COPIA);
-        stringBuilder.append(LocalDate.now());
-        stringBuilder.append("copia.sql");
-        return stringBuilder.toString();
-    }
-
-    /**
-     * Este metodo permite comprobar si se ha creado la copia de seguridad o no,
-     * lo que hace es comprobar si el fichero que se acaba de crear existe o no
-     * @param nombreCopia es el nombre del archivo que queremos comprobar
-     * @return true si existe el archivo, false si no
-     */
-    private static boolean comprobar(String nombreCopia){
-        File file = new File(nombreCopia);
-        return file.exists() && !file.isDirectory();
+        return RUTA_COPIA +
+                LocalDate.now() +
+                "copia.sql";
     }
 
     /**
@@ -115,7 +111,6 @@ public class CopiaDeSeguridad implements Codigos {
             return CANCELADO;
         }
         if(JOptionPane.showConfirmDialog(null, "¿Estas seguro de que quieres realizar una copia de seguridad?", "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
-            System.out.println("cancelado");
             return CANCELADO;
         }
         try {
@@ -123,13 +118,7 @@ public class CopiaDeSeguridad implements Codigos {
             Importante comprobar en la interfaz configuracion que la variable XAMPP_PATH contiene la ruta
             de nuestro XAMPP
              */
-            List<String> command = new ArrayList<>();
-            command.add(Configuracion.XAMPP_PATH + "bin/mysql");
-            command.add("-u");
-            command.add("root");
-            command.add("preguntas");
-
-            ProcessBuilder builder = new ProcessBuilder(command);
+            ProcessBuilder builder = new ProcessBuilder(comandoRestaurar());
             builder.redirectInput(ProcessBuilder.Redirect.from(new java.io.File(RUTA_COPIA + nombreArchivo)));
 
             Process process = builder.start();
@@ -145,6 +134,14 @@ public class CopiaDeSeguridad implements Codigos {
             return ERROR;
         }
         return CORRECTO;
+    }
+    public static List<String> comandoRestaurar(){
+        List<String> command = new ArrayList<>();
+        command.add(Configuracion.XAMPP_PATH + "bin/mysql");
+        command.add("-u");
+        command.add("root");
+        command.add("preguntas");
+        return command;
     }
 
     /**

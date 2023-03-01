@@ -33,5 +33,5 @@ public interface Configuracion {
     /**
      * Ruta a la instacion de nuestro XAMPP
      */
-    String XAMPP_PATH = "C:/xampp/mysql/";
+    String XAMPP_PATH = "C:/xamppp/mysql/";
 }

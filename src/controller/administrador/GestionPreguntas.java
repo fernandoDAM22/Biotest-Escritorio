@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import com.google.gson.reflect.TypeToken;
 
@@ -39,11 +40,7 @@ public class GestionPreguntas {
     public static ArrayList<String[]> obtenerPreguntas(String categoria) {
         String url = Constantes.URL_PREGUNTAS_CATEGORIA;
         String valores = null;
-        try {
-            valores = "categoria=" + URLEncoder.encode(categoria, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        valores = "categoria=" + URLEncoder.encode(categoria, StandardCharsets.UTF_8);
         String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
 
         Gson gson = new Gson();
@@ -65,11 +62,7 @@ public class GestionPreguntas {
     public static ArrayList<String[]> obtenerPreguntasCuestionario(String cuestionario) {
         String url = Constantes.URL_PREGUNTAS_CUESTIONARIO;
         String valores = null;
-        try {
-            valores = "cuestionario=" + URLEncoder.encode(cuestionario, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        valores = "cuestionario=" + URLEncoder.encode(cuestionario, StandardCharsets.UTF_8);
         String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
 
         Gson gson = new Gson();
@@ -113,11 +106,7 @@ public class GestionPreguntas {
     public static String[] obtenerRespuestas(String enunciadoPregunta) {
         String url = Constantes.URL_OBTENER_RESPUESTAS;
         String valores = null;
-        try {
-            valores = "enunciado=" + URLEncoder.encode(enunciadoPregunta, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        valores = "enunciado=" + URLEncoder.encode(enunciadoPregunta, StandardCharsets.UTF_8);
         String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
 
         Gson gson = new Gson();
@@ -150,11 +139,7 @@ public class GestionPreguntas {
      */
     public static boolean borrarPregunta(String enunciado) {
         String query = null;
-        try {
-            query = "enunciado=" + URLEncoder.encode(enunciado, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        query = "enunciado=" + URLEncoder.encode(enunciado, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_PREGUNTA, query);
             JsonParser parser = new JsonParser();
@@ -206,11 +191,7 @@ public class GestionPreguntas {
      */
     public static int obtenerId(String enunciado) {
         String param = null;
-        try {
-            param = "enunciado=" + URLEncoder.encode(enunciado, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        param = "enunciado=" + URLEncoder.encode(enunciado, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID,param);
             JsonParser parser = new JsonParser();
@@ -259,11 +240,7 @@ public class GestionPreguntas {
     public static Pregunta obtenerDatos(int id){
         String url = Constantes.URL_OBTENER_DATOS;
         String param = null;
-        try {
-            param = "id=" + URLEncoder.encode(String.valueOf(id), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        param = "id=" + URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
         String jsonResultado = HttpRequest.GET_REQUEST(url, param);
 
         Gson gson = new Gson();
@@ -283,11 +260,7 @@ public class GestionPreguntas {
      */
     public static boolean existePregunta(String enunciado){
         String values = null;
-        try {
-            values = "enunciado=" + URLEncoder.encode(enunciado, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
-        }
+        values = "enunciado=" + URLEncoder.encode(enunciado, StandardCharsets.UTF_8);
         String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_PREGUNTA, values);
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(respuesta);

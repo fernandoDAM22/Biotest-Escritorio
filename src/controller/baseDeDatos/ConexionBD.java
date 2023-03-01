@@ -76,17 +76,13 @@ public class ConexionBD implements Configuracion {
 
     /**
      * Nos permite cerrar la conexion en la base de datos
-     *
-     * @return
      */
-    public boolean cerrarConexion() {
+    public void cerrarConexion() {
         try {
             if(conexion != null) conexion.close();
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, ex);
-            return false;
         }
-        return true;
     }
 
     /**
@@ -99,17 +95,26 @@ public class ConexionBD implements Configuracion {
      */
     public static void cerrar(ResultSet resultSet, PreparedStatement sentencia, ConexionBD conexionBD) {
         try {
-            if (resultSet != null) {
-                resultSet.close();
-            }
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.cerrarConexion();
-            }
+            closeResultSet(resultSet);
+            cerrarSentencia(sentencia);
+            cerrarConexion(conexionBD);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
+        }
+    }
+    public static void closeResultSet(ResultSet resultSet) throws SQLException {
+        if (resultSet != null) {
+            resultSet.close();
+        }
+    }
+    public static void cerrarSentencia(PreparedStatement sentencia) throws SQLException {
+        if (sentencia != null) {
+            sentencia.close();
+        }
+    }
+    public static void cerrarConexion(ConexionBD conexionBD){
+        if(conexionBD != null){
+            conexionBD.cerrarConexion();
         }
     }
     /**
@@ -122,12 +127,8 @@ public class ConexionBD implements Configuracion {
 
     public static void cerrar(PreparedStatement sentencia, ConexionBD conexionBD) {
         try {
-            if (sentencia != null) {
-                sentencia.close();
-            }
-            if (conexionBD != null) {
-                conexionBD.cerrarConexion();
-            }
+            cerrarSentencia(sentencia);
+            cerrarConexion(conexionBD);
         } catch (SQLException e) {
             logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         }

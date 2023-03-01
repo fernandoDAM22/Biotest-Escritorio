@@ -28,9 +28,9 @@ public final class HttpRequest {
 
 	/**
 	 * Enviar peticiones de ACTUALIZACIÓN
-	 * @param url
-	 * @param values
-	 * @return
+	 * @param url es la url a la que se le hace la peticion
+	 * @param values son los valores que se le pasan a la peticion
+	 * @return el resultado de la peticion
 	 */
     public static String POST_REQUEST(String url, String values) {
         try {
@@ -58,9 +58,9 @@ public final class HttpRequest {
     /**
      * Solicitar la ejecución de consultas select
      * 
-     * @param url
-     * @param values
-     * @return
+     * @param url es la url a la que se le hace la peticion
+     * @param values son los valores que se le pasan a la peticion
+     * @return el resultado de la peticion
      */
     public static String GET_REQUEST(String url, String values) {
         try {

@@ -14,10 +14,7 @@ import controller.administrador.GestionCategorias;
 import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
-import controller.tools.Colores;
-import controller.tools.LoggerUtil;
-import controller.tools.Mensajes;
-import controller.tools.MyCellRenderer;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import model.Cuestionario;
 import view.acceso.VentanaLogin;
@@ -141,7 +138,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelDialogoFila6.setPreferredSize(new java.awt.Dimension(1000, 50));
 
 
-        listaPreguntasDialogo.setEditable(true);
+        listaPreguntasDialogo.setEditable(false);
         listaPreguntasDialogo.setForeground(new Color(255, 255, 255));
         listaPreguntasDialogo.setMaximumRowCount(50);
         listaPreguntasDialogo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -493,6 +490,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         jLabel13.setText("Categoria");
 
+        txtNombreCuestionario.addFocusListener(new EventoFoco());
+        txtDescripcionCuestionario.addFocusListener(new EventoFoco());
+
         txtRespuestaIncorrecta3.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtRespuestaIncorrecta3.setPreferredSize(new java.awt.Dimension(73, 22));
 
@@ -560,7 +560,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datps del cuestionario"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del cuestionario"));
 
         jLabel6.setText("Nombre");
 
@@ -752,16 +752,21 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void deleteItemActionPerformed(ActionEvent evt) {
+        //se obtiene el elemento seleccionado
         int posicion = tablaPreguntas.getSelectedRow();
+        //en caso de no haya seleccionado ningun elemento se corta la ejecucion
         if (posicion == -1) {
             return;
         }
         int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
         int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
+        //se intenta borrar la pregunta
         if (GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)) {
+            //en caso de que se borre
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
         } else {
+            //en caso de que no se borre
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -786,24 +791,33 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void btnInsertarActionPerformed(ActionEvent evt) {
         try {
+            //obtenemos los ids del cuestionario y de la pregunta
             int idCuestionario = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
             int idPregunta = GestionPreguntas.obtenerId(listaPreguntasDialogo.getSelectedItem().toString());
+            //en caso de no haber obtenido bien alguno de los ids
             if (idCuestionario == -1 || idPregunta == -1) {
                 JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 return;
-            } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-                if (GestionCuestionarios.insertarPregunta(idCuestionario, idPregunta)) {
-                    JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-                    GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
-                    tintarTabla();
-                } else {
-                    JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-                }
-                dialogoPreguntas2.dispose();
             }
-        }catch (NullPointerException npe){
+            //nos aseguramos de que el usuario quiere realizar la accion
+            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+                return;
+            }
+            //intentamos insertar la pregunta
+            if (GestionCuestionarios.insertarPregunta(idCuestionario, idPregunta)) {
+                //en caso de que se inserte
+                JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+                GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+                tintarTabla();
+            } else {
+                //en caso de que no se inserte
+                JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+            }
+            dialogoPreguntas2.dispose();
+
+        } catch (NullPointerException npe) {
             logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_CUESTIONARIO_SELECCIONADO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_CUESTIONARIO_SELECCIONADO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
 
@@ -822,16 +836,18 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             listaCuestionarios.setSelectedIndex(0);
         } catch (IllegalArgumentException | NullPointerException e) {
             logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, e);
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_CUESTIONARIO_SELECCIONADO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_CUESTIONARIO_SELECCIONADO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void listaPreguntasDialogoItemListener(ItemEvent evt) {
         try {
+            //obtenemos los datos de la pregunta
             String[] datos = GestionPreguntas.obtenerRespuestas(listaPreguntasDialogo.getSelectedItem().toString());
             if (datos == null) {
                 return;
             }
+            //los colocamos
             GestionPreguntas.colocarRespuesta(inputRespuestaCorrecta, datos[0]);
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta1, datos[1]);
             GestionPreguntas.colocarRespuesta(inputRespuestaIncorrecta2, datos[2]);
@@ -851,7 +867,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void listaCuestionariosItemListener(ItemEvent evt) {
         actualizarCuestionarios(); //actualizamos los cuestionarios
-        if (listaCuestionarios.getSelectedItem() != null) {
+        if (listaCuestionarios.getSelectedItem() != null) {//se comprueba que haya algun elemento seleccionado
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
             colocarDatosCuestionario(listaCuestionarios.getSelectedItem().toString());
         } else {
@@ -869,9 +885,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         actualizarCuestionarios();
         try {
             listaCuestionarios.setSelectedIndex(0);
-        } catch (IllegalArgumentException ignored){
+        } catch (IllegalArgumentException ignored) {
 
-        }catch (NullPointerException npe){
+        } catch (NullPointerException npe) {
             logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
         }
 
@@ -990,12 +1006,16 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void opcionExportarActionPeformed(ActionEvent evt) {
+        //nos aseguramos de que el usuario quiere realizar la accion
         if (JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
+        //se intenta crear la copia
         if (CopiaDeSeguridad.crearCopia()) {
+            //en caso de que se cree
             JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
         } else {
+            //en caso de que no se cree
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -1041,16 +1061,21 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (posicion == -1) {
             return;
         }
+        //se obtienen lo datos
         int idPregunta = GestionPreguntas.obtenerId((String) modelo.getValueAt(posicion, 0));
         int idCuestionario = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
+        //nos aseguramos de que el usuario quiere realizar la accion
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
+        //se intenta borrar la pregunta
         if (GestionCuestionarios.borrarPregunta(idCuestionario, idPregunta)) {
+            //en caso de que se borre
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
             tintarTabla();
         } else {
+            //en caso de que no se borre
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -1061,12 +1086,16 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {
+        //obtenemos los datos
         String nombre = txtNombreCuestionario.getText();
         String descripcion = txtDescripcionCuestionario.getText();
         int id = GestionCategorias.obtenerIdCategoria(listaCategorias.getSelectedItem().toString());
-        if (descripcion.equals("") || nombre.equals("")) { // se comprueba que los datos sean nulos
+        // se comprueba que los datos no esten vacios
+        if (descripcion.equals("") || nombre.equals("")) {
             return;
-        } else if (GestionCuestionarios.existeCuestionario(nombre)) { // se comprueba que ya existe un cuestionario con ese nombre
+        }
+        // se comprueba que ya existe un cuestionario con ese nombre
+        else if (GestionCuestionarios.existeCuestionario(nombre)) {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1074,9 +1103,11 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {// se comprueba si se ha insertado en la base de datos o no
+        if (GestionCuestionarios.insertarCuestionario(id, nombre, descripcion) > 0) {
             JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_INSERTADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-        } else {
+        }
+        // se comprueba si se ha insertado en la base de datos o no
+        else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_INSERTAR_CUESTIONARIOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
         actualizarCuestionarios();
@@ -1084,14 +1115,19 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
+            //se obtiene el id del cuestionario que se quiere borrar
             int id = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
+            //nos aseguramos de que el usuario quiere realizar la accion
             if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
                 return;
             }
+            //se intenta borrar el cuestionario
             if (GestionCuestionarios.borrar(id)) {
+                //en caso de que se borre
                 JOptionPane.showMessageDialog(this, Mensajes.CUESTIONARIO_BORRADO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 listaCuestionarios.removeItem(listaCuestionarios.getSelectedItem().toString());
             } else {
+                //en caso de que no se borre
                 JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
         } catch (NullPointerException npe) {
@@ -1104,21 +1140,24 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         try {
             //obtenemos el id del cuestionario
             int id = GestionCuestionarios.obtenerId(listaCuestionarios.getSelectedItem().toString());
-
+            //obtenemos los datos del cuestionario
             String nombre = txtNombreCuestionario.getText();
             String descripcion = txtDescripcionCuestionario.getText();
-            if (nombre.equals("") || descripcion.equals("")) {//se comprueba que los datos no esten vacios
+            //se comprueba que los datos no esten vacios
+            if (nombre.equals("") || descripcion.equals("")) {
                 JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            //nos aseguramos de que el usuario quiere realiar la accion
             if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
                 return;
             }
+            //se comprueba que no exista ya un cuestionario con ese nombre
             if (GestionCuestionarios.existeCuestionario(nombre) && !nombre.equals(listaCuestionarios.getSelectedItem().toString())) {
                 JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CUESTIONARIO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            /**
+            /*
              * Creamos el objeto cuestionario que contiene:
              *      el id del cuestionario que vamos a modificar
              *      el nombre nuevo del cuestionario
@@ -1150,41 +1189,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {
         dialogoPreguntas2.dispose();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCuestionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCuestionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCuestionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCuestionarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaAdministrarCuestionarios().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify

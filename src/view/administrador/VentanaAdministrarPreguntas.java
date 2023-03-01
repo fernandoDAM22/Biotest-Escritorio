@@ -638,6 +638,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
 
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {
+        //obtenemos los datos de la pregunta
         String enunciado = txtEnunciado.getText();
         String respuestaCorrecta = txtRespuestaCorrecta.getText();
         String respuestaIncorrecta1 = txtRespuestaIncorrecta1.getText();
@@ -648,10 +649,18 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.WARNING_MESSAGE);
-        } else if (GestionPreguntas.existePregunta(enunciado)) {
-            //nos aseguramos de que no existe una pregunta con ese nombre ya
+        }
+        //nos aseguramos de que no existe una pregunta con ese nombre ya
+        else if (GestionPreguntas.existePregunta(enunciado)) {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        } else if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
+            return;
+        }
+        //nos aseguramos de que el usuario quiere realizar la accion
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        //se intenta insertar la pregunta
+        if (GestionPreguntas.insertarPregunta(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3, idCategoria))) {
             //en caso de que se inserte
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
@@ -665,19 +674,20 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             String enunciado = txtEnunciado.getText();
-
             //Si no hay nada escrito en la casilla del enunciado cortamos la ejecucion del metodo
             if (enunciado.equals("")) {
                 return;
             }
-            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-                if (GestionPreguntas.borrarPregunta(enunciado)) {
-                    JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-                    actualizarTabla();
-                    vaciarCajas();
-                } else {
-                    JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-                }
+            //nos aseguramos de que el usuario quiere realizar la accion
+            if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+                return;
+            }
+            if (GestionPreguntas.borrarPregunta(enunciado)) {
+                JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+                actualizarTabla();
+                vaciarCajas();
+            } else {
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
         } catch (NullPointerException npe) {
             logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
@@ -724,7 +734,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("")) {
             //en ese caso mostramos el mensaje de error
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        } else if (GestionPreguntas.modificarPregunta(p, enunciadoAntiguo)) {//si se modifica la pregunta
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        if (GestionPreguntas.modificarPregunta(p, enunciadoAntiguo)) {//si se modifica la pregunta
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_MODIFICADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
             vaciarCajas();
@@ -746,41 +761,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
     private void tablaPreguntasKeyReleased(java.awt.event.KeyEvent evt) {
         colocarDatosPregunta();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarPreguntas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaAdministrarPreguntas().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify

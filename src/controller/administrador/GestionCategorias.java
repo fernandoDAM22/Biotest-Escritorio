@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +93,7 @@ public class GestionCategorias {
     public static int insertarCategoria(String nombre, String descripcion) {
         String values = null;
         try {
-            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8") + "&desc=" + URLEncoder.encode(descripcion, "UTF-8");
+            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8") + "&desc=" + URLEncoder.encode(descripcion, StandardCharsets.UTF_8);
         } catch (UnsupportedEncodingException e) {
             logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
         }
@@ -114,11 +115,7 @@ public class GestionCategorias {
     public static boolean existeCategoria(String nombre) {
         String values;
         values = null;
-        try {
-            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        values = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_CATEGORIA, values);
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(respuesta);
@@ -133,11 +130,7 @@ public class GestionCategorias {
      */
     public static boolean borrarCategoria(String nombre) {
         String param = null;
-        try {
-            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        param = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_CATEGORIA, param);
             JsonParser parser = new JsonParser();
@@ -190,11 +183,7 @@ public class GestionCategorias {
      */
     public static int obtenerIdCategoria(String nombre){
         String param = null;
-        try {
-            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        param = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_CATEGORIA,param);
             JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class); // convertimos la respuesta en un objeto JsonArray
@@ -213,11 +202,7 @@ public class GestionCategorias {
      */
     public static String obtenerDescripcion(String nombre) {
         String param = null;
-        try {
-            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        param = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_DESCRIPCION,param);
             Gson gson = new Gson();
@@ -237,11 +222,7 @@ public class GestionCategorias {
      */
     public static String obtenerCategoriaPregunta(String pregunta){
         String param = null;
-        try {
-            param = "pregunta=" + URLEncoder.encode(pregunta, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e);
-        }
+        param = "pregunta=" + URLEncoder.encode(pregunta, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_CATEGORIA_PREGUNTA,param);
             Gson gson = new Gson();

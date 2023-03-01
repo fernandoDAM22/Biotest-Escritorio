@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
  *     <li>Modificar categorias</li>
  *     <li>Ver las preguntas que tiene cada categoria</li>
  * </ul>
+ *
  * @author fernando
  */
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
@@ -48,7 +49,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setLocationRelativeTo(null);
-        setSize(new Dimension(1300,700));
+        setSize(new Dimension(1300, 700));
     }
 
     /**
@@ -105,7 +106,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jmenuInformePreguntas = new javax.swing.JMenuItem();
         jmenuInformeCategorias = new javax.swing.JMenuItem();
         jmenuPreguntasPorCategoria = new javax.swing.JMenuItem();
-
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -254,19 +254,21 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         popup.add(deleteItem);
         deleteItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               borrarPreguntaMenuEmergente();
+                borrarPreguntaMenuEmergente();
             }
         });
         tablaInformacionPreguntas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 colocarDatosPregunta();
             }
+
             public void mousePressed(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     int row = tablaInformacionPreguntas.rowAtPoint(e.getPoint());
                     popup.show(tablaInformacionPreguntas, e.getX(), e.getY());
                 }
             }
+
             public void mouseReleased(MouseEvent e) {
                 if (e.isPopupTrigger()) {
                     int row = tablaInformacionPreguntas.rowAtPoint(e.getPoint());
@@ -518,6 +520,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
     /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
      *
@@ -573,7 +576,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         } catch (JRException ex) {
             ex.printStackTrace();
         }
-        
+
     }
 
     private void jmenuInformePreguntasActionPerformed(ActionEvent evt) {
@@ -584,11 +587,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
             //Crear un mapa para guardar parametros que podemos pasar al informe
             Map<String, Object> params = new HashMap<String, Object>();
-            if(txtNombreCategoria.getText().equals("")){
-                JOptionPane.showMessageDialog(this,"Seleccione una categoria","Error",JOptionPane.ERROR_MESSAGE);
+            if (txtNombreCategoria.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Seleccione una categoria", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            params.put("id_categoria",GestionCategorias.obtenerIdCategoria(txtNombreCategoria.getText()));
+            params.put("id_categoria", GestionCategorias.obtenerIdCategoria(txtNombreCategoria.getText()));
             //Compilamos el informe .jrxml  para generar el .jasper
             JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
             //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
@@ -609,9 +612,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void borrarPreguntaMenuEmergente() {
         //obtenemos la pregunta que se ha seleccionado
-        int posicion =  tablaInformacionPreguntas.getSelectedRow();
+        int posicion = tablaInformacionPreguntas.getSelectedRow();
         //en caso de que no haya ninguna pregunta seleccionada cortamos la ejecucion del metodo, para evitar excepciones
-        if(posicion == -1){
+        if (posicion == -1) {
             return;
         }
         //comprobamos que el usuario esta seguro de borrar la pregunta
@@ -619,11 +622,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             return;
         }
         //en funcion de si se borra o no mostramos un mensaje u otro
-        if(GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion,0))){
-            JOptionPane.showMessageDialog(this,Mensajes.PREGUNTA_BORRADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
+        if (GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion, 0))) {
+            JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
-        }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_PREGUNTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -644,6 +647,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //obtenemos los datos de la categoria
+        //el nombre antiguo se usa para poder modificar tambien el nombre de la categoria,
         String nombreAntiguo = listaCategorias.getSelectedItem().toString();
         String nombre = txtNombreCategoria.getText();
         String descripcion = txtDescripcionCategoria.getText();
@@ -675,6 +680,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void listaCategoriasItemListener(ItemEvent evt) {
         limpiarCajas();
+        // en caso de que haya alguna categoria seleccionada
         if (listaCategorias.getSelectedItem() != null) {
             modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
             txtNombreCategoria.setText(listaCategorias.getSelectedItem().toString());
@@ -686,6 +692,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     /**
      * Este metodo nos permite limpiar las cajas de texto
+     *
      * @author Fernando
      */
     private void limpiarCajas() {
@@ -707,7 +714,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             //eliminamos la categoria borrada de la lista desplegable
             listaCategorias.removeItem(nombre);
-        } else {
+        } else { //si no se borra
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -725,36 +732,51 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     }
 
     private void btnCrearActionListener(ActionEvent evt) {
-        if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {//en caso de que no rellente todos los campos
+        //en caso de que no rellente todos los campos
+        if (txtNombreCategoria.getText().equals("") || txtNombreCategoria.getText().equals("")) {
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        } else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) { //en caso de que ya exista esa categoria
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-        } else if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, "¿Estas seguro?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0) {
-            if (GestionCategorias.insertarCategoria(txtNombreCategoria.getText(), txtDescripcionCategoria.getText()) > 0) {
-                JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
-                cargarListaCategorias();
-            } else {
-                JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
-            }
         }
-    }
-    private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        //en caso de que ya exista esa categoria
+        else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+        }
+        //se pide al usuario que confirme que quiere realizar la accion
+        if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        // se procede a insertar la categoria
+        if (GestionCategorias.insertarCategoria(txtNombreCategoria.getText(), txtDescripcionCategoria.getText()) > 0) {
+            //en caso de que se inserte
+            JOptionPane.showMessageDialog(this, Mensajes.CATEGORIA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+            cargarListaCategorias();
+        } else {
+            //en caso de que no se inserte
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+        }
+
+    }
+
+    private void opcionExportarActionPeformed(ActionEvent evt) {
+        //se pide al usuario que confirme la accion
+        if (JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
+            return;
+        }
+        //se intenta crear la copia de seguridad
+        if (CopiaDeSeguridad.crearCopia()) {
+            //en caso de que se cree
+            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            //en caso de que no se cree
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
-        if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (estado == Codigos.CORRECTO) {
+            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else if (estado == Codigos.ERROR) {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -811,41 +833,6 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         VentanaLogin frame = new VentanaLogin();
         frame.setVisible(true);
         dispose();
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarCategorias.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaAdministrarCategorias().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify

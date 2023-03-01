@@ -14,6 +14,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -39,11 +40,7 @@ public class GestionCuestionarios {
      */
     public static boolean existeCuestionario(String nombre) {
         String values = null;
-        try {
-            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        values = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_CUESTIONARIO, values);
         JsonParser parser = new JsonParser();
         JsonElement element = parser.parse(respuesta);
@@ -59,11 +56,7 @@ public class GestionCuestionarios {
      */
     public static ArrayList<String> obtenerCuestionarios(String categoria) {
         String param = null;
-        try {
-            param = "categoria="+URLEncoder.encode(categoria, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        param = "categoria="+URLEncoder.encode(categoria, StandardCharsets.UTF_8);
         String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_CUESTIONARIOS,param);
         Gson gson = new Gson();
         JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class);
@@ -87,13 +80,9 @@ public class GestionCuestionarios {
      */
     public static int insertarCuestionario(int idCategoria, String nombre, String descripcion) {
         String values = null;
-        try {
-            values = "nombre=" + URLEncoder.encode(nombre, "UTF-8")
-                    + "&desc=" + URLEncoder.encode(descripcion, "UTF-8")
-                    + "&idcategoria=" + idCategoria;
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        values = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8)
+                + "&desc=" + URLEncoder.encode(descripcion, StandardCharsets.UTF_8)
+                + "&idcategoria=" + idCategoria;
 
         String response = POST_REQUEST(Constantes.URL_INSERTAR_CUESTIONARIO, values);
         System.out.println(response);
@@ -111,11 +100,7 @@ public class GestionCuestionarios {
      */
     public static int obtenerId(String nombre) {
         String param = null;
-        try {
-            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        param = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_CUESTIONARIO,param);
             JsonArray jsonArray = new Gson().fromJson(response, JsonArray.class); // convertimos la respuesta en un objeto JsonArray
@@ -217,11 +202,7 @@ public class GestionCuestionarios {
      */
     public static String obtenerDescripcion(String nombre) {
         String param = null;
-        try {
-            param = "nombre=" + URLEncoder.encode(nombre, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        param = "nombre=" + URLEncoder.encode(nombre, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_DESCRIPCION_CUESTIONARIO,param);
             Gson gson = new Gson();
@@ -242,13 +223,9 @@ public class GestionCuestionarios {
      */
     public static boolean modificar(Cuestionario c) {
         String values = null;
-        try {
-            values = "nombre=" + URLEncoder.encode(c.getNombre(), "UTF-8")
-                    + "&desc=" + URLEncoder.encode(c.getDescripcion(), "UTF-8")
-                    + "&id=" + c.getId();
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        values = "nombre=" + URLEncoder.encode(c.getNombre(), StandardCharsets.UTF_8)
+                + "&desc=" + URLEncoder.encode(c.getDescripcion(), StandardCharsets.UTF_8)
+                + "&id=" + c.getId();
 
         String response = POST_REQUEST(Constantes.URL_MODIFICAR_CUESTIONARIO, values);
         Gson gson = new Gson();
@@ -303,11 +280,7 @@ public class GestionCuestionarios {
      */
     public static ArrayList<Integer> obtenerIdPreguntas(String cuestionario) {
         String param = null;
-        try {
-            param = "nombre=" +  URLEncoder.encode(cuestionario, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_ENCODING, e);
-        }
+        param = "nombre=" +  URLEncoder.encode(cuestionario, StandardCharsets.UTF_8);
         try {
             String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID_PREGUNTAS_CUESTIONARIOS,param);
             JsonParser parser = new JsonParser();
