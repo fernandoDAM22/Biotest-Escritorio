@@ -8,6 +8,7 @@ import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.*;
 import controller.usuario.Codigos;
+import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Registro;
 import model.Usuario;
@@ -442,6 +443,10 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         if(posicion == -1){
             return;
         }
+        if(comprobacionUsuario((String) modelo.getValueAt(posicion,0))){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_MISMO_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
@@ -769,6 +774,10 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_SELECCION_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if(comprobacionUsuario((String) modelo.getValueAt(posicion,0))){
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_MISMO_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
@@ -780,6 +789,17 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_BORRAR_USUARIO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+
+    /**
+     * Este metodo permite comprobar si el usuario que se intenta borrar
+     * es el mismo que el usuario registrado
+     * @param usuario es el usuario que queremos comprobar
+     * @return true si es el mismo, false si no
+     */
+    private boolean comprobacionUsuario(String usuario) {
+        int posicion = tablaUsuarios.getSelectedRow();
+        return usuario.equals(ConfiguracionUsuario.getNombreUsuario());
     }
 
     private void tablaUsuariosKeyReleased(java.awt.event.KeyEvent evt) {
@@ -838,41 +858,6 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaAdministrarUsuarios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaAdministrarUsuarios().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify
