@@ -21,11 +21,11 @@ public interface Configuracion {
     /**
      * Es el nombre del usuario administrador
      */
-    String ADMIN = "admin";
+    String ADMIN = "root";
     /**
      * Contraseña del usuario
      */
-    String PASSWORD_ADMIN = "admin123456";
+    String PASSWORD_ADMIN = "";
     /**
      * Contraseña del usuario normal
      */
