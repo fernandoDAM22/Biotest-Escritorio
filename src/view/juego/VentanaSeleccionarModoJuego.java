@@ -365,9 +365,8 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
      */
     private String seleccionarPartida() {
         ButtonModel modeloBoton = grupoBotones.getSelection();
-        JToggleButton botonSeleccionado = null;
         // Iterar a través de todos los botones del grupo
-        for (Enumeration<AbstractButton> botones = grupoBotones.getElements(); botones.hasMoreElements(); ) {
+        for (Enumeration<AbstractButton> botones = grupoBotones.getElements(); botones.hasMoreElements();) {
             JToggleButton boton = (JToggleButton) botones.nextElement();
             if (boton.getModel() == modeloBoton) {
                 // Este es el botón seleccionado
@@ -378,16 +377,23 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     }
 
     private void btnJugarActionListener(ActionEvent evt) {
+        //obtenemos el tipo de partida
         String mensaje = seleccionarPartida();
         TipoPartida tipoPartida = null;
+        //comprobamos que no ocurra algun error
         if (mensaje == null) {
             JOptionPane.showMessageDialog(null, Mensajes.SELECCIONE_MODO_JUEGO, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         } else {
+            //se establece el tipo de partida en funcion boton seleccionado
             switch (mensaje) { // se establece el tipo de partida elegido
                 case "Modo Libre" -> tipoPartida = TipoPartida.MODO_LIBRE;
                 case "Modo sin fallos" -> tipoPartida = TipoPartida.MODO_SIN_FALLOS;
                 case "Modo Clasico" -> tipoPartida = TipoPartida.MODO_CLASICO;
                 case "Cuestionarios" -> {
+                    /*
+                     * En caso del modo cuestionarios debemos obtener primero el cuestionario
+                     * que se va a jugar
+                     */
                     DialogoElegirCuestionario.mostrarDialogo();
                     boolean elegido = DialogoElegirCuestionario.obtenerEstado();
                     if (!elegido) {
@@ -434,40 +440,6 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_opcionCategoriasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaSeleccionarModoJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaSeleccionarModoJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaSeleccionarModoJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaSeleccionarModoJuego.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaSeleccionarModoJuego().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
