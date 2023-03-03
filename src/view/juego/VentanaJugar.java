@@ -22,27 +22,64 @@ import view.administrador.VentanaAdministrarPreguntas;
 import javax.swing.*;
 
 /**
- * Esta ventana permite al usuario jugar una partida
+ * Esta ventana permite al usuario jugar una partida, los tipos
+ * de partida disponibles son:
+ * <ul>
+ *     <li>Partida Modo libre</li>
+ *     <li>Partida Modo clasico</li>
+ *     <li>Partida Modo sin fallos</li>
+ *     <li>Partida Modo Cuestionario</li>
+ * </ul>
+ * <hr>
  * @author fernando
  */
 public class VentanaJugar extends javax.swing.JFrame {
+    /**
+     * Tipo de la partida que se esta jugando
+     */
     private TipoPartida tipoPartida;
+    /**
+     * Partida modo libre por si el usuario decice jugar este tipo de partida
+     */
     private PartidaModoLibre partidaModoLibre;
+    /**
+     * Partida modo sin fallos por si el usuario decice jugar este tipo de partida
+     */
     private PartidaModoSinFallos partidaModoSinFallos;
+    /**
+     * Partida modo clasico por si el usuario decice jugar este tipo de partida
+     */
     private PartidaModoClasico partidaModoClasico;
+    /**
+     * Partida modo cuestionario por si el usuario decice jugar este tipo de partida
+     */
     private PartidaCuestionario partidaCuestionario;
+    /**
+     * Objeto de tipo modelo para la partida
+     */
     private Partida partida;
+    /**
+     * Bandera para saber si la pregunta a sido respondida o no
+     */
     private boolean bandera;
+    /**
+     * Id de la pregunta que se esta respondiendo
+     */
     private int idPregunta;
-    private int idPartida, idUsuario;
+    /**
+     * Id de la partida que se esta jugando
+     */
+    private int idPartida;
+    /**
+     * Id del usuario que esta jugando la partida
+     */
+    private int idUsuario;
 
     /**
-     * Creates new form VentanaJugar
+     * Constructor de la partida
+     * @param tipoPartida es el tipo de partido que se va a jugar
+     * @author Fernando
      */
-    public VentanaJugar() {
-        initComponents();
-    }
-
     public VentanaJugar(TipoPartida tipoPartida) {
         this.tipoPartida = tipoPartida;
         bandera = true;
@@ -60,6 +97,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         if (tipoPartida != TipoPartida.MODO_LIBRE) {
             panelControles.remove(btnFinalizar);
         }
+        //se inicia la partida en funcion del tipo de partida elegido
         switch (tipoPartida) {
             case MODO_LIBRE -> jugarModoLibre();
             case MODO_SIN_FALLOS -> jugarModoSinFallos();
@@ -70,6 +108,7 @@ public class VentanaJugar extends javax.swing.JFrame {
 
     /**
      * Este metodo permite guardar el id de la partida y el id del usuario
+     * @author Fernando
      */
     private void iniciarPartida() {
         idPartida = GestionPartida.obtenerId();
@@ -83,6 +122,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      */
     private void jugarModoLibre() {
         iniciarPartida();
+        //nos aseguramos de que no hayan errores al obtener los datos
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
@@ -97,6 +137,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      */
     private void jugarModoSinFallos() {
         iniciarPartida();
+        //nos aseguramos de que no hayan errores al obtener los datos
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
@@ -110,6 +151,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      */
     private void jugarModoClasico() {
         iniciarPartida();
+        //nos aseguramos de que no hayan errores al obtener los datos
         if (idPartida == -1 || idUsuario == -1) {
             return;
         }
@@ -125,6 +167,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @author Fernando
      */
     private void jugarCuestionarios() {
+        //nos aseguramos de que no hayan errores al obtener los datos
         iniciarPartida();
         if (idPartida == -1 || idUsuario == -1) {
             return;
@@ -360,29 +403,24 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @author Fernando
      */
     private void colocarPuntuacion() {
-        int puntuacion = 0;
-        switch (tipoPartida) {
-            case MODO_LIBRE:
-                puntuacion = partidaModoLibre.getContadorPreguntasCorrectas();
-                break;
-            case MODO_SIN_FALLOS:
-                puntuacion = partidaModoSinFallos.getContadorPreguntasCorrectas();
-                break;
-            case MODO_CLASICO:
-                puntuacion = partidaModoClasico.getContadorPreguntasCorrectas();
-                break;
-            case CUESTIONARIOS:
-                puntuacion = partidaCuestionario.getContadorPreguntasCorrectas();
-                break;
-        }
+        //obtenemos la puntuacion en funcion de la partida que se ha jugado
+        int puntuacion = switch (tipoPartida) {
+            case MODO_LIBRE -> partidaModoLibre.getContadorPreguntasCorrectas();
+            case MODO_SIN_FALLOS -> partidaModoSinFallos.getContadorPreguntasCorrectas();
+            case MODO_CLASICO -> partidaModoClasico.getContadorPreguntasCorrectas();
+            case CUESTIONARIOS -> partidaCuestionario.getContadorPreguntasCorrectas();
+        };
+        //realizamos una consulta de modificacion para colocar la puntuacion
         ConsultasPartida.establecerPuntuacion(partida.getId(), puntuacion);
     }
 
     private void btnSiguienteActionListener(ActionEvent evt) {
+        //nos aseguramos de que la pregunta no ha sido ya respondida
         if (bandera) {
             JOptionPane.showMessageDialog(null, "Debe responder a la pregunta antes de pasar a la siguiente", Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //en funcion del tipo de partida se llama al metodo ciclo de la partida correspondiente
         switch (tipoPartida) {
             case MODO_LIBRE:
                 if (!partidaModoLibre.fin()) {
@@ -419,6 +457,10 @@ public class VentanaJugar extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este metodo permite lanzar la ventana de resultado
+     * @author Fernando
+     */
     private void lanzarVentanaResultado() {
         colocarPuntuacion();
         VentanaResultado frame = new VentanaResultado(idPartida);
@@ -432,7 +474,7 @@ public class VentanaJugar extends javax.swing.JFrame {
      * @param evt es el boton que se pulsa
      */
     private void responder(ActionEvent evt) {
-        boolean acertada;
+        //en funcion del tipo de partida llamamos al metodo responder de la partida correspondiente
         switch (tipoPartida) {
             case MODO_LIBRE -> responderModoLibre(evt);
             case MODO_SIN_FALLOS -> responderModoSinFallos(evt);
@@ -441,24 +483,39 @@ public class VentanaJugar extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Este metodo permite responder una pregunta en una partida de modo clasico
+     * @param evt es el boton que se pulsa
+     * @author Fernando
+     */
     private void responderModoClasico(ActionEvent evt) {
+        //nos aseguramos de que la partida no esta respondida ya
         if (bandera) {
             JButton button = (JButton) evt.getSource();
             boolean acertada = partidaModoClasico.responder(button);
+            //se marca que la pregunta ya ha sido respondida
             bandera = false;
+            //se actualizan los contadores de respuestas correctas e incorrectas
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoClasico.getContadorPreguntasCorrectas());
-            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoClasico.getContadorRespuestasIncorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas: " + partidaModoClasico.getContadorRespuestasIncorrectas());
             ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
         }
     }
-
+    /**
+     * Este metodo permite responder una pregunta en una partida de modo sin fallos
+     * @param evt es el boton que se pulsa
+     * @author Fernando
+     */
     private void responderModoSinFallos(ActionEvent evt) {
+        //nos aseguramos de que la partida no esta respondida ya
         if (bandera) {
             JButton button = (JButton) evt.getSource();
             boolean acertada = partidaModoSinFallos.responder(button);
+            //se marca que la pregunta ya ha sido respondida
             bandera = false;
+            //se actualizan los contadores de respuestas correctas e incorrectas
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoSinFallos.getContadorPreguntasCorrectas());
-            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoSinFallos.getContadorRespuestasIncorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas: " + partidaModoSinFallos.getContadorRespuestasIncorrectas());
             ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
         }
     }
@@ -473,19 +530,24 @@ public class VentanaJugar extends javax.swing.JFrame {
         if (bandera) {
             JButton button = (JButton) evt.getSource();
             boolean acertada = partidaModoLibre.responder(button);
+            //se marca que la pregunta ya ha sido respondida
             bandera = false;
+            //se actualizan los contadores de respuestas correctas e incorrectas
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaModoLibre.getContadorPreguntasCorrectas());
-            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaModoLibre.getContadorRespuestasIncorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas: " + partidaModoLibre.getContadorRespuestasIncorrectas());
             ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
         }
     }
     private void responderCuestionario(ActionEvent evt){
+        //nos aseguramos de que la pregunta no ha sido respondida ya
         if(bandera){
             JButton button = (JButton) evt.getSource();
             boolean acertada = partidaCuestionario.responder(button);
+            //se marca que la pregunta ya ha sido respondida
             bandera = false;
+            //se actualizan los contadores de respuestas correctas e incorrectas
             labelRespuestasCorrectas.setText("Respuestas correctas: " + partidaCuestionario.getContadorPreguntasCorrectas());
-            labelRespuestasIncorrectas.setText("Respuestas incorrectas " + partidaCuestionario.getContadorRespuestasIncorrectas());
+            labelRespuestasIncorrectas.setText("Respuestas incorrectas: " + partidaCuestionario.getContadorRespuestasIncorrectas());
             ConsultasPartida.insertarPregunta(partida.getId(), idPregunta, acertada);
         }
     }
@@ -517,40 +579,6 @@ public class VentanaJugar extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_opcionCategoriasActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VentanaJugar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VentanaJugar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VentanaJugar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VentanaJugar.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VentanaJugar().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar barraMenu;
