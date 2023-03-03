@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-02-2023 a las 11:30:23
+-- Tiempo de generación: 02-03-2023 a las 16:17:37
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
@@ -47,7 +47,8 @@ INSERT INTO `categoria` (`id`, `nombre`, `descripcion`) VALUES
 (7, 'Plantas', 'en esta categoria encontraras preguntas sobre plantas'),
 (8, 'Setas y hongos', 'en esta categoria encontraras preguntas sobre setas y hongos'),
 (9, 'Reptiles', 'En esta categoria encontraras preguntas sobre reptiles'),
-(26, 'prueba', 'prueba');
+(56, 'prueba', 'categoria de prueba'),
+(57, 'php', 'categoria php');
 
 -- --------------------------------------------------------
 
@@ -67,8 +68,8 @@ CREATE TABLE `cuestionarios` (
 --
 
 INSERT INTO `cuestionarios` (`id`, `nombre`, `descripcion`, `id_categoria`) VALUES
-(1, 'Examen Mamiferos modificado', 'Examen de los mamiferos para tercero de la eso modificado', 1),
-(3, 'prueba', 'cuestionario de prueba', 1);
+(1, 'Examen Mamiferos', 'Examen de los mamiferos para tercero de la eso', 1),
+(12, 'Cuestionario modificado', 'Cuestionario de prueba', 56);
 
 -- --------------------------------------------------------
 
@@ -89,7 +90,45 @@ CREATE TABLE `partidas` (
 --
 
 INSERT INTO `partidas` (`id`, `fecha`, `puntuacion`, `id_usuario`, `tipo_partida`) VALUES
-(1, '2023-02-11', 2, 8, 'MODO CLASICO');
+(1, '2023-02-11', 2, 8, 'MODO CLASICO'),
+(2, '2023-02-18', 1, 8, 'MODO LIBRE'),
+(3, '2023-02-18', 1, 8, 'MODO LIBRE'),
+(4, '2023-02-18', 1, 8, 'MODO LIBRE'),
+(5, '2023-02-18', 2, 8, 'MODO LIBRE'),
+(6, '2023-02-18', 1, 8, 'MODO LIBRE'),
+(7, '2023-02-18', 1, 8, 'MODO LIBRE'),
+(8, '2023-02-18', 1, 8, 'MODO LIBRE'),
+(9, '2023-02-19', 1, 8, 'MODO LIBRE'),
+(10, '2023-02-19', 0, 8, 'MODO SIN FALLOS'),
+(11, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(12, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(13, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(14, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(15, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(16, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(17, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(18, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(19, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(20, '2023-02-20', 2, 8, 'MODO LIBRE'),
+(21, '2023-02-20', 0, 8, 'MODO LIBRE'),
+(22, '2023-02-20', 0, 8, 'MODO LIBRE'),
+(23, '2023-02-20', 0, 8, 'MODO LIBRE'),
+(24, '2023-02-20', 2, 8, 'MODO LIBRE'),
+(25, '2023-02-20', 2, 8, 'MODO LIBRE'),
+(26, '2023-02-20', 2, 8, 'MODO LIBRE'),
+(27, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(28, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(29, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(30, '2023-02-20', 1, 8, 'MODO LIBRE'),
+(31, '2023-02-20', 1, 8, 'CUESTIONARIOS'),
+(32, '2023-02-27', 0, 8, 'MODO LIBRE'),
+(33, '2023-02-27', 1, 8, 'MODO SIN FALLOS'),
+(34, '2023-02-27', 6, 8, 'MODO CLASICO'),
+(35, '2023-03-01', 0, 8, 'MODO LIBRE'),
+(36, '2023-03-02', 0, 23, 'MODO SIN FALLOS'),
+(37, '2023-03-02', 1, 23, 'MODO CLASICO'),
+(38, '2023-03-02', 2, 8, 'MODO CLASICO'),
+(39, '2023-03-02', 2, 8, 'MODO CLASICO');
 
 --
 -- Disparadores `partidas`
@@ -109,13 +148,13 @@ DELIMITER ;
 
 CREATE TABLE `preguntas` (
   `id` int(10) NOT NULL,
-  `enunciado` varchar(200) DEFAULT NULL,
-  `respuesta_correcta` varchar(50) DEFAULT NULL,
-  `respuesta_incorrecta1` varchar(50) DEFAULT NULL,
-  `respuesta_incorrecta2` varchar(50) DEFAULT NULL,
-  `respuesta_incorrecta3` varchar(50) DEFAULT NULL,
+  `enunciado` varchar(200) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respuesta_correcta` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respuesta_incorrecta1` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respuesta_incorrecta2` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respuesta_incorrecta3` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `id_categoria` int(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `preguntas`
@@ -182,7 +221,7 @@ INSERT INTO `preguntas` (`id`, `enunciado`, `respuesta_correcta`, `respuesta_inc
 (671, '¿Cual de estas aves es un ave carroñera', 'Buitre', 'Buho', 'Aguila', 'Halcon', 5),
 (672, '¿Cuanto mide aproximadamente el pico de un tucan?', '20 cm', '10 cm', '15 cm', '25 cm', 5),
 (673, 'Es un ave nocturna', 'Lechuza', 'Tortola', 'Gallina', 'Garza', 5),
-(674, 'Esta considerado el ave mas pequeña del mundo', 'colibrí zunzuncito', 'Colibrí pardo.', 'Colibrí orejimorado', 'Canario', 5),
+(674, 'Esta considerado el ave mas pequeña del mundo', 'Colibri zunzuncito', 'Colibri pardo', 'Colibri orejimorado', 'Canario', 5),
 (675, 'Las aves se caracterizan por', 'Tener huesos huecos', 'Por tener sacos terréreos.', 'Ser de sangre fria', 'Su pico es flexible', 5),
 (676, 'Las aves son animales ', 'Ovíparos', 'Ovovivíparos', 'Vivíparos', 'Ninguna es correcta', 5),
 (677, 'Cuando el avestruz se siente amezadado...', 'Esconde la cabeza', 'Abre las alas', 'Emite sonidos agudos', 'Se va volando', 5),
@@ -211,7 +250,7 @@ INSERT INTO `preguntas` (`id`, `enunciado`, `respuesta_correcta`, `respuesta_inc
 (700, 'Las aves que se alimentan de presas son', 'Carnívoros', 'Insectívoros', 'Todas son correctas', 'Granívoros', 5),
 (701, 'La mayoria de las aves son', 'Endotermos', 'Ecotermos', 'Ambos', 'Ninguna es correcta', 5),
 (702, '¿Todas las aves tienen alas?', 'Si', 'No', 'Solo las que vuelan', 'Solo las que no vuelan', 5),
-(703, '¿Que ave construye nidps de barro?', 'Golondrina', 'Abejaruco', 'Herrerillo', 'Vencejo', 5),
+(703, '¿Que ave construye nidos de barro?', 'Golondrina', 'Abejaruco', 'Herrerillo', 'Vencejo', 5),
 (704, 'Este ave es famosa por coger y esconder objetos brillantes', 'Urraca', 'Oropendola', 'Carbonero', 'Verderon', 5),
 (705, 'Pasa su vida en el aire a excepcion de cuando esta en el nido', 'Vencejo', 'Golondrina', 'Carricero', 'Verdecillo', 5),
 (706, 'Esta ave se alimenta de peces', 'Todas son correctas', 'Gaviota', 'Martin pescador', 'Aguila pescadora', 5),
@@ -471,7 +510,7 @@ INSERT INTO `preguntas` (`id`, `enunciado`, `respuesta_correcta`, `respuesta_inc
 (961, '¿Como se llaman las ramas en las que se divide la traquea?', 'Bronquios', 'Bronquiolos', 'Tuberias', 'Ninguna es correcta', 6),
 (962, '¿Que dientes sirven para moler los alimentos?', 'Las muelas', 'Los colmillos', 'Los paletos', 'Ninguna es correcta', 6),
 (963, '¿Como se llama la parte coloreada del ojo?', 'Iris', 'Retina', 'Pupila ', 'Cornea', 6),
-(964, '¿Que se akmacena en la besicula biliar?', 'Bilis', 'Saliva', 'Sangre', 'Nutrientes', 6),
+(964, '¿Que se almacena en la besicula biliar?', 'Bilis', 'Saliva', 'Sangre', 'Nutrientes', 6),
 (965, '¿Que representan los anillos de los arboles', 'Los años', 'Horas', 'Dias', 'Meses', 7),
 (966, '¿Sus flores solo se abren por la noche?', 'Baobad', 'Almendro', 'Naranjo', 'Cerezo', 7),
 (967, 'Arbol mayoritario en el bosque mediterraneo español', 'Encina', 'Palmera ', 'Pino', 'Castaño', 7),
@@ -499,8 +538,8 @@ INSERT INTO `preguntas` (`id`, `enunciado`, `respuesta_correcta`, `respuesta_inc
 (989, '¿Cual es el fruto del olivo?', 'Aceituna', 'Cereza', 'Bellota', 'Ninguna es correcta', 7),
 (990, 'Planta comestible con tallos blancos y hojas verdes', 'Alcachofa', 'Esparrago', 'Puerro', 'Zanahoria', 7),
 (991, 'Las plantas son seres vivos y necesitan para vivir', 'Todas son correctas', 'Agua', 'Luz', 'Aire', 7),
-(992, '¿Cuanto viven las plantas efimeras', 'Una temporada', '100 años', 'Para siempre', '100 - 120  dias', 7),
-(993, '¿Cuanto viven las plantas perrenes', 'Varios años', 'Una temporada', 'Para siempre', '100 - 120  dias', 7),
+(992, '¿Cuanto viven las plantas efimeras?', 'Una temporada', '100 años', 'Para siempre', '100 - 120  dias', 7),
+(993, '¿Cuanto viven las plantas perennes?', 'Varios años', 'Una temporada', 'Para siempre', '100 - 120  dias', 7),
 (994, 'Las plantas fabrican su propio alimento y este proceso se llama', 'Fotosíntesis', 'Fotocínstecis', 'Fotomatón', 'Fotogenesis', 7),
 (995, 'Para realizar la fotosintesis las plantas necesitan aire, agua, sol y  ..', 'Sales minerales', 'Otras plantas', 'Hidrogeno', 'Ninguna es correcta', 7),
 (996, '¿Como se llama la union de agua, minerales y dioxido de carbono?', 'Savia bruta', 'Savia elaborada', 'Nectar', 'Ninguna es correcta', 7),
@@ -590,11 +629,10 @@ CREATE TABLE `preguntas_cuestionarios` (
 
 INSERT INTO `preguntas_cuestionarios` (`id_pregunta`, `id_cuestionario`) VALUES
 (613, 1),
-(613, 3),
 (614, 1),
-(614, 3),
 (617, 1),
 (623, 1),
+(623, 12),
 (630, 1),
 (634, 1),
 (638, 1),
@@ -630,7 +668,168 @@ INSERT INTO `preguntas_partida` (`id`, `id_pregunta`, `id_partida`, `acertada`) 
 (390, 659, 1, b'0'),
 (391, 883, 1, b'0'),
 (392, 805, 1, b'0'),
-(393, 932, 1, b'1');
+(393, 932, 1, b'1'),
+(394, 728, 2, b'0'),
+(395, 757, 2, b'0'),
+(396, 1042, 2, b'0'),
+(397, 686, 2, b'0'),
+(398, 832, 2, b'1'),
+(399, 738, 3, b'1'),
+(400, 646, 3, b'0'),
+(401, 797, 4, b'0'),
+(402, 931, 4, b'0'),
+(403, 637, 4, b'1'),
+(404, 821, 5, b'1'),
+(405, 807, 5, b'1'),
+(406, 853, 5, b'0'),
+(407, 807, 6, b'1'),
+(408, 831, 6, b'0'),
+(409, 1007, 7, b'0'),
+(410, 678, 7, b'1'),
+(411, 1043, 8, b'0'),
+(412, 818, 8, b'0'),
+(413, 988, 8, b'0'),
+(414, 898, 8, b'0'),
+(415, 825, 8, b'0'),
+(416, 1064, 8, b'0'),
+(417, 907, 8, b'1'),
+(418, 721, 9, b'0'),
+(419, 1036, 9, b'0'),
+(420, 701, 9, b'0'),
+(421, 980, 9, b'0'),
+(422, 724, 9, b'1'),
+(423, 968, 10, b'0'),
+(424, 750, 11, b'1'),
+(425, 722, 11, b'0'),
+(426, 700, 11, b'0'),
+(427, 855, 11, b'0'),
+(428, 933, 11, b'0'),
+(429, 633, 12, b'0'),
+(430, 681, 12, b'0'),
+(431, 756, 12, b'0'),
+(432, 879, 12, b'1'),
+(433, 890, 13, b'1'),
+(434, 717, 13, b'0'),
+(435, 1045, 14, b'0'),
+(436, 704, 14, b'0'),
+(437, 978, 14, b'0'),
+(438, 727, 14, b'1'),
+(439, 623, 15, b'0'),
+(440, 956, 15, b'0'),
+(441, 736, 15, b'0'),
+(442, 875, 15, b'0'),
+(443, 650, 15, b'1'),
+(444, 825, 16, b'0'),
+(445, 1003, 16, b'0'),
+(446, 847, 16, b'1'),
+(447, 841, 17, b'1'),
+(448, 699, 17, b'0'),
+(449, 998, 18, b'0'),
+(450, 953, 18, b'0'),
+(451, 951, 18, b'0'),
+(452, 689, 18, b'1'),
+(453, 794, 19, b'1'),
+(454, 641, 19, b'0'),
+(455, 624, 20, b'1'),
+(456, 762, 20, b'0'),
+(457, 1029, 20, b'0'),
+(458, 989, 20, b'0'),
+(459, 916, 20, b'0'),
+(460, 942, 20, b'0'),
+(461, 867, 20, b'0'),
+(462, 627, 20, b'0'),
+(463, 678, 20, b'0'),
+(464, 1032, 20, b'0'),
+(465, 990, 20, b'0'),
+(466, 997, 20, b'0'),
+(467, 766, 20, b'0'),
+(468, 790, 20, b'0'),
+(469, 649, 20, b'0'),
+(470, 1041, 20, b'1'),
+(471, 734, 24, b'1'),
+(472, 700, 24, b'0'),
+(473, 804, 24, b'1'),
+(474, 943, 24, b'0'),
+(475, 1045, 25, b'1'),
+(476, 964, 25, b'0'),
+(477, 1038, 25, b'0'),
+(478, 721, 25, b'0'),
+(479, 632, 25, b'1'),
+(480, 706, 26, b'0'),
+(481, 657, 26, b'1'),
+(482, 765, 26, b'1'),
+(483, 666, 27, b'0'),
+(484, 927, 27, b'0'),
+(485, 964, 27, b'1'),
+(486, 648, 28, b'0'),
+(487, 668, 28, b'0'),
+(488, 684, 28, b'0'),
+(489, 963, 28, b'0'),
+(490, 735, 28, b'1'),
+(491, 871, 29, b'0'),
+(492, 701, 29, b'0'),
+(493, 820, 29, b'0'),
+(494, 664, 29, b'1'),
+(495, 687, 30, b'0'),
+(496, 1064, 30, b'1'),
+(497, 630, 31, b'0'),
+(498, 658, 31, b'0'),
+(499, 617, 31, b'0'),
+(500, 644, 31, b'0'),
+(501, 634, 31, b'0'),
+(502, 623, 31, b'1'),
+(503, 659, 31, b'0'),
+(504, 614, 31, b'0'),
+(505, 638, 31, b'0'),
+(506, 642, 31, b'0'),
+(507, 1043, 33, b'1'),
+(508, 622, 33, b'0'),
+(509, 867, 34, b'1'),
+(510, 709, 34, b'1'),
+(511, 846, 34, b'0'),
+(512, 961, 34, b'1'),
+(513, 674, 34, b'1'),
+(514, 789, 34, b'0'),
+(515, 767, 34, b'0'),
+(516, 849, 34, b'0'),
+(517, 1042, 34, b'1'),
+(518, 962, 34, b'1'),
+(519, 910, 35, b'0'),
+(520, 675, 35, b'0'),
+(521, 650, 35, b'0'),
+(522, 700, 35, b'0'),
+(523, 755, 35, b'0'),
+(524, 805, 36, b'0'),
+(525, 879, 37, b'0'),
+(526, 959, 37, b'0'),
+(527, 923, 37, b'0'),
+(528, 736, 37, b'0'),
+(529, 844, 37, b'0'),
+(530, 764, 37, b'0'),
+(531, 990, 37, b'0'),
+(532, 840, 37, b'1'),
+(533, 976, 37, b'0'),
+(534, 710, 37, b'0'),
+(535, 985, 38, b'0'),
+(536, 838, 38, b'0'),
+(537, 1053, 38, b'0'),
+(538, 853, 38, b'0'),
+(539, 651, 38, b'0'),
+(540, 906, 38, b'1'),
+(541, 693, 38, b'0'),
+(542, 1016, 38, b'1'),
+(543, 658, 38, b'0'),
+(544, 820, 38, b'0'),
+(545, 1054, 39, b'0'),
+(546, 1044, 39, b'0'),
+(547, 1026, 39, b'0'),
+(548, 978, 39, b'0'),
+(549, 763, 39, b'0'),
+(550, 1048, 39, b'1'),
+(551, 637, 39, b'0'),
+(552, 654, 39, b'0'),
+(553, 803, 39, b'0'),
+(554, 866, 39, b'1');
 
 -- --------------------------------------------------------
 
@@ -653,8 +852,10 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `contrasena`, `email`, `telefono`, `tipo`) VALUES
 (7, 'fernando', 'a75ef907369f33d2dc2be71084ce422ecd2dd1ffb269780449e778237a20ff76', 'fernandoesmr@gmail.com', '652265838', 'user'),
-(8, 'administrador', 'da23890e111536e631be13a069ebc5432c9cf28cdbc5deb2a70770ec9597db6d', 'admin@gmail.com', '888888888', 'admin'),
-(9, 'prueba', 'a75ef907369f33d2dc2be71084ce422ecd2dd1ffb269780449e778237a20ff76', 'emailprueba@gmail.com', '222222222', 'user');
+(8, 'administrador', 'da23890e111536e631be13a069ebc5432c9cf28cdbc5deb2a70770ec9597db6d', 'admin@gmail.com', '333333333', 'admin'),
+(9, 'prueba', 'a75ef907369f33d2dc2be71084ce422ecd2dd1ffb269780449e778237a20ff76', 'emailprueba@gmail.com', '222222222', 'user'),
+(21, 'php', '591c52ec883646fa2f5897ebcd03ff1975716bf151d5c7cfb02be56fa1485017', 'php@gmail.com', '652265838', 'user'),
+(23, 'tester', 'da23890e111536e631be13a069ebc5432c9cf28cdbc5deb2a70770ec9597db6d', 'tester@gmail.com', '123123123', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -716,13 +917,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `cuestionarios`
 --
 ALTER TABLE `cuestionarios`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `partidas`
@@ -734,19 +935,19 @@ ALTER TABLE `partidas`
 -- AUTO_INCREMENT de la tabla `preguntas`
 --
 ALTER TABLE `preguntas`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1082;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1195;
 
 --
 -- AUTO_INCREMENT de la tabla `preguntas_partida`
 --
 ALTER TABLE `preguntas_partida`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=394;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=555;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- Restricciones para tablas volcadas

@@ -61,6 +61,7 @@ public interface Mensajes {
     String TELEFONO_CAMBIADO = "Telefono cambiado correctamente";
     String SELECCIONE_MODO_JUEGO = "Seleccione un modo de juego";
     String USUARIO_REGISTRADO = "Usuario registrado correctamente" ;
+    String ERROR_MISMO_USUARIO = "Error, no puedes borrar tu mismo usuario";
     //----------------------------------BOTONES---------------------------------------------//
     String MENSAJE_BORRAR = "Eliminar";
     //-----------------------------------LOGGER--------------------------------------------//
