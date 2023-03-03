@@ -58,18 +58,25 @@ public class PartidaModoClasico extends GestionPartida {
      * @return el id de la pregunta seleccionada
      */
     public int obtenerDatos() {
+        //sacamos un id de la lista
         int id = pila.pop();
+        /*
+        borramos el id de la lista de ids de todas las preguntas, para evitar
+        que se responde la misma pregunta mas de una vez en la misma partida
+         */
         idPreguntas.removeIf(x -> x == id);
+        //obtenemos los datos de la pregunta
         pregunta = GestionPreguntas.obtenerDatos(id);
         if (pregunta != null) {
-            String[] respuestas = {pregunta.getRespuestaCorrecta(), pregunta.getRespuestaIncorrecta1(),
-                    pregunta.getRespuestaIncorrecta2(), pregunta.getRespuestaIncorrecta3()};
-            colocarEnunciado(enunciado, pregunta.getEnunciado());
+            //obtenemos las respuestas de la pregunta
+            String[] respuestas = pregunta.obtenerRespuestas();
+            //desordenamos las respuesta
             Collections.shuffle(Arrays.asList(respuestas));
-            colocarRespuestas(btnOpcion1, respuestas[0]);
-            colocarRespuestas(btnOpcion2, respuestas[1]);
-            colocarRespuestas(btnOpcion3, respuestas[2]);
-            colocarRespuestas(btnOpcion4, respuestas[3]);
+            //las colocamos en los botones
+            JButton[] botones = {btnOpcion1,btnOpcion2,btnOpcion3,btnOpcion4};
+            for (int i = 0; i < botones.length; i++) {
+                colocarRespuestas(botones[i],respuestas[i]);
+            }
         }
         return id;
 

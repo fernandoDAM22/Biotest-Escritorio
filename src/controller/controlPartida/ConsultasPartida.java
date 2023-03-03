@@ -30,8 +30,8 @@ public class ConsultasPartida {
      */
     public static ArrayList<Integer> obtenerId() {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "select id from partidas";
         ArrayList<Integer> ids = new ArrayList<>();
@@ -61,8 +61,8 @@ public class ConsultasPartida {
      */
     public static void insertarPartida(Partida partida) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ArrayList<Integer> ids = new ArrayList<>();
         conexionBD = new ConexionBD();
         String sql = "INSERT INTO partidas(id,fecha,puntuacion,id_usuario,tipo_partida) VALUES (?,?,?,?,?)";
@@ -93,8 +93,8 @@ public class ConsultasPartida {
      */
     public static void insertarPregunta(int idPartida, int idPregunta, boolean acertada) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         conexionBD = new ConexionBD();
         String sql = "INSERT INTO preguntas_partida (id_pregunta, id_partida, acertada) VALUES (?,?,?)";
         try {
@@ -120,8 +120,8 @@ public class ConsultasPartida {
      */
     public static void establecerPuntuacion(int idPartida, int puntuacion) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         conexionBD = new ConexionBD();
         String sql = "Update partidas set puntuacion = ? where id = ?";
         try {
@@ -147,8 +147,8 @@ public class ConsultasPartida {
      */
     public static ArrayList<String[]> obtenerPreguntasPartida(int idPartida) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3,categoria;
         ArrayList<String[]> preguntas = new ArrayList<>();
@@ -190,8 +190,8 @@ public class ConsultasPartida {
      */
     public static int obtenerPuntuacion(int idPartida) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
 
         ArrayList<String[]> preguntas = new ArrayList<>();

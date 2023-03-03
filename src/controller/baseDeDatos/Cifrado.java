@@ -15,6 +15,7 @@ public class Cifrado {
      * de cifrado SHA-256
      * @param password es la contraseña que queremos cifrar
      * @return retorna el hash de la contraseña
+     * @author Fernando
      */
     public static String SHA256(String password) {
         MessageDigest md = null;

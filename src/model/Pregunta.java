@@ -165,4 +165,12 @@ public class Pregunta implements Serializable {
                 ", idCategoria=" + idCategoria +
                 '}';
     }
+
+    /**
+     * Este metodo devuelve un Array de String con las respuestas de una pregunta
+     * @return un Array de String con los datos de la pregunta
+     */
+    public String[] obtenerRespuestas() {
+        return new String[]{respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3};
+    }
 }
