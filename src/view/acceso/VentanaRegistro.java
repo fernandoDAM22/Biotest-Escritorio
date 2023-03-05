@@ -28,6 +28,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
      */
     public VentanaRegistro() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

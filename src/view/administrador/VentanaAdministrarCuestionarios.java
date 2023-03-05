@@ -48,6 +48,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
      */
     public VentanaAdministrarCuestionarios() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
