@@ -140,7 +140,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
 
         listaPreguntasDialogo.setEditable(false);
-        listaPreguntasDialogo.setForeground(new Color(255, 255, 255));
+        listaPreguntasDialogo.setForeground(Colores.COLOR_LISTAS);
         listaPreguntasDialogo.setMaximumRowCount(50);
         listaPreguntasDialogo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
@@ -294,11 +294,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelFila1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
 
         listaCuestionarios.setEditable(false);
-        listaCuestionarios.setForeground(new java.awt.Color(0, 0, 0));
+        listaCuestionarios.setForeground(Colores.COLOR_LISTAS);
         listaCuestionarios.setMaximumRowCount(50);
         listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
         listaCuestionarios.setEditable(false);
-        listaCuestionarios.setForeground(new Color(0, 0, 0));
         listaCuestionarios.setMaximumRowCount(50);
         listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
         listaCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14));
@@ -333,7 +332,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnCrear.setForeground(new java.awt.Color(0, 0, 0));
         btnCrear.setText("Crear");
         btnCrear.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnCrear.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnCrear.setPreferredSize(new java.awt.Dimension(150, 40));
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCrearActionPerformed(evt);
@@ -346,7 +345,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnBorrar.setForeground(new java.awt.Color(0, 0, 0));
         btnBorrar.setText("Borrar");
         btnBorrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnBorrar.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnBorrar.setPreferredSize(new java.awt.Dimension(150, 40));
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrarActionPerformed(evt);
@@ -359,7 +358,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         btnModificar.setForeground(new java.awt.Color(0, 0, 0));
         btnModificar.setText("Modificar");
         btnModificar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnModificar.setPreferredSize(new java.awt.Dimension(100, 40));
+        btnModificar.setPreferredSize(new java.awt.Dimension(150, 40));
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnModificarActionPerformed(evt);

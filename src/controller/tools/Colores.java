@@ -65,4 +65,8 @@ public interface Colores {
      * en la ventana resultado
      */
     Color COLOR_PREGUNTAS_ACERTADAS = new Color(165, 255, 214);
+    /**
+     * Este es el color que se les da a las listas desplegables
+     */
+    Color COLOR_LISTAS = Color.white;
 }

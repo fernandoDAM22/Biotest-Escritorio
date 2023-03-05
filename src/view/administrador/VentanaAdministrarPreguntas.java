@@ -293,6 +293,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         panelContenido.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         jPanel2.setPreferredSize(new java.awt.Dimension(1200, 50));
+        listaCategorias.setForeground(Colores.COLOR_LISTAS);
         listaCategorias.setPreferredSize(new java.awt.Dimension(400, 40));
         listaCategorias.setFont(new java.awt.Font("Segoe UI", 1, 14));
         listaCategorias.addItemListener(new java.awt.event.ItemListener() {

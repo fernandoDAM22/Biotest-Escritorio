@@ -70,6 +70,8 @@ public class PartidaModoClasico extends GestionPartida {
         if (pregunta != null) {
             //obtenemos las respuestas de la pregunta
             String[] respuestas = pregunta.obtenerRespuestas();
+            //colocamos el enunciado de la pregunta
+            enunciado.setText(pregunta.getEnunciado());
             //desordenamos las respuesta
             Collections.shuffle(Arrays.asList(respuestas));
             //las colocamos en los botones

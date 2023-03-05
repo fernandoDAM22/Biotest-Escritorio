@@ -79,6 +79,8 @@ public class PartidaModoLibre extends GestionPartida {
             String[] respuestas = pregunta.obtenerRespuestas();
             //desordenamos las respuesta
             Collections.shuffle(Arrays.asList(respuestas));
+            //colocamos el enunciado de la pregunta
+            enunciado.setText(pregunta.getEnunciado());
             //las colocamos en los botones
             JButton[] botones = {btnOpcion1,btnOpcion2,btnOpcion3,btnOpcion4};
             for (int i = 0; i < botones.length; i++) {

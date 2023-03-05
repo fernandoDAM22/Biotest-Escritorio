@@ -74,7 +74,7 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
         panelFIla1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 50));
 
         listaCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        listaCuestionarios.setForeground(new java.awt.Color(255, 255, 255));
+        listaCuestionarios.setForeground(Colores.COLOR_LISTAS);
         listaCuestionarios.setPreferredSize(new java.awt.Dimension(500, 50));
         listaCuestionarios.addItemListener(new ItemListener() {
             @Override

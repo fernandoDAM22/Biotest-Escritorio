@@ -78,6 +78,8 @@ public class PartidaModoSinFallos extends GestionPartida {
         //obtenemos los datos de la pregunta
         pregunta = GestionPreguntas.obtenerDatos(id);
         if (pregunta != null) {
+            //colocamos el enunciado de la pregunta
+            enunciado.setText(pregunta.getEnunciado());
             //obtenemos las respuestas de la pregunta
             String[] respuestas = pregunta.obtenerRespuestas();
             //desordenamos las respuesta

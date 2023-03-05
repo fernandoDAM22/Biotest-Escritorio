@@ -212,6 +212,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         listaCategorias.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         listaCategorias.setForeground(new java.awt.Color(0, 0, 0));
         listaCategorias.setPreferredSize(new java.awt.Dimension(200, 50));
+        listaCategorias.setForeground(Colores.COLOR_LISTAS);
         listaCategorias.setEditable(false);
         listaCategorias.addItemListener(new ItemListener() {
             @Override
