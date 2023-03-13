@@ -18,8 +18,8 @@ import java.awt.*;
 import java.util.logging.Handler;
 
 /**
- *
- * @author fernando
+ * Esta clase pinta el panel que permite al usuario cambiar su nombre de usuario
+ * @author Fernando
  */
 public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
     JTextField txtNombreUsuario;

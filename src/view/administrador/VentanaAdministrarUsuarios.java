@@ -23,8 +23,17 @@ import java.awt.event.*;
 import java.awt.image.ImageObserver;
 import java.util.ArrayList;
 
+import static controller.usuario.Codigos.*;
+
 /**
- * @author fernando
+ * Esta clase pinta la interfaz que permite al administrador modificar sus datos
+ * de usuario, sus funciones son:
+ * <ul>
+ *     <li>Crear usuario</li>
+ *     <li>Moficiar Usuarios</li>
+ *     <li>Borrar usuarios</li>
+ * </ul>
+ * @author Fernando
  */
 public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     DefaultTableModel modelo;
@@ -843,7 +852,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
     private void opcionImportarActionPerformed(java.awt.event.ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
-        if(estado == Codigos.CORRECTO){
+        if(estado == CORRECTO){
             JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA, Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
         }else if(estado == Codigos.ERROR){
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);

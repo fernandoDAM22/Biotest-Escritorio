@@ -442,7 +442,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
         colocarCategorias();
-        modelo = (DefaultTableModel) tablaPreguntas.getModel();
         setJMenuBar(barraMenu);
         tintarTabla();
         pack();

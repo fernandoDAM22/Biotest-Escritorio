@@ -23,8 +23,8 @@ import static controller.usuario.Codigos.CORRECTO;
 import static controller.usuario.Codigos.ERROR_NO_EXISTE_USUARIO;
 
 /**
- *
- * @author fernando
+ *  Esta clase pinta en pantalla la ventana que permite al usuario iniciar sesion
+ * @author Fernando
  */
 public class VentanaLogin extends javax.swing.JFrame {
 

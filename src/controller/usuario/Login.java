@@ -1,19 +1,19 @@
 package controller.usuario;
 
-import com.google.gson.*;
-import com.google.gson.reflect.TypeToken;
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
-import controller.baseDeDatos.Constantes;
-import controller.baseDeDatos.HttpRequest;
 import controller.tools.ComprobarDatos;
-import model.Pregunta;
-import model.Usuario;
-import com.google.gson.JsonParser;
 
-import java.awt.*;
-import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+/**
+ * Esta clase contiene los metodos necesarios para permitir al usuario
+ * iniciar sesion en el sistema
+ * @author Fernando
+ */
 public class Login implements Codigos {
     /**
      * Este metodo permite comprobar si los datos introducidos
@@ -37,34 +37,36 @@ public class Login implements Codigos {
      * Este metodo nos permite obtener algun dato de una persona
      * a partir de su nombre
      * @param nombre es el nombre de la persona que estamos buscando
-     * @param tipoDato es el dato que queremos obtener del usuario
      * @return el dato indicado si existe la persona, una cadena vacia si no existe
      * @author Fernando
      */
     public static String obtenerDatos(String nombre,String tipoDato) {
-        String url = Constantes.URL_LOGIN;
-        String valores = "nombre=" + nombre;
-        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
-
-        Gson gson = new Gson();
-        JsonElement jsonElement = gson.fromJson(jsonResultado, JsonElement.class);
-        JsonArray jsonArray = jsonElement.getAsJsonArray();
-
-        int id = jsonArray.get(0).getAsInt();
-        String name = jsonArray.get(1).getAsString();
-        String contrasena = jsonArray.get(2).getAsString();
-        String email = jsonArray.get(3).getAsString();
-        String telefono = jsonArray.get(4).getAsString();
-        String tipo = jsonArray.get(5).getAsString();
-
-        Usuario usuario = new Usuario(id, name, contrasena, email, telefono, tipo);
-        if (tipoDato.equals(Codigos.OBTENER_PASSWORD)) {
-            return usuario.getPassword();
-        } else if (tipoDato.equals(Codigos.OBTENER_TIPO)) {
-            return usuario.getTipo();
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+           /*
+          Tenemos que usar la clausula BINARY para poder obtener el usuario que se llame exactamente
+          igual al que estamos buscando, ya que con el igual o con el like no distingue entre mayusculas
+          y minusculas
+         */
+        String sql = "SELECT * FROM usuarios WHERE BINARY nombre = ?";
+        String password = "";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, nombre);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                password = resultSet.getString(tipoDato);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
-
-        return null;
+        return password;
     }
 
 }

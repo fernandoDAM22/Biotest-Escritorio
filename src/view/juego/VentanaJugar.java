@@ -31,7 +31,7 @@ import javax.swing.*;
  *     <li>Partida Modo Cuestionario</li>
  * </ul>
  * <hr>
- * @author fernando
+ * @author Fernando
  */
 public class VentanaJugar extends javax.swing.JFrame {
     /**

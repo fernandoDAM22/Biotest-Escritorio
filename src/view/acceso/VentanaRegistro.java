@@ -16,8 +16,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- *
- * @author fernando
+ * Esta clase pinta la ventana que permite al usuario registrarse en el sistema
+ * @author Fernando
  */
 public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
@@ -118,7 +118,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
         labelPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelPassword.setForeground(new java.awt.Color(0, 0, 0));
-        labelPassword.setText("Contreseña");
+        labelPassword.setText("Contraseña");
         labelPassword.setPreferredSize(new java.awt.Dimension(100, 16));
         panelFila3.add(labelPassword);
 

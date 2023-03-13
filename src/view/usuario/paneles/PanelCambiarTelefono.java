@@ -17,8 +17,8 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- *
- * @author fernando
+ * Esta clase pinta el panel que permite al usuario cambiar su telefono
+ * @author Fernando
  */
 public class PanelCambiarTelefono extends javax.swing.JPanel {
     public static final String ERROR_CAMBIAR_TELEFONO = "No se ha podido cambiar el nombre";

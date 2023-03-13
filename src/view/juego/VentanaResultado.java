@@ -29,7 +29,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Esta clase permite al usuario ver el resultado de una partida, se lanza
  * automaticamente al finalizar la partida
- * @author fernando
+ * @author Fernando
  *
  */
 public class VentanaResultado extends javax.swing.JFrame {

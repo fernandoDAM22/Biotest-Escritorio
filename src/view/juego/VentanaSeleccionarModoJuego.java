@@ -29,7 +29,7 @@ import javax.swing.*;
 /**
  * Esta clase permite al usuario seleccionar un modo de juego
  * y pasar a la ventana jugar para jugar una partida
- * @author fernando
+ * @author Fernando
  */
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     boolean puedeContinuar = true;

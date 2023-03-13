@@ -1,29 +1,15 @@
 package controller.administrador;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import controller.baseDeDatos.Constantes;
-import controller.baseDeDatos.HttpRequest;
-import controller.tools.LoggerUtil;
-import controller.tools.Mensajes;
+import controller.baseDeDatos.ConexionBD;
 import model.Pregunta;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import com.google.gson.reflect.TypeToken;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * Esta clase nos permite gestionar las preguntas
@@ -31,7 +17,6 @@ import java.util.stream.Collectors;
  * @author fernando
  */
 public class GestionPreguntas {
-    private static final Logger logger = LoggerUtil.getLogger(GestionPreguntas.class);
     /**
      * Este metodo permite obtener las preguntas de una categoria concreta
      *
@@ -39,17 +24,34 @@ public class GestionPreguntas {
      * @return un ArrayList de String con los datos de las preguntas
      */
     public static ArrayList<String[]> obtenerPreguntas(String categoria) {
-        String url = Constantes.URL_PREGUNTAS_CATEGORIA;
-        String valores = null;
-        valores = "categoria=" + URLEncoder.encode(categoria, StandardCharsets.UTF_8);
-        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
-
-        Gson gson = new Gson();
-        List<String[]> listaPreguntas = gson.fromJson(jsonResultado, new TypeToken<List<String[]>>(){}.getType());
-
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
         ArrayList<String[]> preguntas = new ArrayList<>();
-        for (String[] pregunta : listaPreguntas) {
-           preguntas.add(new String[]{pregunta[0],pregunta[1],pregunta[2],pregunta[3],pregunta[4]});
+        String sql = "SELECT enunciado,respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
+                "from preguntas p JOIN categoria c on p.id_categoria = c.id WHERE c.nombre like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, categoria);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                //guardamos los datos de la pregunta actual en el ResulSet
+                enunciado = resultSet.getString("enunciado");
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                //agregamos la pregunta al ArrayList
+                preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3});
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return preguntas;
 
@@ -61,17 +63,35 @@ public class GestionPreguntas {
      * @return arrayList de String con los datos de la pregunta
      */
     public static ArrayList<String[]> obtenerPreguntasCuestionario(String cuestionario) {
-        String url = Constantes.URL_PREGUNTAS_CUESTIONARIO;
-        String valores = null;
-        valores = "cuestionario=" + URLEncoder.encode(cuestionario, StandardCharsets.UTF_8);
-        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
-
-        Gson gson = new Gson();
-        List<String[]> listaPreguntas = gson.fromJson(jsonResultado, new TypeToken<List<String[]>>(){}.getType());
-
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
         ArrayList<String[]> preguntas = new ArrayList<>();
-        for (String[] pregunta : listaPreguntas) {
-            preguntas.add(new String[]{pregunta[0],pregunta[1],pregunta[2],pregunta[3],pregunta[4]});
+        String sql = "SELECT p.* from ((preguntas p inner JOIN preguntas_cuestionarios pp ON p.id = pp.id_pregunta)\n" +
+                                        "INNER JOIN cuestionarios c on c.id = pp.id_cuestionario)\n" +
+                                        "WHERE c.nombre like ?;";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, cuestionario);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                //guardamos los datos de la pregunta actual en el ResulSet
+                enunciado = resultSet.getString("enunciado");
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                //agregamos la pregunta al ArrayList
+                preguntas.add(new String[]{enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3});
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return preguntas;
 
@@ -105,13 +125,33 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static String[] obtenerRespuestas(String enunciadoPregunta) {
-        String url = Constantes.URL_OBTENER_RESPUESTAS;
-        String valores = null;
-        valores = "enunciado=" + URLEncoder.encode(enunciadoPregunta, StandardCharsets.UTF_8);
-        String jsonResultado = HttpRequest.GET_REQUEST(url, valores);
-
-        Gson gson = new Gson();
-        return gson.fromJson(jsonResultado, String[].class);
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        String sql = "SELECT respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
+                "from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, enunciadoPregunta);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                return new String[]{respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3};
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return null;
     }
 
     /**
@@ -123,12 +163,29 @@ public class GestionPreguntas {
      */
 
     public static boolean insertarPregunta(Pregunta p) {
-        Gson gson = new Gson();
-        String values = gson.toJson(p);
-        String respuesta = HttpRequest.POST_REQUEST(Constantes.URL_INSERTAR_PREGUNTA, values);
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(respuesta);
-        return element.getAsBoolean();
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "insert into preguntas " +
+                "(enunciado,respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3,id_categoria) " +
+                " values (?,?,?,?,?,?)";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, p.getEnunciado());
+            sentencia.setString(2, p.getRespuestaCorrecta());
+            sentencia.setString(3, p.getRespuestaIncorrecta1());
+            sentencia.setString(4, p.getRespuestaIncorrecta2());
+            sentencia.setString(5, p.getRespuestaIncorrecta3());
+            sentencia.setInt(6, p.getIdCategoria());
+            int estado = sentencia.executeUpdate();
+            return estado > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
     }
 
     /**
@@ -139,16 +196,21 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static boolean borrarPregunta(String enunciado) {
-        String query = null;
-        query = "enunciado=" + URLEncoder.encode(enunciado, StandardCharsets.UTF_8);
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "delete from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
         try {
-            String response = HttpRequest.POST_REQUEST(Constantes.URL_BORRAR_PREGUNTA, query);
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(response);
-            return element.getAsBoolean();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, enunciado);
+            int estado = sentencia.executeUpdate();
+            return estado > 0;
+        } catch (SQLException e) {
+           return false;
+        } finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -161,26 +223,26 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static boolean modificarPregunta(Pregunta p, String enunciado) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("enunciado", p.getEnunciado());
-        params.put("respuestaCorrecta", p.getRespuestaCorrecta());
-        params.put("respuestaIncorrecta1", p.getRespuestaIncorrecta1());
-        params.put("respuestaIncorrecta2", p.getRespuestaIncorrecta2());
-        params.put("respuestaIncorrecta3", p.getRespuestaIncorrecta3());
-        params.put("enunciadoantiguo", enunciado);
-
-        String query = String.join("&", params.entrySet().stream()
-                .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.toList()));
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "UPDATE `preguntas` set enunciado = ?, respuesta_correcta = ?, respuesta_incorrecta1 = ?, respuesta_incorrecta2 = ?, respuesta_incorrecta3 = ?  WHERE enunciado like ?";
+        conexionBD = new ConexionBD();
         try {
-            String response = HttpRequest.POST_REQUEST(Constantes.URL_MODIFICAR_PREGUNTA,query);
-            System.out.println(response);
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(response);
-            return element.getAsBoolean();
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
-            return false;
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, p.getEnunciado());
+            sentencia.setString(2, p.getRespuestaCorrecta());
+            sentencia.setString(3, p.getRespuestaIncorrecta1());
+            sentencia.setString(4, p.getRespuestaIncorrecta2());
+            sentencia.setString(5, p.getRespuestaIncorrecta3());
+            sentencia.setString(6, enunciado);
+            int estado = sentencia.executeUpdate();
+            return estado > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
         }
     }
 
@@ -191,18 +253,28 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static int obtenerId(String enunciado) {
-        String param = null;
-        param = "enunciado=" + URLEncoder.encode(enunciado, StandardCharsets.UTF_8);
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        int id;
+        String sql = "select id from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
         try {
-            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_ID,param);
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(response);
-            String result = element.toString().replaceAll("\"","");
-            return Integer.parseInt(result);
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
-            return -1;
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, enunciado);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                id = resultSet.getInt("id");
+                return id;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
+        return -1;
     }
 
     /**
@@ -211,25 +283,26 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static ArrayList<Integer> obtenerIds(){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        ArrayList<Integer> ids = new ArrayList<>();
+        String sql = "select id from preguntas";
+        conexionBD = new ConexionBD();
         try {
-            String response = HttpRequest.GET_REQUEST(Constantes.URL_OBTENER_IDS,"");
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(response);
-            if (element.isJsonArray()) {
-                ArrayList<Integer> list = new ArrayList<>();
-                JsonArray jsonArray = element.getAsJsonArray();
-                for (JsonElement jsonElement : jsonArray) {
-                    list.add(jsonElement.getAsInt());
-                }
-                return list;
-            } else {
-                return null;
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            resultSet = sentencia.executeQuery();
+            while(resultSet.next()) {
+                ids.add(resultSet.getInt("id"));
             }
-
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
-            return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
+        return ids;
     }
 
     /**
@@ -239,15 +312,32 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static Pregunta obtenerDatos(int id){
-        String url = Constantes.URL_OBTENER_DATOS;
-        String param = null;
-        param = "id=" + URLEncoder.encode(String.valueOf(id), StandardCharsets.UTF_8);
-        String jsonResultado = HttpRequest.GET_REQUEST(url, param);
-
-        Gson gson = new Gson();
-        String[] data = gson.fromJson(jsonResultado, String[].class);
-        if(data != null){
-            return new Pregunta(data[0],data[1],data[2],data[3],data[4]);
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String enunciado,respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
+        ArrayList<String[]> preguntas = new ArrayList<>();
+        String sql = "SELECT enunciado,respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
+                "from preguntas where id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, id);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                enunciado = resultSet.getString("enunciado");
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                return new Pregunta(enunciado,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return null;
     }
@@ -260,35 +350,55 @@ public class GestionPreguntas {
      * @author Fernando
      */
     public static boolean existePregunta(String enunciado){
-        String values = null;
-        values = "enunciado=" + URLEncoder.encode(enunciado, StandardCharsets.UTF_8);
-        String respuesta = HttpRequest.GET_REQUEST(Constantes.URL_EXISTE_PREGUNTA, values);
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(respuesta);
-        return element.getAsBoolean();
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "select * from preguntas where enunciado like ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,enunciado);
+            resultSet = sentencia.executeQuery();
+            return resultSet.next();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
     }
 
     /**
-     * Este metodo indica si una pregunta se ha acertado
-     * @param idPartida es el id de la pregunta
-     * @param idPregunta es el id de la partida
-     * @return true si se acierta, false si no ( return !=0)
+     * Este metodo permite saber si una pregunta ha sido acertada o no
+     * @param idPartida es el id de la partida
+     * @param idPregunta es el id de la pregunta
+     * @return true si ha sido acertada, false si no
      */
     public static boolean preguntaAcertada(int idPartida, int idPregunta) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("idPartida", String.valueOf(idPartida));
-        params.put("idPregunta", String.valueOf(idPregunta));
-        String query = String.join("&", params.entrySet().stream()
-                .map(e -> e.getKey() + "=" + e.getValue())
-                .collect(Collectors.toList()));
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "select acertada from preguntas_partida where id_pregunta = ? and id_partida = ?";
+        conexionBD = new ConexionBD();
         try {
-            String response = HttpRequest.GET_REQUEST(Constantes.URL_PREGUNTA_ACERTADA,query);
-            JsonParser parser = new JsonParser();
-            int numero = parser.parse(response).getAsInt();
-            return numero != 0;
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_EXCEPTION, e);
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1,idPregunta);
+            sentencia.setInt(2,idPartida);
+            resultSet = sentencia.executeQuery();
+            if(resultSet.next()){
+                int num = resultSet.getInt("acertada");
+                return num > 0;
+            }
+
+        } catch (SQLException e) {
             return false;
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
+        return false;
     }
 }

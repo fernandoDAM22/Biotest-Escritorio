@@ -731,6 +731,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                                 .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                                 .addContainerGap())
         );
+        modelo = (DefaultTableModel) tablaPreguntas.getModel();
         colocarCategorias();
         actualizarCuestionarios();
         actualizarPreguntasDialogo();
@@ -808,6 +809,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 //en caso de que se inserte
                 JOptionPane.showMessageDialog(null, Mensajes.PREGUNTA_INSERTADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
+                modelo = (DefaultTableModel) tablaPreguntas.getModel();
                 tintarTabla();
             } else {
                 //en caso de que no se inserte

@@ -18,8 +18,8 @@ import java.awt.*;
 import java.util.logging.Handler;
 
 /**
- *
- * @author fernando
+ * Esta clase pinta el panel que permite al usuario cambiar su password
+ * @author Fernando
  */
 public class PanelCambiarPassword extends javax.swing.JPanel {
 

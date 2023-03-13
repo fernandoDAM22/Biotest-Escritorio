@@ -2,6 +2,10 @@ package controller.tools;
 
 import java.util.Stack;
 
+/**
+ * Esta clase permite crear una pila de numeros enteros sin repetidos
+ * @author Fernando
+ */
 public class PilaSinRepetidos extends Stack<Integer> {
     @Override
     public Integer push(Integer item) {

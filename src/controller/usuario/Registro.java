@@ -1,12 +1,7 @@
 package controller.usuario;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
-import controller.baseDeDatos.Constantes;
-import controller.baseDeDatos.HttpRequest;
 import controller.tools.ComprobarDatos;
 import model.Usuario;
 
@@ -76,16 +71,28 @@ public class Registro implements Codigos {
      * Este metodo inserta el usuario en la base de datos
      *
      * @param usuario es el usuario con los datos que vamos a insertar
-     * @return true si se inserta el usuario, false si no
      * @author Fernando
      */
     public static boolean registrarUsuario(Usuario usuario) {
-        Gson gson = new Gson();
-        String values = gson.toJson(usuario);
-        String respuesta = HttpRequest.POST_REQUEST(Constantes.URL_REGISTRO, values);
-        JsonParser parser = new JsonParser();
-        JsonElement element = parser.parse(respuesta);
-        return element.getAsBoolean();
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        String sql = "INSERT INTO `usuarios`(`nombre`, `contrasena`, `email`, `telefono`, `tipo`) VALUES (?,?,?,?,?)";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1, usuario.getNombre());
+            sentencia.setString(2, usuario.getPassword());
+            sentencia.setString(3, usuario.getEmail());
+            sentencia.setString(4, usuario.getTelefono());
+            sentencia.setString(5, usuario.getTipo());
+            return sentencia.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(sentencia,conexionBD);
+        }
     }
 
 }

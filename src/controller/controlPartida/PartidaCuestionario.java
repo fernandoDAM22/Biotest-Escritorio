@@ -13,7 +13,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 
-
+/**
+ * Esta clase permite jugar una partida en modo cuestionario,
+ * se resuelven las preguntas de un cuestionario previamente creado
+ * @author Fernando
+ */
 public class PartidaCuestionario extends GestionPartida{
     PilaSinRepetidos pila;
     /**
