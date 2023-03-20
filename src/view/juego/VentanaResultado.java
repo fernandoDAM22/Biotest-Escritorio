@@ -8,14 +8,16 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import controller.administrador.GestionCuestionarios;
+import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.controlPartida.ConsultasPartida;
-import controller.tools.Colores;
-import controller.tools.Mensajes;
-import controller.tools.MyCellRenderer;
-import controller.tools.TableCellRenderResultado;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
+import controller.usuario.GestionUsuarios;
+import model.Partida;
+import model.Pregunta;
 import view.acceso.VentanaLogin;
 import view.administrador.VentanaAdministrarCategorias;
 import view.administrador.VentanaAdministrarCuestionarios;
@@ -23,6 +25,7 @@ import view.administrador.VentanaAdministrarPreguntas;
 import view.administrador.VentanaAdministrarUsuarios;
 import view.usuario.VentanaAjustesUsuario;
 
+import javax.mail.MessagingException;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -72,8 +75,9 @@ public class VentanaResultado extends javax.swing.JFrame {
         labelPuntuacion = new javax.swing.JLabel();
         sliderPuntuacion = new javax.swing.JSlider();
         panelBotones = new javax.swing.JPanel();
-        btnMenuPrincipal = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnMenuPrincipal = new javax.swing.JButton();
+        btnEmail = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaPreguntas = new javax.swing.JTable();
@@ -93,20 +97,22 @@ public class VentanaResultado extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
-        opcionCerrarSesion = new javax.swing.JMenuItem();
-        opcionAjustesUsuario = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
+        opcionCuestionarios = new javax.swing.JMenuItem();
+        opcionCategorias = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
+        opcionCerrarSesion = new javax.swing.JMenuItem();
+        opcionAjustesUsuario = new javax.swing.JMenuItem();
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1200, 700));
+        setPreferredSize(new java.awt.Dimension(1200, 600));
 
         panelPrincipal.setLayout(new java.awt.BorderLayout());
 
@@ -128,21 +134,9 @@ public class VentanaResultado extends javax.swing.JFrame {
         sliderPuntuacion.setValue(5);
         panelLateral.add(sliderPuntuacion);
 
-        panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
-
-        btnMenuPrincipal.setBackground(new Color(29, 209, 161));
-        btnMenuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnMenuPrincipal.setForeground(new java.awt.Color(0, 0, 0));
-        btnMenuPrincipal.setText("Menu Principal");
-        btnMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnMenuPrincipal.setPreferredSize(new java.awt.Dimension(150, 40));
-        btnMenuPrincipal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                btnMenuPrincipalActionPerformed(evt);
-            }
-        });
-        panelBotones.add(btnMenuPrincipal);
+        panelBotones.setMinimumSize(new java.awt.Dimension(200, 150));
+        panelBotones.setPreferredSize(new java.awt.Dimension(400, 150));
+        panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
 
         btnSalir.setBackground(new Color(238, 82, 83));
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
@@ -158,6 +152,33 @@ public class VentanaResultado extends javax.swing.JFrame {
         });
         panelBotones.add(btnSalir);
 
+        btnMenuPrincipal.setBackground(new Color(29, 209, 161));
+        btnMenuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnMenuPrincipal.setForeground(new java.awt.Color(0, 0, 0));
+        btnMenuPrincipal.setText("Menu Principal");
+        btnMenuPrincipal.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMenuPrincipal.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnMenuPrincipal.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                btnMenuPrincipalActionPerformed(evt);
+            }
+        });
+        panelBotones.add(btnMenuPrincipal);
+
+        btnEmail.setBackground(new Color(29, 209, 161));
+        btnEmail.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        btnEmail.setForeground(new java.awt.Color(0, 0, 0));
+        btnEmail.setText("Enviar Email");
+        btnEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEmail.setPreferredSize(new java.awt.Dimension(150, 40));
+        btnEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmailActionPerformed(evt);
+            }
+        });
+        panelBotones.add(btnEmail);
+
         panelLateral.add(panelBotones);
 
         panelPrincipal.add(panelLateral, java.awt.BorderLayout.LINE_END);
@@ -169,7 +190,7 @@ public class VentanaResultado extends javax.swing.JFrame {
 
                 },
                 new String [] {
-                        "Enunciado", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuesta Incorrecta 3", "categoria"
+                        "Enunciado", "Respuesta Correcta", "Respuesta Incorrecta 1", "Respuesta Incorrecta 2", "Respuesta Incorrecta 3", "Categoria"
                 }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -272,6 +293,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         jPanel4.add(jPanel6, java.awt.BorderLayout.PAGE_END);
 
         panelPrincipal.add(jPanel4, java.awt.BorderLayout.CENTER);
+
 
         menuUsuario.setText("Usuario");
 
@@ -382,12 +404,70 @@ public class VentanaResultado extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
+        txtEnunciado.setEditable(false);
+        txtRespuestaCorrecta.setEditable(false);
+        txtRespuestaIncorrecta1.setEditable(false);
+        txtRespuestaIncorrecta2.setEditable(false);
+        txtRespuestaIncorrecta3.setEditable(false);
+        txtCategoria.setEditable(false);
         ponerPreguntas();
         ponerPuntuacion();
         ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void btnEmailActionPerformed(ActionEvent evt) {
+        // Crear una instancia de la interfaz Runnable como una clase anónima
+        Runnable enviarEmail = () -> {
+            Partida partida = ConsultasPartida.obtenerPartida(idPartida);
+            StringBuilder resumenPartida = crearResumen(partida);
+            try {
+                EmailSender.sendEmail(GestionUsuarios.obtenerEmail(partida.getIdUsuario()),"RESUMEN PARTIDA",resumenPartida.toString());
+                JOptionPane.showMessageDialog(null,Mensajes.MENSAJE_EMAIL_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
+            } catch (MessagingException e) {
+                JOptionPane.showMessageDialog(null,Mensajes.MENSAJE_ERROR_EMAIL,Mensajes.CORRECTO,JOptionPane.ERROR_MESSAGE);
+                throw new RuntimeException(e);
+            }
+        };
+
+        // Crear un hilo y ejecutar la instancia de la interfaz Runnable
+        Thread hiloEnviarEmail = new Thread(enviarEmail);
+        hiloEnviarEmail.start();
+
+    }
+
+    /**
+     * Este metodo crea un resumen de una partida en formato String
+     * @param partida es el objeto partida que contiene los datos de la partida de la cual
+     *                queremos obtener el resumen
+     * @return Un StringBuilder con los datos de la partida
+     * @author Fernando
+     */
+    public StringBuilder crearResumen(Partida partida){
+        int idPregunta;
+        boolean acertada;
+        String texto;
+        StringBuilder cadena = new StringBuilder();
+        cadena.append("-----RESUMEN PARTIDA-----\n");
+        cadena.append("USUARIO ===> " ).append(GestionUsuarios.obtenerNombreUsuario(partida.getIdUsuario())).append("\n");
+        cadena.append("FECHA ===> ").append(partida.getFecha()).append("\n");
+        cadena.append("TIPO ===> ").append(partida.getTipo()).append("\n");
+        cadena.append("PUNTUACION ===> ").append(partida.getPuntuacion()).append("\n");
+        cadena.append("PREGUNTAS RESPONDIDAS: ").append("\n");
+        for(Pregunta p: partida.getPreguntas()){
+            idPregunta = GestionPreguntas.obtenerId(p.getEnunciado());
+            acertada = GestionPreguntas.preguntaAcertada(idPartida,idPregunta);
+            if(acertada){
+                texto = "SI";
+            }else{
+                texto = "NO";
+            }
+            cadena.append("\t").append("-").append(p.getEnunciado()).append(" acertada ==> ").append(texto).append("\n");
+        }
+        return cadena;
+    }
+
     /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
      *
@@ -540,10 +620,11 @@ public class VentanaResultado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify
+    // Variables declaration - do not modify
     private javax.swing.JMenuBar barraMenu;
+    private javax.swing.JButton btnEmail;
     private javax.swing.JButton btnMenuPrincipal;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JLabel labelPuntuacion;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -553,29 +634,30 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSlider sliderPuntuacion;
-    private javax.swing.JTable tablaPreguntas;
+    private javax.swing.JLabel labelPuntuacion;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
-    private javax.swing.JMenu opcionCopiasDeSeguridad;
-    private javax.swing.JMenuItem opcionExportar;
-    private javax.swing.JMenuItem opcionImportar;
-    private javax.swing.JMenuItem opcionUsuarios;
-
     private javax.swing.JMenuItem opcionModoJuego;
-    private javax.swing.JMenuItem opcionCerrarSesion;
-    private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelLateral;
     private javax.swing.JPanel panelPrincipal;
+    private javax.swing.JSlider sliderPuntuacion;
+    private javax.swing.JTable tablaPreguntas;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtEnunciado;
     private javax.swing.JTextField txtRespuestaCorrecta;
     private javax.swing.JTextField txtRespuestaIncorrecta1;
     private javax.swing.JTextField txtRespuestaIncorrecta2;
     private javax.swing.JTextField txtRespuestaIncorrecta3;
+    private javax.swing.JMenuItem opcionAjustesUsuario;
+    private javax.swing.JMenuItem opcionCerrarSesion;
+    private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenuItem opcionExportar;
+    private javax.swing.JMenuItem opcionImportar;
+    private javax.swing.JMenuItem opcionUsuarios;
+    // End of variables declaration
     // End of variables declaration
 }

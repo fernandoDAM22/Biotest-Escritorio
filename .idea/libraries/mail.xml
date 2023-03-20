@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="mail">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/email/mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/email/javax.faces-api-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/email/javax.ejb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/email/javax.activation-1.1.0.v201105071233.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/email/javax-inject.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

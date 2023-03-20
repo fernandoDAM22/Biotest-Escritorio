@@ -53,6 +53,15 @@ public class Partida {
         this.preguntas = new ArrayList<>();
     }
 
+    public Partida(int id, LocalDate fecha, int puntuacion, String tipo, int idUsuario, ArrayList<Pregunta> preguntas) {
+        this.id = id;
+        this.fecha = fecha;
+        this.puntuacion = puntuacion;
+        this.tipo = tipo;
+        this.idUsuario = idUsuario;
+        this.preguntas = preguntas;
+    }
+
     public int getId() {
         return id;
     }
@@ -91,6 +100,14 @@ public class Partida {
 
     public void setIdUsuario(int idUsuario) {
         this.idUsuario = idUsuario;
+    }
+
+    public ArrayList<Pregunta> getPreguntas() {
+        return preguntas;
+    }
+
+    public void setPreguntas(ArrayList<Pregunta> preguntas) {
+        this.preguntas = preguntas;
     }
 
     @Override

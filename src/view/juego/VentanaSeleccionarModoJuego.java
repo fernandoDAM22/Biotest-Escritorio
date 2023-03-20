@@ -1,14 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package view.juego;
-
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.util.Enumeration;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.Colores;
@@ -16,19 +6,25 @@ import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
-import view.administrador.VentanaAdministrarUsuarios;
-import view.juego.dialogos.DialogoElegirCuestionario;
 import view.acceso.VentanaLogin;
 import view.administrador.VentanaAdministrarCategorias;
 import view.administrador.VentanaAdministrarCuestionarios;
 import view.administrador.VentanaAdministrarPreguntas;
+import view.administrador.VentanaAdministrarUsuarios;
+import view.juego.dialogos.DialogoElegirCuestionario;
 import view.usuario.VentanaAjustesUsuario;
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.Enumeration;
 
 /**
  * Esta clase permite al usuario seleccionar un modo de juego
  * y pasar a la ventana jugar para jugar una partida
+ *
  * @author Fernando
  */
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
@@ -274,7 +270,8 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         opcionExportar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                opcionExportarActionPeformed(evt);;
+                opcionExportarActionPeformed(evt);
+                ;
             }
         });
         opcionCopiasDeSeguridad.add(opcionImportar);
@@ -305,22 +302,22 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     }
 
     private void opcionExportarActionPeformed(ActionEvent evt) {
-        if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION   , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
+        if (JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
         }
-        if(CopiaDeSeguridad.crearCopia()){
-            JOptionPane.showMessageDialog(this,Mensajes.BACKUP_CORRECTO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else{
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_BACKUP,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (CopiaDeSeguridad.crearCopia()) {
+            JOptionPane.showMessageDialog(this, Mensajes.BACKUP_CORRECTO, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_BACKUP, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void opcionImportarActionPerformed(ActionEvent evt) {
         int estado = CopiaDeSeguridad.restaurarCopia();
-        if(estado == Codigos.CORRECTO){
-            JOptionPane.showMessageDialog(this,Mensajes.IMPORTACION_CORRECTA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
-        }else if(estado == Codigos.ERROR){
-            JOptionPane.showMessageDialog(this,Mensajes.ERROR_IMPORTACION,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+        if (estado == Codigos.CORRECTO) {
+            JOptionPane.showMessageDialog(this, Mensajes.IMPORTACION_CORRECTA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+        } else if (estado == Codigos.ERROR) {
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_IMPORTACION, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -366,7 +363,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private String seleccionarPartida() {
         ButtonModel modeloBoton = grupoBotones.getSelection();
         // Iterar a través de todos los botones del grupo
-        for (Enumeration<AbstractButton> botones = grupoBotones.getElements(); botones.hasMoreElements();) {
+        for (Enumeration<AbstractButton> botones = grupoBotones.getElements(); botones.hasMoreElements(); ) {
             JToggleButton boton = (JToggleButton) botones.nextElement();
             if (boton.getModel() == modeloBoton) {
                 // Este es el botón seleccionado

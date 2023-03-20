@@ -34,4 +34,20 @@ public interface Configuracion {
      * Ruta a la instacion de nuestro XAMPP
      */
     String XAMPP_PATH = "C:/xamppp/mysql/";
+    /**
+     * Email desde el cual se mandan los emails con el resumen de la partida
+     */
+    String  EMAIL = "BioTestProyecto@gmail.com";
+    /**
+     * Password generada para el email desde el cual se mandan los emails con el resumen de la partida
+     */
+    String EMAIL_PASSWORD = "exrsdgkstaivnerh";
+    /**
+     * Host para enviar los emails con el resumen de la partida
+     */
+    String SMTP_HOST  = "smtp.gmail.com";
+    /**
+     * Puerto para enviar los emails con el resumen de la partida
+     */
+    int SMTP_PORT = 587;
 }

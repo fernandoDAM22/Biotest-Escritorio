@@ -104,9 +104,7 @@ public class VentanaJugar extends javax.swing.JFrame {
             case MODO_CLASICO -> jugarModoClasico();
             case CUESTIONARIOS -> jugarCuestionarios();
         }
-    }
-
-    /**
+    }    /**
      * Este metodo permite guardar el id de la partida y el id del usuario
      * @author Fernando
      */

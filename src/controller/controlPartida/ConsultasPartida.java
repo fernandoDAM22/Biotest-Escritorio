@@ -4,13 +4,18 @@ import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.HttpRequest;
 import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
+import controller.tools.TipoPartida;
 import model.Partida;
+import model.Pregunta;
 
+import javax.mail.Part;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -212,5 +217,74 @@ public class ConsultasPartida {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return -1;
+    }
+    public static ArrayList<Pregunta> obtenerPreguntas(int idPartida){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
+        int id_categoria;
+        ArrayList<Pregunta> preguntas = new ArrayList<>();
+        String sql = "SELECT p.enunciado,p.respuesta_correcta,p.respuesta_incorrecta1,p.respuesta_incorrecta2,p.respuesta_incorrecta3,p.id_categoria as categoria\n" +
+                "from (((preguntas p join preguntas_partida pr on p.id = pr.id_pregunta) \n" +
+                "      join partidas pa on pr.id_partida = pa.id)\n" +
+                "      JOIN categoria c on c.id = p.id_categoria)\n" +
+                "      WHERE pa.id = ?;\n";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idPartida);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                //guardamos los datos de la pregunta actual en el ResulSet
+                enunciado = resultSet.getString("enunciado");
+                respuestaCorrecta = resultSet.getString("respuesta_correcta");
+                respuestaIncorrecta1 = resultSet.getString("respuesta_incorrecta1");
+                respuestaIncorrecta2 = resultSet.getString("respuesta_incorrecta2");
+                respuestaIncorrecta3 = resultSet.getString("respuesta_incorrecta3");
+                id_categoria = resultSet.getInt("categoria");
+                //agregamos la pregunta al ArrayList
+                preguntas.add(new Pregunta(enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3,id_categoria));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return preguntas;
+    }
+    public static Partida obtenerPartida(int idPartida){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        Partida partida = null;
+        int id, idUsuario, puntuacion;
+        String  tipo;
+        LocalDate fecha;
+        ArrayList<Pregunta> preguntas = obtenerPreguntas(idPartida);
+        String sql = "SELECT * FROM partidas WHERE id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idPartida);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                id = resultSet.getInt("id");
+                fecha = LocalDate.parse(resultSet.getString("fecha"));
+                puntuacion = resultSet.getInt("puntuacion");
+                idUsuario = resultSet.getInt("id_usuario");
+                tipo = resultSet.getString("tipo_partida");
+                partida = new Partida(id,fecha,puntuacion,tipo,idUsuario,preguntas);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return partida;
     }
 }

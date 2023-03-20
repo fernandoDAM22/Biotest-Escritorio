@@ -306,4 +306,60 @@ public class GestionUsuarios {
         }
         return false;
     }
+    /**
+     * Este metodo permite obtener el nombre de un usuario a partir de su id
+     * @param idUsuario es el id del usuario del que queremos obtener su nombre
+     * @return el nombre del usuario si existe, false si no
+     * @author Fernando
+     */
+    public static String obtenerNombreUsuario(int idUsuario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "SELECT nombre FROM usuarios WHERE id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idUsuario);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("nombre");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return null;
+    }
+    /**
+     * Este metodo permite obtener el email de un usuario a partir de su id
+     * @param idUsuario es el id del usuario del que queremos obtener su email
+     * @return el email del usuario si existe, false si no
+     * @author Fernando
+     */
+    public static String obtenerEmail(int idUsuario) {
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD = null;
+        Connection conexion = null;
+        ResultSet resultSet = null;
+        String sql = "SELECT email FROM usuarios WHERE id = ?";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setInt(1, idUsuario);
+            resultSet = sentencia.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("email");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+        return null;
+    }
 }
