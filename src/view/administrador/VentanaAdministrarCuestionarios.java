@@ -740,6 +740,20 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }// </editor-fold>
 
     /**
+     * Este metodo permite limpiar los campos que contienen los datos
+     * de la pregunta que esta seleccionada
+     * @author Fernando
+     */
+    private void limpiarCampos(){
+        txtEnunciado.setText("");
+        txtRespuestaCorrecta.setText("");
+        txtRespuestaIncorrecta1.setText("");
+        txtRespuestaIncorrecta2.setText("");
+        txtRespuestaIncorrecta3.setText("");
+        txtCategoriaPregunta.setText("");
+    }
+
+    /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
      *
      * @author Fernando
@@ -868,6 +882,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }
 
     private void listaCuestionariosItemListener(ItemEvent evt) {
+        limpiarCampos();
         actualizarCuestionarios(); //actualizamos los cuestionarios
         if (listaCuestionarios.getSelectedItem() != null) {//se comprueba que haya algun elemento seleccionado
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
