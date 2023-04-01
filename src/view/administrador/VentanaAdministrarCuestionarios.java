@@ -20,6 +20,7 @@ import model.Cuestionario;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
+import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -115,6 +116,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
         opcionModoJuego = new javax.swing.JMenuItem();
+        opcionMisPartidas = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCerrarSesion = new javax.swing.JMenuItem();
@@ -665,7 +667,15 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionAjustesUsuario);
-
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
 
         opcionCuestionarios.setText("Cuestionarios");
         opcionCuestionarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.ALT_MASK));
@@ -738,6 +748,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+    }
 
     /**
      * Este metodo permite limpiar los campos que contienen los datos
@@ -1250,6 +1266,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> listaPreguntasDialogo;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenu opcionCopiasDeSeguridad;

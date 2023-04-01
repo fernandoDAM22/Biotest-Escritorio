@@ -1,5 +1,6 @@
 package controller.controlPartida;
 
+import com.kitfox.svg.A;
 import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.HttpRequest;
 import controller.tools.LoggerUtil;
@@ -272,7 +273,7 @@ public class ConsultasPartida {
             sentencia = conexion.prepareStatement(sql);
             sentencia.setInt(1, idPartida);
             resultSet = sentencia.executeQuery();
-            while (resultSet.next()) {
+            if (resultSet.next()) {
                 id = resultSet.getInt("id");
                 fecha = LocalDate.parse(resultSet.getString("fecha"));
                 puntuacion = resultSet.getInt("puntuacion");
@@ -286,5 +287,39 @@ public class ConsultasPartida {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return partida;
+    }
+    public static ArrayList<Partida> obtenerPartidasUsuario(String usuario){
+        PreparedStatement sentencia = null;
+        ConexionBD conexionBD;
+        Connection conexion;
+        ResultSet resultSet = null;
+        ArrayList<Partida> partidas = new ArrayList<>();
+        int  puntuacion, idPartida;
+        String  tipo;
+        LocalDate fecha;
+        String sql = "SELECT p.id,p.fecha,p.puntuacion,p.tipo_partida from partidas p inner JOIN usuarios u on p.id_usuario = u.id WHERE BINARY u.nombre = ?;";
+        conexionBD = new ConexionBD();
+        try {
+            conexion = conexionBD.abrirConexion();
+            sentencia = conexion.prepareStatement(sql);
+            sentencia.setString(1,usuario);
+            resultSet = sentencia.executeQuery();
+            while (resultSet.next()) {
+                idPartida = resultSet.getInt("id");
+                fecha = LocalDate.parse(resultSet.getString("fecha"));
+                puntuacion = resultSet.getInt("puntuacion");
+                tipo = resultSet.getString("tipo_partida");
+                ArrayList<Pregunta> preguntas = obtenerPreguntas(idPartida);
+                partidas.add(new Partida(idPartida,fecha,puntuacion,tipo,preguntas));
+            }
+            return partidas;
+
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
+            return null;
+        } finally {
+            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+        }
+
     }
 }

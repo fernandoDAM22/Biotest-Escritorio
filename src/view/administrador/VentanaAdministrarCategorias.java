@@ -24,6 +24,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
+import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -91,6 +92,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         opcionModoJuego = new javax.swing.JMenuItem();
         opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionAjustesUsuario = new javax.swing.JMenuItem();
+        opcionMisPartidas = new javax.swing.JMenuItem();
 
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
@@ -407,6 +409,16 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         });
         menuUsuario.add(opcionAjustesUsuario);
 
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
+
 
         barraMenu.add(menuUsuario);
 
@@ -521,6 +533,13 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+
+    }
 
     /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
@@ -859,6 +878,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JMenuItem jmenuPreguntasPorCategoria;
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCerrarSesion;
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;

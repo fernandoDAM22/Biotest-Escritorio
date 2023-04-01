@@ -13,6 +13,7 @@ import view.administrador.VentanaAdministrarPreguntas;
 import view.administrador.VentanaAdministrarUsuarios;
 import view.juego.dialogos.DialogoElegirCuestionario;
 import view.usuario.VentanaAjustesUsuario;
+import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import java.awt.*;
@@ -62,6 +63,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         labelDescripcion = new javax.swing.JLabel();
         barraMenu = new javax.swing.JMenuBar();
         menuUsuario = new javax.swing.JMenu();
+        opcionMisPartidas = new javax.swing.JMenuItem();
         opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionModoJuego = new javax.swing.JMenuItem();
         opcionAjustesUsuario = new javax.swing.JMenuItem();
@@ -216,6 +218,16 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         menuUsuario.add(opcionAjustesUsuario);
 
         barraMenu.add(menuUsuario);
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
+
         opcionCerrarSesion.setText("Cerrar sesion");
         opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
         opcionCerrarSesion.addActionListener(new ActionListener() {
@@ -294,6 +306,12 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         ConfiguracionUsuario.desactivarMenu(barraMenu, menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionUsuariosActionPerformed(ActionEvent evt) {
         VentanaAdministrarUsuarios frame = new VentanaAdministrarUsuarios();
@@ -455,6 +473,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionAjustesUsuario;
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JMenu opcionCopiasDeSeguridad;

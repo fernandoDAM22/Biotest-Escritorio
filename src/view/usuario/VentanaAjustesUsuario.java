@@ -41,10 +41,10 @@ import java.awt.event.KeyEvent;
  */
 public class VentanaAjustesUsuario extends javax.swing.JFrame {
     CardLayout cardLayout;
-    PanelCambiarPassword panelCambiarPassword = null;
-    PanelCambiarEmail panelCambiarEmail = null;
-    PanelCambiarTelefono panelCambiarTelefono = null;
-    PanelCambiarNombreUsuario panelCambiarNombreUsuario = null;
+    PanelCambiarPassword panelCambiarPassword;
+    PanelCambiarEmail panelCambiarEmail;
+    PanelCambiarTelefono panelCambiarTelefono;
+    PanelCambiarNombreUsuario panelCambiarNombreUsuario;
 
     /**
      * Creates new form VentanaAjustesUsuario
@@ -121,10 +121,11 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        opcionMisPartidas = new javax.swing.JMenuItem();
         opcionImportar = new javax.swing.JMenuItem();
-
-        opcionUsuarios = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
+        opcionUsuarios = new javax.swing.JMenuItem();
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -273,7 +274,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         menuUsuario.setText("Usuario");
 
         opcionModoJuego.setText("Seleccionar Modo de juego");
-        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
+        opcionModoJuego.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        opcionCerrarSesion.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.ALT_MASK));
         opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 opcionModoJuegoActionPerformed(evt);
@@ -332,6 +334,15 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
                 opcionCategoriasActionPerformed(evt);
             }
         });
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
         menuAdministrador.add(opcionCategorias);
         opcionCopiasDeSeguridad.setText("Copias de seguridad");
         opcionImportar.setText("Importar");
@@ -355,8 +366,6 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         menuAdministrador.add(opcionCopiasDeSeguridad);
         opcionUsuarios.setText("Usuarios");
         opcionUsuarios.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_U, ActionEvent.ALT_MASK));
-
-
         opcionUsuarios.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -384,6 +393,12 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+    }
 
     private void opcionUsuariosActionPerformed(ActionEvent evt) {
 
@@ -483,6 +498,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JMenu opcionCopiasDeSeguridad;

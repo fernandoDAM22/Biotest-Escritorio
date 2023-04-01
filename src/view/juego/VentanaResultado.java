@@ -24,6 +24,7 @@ import view.administrador.VentanaAdministrarCuestionarios;
 import view.administrador.VentanaAdministrarPreguntas;
 import view.administrador.VentanaAdministrarUsuarios;
 import view.usuario.VentanaAjustesUsuario;
+import view.usuario.VentanaMisPartidas;
 
 import javax.mail.MessagingException;
 import javax.swing.*;
@@ -99,6 +100,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         opcionModoJuego = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
         opcionPreguntas = new javax.swing.JMenuItem();
+        opcionMisPartidas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
@@ -325,6 +327,16 @@ public class VentanaResultado extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionAjustesUsuario);
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
+
         barraMenu.add(menuUsuario);
 
         menuAdministrador.setText("Administrador");
@@ -417,6 +429,12 @@ public class VentanaResultado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+    }
+
     private void btnEmailActionPerformed(ActionEvent evt) {
         // Crear una instancia de la interfaz Runnable como una clase anónima
         Runnable enviarEmail = () -> {
@@ -474,7 +492,7 @@ public class VentanaResultado extends javax.swing.JFrame {
      * @author Fernando
      */
     private void tintarTabla() {
-        tablaPreguntas.setForeground(Colores.COLOR_NEGRO);
+
         int numero = tablaPreguntas.getColumnCount();
         for (int i = 0; i < numero; i++) {
             tablaPreguntas.getColumnModel().getColumn(i).setCellRenderer(new TableCellRenderResultado(idPartida));
@@ -638,6 +656,7 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenuItem opcionCategorias;
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenuItem opcionModoJuego;
     private javax.swing.JMenuItem opcionPreguntas;

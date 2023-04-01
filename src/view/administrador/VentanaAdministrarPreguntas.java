@@ -15,6 +15,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
+import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -89,6 +90,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         panelControles = new javax.swing.JPanel();
         panelOperaciones = new javax.swing.JPanel();
         btnModificar = new javax.swing.JButton();
+        opcionMisPartidas = new javax.swing.JMenuItem();
         btnInsertar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         panelDatosPregunta = new javax.swing.JPanel();
@@ -136,6 +138,16 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             }
         });
         menuUsuario.add(opcionAjustesUsuario);
+
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
 
         barraMenu.add(menuUsuario);
 
@@ -446,6 +458,13 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+
+    }
 
     /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
@@ -791,7 +810,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
     private javax.swing.JMenuItem opcionUsuarios;
-
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JMenuItem opcionAjustesUsuario;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelContenido;

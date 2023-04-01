@@ -15,6 +15,7 @@ import model.Usuario;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
+import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -70,6 +71,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        opcionMisPartidas = new javax.swing.JMenuItem();
         labelTextoPassword = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         txtEmail = new javax.swing.JTextField();
@@ -352,6 +354,15 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         });
         menuUsuario.add(opcionCerrarSesion);
 
+        opcionMisPartidas.setText("Mis partidas");
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionMisPartidasActionPerformed(evt);
+            }
+        });
+        menuUsuario.add(opcionMisPartidas);
         barraMenu.add(menuUsuario);
 
         menuAdministrador.setText("Administrador");
@@ -435,6 +446,13 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionMisPartidasActionPerformed(ActionEvent evt) {
+        VentanaMisPartidas frame = new VentanaMisPartidas();
+        frame.setVisible(true);
+        dispose();
+    }
+
     /**
      * Este metodo nos permite cambiar el color de las filas de la tabla
      *
@@ -882,6 +900,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel labelTextoPassword;
+    private javax.swing.JMenuItem opcionMisPartidas;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;

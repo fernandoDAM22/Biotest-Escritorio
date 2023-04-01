@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 /**
  * Clase modelo de la partida
+ *
  * @author Fernando
  */
 public class Partida {
@@ -24,8 +25,9 @@ public class Partida {
     /**
      * Este constructor establece por defecto la puntuacion a 0
      * y la fecha a la fecha actual del sistema
-     * @param id es el id de la partida
-     * @param tipo es el tipo de la partida
+     *
+     * @param id        es el id de la partida
+     * @param tipo      es el tipo de la partida
      * @param idUsuario es el id del usuario que juega la partida
      */
     public Partida(int id, String tipo, int idUsuario) {
@@ -35,14 +37,14 @@ public class Partida {
         this.puntuacion = 0;
         this.fecha = LocalDate.now();
     }
-
     /**
      * Constructor parametrizado
-     * @param id es el id de la partida
-     * @param fecha es la fecha en la que se jugo la partida
+     *
+     * @param id         es el id de la partida
+     * @param fecha      es la fecha en la que se jugo la partida
      * @param puntuacion es la puntuacion de la partida
-     * @param tipo es el tipo de la partida
-     * @param idUsuario es el id del usuario que juega la partida
+     * @param tipo       es el tipo de la partida
+     * @param idUsuario  es el id del usuario que juega la partida
      */
     public Partida(int id, LocalDate fecha, int puntuacion, String tipo, int idUsuario) {
         this.id = id;
@@ -59,6 +61,13 @@ public class Partida {
         this.puntuacion = puntuacion;
         this.tipo = tipo;
         this.idUsuario = idUsuario;
+        this.preguntas = preguntas;
+    }
+    public Partida(int id, LocalDate fecha, int puntuacion, String tipo, ArrayList<Pregunta> preguntas) {
+        this.id = id;
+        this.fecha = fecha;
+        this.puntuacion = puntuacion;
+        this.tipo = tipo;
         this.preguntas = preguntas;
     }
 
@@ -112,12 +121,6 @@ public class Partida {
 
     @Override
     public String toString() {
-        return "Partida{" +
-                "id=" + id +
-                ", fecha=" + fecha +
-                ", puntuacion=" + puntuacion +
-                ", tipo='" + tipo + '\'' +
-                ", idUsuario=" + idUsuario +
-                '}';
+        return "Fecha: " + fecha + " - " + "Tipo: " + tipo + " - " + "Puntuacion: " + puntuacion;
     }
 }
