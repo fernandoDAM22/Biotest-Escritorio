@@ -24,8 +24,8 @@ public class GestionCategorias {
      */
     public static ArrayList<String> obtenerCategorias() {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         ArrayList<String> nombresCategorias = new ArrayList<>();
         String sql = "select nombre from categoria";
@@ -80,8 +80,8 @@ public class GestionCategorias {
      */
     public static int insertarCategoria(String nombre, String descipcion) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "insert into categoria (nombre,descripcion) values (?,?);";
         conexionBD = new ConexionBD();
         try {
@@ -107,8 +107,8 @@ public class GestionCategorias {
      */
     public static boolean existeCategoria(String nombre) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "select * from categoria where nombre like ?";
         conexionBD = new ConexionBD();
@@ -133,9 +133,9 @@ public class GestionCategorias {
      */
     public static boolean borrarCategoria(String nombre) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        int resultado = 0;
+        ConexionBD conexionBD;
+        Connection conexion;
+        int resultado;
         String sql = "delete from categoria where nombre like ?";
         conexionBD = new ConexionBD();
         try {
@@ -145,7 +145,7 @@ public class GestionCategorias {
             resultado = sentencia.executeUpdate();
             /*
              * Hay que tener en cuenta que saltara una excepcion si el usuario
-             * elije borrar una categoria que tiene preguntas puesto que esto no esta permitido por la integridad referencial,
+             * elije borrar una categoria que tiene preguntas, puesto que esto no esta permitido por la integridad referencial,
              * si salta la excepcion retornamos false
              */
         } catch (SQLException e) {
@@ -165,9 +165,9 @@ public class GestionCategorias {
      */
     public static boolean modificarCategoria(String nombreAntiguo, String nombreNuevo, String descripcion){
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        int resultado = 0;
+        ConexionBD conexionBD;
+        Connection conexion;
+        int resultado;
         String sql = "update categoria set nombre = ?, descripcion = ? where nombre like ?";
         conexionBD = new ConexionBD();
         try {
@@ -193,8 +193,8 @@ public class GestionCategorias {
      */
     public static int obtenerIdCategoria(String nombre){
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "select id from categoria where nombre like ?";
         conexionBD = new ConexionBD();
@@ -223,8 +223,8 @@ public class GestionCategorias {
      */
     public static String obtenerDescripcion(String nombre) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "select descripcion from categoria where nombre like ?";
         conexionBD = new ConexionBD();
@@ -253,8 +253,8 @@ public class GestionCategorias {
      */
     public static String obtenerCategoriaPregunta(String pregunta){
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "Select c.nombre from categoria c join preguntas p on c.id = p.id_categoria where p.enunciado like ?";
         conexionBD = new ConexionBD();

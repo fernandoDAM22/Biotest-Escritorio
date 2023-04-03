@@ -1,6 +1,6 @@
 package controller.tools;
+
 import controller.baseDeDatos.ConexionBD;
-import controller.controlPartida.ConsultasPartida;
 import controller.usuario.Codigos;
 
 import javax.mail.internet.AddressException;

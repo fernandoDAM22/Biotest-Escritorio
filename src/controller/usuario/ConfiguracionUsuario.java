@@ -32,10 +32,6 @@ public class ConfiguracionUsuario {
 
     }
 
-    public static String getTipoUsuario() {
-        return tipoUsuario;
-    }
-
     public static void setTipoUsuario(String tipoUsuario) {
         ConfiguracionUsuario.tipoUsuario = tipoUsuario;
     }

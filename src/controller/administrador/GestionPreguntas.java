@@ -5,10 +5,7 @@ import model.Pregunta;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 /**
@@ -25,8 +22,8 @@ public class GestionPreguntas {
      */
     public static ArrayList<String[]> obtenerPreguntas(String categoria) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
         ArrayList<String[]> preguntas = new ArrayList<>();
@@ -64,12 +61,12 @@ public class GestionPreguntas {
      */
     public static ArrayList<String[]> obtenerPreguntasCuestionario(String cuestionario) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
         ArrayList<String[]> preguntas = new ArrayList<>();
-        String sql = "SELECT p.* from ((preguntas p inner JOIN preguntas_cuestionarios pp ON p.id = pp.id_pregunta)\n" +
+        String sql = "SELECT p.* from ((preguntas p inner JOIN preguntas_cuestionarios pp ON p.id = pp.id_pregunta) " +
                                         "INNER JOIN cuestionarios c on c.id = pp.id_cuestionario)\n" +
                                         "WHERE c.nombre like ?;";
         conexionBD = new ConexionBD();
@@ -126,11 +123,10 @@ public class GestionPreguntas {
      */
     public static String[] obtenerRespuestas(String enunciadoPregunta) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
-        ArrayList<String[]> preguntas = new ArrayList<>();
         String sql = "SELECT respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
                 "from preguntas where enunciado like ?";
         conexionBD = new ConexionBD();
@@ -164,8 +160,8 @@ public class GestionPreguntas {
 
     public static boolean insertarPregunta(Pregunta p) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "insert into preguntas " +
                 "(enunciado,respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3,id_categoria) " +
                 " values (?,?,?,?,?,?)";
@@ -197,8 +193,8 @@ public class GestionPreguntas {
      */
     public static boolean borrarPregunta(String enunciado) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "delete from preguntas where enunciado like ?";
         conexionBD = new ConexionBD();
         try {
@@ -224,8 +220,8 @@ public class GestionPreguntas {
      */
     public static boolean modificarPregunta(Pregunta p, String enunciado) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "UPDATE `preguntas` set enunciado = ?, respuesta_correcta = ?, respuesta_incorrecta1 = ?, respuesta_incorrecta2 = ?, respuesta_incorrecta3 = ?  WHERE enunciado like ?";
         conexionBD = new ConexionBD();
         try {
@@ -254,8 +250,8 @@ public class GestionPreguntas {
      */
     public static int obtenerId(String enunciado) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         int id;
         String sql = "select id from preguntas where enunciado like ?";
@@ -284,8 +280,8 @@ public class GestionPreguntas {
      */
     public static ArrayList<Integer> obtenerIds(){
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         ArrayList<Integer> ids = new ArrayList<>();
         String sql = "select id from preguntas";
@@ -313,11 +309,10 @@ public class GestionPreguntas {
      */
     public static Pregunta obtenerDatos(int id){
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String enunciado,respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
-        ArrayList<String[]> preguntas = new ArrayList<>();
         String sql = "SELECT enunciado,respuesta_correcta,respuesta_incorrecta1,respuesta_incorrecta2,respuesta_incorrecta3 " +
                 "from preguntas where id = ?";
         conexionBD = new ConexionBD();
@@ -351,8 +346,8 @@ public class GestionPreguntas {
      */
     public static boolean existePregunta(String enunciado){
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "select * from preguntas where enunciado like ?";
         conexionBD = new ConexionBD();
@@ -373,32 +368,33 @@ public class GestionPreguntas {
     /**
      * Este metodo permite saber si una pregunta ha sido acertada o no
      * @param idPartida es el id de la partida
-     * @param idPregunta es el id de la pregunta
+     * @param enunciado es el enunciado de la pregunta la cual queremos comprobar
      * @return true si ha sido acertada, false si no
      */
-    public static boolean preguntaAcertada(int idPartida, int idPregunta) {
+    public static boolean preguntaAcertada(int idPartida, String enunciado) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
-        String sql = "select acertada from preguntas_partida where id_pregunta = ? and id_partida = ?";
+        String sql = "select acertada from resultado_preguntas where enunciado = ? and id_partida = ?";
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();
             sentencia = conexion.prepareStatement(sql);
-            sentencia.setInt(1,idPregunta);
+            sentencia.setString(1,enunciado);
             sentencia.setInt(2,idPartida);
             resultSet = sentencia.executeQuery();
             if(resultSet.next()){
                 int num = resultSet.getInt("acertada");
                 return num > 0;
             }
-
         } catch (SQLException e) {
+            e.printStackTrace();
             return false;
         } finally {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return false;
     }
+
 }

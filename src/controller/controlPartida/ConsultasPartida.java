@@ -1,22 +1,17 @@
 package controller.controlPartida;
 
-import com.kitfox.svg.A;
 import controller.baseDeDatos.ConexionBD;
-import controller.baseDeDatos.HttpRequest;
 import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
-import controller.tools.TipoPartida;
 import model.Partida;
 import model.Pregunta;
 
-import javax.mail.Part;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,7 +64,6 @@ public class ConsultasPartida {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD;
         Connection conexion;
-        ArrayList<Integer> ids = new ArrayList<>();
         conexionBD = new ConexionBD();
         String sql = "INSERT INTO partidas(id,fecha,puntuacion,id_usuario,tipo_partida) VALUES (?,?,?,?,?)";
         try {
@@ -200,7 +194,6 @@ public class ConsultasPartida {
         Connection conexion;
         ResultSet resultSet = null;
 
-        ArrayList<String[]> preguntas = new ArrayList<>();
         String sql = "SELECT puntuacion from partidas where id = ?";
         conexionBD = new ConexionBD();
         try {

@@ -1,6 +1,5 @@
 package controller.baseDeDatos;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,13 +17,13 @@ public class Cifrado {
      * @author Fernando
      */
     public static String SHA256(String password) {
-        MessageDigest md = null;
+        MessageDigest md;
         byte[] hash;
         try {
             md = MessageDigest.getInstance("SHA-256");
             hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
+           return null;
         }
 
         StringBuilder sb = new StringBuilder();

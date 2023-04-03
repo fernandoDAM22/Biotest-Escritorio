@@ -22,9 +22,8 @@ public class TableCellRenderResultado  extends DefaultTableCellRenderer {
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-        int idPregunta = GestionPreguntas.obtenerId((String) table.getValueAt(row,0));
         //si la pregunta se acerto se coloca la fila de la tabla de color verde, de lo contrario se coloca de color rojo
-        if (GestionPreguntas.preguntaAcertada(idPartida,idPregunta)) {
+        if (GestionPreguntas.preguntaAcertada(idPartida,(String) table.getValueAt(row,0))) {
             c.setBackground(Colores.COLOR_PREGUNTAS_ACERTADAS);
         } else {
             c.setBackground(Colores.COLOR_PREGUNTAS_FALLADAS);

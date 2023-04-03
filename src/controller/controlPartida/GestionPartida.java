@@ -62,15 +62,6 @@ public abstract class GestionPartida {
         }
         return numero;
     }
-    /**
-     * Este metodo permite colocar el enunciado de una pregunta en la pantalla
-     * @param etiqueta es la etiqueta donde se coloca el enunciado
-     * @param texto es el enunciado que se coloca
-     * @author Fernando
-     */
-    public void colocarEnunciado(JLabel etiqueta, String texto) {
-        etiqueta.setText(texto);
-    }
 
     /**
      * Este metodo permite colocar una respuesta en un boton

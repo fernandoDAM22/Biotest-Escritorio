@@ -8,14 +8,6 @@ import java.awt.*;
  */
 public interface Colores {
     /**
-     *Este es el color de la ventana de inicio
-     */
-    Color COLOR_VENTANA_INICIO = new Color(42, 45, 52);
-    /**
-     * Este es el color del boton de la ventana de inicio
-     */
-    Color COLOR_BOTON_INICIO = new Color(29, 172, 214);
-    /**
      * Este color se coloca al boton que contiene la respuesta correcta
      */
     Color COLOR_CORRECTO = new Color(46, 204, 113);

@@ -60,7 +60,7 @@ public class ConexionBD implements Configuracion {
             Class.forName("com.mysql.cj.jdbc.Driver");//actual mysql-connector-j-8.0.31.jar
 
             try {
-                conexion = (Connection) DriverManager.getConnection("jdbc:mysql://" + DBHOST + ":3306/" + DBNAME,
+                conexion = DriverManager.getConnection("jdbc:mysql://" + DBHOST + ":3306/" + DBNAME,
                         this.usuario, this.password);
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
@@ -102,16 +102,36 @@ public class ConexionBD implements Configuracion {
             logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         }
     }
+
+    /**
+     * Este metodo permite cerrar un objeto ResultSet
+     * @param resultSet es el resultSet que queremos cerrar
+     * @throws SQLException en caso de que ocurran problemas con la conexion a la base de datos
+     * @author Fernando
+     */
     public static void closeResultSet(ResultSet resultSet) throws SQLException {
         if (resultSet != null) {
             resultSet.close();
         }
     }
+
+    /**
+     * Este metodo permite cerrar una sentencia preparada
+     * @param sentencia es la sentencia preparada que queremos cerrar
+     * @throws SQLException en caso de que ocurran problemas con la conexion a la base de datos
+     * @author Fernando
+     */
     public static void cerrarSentencia(PreparedStatement sentencia) throws SQLException {
         if (sentencia != null) {
             sentencia.close();
         }
     }
+
+    /**
+     * Este metodo permite cerrar una conexion a la base de datos
+     * @param conexionBD es la conexion que queremos cerrar
+     * @author Fernando
+     */
     public static void cerrarConexion(ConexionBD conexionBD){
         if(conexionBD != null){
             conexionBD.cerrarConexion();

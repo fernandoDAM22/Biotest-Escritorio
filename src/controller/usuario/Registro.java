@@ -75,8 +75,8 @@ public class Registro implements Codigos {
      */
     public static boolean registrarUsuario(Usuario usuario) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "INSERT INTO `usuarios`(`nombre`, `contrasena`, `email`, `telefono`, `tipo`) VALUES (?,?,?,?,?)";
         conexionBD = new ConexionBD();
         try {

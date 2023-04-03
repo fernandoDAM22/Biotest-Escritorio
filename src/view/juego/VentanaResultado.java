@@ -217,6 +217,7 @@ public class VentanaResultado extends javax.swing.JFrame {
                 tablaPreguntasKeyReleased(evt);
             }
         });
+        tablaPreguntas.setForeground(Colores.COLOR_NEGRO);
         jScrollPane1.setViewportView(tablaPreguntas);
 
         jPanel4.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -474,8 +475,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         cadena.append("PUNTUACION ===> ").append(partida.getPuntuacion()).append("\n");
         cadena.append("PREGUNTAS RESPONDIDAS: ").append("\n");
         for(Pregunta p: partida.getPreguntas()){
-            idPregunta = GestionPreguntas.obtenerId(p.getEnunciado());
-            acertada = GestionPreguntas.preguntaAcertada(idPartida,idPregunta);
+            acertada = GestionPreguntas.preguntaAcertada(idPartida,p.getEnunciado());
             if(acertada){
                 texto = "SI";
             }else{
@@ -542,6 +542,10 @@ public class VentanaResultado extends javax.swing.JFrame {
     private void colocarDatosPregunta() {
         //obtenemos la posicion de la fila que se ha pulsado
         int posicion = tablaPreguntas.getSelectedRow();
+        //nos aseguramos de haya alguna fila seleccionada
+        if(posicion == -1) {
+            return;
+        }
         //obtenemos los datos de la pregunta
         String enunciado = (String) modelo.getValueAt(posicion, 0);
         String respuestaCorrecta = (String) modelo.getValueAt(posicion, 1);

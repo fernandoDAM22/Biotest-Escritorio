@@ -28,8 +28,8 @@ public class GestionCuestionarios {
      */
     public static boolean existeCuestionario(String nombre) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String sql = "select *  from cuestionarios where nombre like ?";
         conexionBD = new ConexionBD();
@@ -42,7 +42,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
     }
 
@@ -55,8 +55,8 @@ public class GestionCuestionarios {
      */
     public static ArrayList<String> obtenerCuestionarios(String categoria) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         ArrayList<String> cuestionarios = new ArrayList<>();
         String sql = "select cu.nombre from cuestionarios cu join categoria cat on cu.id_categoria = cat.id where cat.nombre like ?";
@@ -70,9 +70,9 @@ public class GestionCuestionarios {
                 cuestionarios.add(resultSet.getString("nombre"));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return null;
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
         return cuestionarios;
     }
@@ -88,8 +88,8 @@ public class GestionCuestionarios {
      */
     public static int insertarCuestionario(int idCategoria, String nombre, String descripcion) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "INSERT INTO cuestionarios(nombre, descripcion, id_categoria) VALUES (?,?,?);";
         conexionBD = new ConexionBD();
         try {
@@ -100,9 +100,9 @@ public class GestionCuestionarios {
             sentencia.setInt(3, idCategoria);
             return sentencia.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return -1;
         } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
+            ConexionBD.cerrar(sentencia, conexionBD);
         }
     }
 
@@ -115,8 +115,8 @@ public class GestionCuestionarios {
      */
     public static int obtenerId(String nombre) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         int id;
         String sql = "select id from cuestionarios where nombre like ?";
@@ -131,9 +131,9 @@ public class GestionCuestionarios {
                 return id;
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return -1;
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
         return -1;
     }
@@ -148,9 +148,8 @@ public class GestionCuestionarios {
      */
     public static boolean insertarPregunta(int idCuestionario, int idPregunta) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
-        int id;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "insert into preguntas_cuestionarios (id_cuestionario, id_pregunta) values (?,?)";
         conexionBD = new ConexionBD();
         try {
@@ -166,7 +165,7 @@ public class GestionCuestionarios {
              */
             return false;
         } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
+            ConexionBD.cerrar(sentencia, conexionBD);
         }
     }
 
@@ -203,8 +202,8 @@ public class GestionCuestionarios {
      */
     public static boolean borrarPregunta(int idCuestionario, int idPregunta) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         String sql = "delete from preguntas_cuestionarios where id_cuestionario = ? and id_pregunta = ?";
         conexionBD = new ConexionBD();
         try {
@@ -216,7 +215,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            ConexionBD.cerrar(sentencia,conexionBD);
+            ConexionBD.cerrar(sentencia, conexionBD);
         }
     }
 
@@ -229,8 +228,8 @@ public class GestionCuestionarios {
      */
     public static String obtenerDescripcion(String nombre) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         String descripcion;
         String sql = "select descripcion from cuestionarios where nombre like ?";
@@ -247,7 +246,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return null;
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
         return null;
     }
@@ -261,10 +260,9 @@ public class GestionCuestionarios {
      */
     public static boolean modificar(Cuestionario c) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
-        String descripcion;
         String sql = "update cuestionarios set nombre = ?, descripcion = ? where id = ?";
         conexionBD = new ConexionBD();
         try {
@@ -277,7 +275,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
     }
 
@@ -290,10 +288,9 @@ public class GestionCuestionarios {
      */
     public static boolean borrar(int id) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
-        String descripcion;
         String sql = "delete from cuestionarios where id = ?";
         conexionBD = new ConexionBD();
         try {
@@ -304,20 +301,21 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
     }
 
     /**
      * Este metodo nos permite obtener los cuestionarios que cuenten con 10 o
      * mas preguntas
+     *
      * @return un ArrayList con los nombres de los cuestionarios
      * @author Fernando
      */
     public static ArrayList<String> obtenerCuestionariosCompletos() {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         ArrayList<String> cuestionarios = new ArrayList<>();
         String sql = "SELECT c.nombre from cuestionarios c join preguntas_cuestionarios p on c.id = p.id_cuestionario GROUP by c.id HAVING COUNT(id_pregunta) > 10";
@@ -332,7 +330,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
         return cuestionarios;
     }
@@ -340,14 +338,15 @@ public class GestionCuestionarios {
     /**
      * Este metodo permite obtener los ids de las preguntas de un cuestionario a partir
      * de su nombre
+     *
      * @param cuestionario es el nombre del cuestionario
      * @return un ArrayList con los ids de las preguntas
      * @author Fernando
      */
     public static ArrayList<Integer> obtenerIdPreguntas(String cuestionario) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
         ArrayList<Integer> idPreguntas = new ArrayList<>();
         String sql = "SELECT p.id_pregunta from cuestionarios c JOIN preguntas_cuestionarios " +
@@ -364,7 +363,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
-            ConexionBD.cerrar(resultSet,sentencia,conexionBD);
+            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
         }
         return idPreguntas;
 

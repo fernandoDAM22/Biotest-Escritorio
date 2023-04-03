@@ -74,10 +74,8 @@ public interface Mensajes {
     String CORRECTO = "Correcto";
     String TITULO_CONFIRMACION = "¿Estas seguro?";
     Object ERROR_CUESTIONARIO_SELECCIONADO = "Error, no tienes seleccionado ningun cuestionario";
-    String ERROR_ENCODING = "Se produjo una excepción al insertar una pregunta";
     String ERROR_EXCEPTION = "Se produjo una excepcion";
     String ERROR_SQL_EXCEPTION = "Se produjo una excepcion de sql";
-    String ERROR_ENTRADA_SALIDA = "Se produjo un error en la entrada/salida";
     String ERROR_NULL_POINTER_EXCEPCION = "Se produjo un error de puntero nulo";
     Object MENSAJE_EMAIL_CORRECTO = "Email enviado correctamente, si no lo ha recibido, compruebe que su email es correcto y consulte el manual";
     Object MENSAJE_ERROR_EMAIL = "Error al enviar el email";

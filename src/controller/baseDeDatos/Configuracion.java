@@ -15,10 +15,6 @@ public interface Configuracion {
      */
     String DBNAME = "preguntas";
     /**
-     * Es el nombre del usuario sin privilegios
-     */
-    String USER = "user";
-    /**
      * Es el nombre del usuario administrador
      */
     String ADMIN = "root";
@@ -26,10 +22,6 @@ public interface Configuracion {
      * Contraseña del usuario
      */
     String PASSWORD_ADMIN = "";
-    /**
-     * Contraseña del usuario normal
-     */
-    String PASSWORD_USER = "user123456";
     /**
      * Ruta a la instacion de nuestro XAMPP
      */

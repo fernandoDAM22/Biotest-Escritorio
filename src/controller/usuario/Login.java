@@ -42,8 +42,8 @@ public class Login implements Codigos {
      */
     public static String obtenerDatos(String nombre,String tipoDato) {
         PreparedStatement sentencia = null;
-        ConexionBD conexionBD = null;
-        Connection conexion = null;
+        ConexionBD conexionBD;
+        Connection conexion;
         ResultSet resultSet = null;
            /*
           Tenemos que usar la clausula BINARY para poder obtener el usuario que se llame exactamente

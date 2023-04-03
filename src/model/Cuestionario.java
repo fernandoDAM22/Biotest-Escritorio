@@ -28,44 +28,10 @@ public class Cuestionario {
      */
     private ArrayList<Pregunta> preguntas;
 
-    /**
-     * Constructor vacio
-     */
-    public Cuestionario() {
-    }
-
-    /**
-     * Este constructor crea un cuestionario sin preguntas, no obstante inicializa el ArrayList de las preguntas
-     * a uno vacio
-     * @param id es él id del cuestionario
-     * @param nombre es el nombre del cuestionario
-     * @param idCategoria es él id de la categoria, esté id corresponde con el id de la categoria correspondiente
-     */
-    public Cuestionario(int id, String nombre, int idCategoria) {
-        this.id = id;
-        this.nombre = nombre;
-        this.idCategoria = idCategoria;
-        preguntas = new ArrayList<>();
-    }
-
     public Cuestionario(int id, String nombre, String descripcion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-    }
-
-    /**
-     *
-     * @param id es el id del cuestionario
-     * @param nombre es el nombre del cuestionario
-     * @param idCategoria es el id de la categoria, esté id corresponde con el id de la categoria correspondiente
-     * @param preguntas es la lista de preguntas del cuestionario
-     */
-    public Cuestionario(int id, String nombre, int idCategoria, ArrayList<Pregunta> preguntas) {
-        this.id = id;
-        this.nombre = nombre;
-        this.idCategoria = idCategoria;
-        this.preguntas = preguntas;
     }
 
     public int getId() {
@@ -82,14 +48,6 @@ public class Cuestionario {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public int getIdCategoria() {
-        return idCategoria;
-    }
-
-    public void setIdCategoria(int idCategoria) {
-        this.idCategoria = idCategoria;
     }
 
     public ArrayList<Pregunta> getPreguntas() {

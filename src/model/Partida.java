@@ -17,12 +17,6 @@ public class Partida {
     private ArrayList<Pregunta> preguntas;
 
     /**
-     * Constructor vacio
-     */
-    public Partida() {
-    }
-
-    /**
      * Este constructor establece por defecto la puntuacion a 0
      * y la fecha a la fecha actual del sistema
      *
@@ -36,23 +30,6 @@ public class Partida {
         this.idUsuario = idUsuario;
         this.puntuacion = 0;
         this.fecha = LocalDate.now();
-    }
-    /**
-     * Constructor parametrizado
-     *
-     * @param id         es el id de la partida
-     * @param fecha      es la fecha en la que se jugo la partida
-     * @param puntuacion es la puntuacion de la partida
-     * @param tipo       es el tipo de la partida
-     * @param idUsuario  es el id del usuario que juega la partida
-     */
-    public Partida(int id, LocalDate fecha, int puntuacion, String tipo, int idUsuario) {
-        this.id = id;
-        this.fecha = fecha;
-        this.puntuacion = puntuacion;
-        this.tipo = tipo;
-        this.idUsuario = idUsuario;
-        this.preguntas = new ArrayList<>();
     }
 
     public Partida(int id, LocalDate fecha, int puntuacion, String tipo, int idUsuario, ArrayList<Pregunta> preguntas) {
@@ -105,10 +82,6 @@ public class Partida {
 
     public int getIdUsuario() {
         return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
     }
 
     public ArrayList<Pregunta> getPreguntas() {
