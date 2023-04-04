@@ -12,7 +12,7 @@ import static org.junit.Assert.assertArrayEquals;
 public class GestionCuestionariosTest {
     @Test
     public void existeCuestionario(){
-        String[] cuestionarios = {"Examen Mamiferos modificado","prueba","adasdad"};
+        String[] cuestionarios = {"Examen Mamiferos","prueba","adasdad"};
         boolean[] esperado = {true,true,false};
         boolean[] resultado = new boolean[esperado.length];
         for (int i = 0; i < cuestionarios.length; i++) {
@@ -23,15 +23,15 @@ public class GestionCuestionariosTest {
     @Test
     public void obtenerCuestionarios(){
         ArrayList<String> esperado = new ArrayList<>();
-        esperado.add("Examen Mamiferos modificado");
-        esperado.add("prueba");
+        esperado.add("Examen Mamiferos");
+        esperado.add("Prueba");
         ArrayList<String> resultado = GestionCuestionarios.obtenerCuestionarios("Mamiferos");
         assertArrayEquals(esperado.toArray(),resultado.toArray());
     }
     @Test
     public void obtenerId(){
-        String[] cuestionarios = {"Examen Mamiferos modificado","prueba","adasdad"};
-        int[] esperado = {1,3,-1};
+        String[] cuestionarios = {"Examen Mamiferos","prueba","adasdad"};
+        int[] esperado = {1,16,-1};
         int[] resultado = new int[esperado.length];
         for (int i = 0; i < cuestionarios.length; i++) {
             resultado[i] = GestionCuestionarios.obtenerId(cuestionarios[i]);
@@ -44,7 +44,7 @@ public class GestionCuestionariosTest {
         boolean[] esperado = {true,true,true,true,true,false,false};
         boolean[] resultado = new boolean[esperado.length];
         for (int i = 0; i < preguntas.length; i++) {
-            resultado[i] = GestionCuestionarios.insertarPregunta(3,preguntas[i]);
+            resultado[i] = GestionCuestionarios.insertarPregunta(16,preguntas[i]);
         }
         assertArrayEquals(esperado,resultado);
     }
@@ -54,14 +54,14 @@ public class GestionCuestionariosTest {
         boolean[] esperado = {true,true,true,true,true,false,false};
         boolean[] resultado = new boolean[esperado.length];
         for (int i = 0; i < preguntas.length; i++) {
-            resultado[i] = GestionCuestionarios.borrarPregunta(3,preguntas[i]);
+            resultado[i] = GestionCuestionarios.borrarPregunta(16,preguntas[i]);
         }
         assertArrayEquals(esperado,resultado);
     }
     @Test
     public void obtenerDescripcion(){
-        String[] cuestionarios = {"Examen Mamiferos modificado","prueba","adasdad"};
-        String[] esperado = {"Examen de los mamiferos para tercero de la eso modificado","cuestionario de prueba",null};
+        String[] cuestionarios = {"Examen Mamiferos","prueba","adasdad"};
+        String[] esperado = {"Examen de los mamiferos para tercero de la eso","Cuestionario de prueba",null};
         String[] resultado = new String[esperado.length];
         for (int i = 0; i < cuestionarios.length; i++) {
             resultado[i] = GestionCuestionarios.obtenerDescripcion(cuestionarios[i]);
@@ -71,7 +71,7 @@ public class GestionCuestionariosTest {
     @Test
     public void obtenerCuestionariosCompletos(){
         ArrayList<String> esperado = new ArrayList<>();
-        esperado.add("Examen Mamiferos modificado");
+        esperado.add("Examen Mamiferos");
         ArrayList<String> resultado = GestionCuestionarios.obtenerCuestionariosCompletos();
         assertArrayEquals(esperado.toArray(),resultado.toArray());
     }
@@ -89,7 +89,7 @@ public class GestionCuestionariosTest {
         esperado.add(644);
         esperado.add(658);
         esperado.add(659);
-        ArrayList<Integer> resultado = GestionCuestionarios.obtenerIdPreguntas("Examen Mamiferos modificado");
+        ArrayList<Integer> resultado = GestionCuestionarios.obtenerIdPreguntas("Examen Mamiferos");
         assertArrayEquals(esperado.toArray(),resultado.toArray());
 
     }

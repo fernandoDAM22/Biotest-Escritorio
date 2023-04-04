@@ -10,6 +10,7 @@ import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.Registro;
 
+import javax.print.attribute.standard.MediaName;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -91,7 +92,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputNombre.setColumns(20);
         inputNombre.setBorder(null);
         inputNombre.setPreferredSize(new java.awt.Dimension(200, 30));
-        inputNombre.setToolTipText("El nombre solo puede tener letras y espacios");
+        inputNombre.setToolTipText(Mensajes.CONSEJO_USERNAME);
         inputNombre.addFocusListener(new EventoFoco());
         panelFila1.add(inputNombre);
 
@@ -108,7 +109,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputEmail.setColumns(20);
         inputEmail.setBorder(null);
         inputEmail.setPreferredSize(new java.awt.Dimension(200, 30));
-        inputEmail.setToolTipText("El email debe ser un email valido");
+        inputEmail.setToolTipText(Mensajes.CONSEJO_EMAIL);
         inputEmail.addFocusListener(new EventoFoco());
         panelFila2.add(inputEmail);
 
@@ -125,7 +126,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputPassword.setColumns(20);
         inputPassword.setBorder(null);
         inputPassword.setPreferredSize(new java.awt.Dimension(200, 30));
-        inputPassword.setToolTipText("8 caracteres de los cuales uno debe ser un numero");
+        inputPassword.setToolTipText(Mensajes.CONSEJO_PASSWORD);
         inputPassword.addFocusListener(new EventoFoco());
         panelFila3.add(inputPassword);
 
@@ -137,7 +138,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         labelPassword2.setForeground(new java.awt.Color(0, 0, 0));
         labelPassword2.setText("Contraseña 2");
         labelPassword2.setPreferredSize(new java.awt.Dimension(100, 16));
-        inputPassword2.setToolTipText("8 caracteres de los cuales uno debe ser un numero");
+        inputPassword2.setToolTipText(Mensajes.CONSEJO_PASSWORD);
         inputPassword2.addFocusListener(new EventoFoco());
         panelFila4.add(labelPassword2);
 
@@ -159,7 +160,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
         inputTelefono.setColumns(20);
         inputTelefono.setBorder(null);
         inputTelefono.setPreferredSize(new java.awt.Dimension(200, 30));
-        inputTelefono.setToolTipText("9 numeros");
+        inputTelefono.setToolTipText(Mensajes.CONSEJO_TELEFONO);
         inputTelefono.addFocusListener(new EventoFoco());
         panelFila5.add(inputTelefono);
 
@@ -178,7 +179,7 @@ public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
                 btnCancelarActionPerformed(evt);
             }
         });
-        btnCancelar.setToolTipText("Volver a la ventana de login");
+        btnCancelar.setToolTipText(Mensajes.CONSEJO_CANCELAR_VENTANA_REGISTRO);
         panelFila6.add(btnCancelar);
 
 

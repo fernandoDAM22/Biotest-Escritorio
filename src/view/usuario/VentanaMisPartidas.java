@@ -155,11 +155,23 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
         txtPuntuacion.setEditable(false);
 
         txtEnunciado.setEditable(false);
+        txtCategoria.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaCorrecta.setEditable(false);
+        txtRespuestaCorrecta.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaIncorrecta1.setEditable(false);
+        txtRespuestaIncorrecta1.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaIncorrecta2.setEditable(false);
+        txtRespuestaIncorrecta2.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaIncorrecta3.setEditable(false);
+        txtRespuestaIncorrecta3.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtCategoria.setEditable(false);
+        txtCategoria.setDisabledTextColor(Colores.COLOR_BLANCO);
+
 
         datePicker.setEnabled(false);
         datePicker.setForeground(Colores.COLOR_NEGRO);

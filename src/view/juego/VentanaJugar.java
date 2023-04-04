@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import controller.controlPartida.*;
+import controller.tools.Colores;
 import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
 import controller.usuario.ConfiguracionUsuario;
@@ -218,13 +219,13 @@ public class VentanaJugar extends javax.swing.JFrame {
 
 
         labelRespuestasIncorrectas.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
-        labelRespuestasIncorrectas.setForeground(new Color(238, 82, 83));
+        labelRespuestasIncorrectas.setForeground(Colores.COLOR_PREGUNTAS_FALLADAS);
         labelRespuestasIncorrectas.setText("Respuestas Incorrectas: ");
         labelRespuestasIncorrectas.setPreferredSize(new java.awt.Dimension(220, 0));
         panelInformacion.add(labelRespuestasIncorrectas, java.awt.BorderLayout.LINE_START);
 
         labelRespuestasCorrectas.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 14)); // NOI18N
-        labelRespuestasCorrectas.setForeground(new Color(29, 209, 161));
+        labelRespuestasCorrectas.setForeground(Colores.COLOR_PREGUNTAS_ACERTADAS);
         labelRespuestasCorrectas.setText("Respuestas Correctas: ");
         labelRespuestasCorrectas.setPreferredSize(new java.awt.Dimension(220, 0));
         panelInformacion.add(labelRespuestasCorrectas, java.awt.BorderLayout.LINE_END);

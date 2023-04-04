@@ -6,7 +6,6 @@ package view.usuario.paneles;
 
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
-import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
@@ -14,8 +13,6 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.logging.Handler;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su nombre de usuario
@@ -47,9 +44,6 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
-        txtPassword.addFocusListener(new EventoFoco());
-        txtUsername.addFocusListener(new EventoFoco());
-
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña");
 
@@ -58,10 +52,10 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setForeground(Colores.COLOR_NEGRO);
-        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
+
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -70,10 +64,10 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
+        btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnAceptar.setForeground(Colores.COLOR_NEGRO);
-        btnAceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
+
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -84,28 +78,32 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 159, Short.MAX_VALUE)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(41, 41, 41)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
-                            .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(94, 94, 94))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-                                .addComponent(txtUsername))))))
+                    .addGap(18, 18, 18)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                        .addComponent(txtUsername))
+                    .addContainerGap(44, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 496, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(316, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(130, 130, 130))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(115, 115, 115)
@@ -116,11 +114,7 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGap(141, 141, 141)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addContainerGap(116, Short.MAX_VALUE)))
+                    .addContainerGap(307, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,7 +123,7 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void limpiarCampos() {
-        txtUsername.setText("");
+        txtPassword.setText("");
         txtPassword.setText("");
     }
 
@@ -151,7 +145,7 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         }else if(!ComprobarDatos.comprobarNombre(txtUsername.getText())){
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_USERNAME,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
-            if(GestionUsuarios.cambiarNombre(ConfiguracionUsuario.getNombreUsuario(),txtUsername.getText())){
+            if(GestionUsuarios.cambiarNombre(ConfiguracionUsuario.getNombreUsuario(), txtUsername.getText())){
                 JOptionPane.showMessageDialog(this, Mensajes.USUARIO_CAMBIADO,Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 txtNombreUsuario.setText(txtUsername.getText());
                 limpiarCampos();

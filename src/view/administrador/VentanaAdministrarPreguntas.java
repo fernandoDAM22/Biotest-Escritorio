@@ -52,6 +52,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     public VentanaAdministrarPreguntas() {
         initComponents();
         setLocationRelativeTo(null);
+        setSize(1300,700);
     }
 
     /**

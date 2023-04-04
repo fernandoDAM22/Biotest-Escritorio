@@ -2,6 +2,7 @@ package controller.tools;
 
 /**
  * En esta interfaz tenemos los mensajes que mostramos al usuario
+ *
  * @author Fernando
  */
 public interface Mensajes {
@@ -60,8 +61,10 @@ public interface Mensajes {
     String ERROR_CAMBIAR_USERNAME = "No se ha podido cambiar el nombre de usuario";
     String TELEFONO_CAMBIADO = "Telefono cambiado correctamente";
     String SELECCIONE_MODO_JUEGO = "Seleccione un modo de juego";
-    String USUARIO_REGISTRADO = "Usuario registrado correctamente" ;
+    String USUARIO_REGISTRADO = "Usuario registrado correctamente";
     String ERROR_MISMO_USUARIO = "Error, no puedes borrar tu mismo usuario";
+    Object MENSAJE_EMAIL_CORRECTO = "Email enviado correctamente, si no lo ha recibido, compruebe que su email es correcto y consulte el manual";
+    Object MENSAJE_ERROR_EMAIL = "Error al enviar el email";
     //----------------------------------BOTONES---------------------------------------------//
     String MENSAJE_BORRAR = "Eliminar";
     //-----------------------------------LOGGER--------------------------------------------//
@@ -77,6 +80,11 @@ public interface Mensajes {
     String ERROR_EXCEPTION = "Se produjo una excepcion";
     String ERROR_SQL_EXCEPTION = "Se produjo una excepcion de sql";
     String ERROR_NULL_POINTER_EXCEPCION = "Se produjo un error de puntero nulo";
-    Object MENSAJE_EMAIL_CORRECTO = "Email enviado correctamente, si no lo ha recibido, compruebe que su email es correcto y consulte el manual";
-    Object MENSAJE_ERROR_EMAIL = "Error al enviar el email";
+    //-----------------------------------CONSEJOS--------------------------------------------//
+    String CONSEJO_USERNAME = "El nombre solo debe contener letras y espacios";
+    String CONSEJO_PASSWORD = "La contraseña debera tener caracteres de los cuales minimo uno debera ser un numero";
+    String CONSEJO_EMAIL = "El email debe ser un email valido";
+
+    String CONSEJO_TELEFONO = "El telefono debera contener 9 numeros";
+    String CONSEJO_CANCELAR_VENTANA_REGISTRO = "Volver a la ventana de login";
 }

@@ -212,12 +212,20 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         jLabel5.setText("Tipo de usuario");
 
         txtUser.setPreferredSize(new java.awt.Dimension(300, 30));
+        txtUser.setEnabled(false);
+        txtUser.setDisabledTextColor(Colores.COLOR_BLANCO);
 
         txtEmail.setPreferredSize(new java.awt.Dimension(300, 30));
+        txtEmail.setEnabled(false);
+        txtEmail.setDisabledTextColor(Colores.COLOR_BLANCO);
 
         txtTipo.setPreferredSize(new java.awt.Dimension(300, 30));
+        txtTipo.setEnabled(false);
+        txtTipo.setDisabledTextColor(Colores.COLOR_BLANCO);
 
         txtTelefono.setPreferredSize(new java.awt.Dimension(300, 30));
+        txtTelefono.setEnabled(false);
+        txtTelefono.setDisabledTextColor(Colores.COLOR_BLANCO);
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);

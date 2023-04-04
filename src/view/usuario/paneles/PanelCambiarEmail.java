@@ -6,7 +6,6 @@ package view.usuario.paneles;
 
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
-import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
@@ -14,8 +13,6 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.logging.Handler;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su email
@@ -47,9 +44,6 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         btnCancelar = new javax.swing.JButton();
         btnAceptar = new javax.swing.JButton();
 
-        txtPassword.addFocusListener(new EventoFoco());
-        txtEmail.addFocusListener(new EventoFoco());
-
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Contraseña");
 
@@ -58,10 +52,9 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnCancelar.setForeground(Colores.COLOR_NEGRO);
-        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnCancelar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -70,10 +63,9 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
 
         btnAceptar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAceptar.setText("Aceptar");
+        btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnAceptar.setForeground(Colores.COLOR_NEGRO);
-        btnAceptar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        btnAceptar.setPreferredSize(new java.awt.Dimension(150, 50));
         btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAceptarActionPerformed(evt);
@@ -85,11 +77,11 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(69, 69, 69)
+                .addGap(26, 26, 26)
                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 145, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGap(29, 29, 29))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(41, 41, 41)

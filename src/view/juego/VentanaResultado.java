@@ -140,7 +140,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         panelBotones.setPreferredSize(new java.awt.Dimension(400, 150));
         panelBotones.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 15));
 
-        btnSalir.setBackground(new Color(238, 82, 83));
+        btnSalir.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnSalir.setForeground(new java.awt.Color(0, 0, 0));
         btnSalir.setText("Salir");
@@ -154,7 +154,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         });
         panelBotones.add(btnSalir);
 
-        btnMenuPrincipal.setBackground(new Color(29, 209, 161));
+        btnMenuPrincipal.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnMenuPrincipal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnMenuPrincipal.setForeground(new java.awt.Color(0, 0, 0));
         btnMenuPrincipal.setText("Menu Principal");
@@ -168,7 +168,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         });
         panelBotones.add(btnMenuPrincipal);
 
-        btnEmail.setBackground(new Color(29, 209, 161));
+        btnEmail.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnEmail.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         btnEmail.setForeground(new java.awt.Color(0, 0, 0));
         btnEmail.setText("Enviar Email");

@@ -50,6 +50,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     public VentanaAdministrarCuestionarios() {
         initComponents();
         setLocationRelativeTo(null);
+        setTitle("Cuestionarios");
     }
 
     /**
@@ -127,7 +128,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
-
 
         panelPrincipal3.setLayout(new java.awt.GridLayout(4, 1));
 
@@ -295,13 +295,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         panelFila1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 30));
 
+
         listaCuestionarios.setEditable(false);
         listaCuestionarios.setForeground(Colores.COLOR_LISTAS);
         listaCuestionarios.setMaximumRowCount(50);
-        listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
         listaCuestionarios.setEditable(false);
         listaCuestionarios.setMaximumRowCount(50);
-        listaCuestionarios.setPreferredSize(new java.awt.Dimension(600, 40));
+        listaCuestionarios.setPreferredSize(new java.awt.Dimension(700, 40));
         listaCuestionarios.setFont(new java.awt.Font("Segoe UI", 1, 14));
         listaCuestionarios.addItemListener(new ItemListener() {
             @Override
@@ -469,16 +469,26 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         txtCategoriaPregunta.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtCategoriaPregunta.setPreferredSize(new java.awt.Dimension(73, 22));
+        txtCategoriaPregunta.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtCategoriaPregunta.setEnabled(false);
 
         txtRespuestaIncorrecta2.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtRespuestaIncorrecta2.setPreferredSize(new java.awt.Dimension(73, 22));
+        txtRespuestaIncorrecta2.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta2.setEnabled(false);
 
         txtRespuestaIncorrecta1.setMaximumSize(new java.awt.Dimension(2147483647, 22));
+        txtRespuestaIncorrecta1.setDisabledTextColor(Colores.COLOR_BLANCO);
         txtRespuestaIncorrecta1.setPreferredSize(new java.awt.Dimension(73, 22));
+        txtRespuestaIncorrecta1.setEnabled(false);
 
         txtRespuestaCorrecta.setMaximumSize(new java.awt.Dimension(2147483647, 22));
+        txtRespuestaCorrecta.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaCorrecta.setEnabled(false);
 
         txtEnunciado.setMaximumSize(new java.awt.Dimension(2147483647, 22));
+        txtEnunciado.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtEnunciado.setEnabled(false);
 
         jLabel7.setText("Enunciado");
 
@@ -497,6 +507,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         txtRespuestaIncorrecta3.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtRespuestaIncorrecta3.setPreferredSize(new java.awt.Dimension(73, 22));
+        txtRespuestaIncorrecta3.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta3.setEnabled(false);
 
         javax.swing.GroupLayout JpanelPreguntasLayout = new javax.swing.GroupLayout(JpanelPreguntas);
         JpanelPreguntas.setLayout(JpanelPreguntasLayout);
@@ -1255,6 +1267,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel labelTitulo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaPreguntas;
     private javax.swing.JTextField txtNombreCuestionario;
@@ -1285,6 +1298,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JPanel panelDialogoFila8;
     private javax.swing.JPanel panelFila1;
     private javax.swing.JPanel panelFila2;
+    private javax.swing.JPanel panelTitulo;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelPrincipal3;
     private javax.swing.JTextField txtCategoriaPregunta;

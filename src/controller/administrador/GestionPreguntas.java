@@ -178,7 +178,7 @@ public class GestionPreguntas {
             int estado = sentencia.executeUpdate();
             return estado > 0;
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            return false;
         } finally {
             ConexionBD.cerrar(sentencia,conexionBD);
         }

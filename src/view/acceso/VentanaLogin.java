@@ -65,11 +65,13 @@ public class VentanaLogin extends javax.swing.JFrame {
         labelUsername.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelUsername.setForeground(new Color(0, 0, 0));
         labelUsername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        inputUsername.setToolTipText(Mensajes.CONSEJO_USERNAME);
         labelUsername.setText("Username");
 
         labelPassword.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelPassword.setForeground(new Color(0, 0, 0));
         labelPassword.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        inputPassword.setToolTipText(Mensajes.CONSEJO_PASSWORD);
         labelPassword.setText("Password");
 
         inputPassword.setBorder(null);

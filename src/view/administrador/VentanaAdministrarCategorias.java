@@ -49,8 +49,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     public VentanaAdministrarCategorias() {
         initComponents();
         setLocationRelativeTo(null);
-        setLocationRelativeTo(null);
         setSize(new Dimension(1300, 700));
+        setTitle("Categorias");
     }
 
     /**
@@ -62,9 +62,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        panelPrinicipal = new javax.swing.JPanel();
+        panelPrincipal = new javax.swing.JPanel();
         panelBotones = new javax.swing.JPanel();
         panelDatosCategoria = new javax.swing.JPanel();
+        panelTitulo = new javax.swing.JPanel();
+        labelTitulo = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtNombreCategoria = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -112,7 +114,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        panelPrinicipal.setLayout(new java.awt.BorderLayout());
+        panelPrincipal.setLayout(new java.awt.BorderLayout());
+        labelTitulo.setText("Categorias");
+        labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        panelTitulo.add(labelTitulo);
+        panelPrincipal.add(panelTitulo,BorderLayout.PAGE_START);
 
         panelBotones.setAutoscrolls(true);
         panelBotones.setBorder(javax.swing.BorderFactory.createTitledBorder("Operaciones"));
@@ -127,6 +133,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jLabel12.setText("Descripcion");
         txtNombreCategoria.addFocusListener(new EventoFoco());
         txtDescripcionCategoria.addFocusListener(new EventoFoco());
+        panelDatosCategoria.setLayout(new FlowLayout());
+
+
 
         javax.swing.GroupLayout panelDatosCategoriaLayout = new javax.swing.GroupLayout(panelDatosCategoria);
         panelDatosCategoria.setLayout(panelDatosCategoriaLayout);
@@ -207,7 +216,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         });
         panelBotones.add(btnModificar);
 
-        panelPrinicipal.add(panelBotones, java.awt.BorderLayout.LINE_END);
+        panelPrincipal.add(panelBotones, java.awt.BorderLayout.LINE_END);
 
         panelContenido.setLayout(new java.awt.BorderLayout(0, 25));
 
@@ -305,17 +314,27 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jLabel11.setText("Respuesta Incorrecta 3");
 
         txtEnunciado.setMaximumSize(new java.awt.Dimension(2147483647, 22));
+        txtEnunciado.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtEnunciado.setEnabled(false);
 
         txtRespuestaCorrecta.setMaximumSize(new java.awt.Dimension(2147483647, 22));
+        txtRespuestaCorrecta.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaCorrecta.setEnabled(false);
 
         txtRespuestaIncorrecta1.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtRespuestaIncorrecta1.setPreferredSize(new java.awt.Dimension(73, 26));
+        txtRespuestaIncorrecta1.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta1.setEnabled(false);
 
         txtRespuestaIncorrecta2.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtRespuestaIncorrecta2.setPreferredSize(new java.awt.Dimension(73, 26));
+        txtRespuestaIncorrecta2.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta2.setEnabled(false);
 
         txtRespuestaIncorrecta3.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtRespuestaIncorrecta3.setPreferredSize(new java.awt.Dimension(73, 26));
+        txtRespuestaIncorrecta3.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta3.setEnabled(false);
 
         javax.swing.GroupLayout jpanelInformacionPreguntasLayout = new javax.swing.GroupLayout(jpanelInformacionPreguntas);
         jpanelInformacionPreguntas.setLayout(jpanelInformacionPreguntasLayout);
@@ -378,7 +397,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         panelContenido.add(jpanelInformacionPreguntas, java.awt.BorderLayout.PAGE_END);
 
-        panelPrinicipal.add(panelContenido, java.awt.BorderLayout.CENTER);
+        panelPrincipal.add(panelContenido, java.awt.BorderLayout.CENTER);
 
         menuUsuario.setText("Usuario");
 
@@ -521,11 +540,11 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(panelPrinicipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
+                        .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 554, Short.MAX_VALUE)
         );
         cargarListaCategorias();
         modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
@@ -860,6 +879,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -886,11 +906,12 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JPanel panelBotones;
     private javax.swing.JPanel panelContenido;
     private javax.swing.JPanel panelDatosCategoria;
+    private javax.swing.JPanel panelTitulo;
     private javax.swing.JMenu opcionCopiasDeSeguridad;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
     private javax.swing.JMenuItem opcionUsuarios;
-    private javax.swing.JPanel panelPrinicipal;
+    private javax.swing.JPanel panelPrincipal;
     private javax.swing.JScrollPane tablaPreguntas;
     private javax.swing.JTextField txtDescripcionCategoria;
     private javax.swing.JTextField txtEnunciado;

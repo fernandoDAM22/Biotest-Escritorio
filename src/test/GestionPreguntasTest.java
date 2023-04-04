@@ -26,10 +26,10 @@ public class GestionPreguntasTest {
     @Test
     public void insertarPregunta(){
         ArrayList<Pregunta> preguntas = new ArrayList<>();
-        preguntas.add(new Pregunta("prueba1","a","a","a","a",26));
-        preguntas.add(new Pregunta("prueba2","a","a","a","a",26));
-        preguntas.add(new Pregunta("prueba3","a","a","a","a",26));
-        preguntas.add(new Pregunta("prueba3","a","a","a","a",26));
+        preguntas.add(new Pregunta("prueba2","a","a","a","a",56));
+        preguntas.add(new Pregunta("prueba1","a","a","a","a",56));
+        preguntas.add(new Pregunta("prueba3","a","a","a","a",56));
+        preguntas.add(new Pregunta("prueba3","a","a","a","a",56));
         preguntas.add(new Pregunta("prueba4","a","a","a","a",27));
         boolean[] esperado = {true,true,true,true,false};
         boolean[] resultado = new boolean[esperado.length];
@@ -41,8 +41,8 @@ public class GestionPreguntasTest {
     @Test
     public void borrarPregunta(){
         ArrayList<Pregunta> preguntas = new ArrayList<>();
-        preguntas.add(new Pregunta("prueba1","a","a","a","a",26));
-        preguntas.add(new Pregunta("prueba2","a","a","a","a",26));
+        preguntas.add(new Pregunta("prueba1","a","a","a","a",56));
+        preguntas.add(new Pregunta("prueba2","a","a","a","a",56));
         GestionPreguntas.insertarPregunta(preguntas.get(0));
         GestionPreguntas.insertarPregunta(preguntas.get(1));
         preguntas.add(new Pregunta("","","","",""));
