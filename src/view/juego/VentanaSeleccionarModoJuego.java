@@ -1,6 +1,7 @@
 package view.juego;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.tools.Browser;
 import controller.tools.Colores;
 import controller.tools.Mensajes;
 import controller.tools.TipoPartida;
@@ -17,6 +18,8 @@ import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -29,7 +32,7 @@ import java.util.Enumeration;
  * @author Fernando
  */
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
-    boolean puedeContinuar = true;
+    // boolean puedeContinuar = true;
 
     /**
      * Creates new form VentanaSeleccionarModoJuego
@@ -68,6 +71,8 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
         opcionModoJuego = new javax.swing.JMenuItem();
         opcionAjustesUsuario = new javax.swing.JMenuItem();
         menuAdministrador = new javax.swing.JMenu();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
         opcionPreguntas = new javax.swing.JMenuItem();
         opcionCuestionarios = new javax.swing.JMenuItem();
         opcionCategorias = new javax.swing.JMenuItem();
@@ -302,10 +307,33 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
 
         barraMenu.add(menuAdministrador);
 
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
+
         setJMenuBar(barraMenu);
         ConfiguracionUsuario.desactivarMenu(barraMenu, menuAdministrador);
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        /*
+        En caso de que no podamos acceder al navegador del usuario, bien porque no
+        tiene ninguno instalado o porque ocurre algun error, mostramos un mensaje de
+        error y copiamos la url en el portapales del usuario
+         */
+        if (!Browser.openURL(Browser.URL_LICENCIA)) {
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -477,6 +505,8 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
     private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;

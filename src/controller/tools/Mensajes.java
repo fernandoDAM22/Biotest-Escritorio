@@ -1,5 +1,7 @@
 package controller.tools;
 
+import com.google.gson.internal.bind.JsonTreeReader;
+
 /**
  * En esta interfaz tenemos los mensajes que mostramos al usuario
  *
@@ -87,4 +89,5 @@ public interface Mensajes {
 
     String CONSEJO_TELEFONO = "El telefono debera contener 9 numeros";
     String CONSEJO_CANCELAR_VENTANA_REGISTRO = "Volver a la ventana de login";
+    String ERROR_ABRIR_NAVEGADOR = "Error al abrir el navegador, la url a sido copiada en el portapapeles";
 }

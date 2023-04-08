@@ -19,4 +19,5 @@ public interface Patrones {
      */
 
     String PATRON_FORMATO_PASSWORD = "^(?=.*[0-9]).{8,}$";
+
 }
