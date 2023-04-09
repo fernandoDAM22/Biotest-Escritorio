@@ -309,6 +309,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
 
         menuLicencia.setText("Licencia");
         opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
         opcionLicencia.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {

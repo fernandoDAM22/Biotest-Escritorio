@@ -5,6 +5,7 @@
 package view.usuario;
 
 import controller.baseDeDatos.CopiaDeSeguridad;
+import controller.tools.Browser;
 import controller.tools.Colores;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
@@ -125,6 +126,9 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
+
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -384,6 +388,18 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
 
         barraMenu.add(menuAdministrador);
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
+
 
         setJMenuBar(barraMenu);
 
@@ -401,6 +417,13 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -522,5 +545,8 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtTelefono;
     private javax.swing.JTextField txtTipo;
     private javax.swing.JTextField txtUser;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
+
     // End of variables declaration//GEN-END:variables
 }

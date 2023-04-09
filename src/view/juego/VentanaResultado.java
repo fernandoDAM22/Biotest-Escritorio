@@ -111,6 +111,8 @@ public class VentanaResultado extends javax.swing.JFrame {
         opcionUsuarios = new javax.swing.JMenuItem();
         opcionCerrarSesion = new javax.swing.JMenuItem();
         opcionAjustesUsuario = new javax.swing.JMenuItem();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -403,7 +405,19 @@ public class VentanaResultado extends javax.swing.JFrame {
 
 
 
-        barraMenu.add(menuAdministrador);
+        barraMenu.add(menuAdministrador);   menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
+
+
 
         setJMenuBar(barraMenu);
 
@@ -429,6 +443,13 @@ public class VentanaResultado extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -681,6 +702,8 @@ public class VentanaResultado extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
     private javax.swing.JMenuItem opcionUsuarios;
-    // End of variables declaration
+
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
     // End of variables declaration
 }

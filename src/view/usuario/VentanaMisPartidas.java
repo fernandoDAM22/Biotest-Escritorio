@@ -7,10 +7,7 @@ package view.usuario;
 import controller.administrador.GestionCategorias;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.controlPartida.ConsultasPartida;
-import controller.tools.Colores;
-import controller.tools.Mensajes;
-import controller.tools.PilaComboBoxModel;
-import controller.tools.TableCellRenderResultado;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import model.Partida;
@@ -108,6 +105,10 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
+
+
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1200, 700));
@@ -398,8 +399,21 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
 
 
         barraMenu.add(menuAdministrador);
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
+
 
         setJMenuBar(barraMenu);
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -414,6 +428,13 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionExportarActionPeformed(ActionEvent evt) {
         if(JOptionPane.showConfirmDialog(null, Mensajes.CONFIRMACION_BACKUP, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0){
@@ -614,5 +635,8 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionUsuarios;
     private javax.swing.JTextField txtRespuestaIncorrecta2;
     private javax.swing.JTextField txtRespuestaIncorrecta3;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
+
     // End of variables declaration//GEN-END:variables
 }

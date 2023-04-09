@@ -94,6 +94,8 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
 
         txtNombre.addFocusListener(new EventoFoco());
         txtPassword.addFocusListener(new EventoFoco());
@@ -427,6 +429,19 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
 
         barraMenu.add(menuAdministrador);
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
+
+
 
         setJMenuBar(barraMenu);
 
@@ -446,6 +461,13 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -927,5 +949,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPassword;
     private javax.swing.JTextField txtTelefono;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
     // End of variables declaration
 }

@@ -14,10 +14,7 @@ import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
-import controller.tools.Colores;
-import controller.tools.EventoFoco;
-import controller.tools.Mensajes;
-import controller.tools.MyCellRenderer;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
@@ -110,6 +107,9 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jmenuInformePreguntas = new javax.swing.JMenuItem();
         jmenuInformeCategorias = new javax.swing.JMenuItem();
         jmenuPreguntasPorCategoria = new javax.swing.JMenuItem();
+
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -533,6 +533,17 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuInformes.add(jmenuInformePreguntas);
         menuInformes.add(jmenuPreguntasPorCategoria);
         barraMenu.add(menuInformes);
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
 
         setJMenuBar(barraMenu);
 
@@ -552,6 +563,13 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -893,6 +911,8 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private javax.swing.JMenu menuAdministrador;
     private javax.swing.JMenu menuUsuario;
     private javax.swing.JMenu menuInformes;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
     private javax.swing.JMenuItem jmenuInformePreguntas;
     private javax.swing.JMenuItem jmenuInformeCategorias;
     private javax.swing.JMenuItem jmenuPreguntasPorCategoria;

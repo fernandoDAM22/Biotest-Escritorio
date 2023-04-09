@@ -75,6 +75,8 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         opcionCategorias = new javax.swing.JMenuItem();
         opcionCopiasDeSeguridad = new javax.swing.JMenu();
         jmenuInformes = new javax.swing.JMenu();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
         jmenuItemInforme = new javax.swing.JMenuItem();
         opcionImportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
@@ -454,11 +456,29 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
         );
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
         colocarCategorias();
         setJMenuBar(barraMenu);
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -806,6 +826,8 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCerrarSesion;
     private javax.swing.JMenu opcionCopiasDeSeguridad;
     private javax.swing.JMenu jmenuInformes;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
 
     private javax.swing.JMenuItem jmenuItemInforme;
     private javax.swing.JMenuItem opcionExportar;

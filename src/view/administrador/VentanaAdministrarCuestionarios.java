@@ -128,6 +128,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         opcionImportar = new javax.swing.JMenuItem();
         opcionExportar = new javax.swing.JMenuItem();
         opcionUsuarios = new javax.swing.JMenuItem();
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
+
 
         panelPrincipal3.setLayout(new java.awt.GridLayout(4, 1));
 
@@ -738,6 +741,20 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
 
         barraMenu.add(menuAdministrador);
+        menuLicencia = new javax.swing.JMenu();
+        opcionLicencia = new javax.swing.JMenuItem();
+
+        menuLicencia.setText("Licencia");
+        opcionLicencia.setText("Detalles de la licencia");
+        opcionLicencia.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, ActionEvent.ALT_MASK));
+        opcionLicencia.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                opcionLicenciaActionPerformed(evt);
+            }
+        });
+        menuLicencia.add(opcionLicencia);
+        barraMenu.add(menuLicencia);
 
         setJMenuBar(barraMenu);
 
@@ -760,6 +777,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void opcionLicenciaActionPerformed(ActionEvent evt) {
+        if(!Browser.openURL(Browser.URL_LICENCIA)){
+            JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
+            Browser.copyURL(Browser.URL_LICENCIA);
+        }
+    }
 
     private void opcionMisPartidasActionPerformed(ActionEvent evt) {
         VentanaMisPartidas frame = new VentanaMisPartidas();
@@ -1283,6 +1307,8 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JMenuItem opcionCategorias;
     private javax.swing.JMenuItem opcionCuestionarios;
     private javax.swing.JMenu opcionCopiasDeSeguridad;
+    private javax.swing.JMenu menuLicencia;
+    private javax.swing.JMenuItem opcionLicencia;
     private javax.swing.JMenuItem opcionExportar;
     private javax.swing.JMenuItem opcionImportar;
     private javax.swing.JMenuItem opcionUsuarios;
@@ -1298,7 +1324,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private javax.swing.JPanel panelDialogoFila8;
     private javax.swing.JPanel panelFila1;
     private javax.swing.JPanel panelFila2;
-    private javax.swing.JPanel panelTitulo;
     private javax.swing.JPanel panelPrincipal;
     private javax.swing.JPanel panelPrincipal3;
     private javax.swing.JTextField txtCategoriaPregunta;

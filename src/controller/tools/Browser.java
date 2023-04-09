@@ -15,7 +15,7 @@ public class Browser {
     /**
      * Esta constante contiene la url de la licencia de nuestra aplicacion
      */
-    public static final String URL_LICENCIA = "https://creativecommons.org/licenses/by-nc-sa/4.0/";
+    public static final String URL_LICENCIA = "https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es";
 
     /**
      * Este metodo permite abrir una url en el navegador predeterminado

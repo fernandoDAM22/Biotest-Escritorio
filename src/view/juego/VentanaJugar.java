@@ -240,7 +240,7 @@ public class VentanaJugar extends javax.swing.JFrame {
 
         panelPrincipal.add(panelPregunta);
 
-        btnOpcion1.setBackground(new Color(72, 219, 251));
+        btnOpcion1.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnOpcion1.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 12)); // NOI18N
         btnOpcion1.setForeground(new Color(0, 0, 0));
         btnOpcion1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -253,7 +253,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         });
         panelOpciones.add(btnOpcion1);
 
-        btnOpcion2.setBackground(new Color(72, 219, 251));
+        btnOpcion2.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnOpcion2.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 12)); // NOI18N
         btnOpcion2.setForeground(new Color(0, 0, 0));
         btnOpcion2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -266,7 +266,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         });
         panelOpciones.add(btnOpcion2);
 
-        btnOpcion3.setBackground(new Color(72, 219, 251));
+        btnOpcion3.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnOpcion3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnOpcion3.setForeground(new Color(0, 0, 0));
         btnOpcion3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -279,7 +279,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         });
         panelOpciones.add(btnOpcion3);
 
-        btnOpcion4.setBackground(new Color(72, 219, 251));
+        btnOpcion4.setBackground(Colores.COLOR_AZUL_BOTONES);
         btnOpcion4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnOpcion4.setForeground(new Color(0, 0, 0));
         btnOpcion4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -296,7 +296,7 @@ public class VentanaJugar extends javax.swing.JFrame {
 
         panelControles.setLayout(new java.awt.FlowLayout());
 
-        btnFinalizar.setBackground(new Color(238, 82, 83));
+        btnFinalizar.setBackground(Colores.COLOR_BOTON_CANCELAR);
         btnFinalizar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnFinalizar.setForeground(new Color(0, 0, 0));
         btnFinalizar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -312,7 +312,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         panelControles.add(btnFinalizar);
 
         panelControles.setLayout(new java.awt.FlowLayout());
-        btnSiguiente.setBackground(new Color(29, 209, 161));
+        btnSiguiente.setBackground(Colores.COLOR_BOTON_ACEPTAR);
         btnSiguiente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnSiguiente.setForeground(new Color(0, 0, 0));
         btnSiguiente.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
