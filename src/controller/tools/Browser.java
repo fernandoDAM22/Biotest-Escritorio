@@ -32,6 +32,11 @@ public class Browser {
                     desktop.browse(new URI(url));
                     return true;
                 } catch (IOException | URISyntaxException ex) {
+                    /*
+                     * En caso de que no se pueda abrir el navegador devido a un error,
+                     * retornamos false, para poder indicarselo al usuario y copiar la url
+                     * de la licencia en su portapapeles
+                     */
                     return false;
                 }
             }

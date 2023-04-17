@@ -37,13 +37,7 @@ public class ComprobarDatos implements Patrones{
      * @author Fernando
      */
     public static boolean comprobarCorreo(String email) {
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            return false;
-        }
-        return true;
+        return email.matches(PATRON_EMAIL);
     }
 
     /**
