@@ -1,6 +1,5 @@
 package controller.tools;
 
-import com.google.gson.internal.bind.JsonTreeReader;
 
 /**
  * En esta interfaz tenemos los mensajes que mostramos al usuario

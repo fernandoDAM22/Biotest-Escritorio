@@ -19,7 +19,7 @@ public class LoggerUtil {
                 if(!carpeta.isFile()){
                     carpeta.mkdirs();
                 }
-                fileHandler = new FileHandler("logs/log-file");
+                fileHandler = new FileHandler("logs/log-file.txt",true);
                 fileHandler.setFormatter(new SimpleFormatter());
             } catch (IOException e) {
                 logger.log(Level.SEVERE, "No se pudo crear el archivo de registro", e);

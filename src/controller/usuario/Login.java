@@ -3,11 +3,16 @@ package controller.usuario;
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
 import controller.tools.ComprobarDatos;
+import controller.tools.LoggerUtil;
+import controller.tools.Mensajes;
+import view.administrador.VentanaAdministrarPreguntas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase contiene los metodos necesarios para permitir al usuario

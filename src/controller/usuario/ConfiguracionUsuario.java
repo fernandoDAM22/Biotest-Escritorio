@@ -1,6 +1,8 @@
 package controller.usuario;
 
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Esta clase guarda algunos datos que nos seran necesarios para
@@ -22,10 +24,11 @@ public class ConfiguracionUsuario {
      * Este metodo permite eliminar un menu de la barra de menu,
      * se usa para eliminar el menu de administrador en caso de que
      * el usuario logueado no sea administrador
+     *
      * @param barraMenu es la barra de menu
-     * @param menu es el menu que queremos desactivar
+     * @param menu      es el menu que queremos desactivar
      */
-    public static void desactivarMenu(JMenuBar barraMenu,JMenu menu) {
+    public static void desactivarMenu(JMenuBar barraMenu, JMenu menu) {
         if (tipoUsuario.equals(Codigos.USUARIO_NORMAL)) {
             barraMenu.remove(menu);
         }
@@ -39,7 +42,9 @@ public class ConfiguracionUsuario {
     public static void setNombreUsuario(String nombreUsuario) {
         ConfiguracionUsuario.nombreUsuario = nombreUsuario;
     }
-    public static String getNombreUsuario(){
+
+    public static String getNombreUsuario() {
         return nombreUsuario;
     }
+
 }

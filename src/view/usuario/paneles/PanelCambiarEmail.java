@@ -6,13 +6,18 @@ package view.usuario.paneles;
 
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
+import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
+import view.administrador.VentanaAdministrarCuestionarios;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su email
@@ -125,7 +130,7 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         txtEmail.setText("");
     }
 
-    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+    private void btnAceptarActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
            /*
           antes de pasar a realizar la operacion de modificacion comprobamos que los campos no estan vacios,
           de esta forma evitamos que al usuario se le muestren mensajes de error si pulsa el boton accidentalmente

@@ -6,10 +6,12 @@ package view.acceso;
 
 import controller.tools.Colores;
 import controller.tools.EventoFoco;
+import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.Login;
+import view.administrador.VentanaAdministrarPreguntas;
 import view.juego.VentanaSeleccionarModoJuego;
 
 
@@ -18,6 +20,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.logging.Logger;
 
 import static controller.usuario.Codigos.CORRECTO;
 import static controller.usuario.Codigos.ERROR_NO_EXISTE_USUARIO;

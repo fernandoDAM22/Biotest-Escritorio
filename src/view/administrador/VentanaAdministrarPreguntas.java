@@ -689,6 +689,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (enunciado.equals("") || respuestaCorrecta.equals("") || respuestaIncorrecta1.equals("")
                 || respuestaIncorrecta2.equals("") || respuestaIncorrecta3.equals("") || idCategoria == -1) {
             JOptionPane.showMessageDialog(this, Mensajes.RELLENE_TODOS_LOS_CAMPOS, Mensajes.ERROR, JOptionPane.WARNING_MESSAGE);
+            return;
         }
         //nos aseguramos de que no existe una pregunta con ese nombre ya
         else if (GestionPreguntas.existePregunta(enunciado)) {
@@ -716,7 +717,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             String enunciado = txtEnunciado.getText();
             //Si no hay nada escrito en la casilla del enunciado cortamos la ejecucion del metodo
             if (enunciado.equals("")) {
-                return;
+                throw new NullPointerException();
             }
             //nos aseguramos de que el usuario quiere realizar la accion
             if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {

@@ -76,4 +76,5 @@ public interface Codigos {
      */
     String OBTENER_TIPO = "tipo";
 
+    String EMAIL = "Email";
 }
