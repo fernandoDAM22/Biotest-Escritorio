@@ -331,7 +331,7 @@ public class VentanaResultado extends javax.swing.JFrame {
         });
         menuUsuario.add(opcionAjustesUsuario);
         opcionMisPartidas.setText("Mis partidas");
-        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
         opcionMisPartidas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {

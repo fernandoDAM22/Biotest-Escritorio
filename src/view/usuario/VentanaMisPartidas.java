@@ -66,7 +66,6 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSlider1 = new javax.swing.JSlider();
         panelPrincipal = new javax.swing.JPanel();
         panelSuperior = new javax.swing.JPanel();
         listaPartidas = new javax.swing.JComboBox<>(new PilaComboBoxModel<>());
@@ -327,7 +326,7 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
         menuUsuario.add(opcionCerrarSesion);
 
         opcionMisPartidas.setText("Mis partidas");
-        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
         opcionMisPartidas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -610,7 +609,7 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenuItem opcionMisPartidas;
-    private javax.swing.JSlider jSlider1;
+
     private javax.swing.JTable tablaPreguntas;
     private javax.swing.JTextField txtModo;
     private javax.swing.JTextField txtPuntuacion;

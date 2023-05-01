@@ -429,7 +429,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         menuUsuario.add(opcionAjustesUsuario);
 
         opcionMisPartidas.setText("Mis partidas");
-        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
         opcionMisPartidas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -682,6 +682,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         if (GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion, 0))) {
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCategorias.colocarPreguntas(tablaInformacionPreguntas, listaCategorias.getSelectedItem().toString());
+            tintarTabla();
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }

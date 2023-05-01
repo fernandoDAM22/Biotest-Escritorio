@@ -683,7 +683,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         });
         menuUsuario.add(opcionAjustesUsuario);
         opcionMisPartidas.setText("Mis partidas");
-        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK));
+        opcionMisPartidas.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.ALT_MASK));
         opcionMisPartidas.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -832,6 +832,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             //en caso de que se borre
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
+            tintarTabla();
         } else {
             //en caso de que no se borre
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);

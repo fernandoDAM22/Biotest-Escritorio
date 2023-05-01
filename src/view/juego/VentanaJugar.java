@@ -201,13 +201,6 @@ public class VentanaJugar extends javax.swing.JFrame {
         btnOpcion4 = new javax.swing.JButton();
         btnFinalizar = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
-        barraMenu = new javax.swing.JMenuBar();
-        menuUsuario = new javax.swing.JMenu();
-        opcionModoJuego = new javax.swing.JMenuItem();
-        menuAdministrador = new javax.swing.JMenu();
-        opcionPreguntas = new javax.swing.JMenuItem();
-        opcionCuestionarios = new javax.swing.JMenuItem();
-        opcionCategorias = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 600));
@@ -329,49 +322,6 @@ public class VentanaJugar extends javax.swing.JFrame {
 
         panelPrincipal.add(panelControles);
 
-
-        menuUsuario.setText("Usuario");
-
-        opcionModoJuego.setText("Seleccionar Modo de juego");
-        opcionModoJuego.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionModoJuegoActionPerformed(evt);
-            }
-        });
-        menuUsuario.add(opcionModoJuego);
-
-        barraMenu.add(menuUsuario);
-
-        menuAdministrador.setText("Administrador");
-
-        opcionPreguntas.setText("Preguntas");
-        opcionPreguntas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionPreguntasActionPerformed(evt);
-            }
-        });
-        menuAdministrador.add(opcionPreguntas);
-
-        opcionCuestionarios.setText("Cuestionarios");
-        opcionCuestionarios.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionCuestionariosActionPerformed(evt);
-            }
-        });
-        menuAdministrador.add(opcionCuestionarios);
-
-        opcionCategorias.setText("Categorias");
-        opcionCategorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                opcionCategoriasActionPerformed(evt);
-            }
-        });
-        menuAdministrador.add(opcionCategorias);
-
-        barraMenu.add(menuAdministrador);
-
-        setJMenuBar(barraMenu);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -384,8 +334,6 @@ public class VentanaJugar extends javax.swing.JFrame {
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
-        ConfiguracionUsuario.desactivarMenu(barraMenu, menuAdministrador);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -580,7 +528,6 @@ public class VentanaJugar extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuBar barraMenu;
     private javax.swing.JButton btnOpcion1;
     private javax.swing.JButton btnOpcion2;
     private javax.swing.JButton btnOpcion3;
@@ -591,12 +538,6 @@ public class VentanaJugar extends javax.swing.JFrame {
     private javax.swing.JLabel labelPregunta;
     private javax.swing.JLabel labelRespuestasCorrectas;
     private javax.swing.JLabel labelRespuestasIncorrectas;
-    private javax.swing.JMenu menuAdministrador;
-    private javax.swing.JMenu menuUsuario;
-    private javax.swing.JMenuItem opcionCategorias;
-    private javax.swing.JMenuItem opcionCuestionarios;
-    private javax.swing.JMenuItem opcionModoJuego;
-    private javax.swing.JMenuItem opcionPreguntas;
     private javax.swing.JPanel panelInformacion;
     private javax.swing.JPanel panelControles;
     private javax.swing.JPanel panelOpciones;
