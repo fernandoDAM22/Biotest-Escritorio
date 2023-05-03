@@ -24,6 +24,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -502,27 +503,9 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
     private void jmenuItemInformeActionPerformed(ActionEvent evt) {
         try {
-            //Indicamos las carpetas donde se encuentra el origen y destino del informe
-            String reportSource = "src/informes/templates/datosPreguntas.jrxml";
-            String reportDest = "src/informes/resultados/datosPreguntas.html";
-            //Compilamos el informe .jrxml  para generar el .jasper
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
-
-            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
-            ConexionBD cbd = new ConexionBD();
-            Connection conn = cbd.abrirConexion();
-
-            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
-
-            //Exportamos el informe
-            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
-            //lo visualizamos
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            ex.printStackTrace();
+           Informes.informePreguntas();
+        } catch (JRException | FileNotFoundException ignored) {
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_RUTA_INFORME,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 

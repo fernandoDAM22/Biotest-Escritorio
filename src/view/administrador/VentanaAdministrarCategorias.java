@@ -6,6 +6,7 @@ package view.administrador;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
@@ -593,45 +594,17 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
     private void jmenuPreguntasPorCategoriaActionPerformed(ActionEvent evt) {
         try {
-            //Indicamos las carpetas donde se encuentra el origen y destino del informe
-            String reportSource = "src/informes/templates/cuentaPreguntasCategoria.jrxml";
-            String reportDest = "src/informes/resultados/cuentaPreguntasCategoria.html";
-            //Compilamos el informe .jrxml  para generar el .jasper
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
-            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
-            ConexionBD cbd = new ConexionBD();
-            Connection conn = cbd.abrirConexion();
-            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
-            //Exportamos el informe
-            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            ex.printStackTrace();
+            Informes.informePreguntasPorCategoria();
+        } catch (JRException | FileNotFoundException ignored) {
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_RUTA_INFORME,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void jmenuInformeCategoriasActionPerformed(ActionEvent evt) {
         try {
-            //Indicamos las carpetas donde se encuentra el origen y destino del informe
-            String reportSource = "src/informes/templates/categorias.jrxml";
-            String reportDest = "src/informes/resultados/categorias.html";
-            //Compilamos el informe .jrxml  para generar el .jasper
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
-            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
-            ConexionBD cbd = new ConexionBD();
-            Connection conn = cbd.abrirConexion();
-            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, conn);
-            //Exportamos el informe
-            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            ex.printStackTrace();
+           Informes.informeCategorias();
+        } catch (JRException | FileNotFoundException ignored) {
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_RUTA_INFORME,"Error",JOptionPane.ERROR_MESSAGE);
         }
 
     }
@@ -639,31 +612,14 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     private void jmenuInformePreguntasActionPerformed(ActionEvent evt) {
         try {
             //Indicamos las carpetas donde se encuentra el origen y destino del informe
-            String reportSource = "src/informes/templates/informacionPreguntas.jrxml";
-            String reportDest = "src/informes/resultados/preguntas.html";
 
-            //Crear un mapa para guardar parametros que podemos pasar al informe
-            Map<String, Object> params = new HashMap<String, Object>();
             if (txtNombreCategoria.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Seleccione una categoria", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            params.put("id_categoria", GestionCategorias.obtenerIdCategoria(txtNombreCategoria.getText()));
-            //Compilamos el informe .jrxml  para generar el .jasper
-            JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
-            //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
-            ConexionBD cbd = new ConexionBD();
-            Connection conn = cbd.abrirConexion();
-            //Cargamos los datos en el jasper pasandole los parámetros y la conexion a la BD
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
-            //Exportamos el informe
-            JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
-            //Y lo visualizamos
-            JasperViewer viewer = new JasperViewer(jasperPrint, false);
-            viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            viewer.setVisible(true);
-        } catch (JRException ex) {
-            ex.printStackTrace();
+            Informes.informePreguntasPorCategoria(listaCategorias.getSelectedItem().toString());
+        } catch (JRException | FileNotFoundException ignored) {
+            JOptionPane.showMessageDialog(this,Mensajes.ERROR_RUTA_INFORME,"Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 

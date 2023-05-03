@@ -89,4 +89,5 @@ public interface Mensajes {
     String CONSEJO_TELEFONO = "El telefono debera contener 9 numeros";
     String CONSEJO_CANCELAR_VENTANA_REGISTRO = "Volver a la ventana de login";
     String ERROR_ABRIR_NAVEGADOR = "Error al abrir el navegador, la url a sido copiada en el portapapeles";
+    Object ERROR_RUTA_INFORME = "Error al crear el informe, comprueba que la ruta (informes/templates) existe y contiene las plantillas necesarias, de lo contrario ponte en contacto con el administrador";
 }
