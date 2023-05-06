@@ -74,7 +74,7 @@ La ruta de instalacion por defecto suele ser:
 
 Despues sustituya el email por el email desde el cual se van a mandar los correos
 ```java
-String EMAIL_PASSWORD = "exrsdgkstaivnerh";
+String  EMAIL = "BioTestProyecto@gmail.com";
 ````
 Genere la clave que le permite enviar correos desde aplicaciones de terceros en su gmail
 ,si no sabe como hacerlo visite el siguiente enlace: 
