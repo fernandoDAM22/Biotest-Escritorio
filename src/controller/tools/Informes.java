@@ -28,8 +28,8 @@ public class Informes {
         //comprobamos que la carpeta resultados existe
         comprobarCarpeta();
         //Indicamos las carpetas donde se encuentra el origen y destino del informe
-        String reportSource = "informes/templates/cuentaPreguntasCategoria.jrxml";
-        String reportDest = "informes/resultados/cuentaPreguntasCategoria.html";
+        String reportSource = "templatesInformes/cuentaPreguntasCategoria.jrxml";
+        String reportDest = "resultadosInformes/cuentaPreguntasCategoria.html";
         //Compilamos el informe .jrxml  para generar el .jasper
         JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
         //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
@@ -53,8 +53,8 @@ public class Informes {
         //comprobamos que la carpeta resultados existe
         comprobarCarpeta();
         //Indicamos las carpetas donde se encuentra el origen y destino del informe
-        String reportSource = "informes/templates/categorias.jrxml";
-        String reportDest = "informes/resultados/categorias.html";
+        String reportSource = "templatesInformes/categorias.jrxml";
+        String reportDest = "resultadosInformes/categorias.html";
         //Compilamos el informe .jrxml  para generar el .jasper
         JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
         //Creamos la conexion a la bd para poder rellenar el .jasper con los datos de la bd
@@ -79,8 +79,8 @@ public class Informes {
     public static void informePreguntasPorCategoria(String categoria) throws JRException, FileNotFoundException {
         //comprobamos que la carpeta resultados existe
         comprobarCarpeta();
-        String reportSource = "informes/templates/informacionPreguntas.jrxml";
-        String reportDest = "informes/resultados/preguntas.html";
+        String reportSource = "templatesInformes/informacionPreguntas.jrxml";
+        String reportDest = "resultadosInformes/preguntas.html";
         //Crear un mapa para guardar parametros que podemos pasar al informe
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("id_categoria", GestionCategorias.obtenerIdCategoria(categoria));
@@ -108,8 +108,8 @@ public class Informes {
         //comprobamos que la carpeta resultados existe
         comprobarCarpeta();
         //Indicamos las carpetas donde se encuentra el origen y destino del informe
-        String reportSource = "informes/templates/datosPreguntas.jrxml";
-        String reportDest = "informes/resultados/datosPreguntas.html";
+        String reportSource = "templatesInformes/datosPreguntas.jrxml";
+        String reportDest = "resultadosInformes/datosPreguntas.html";
         //Compilamos el informe .jrxml  para generar el .jasper
         JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
 
@@ -134,7 +134,7 @@ public class Informes {
      * @author Fernando
      */
     private static void comprobarCarpeta(){
-        File file = new File("informes/resultados/");
+        File file = new File("resultadosInformes");
         if(!file.exists()){
             file.mkdirs();
         }
