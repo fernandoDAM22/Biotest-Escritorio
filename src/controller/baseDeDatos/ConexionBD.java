@@ -1,5 +1,6 @@
 package controller.baseDeDatos;
 
+import controller.tools.JSONReader;
 import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
 
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Fernando
  */
-public class ConexionBD implements Configuracion {
+public class ConexionBD {
     private static final Logger logger = LoggerUtil.getLogger(ConexionBD.class);
     /**
      * Objeto connection a la base de datos
@@ -31,8 +32,8 @@ public class ConexionBD implements Configuracion {
      * Constructor sin parametros
      */
     public ConexionBD() {
-        this.usuario = ADMIN;
-        this.password = PASSWORD_ADMIN;
+        this.usuario = JSONReader.getConfigValue(JSONReader.DATABASE,JSONReader.ADMIN);
+        this.password = JSONReader.getConfigValue(JSONReader.DATABASE,JSONReader.ADMIN_PASSWORD);
     }
 
     /**
@@ -55,19 +56,21 @@ public class ConexionBD implements Configuracion {
      * @return la conexion a la base de datos
      */
     public Connection abrirConexion() {
+        String dbhost = JSONReader.getConfigValue(JSONReader.DATABASE,JSONReader.DBHOST);
+        String dbname = JSONReader.getConfigValue(JSONReader.DATABASE,JSONReader.DBNAME);
         try {
             //Cargamos el driver
             Class.forName("com.mysql.cj.jdbc.Driver");//actual mysql-connector-j-8.0.31.jar
 
             try {
-                conexion = DriverManager.getConnection("jdbc:mysql://" + DBHOST + ":3306/" + DBNAME,
+                conexion = DriverManager.getConnection("jdbc:mysql://" + dbhost + ":3306/" + dbname,
                         this.usuario, this.password);
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
                 e.printStackTrace();
             }
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
         }
 
         return conexion;

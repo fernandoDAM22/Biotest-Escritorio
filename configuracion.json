@@ -1,0 +1,15 @@
+{
+  "database": {
+    "host": "localhost",
+    "name": "preguntas",
+    "admin": "root",
+    "adminPassword": "",
+    "xamppPath": "C:/xamppp/mysql/"
+  },
+  "email": {
+    "sender": "BioTestProyecto@gmail.com",
+    "password": "exrsdgkstaivnerh",
+    "smtpHost": "smtp.gmail.com",
+    "smtpPort": 587
+  }
+}

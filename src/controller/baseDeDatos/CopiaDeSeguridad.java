@@ -1,5 +1,6 @@
 package controller.baseDeDatos;
 
+import controller.tools.JSONReader;
 import controller.tools.LoggerUtil;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
@@ -62,7 +63,7 @@ public class CopiaDeSeguridad implements Codigos {
      */
     public static List<String> comandoCrear(){
         List<String> command = new ArrayList<>();
-        command.add(Configuracion.XAMPP_PATH + "bin/mysqldump");
+        command.add(JSONReader.getConfigValue(JSONReader.DATABASE,JSONReader.XAMPP_PATH) + "bin/mysqldump");
         command.add("-u");
         command.add("root");
         command.add("preguntas");
@@ -137,7 +138,7 @@ public class CopiaDeSeguridad implements Codigos {
     }
     public static List<String> comandoRestaurar(){
         List<String> command = new ArrayList<>();
-        command.add(Configuracion.XAMPP_PATH + "bin/mysql");
+        command.add(JSONReader.getConfigValue(JSONReader.DATABASE,JSONReader.XAMPP_PATH) + "bin/mysql");
         command.add("-u");
         command.add("root");
         command.add("preguntas");

@@ -1,7 +1,5 @@
 package controller.tools;
 
-import controller.baseDeDatos.Configuracion;
-
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -12,7 +10,7 @@ import java.util.Properties;
  * Esta clase permite enviar un email
  * @author Fernando
  */
-public class EmailSender implements Configuracion {
+public class EmailSender {
 
 
     /**
@@ -31,19 +29,21 @@ public class EmailSender implements Configuracion {
         Security.setProperty("jdk.tls.client.cipherSuites", "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256");
 
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.host", SMTP_HOST);
-        props.put("mail.smtp.port", SMTP_PORT);
+        props.put("mail.smtp.host", JSONReader.getConfigValue(JSONReader.EMAIL,JSONReader.SMTP_HOST));
+        props.put("mail.smtp.port", Integer.parseInt(JSONReader.getConfigValue(JSONReader.EMAIL,JSONReader.SMTP_PORT)));
         props.put("mail.smtp.starttls.enable", "true");
 
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(EMAIL, EMAIL_PASSWORD);
+                return new PasswordAuthentication(
+                        JSONReader.getConfigValue(JSONReader.EMAIL,JSONReader.EMAIL_SENDER),
+                        JSONReader.getConfigValue(JSONReader.EMAIL,JSONReader.EMAIL_PASSWORD));
             }
         });
 
         Message msg = new MimeMessage(session);
-        msg.setFrom(new InternetAddress(EMAIL));
+        msg.setFrom(new InternetAddress(JSONReader.getConfigValue(JSONReader.EMAIL,JSONReader.EMAIL_SENDER)));
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
         msg.setSubject(subject);
         msg.setText(message);

@@ -105,13 +105,14 @@ public class ComprobarDatos implements Patrones{
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }finally {
-            assert sentencia != null;
             try {
                 sentencia.close();
+                conexionBD.cerrarConexion();
             } catch (SQLException e) {
                 logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
+            }catch (NullPointerException npe){
+                logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
             }
-            conexionBD.cerrarConexion();
         }
         return resultado;
     }

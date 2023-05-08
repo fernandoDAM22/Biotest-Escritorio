@@ -81,6 +81,8 @@ public interface Mensajes {
     String ERROR_EXCEPTION = "Se produjo una excepcion";
     String ERROR_SQL_EXCEPTION = "Se produjo una excepcion de sql";
     String ERROR_NULL_POINTER_EXCEPCION = "Se produjo un error de puntero nulo";
+    String ERROR_ENTRADA_SALIDA = "Se produjo un error de entrada/salida";
+
     //-----------------------------------CONSEJOS--------------------------------------------//
     String CONSEJO_USERNAME = "El nombre solo debe contener letras y espacios";
     String CONSEJO_PASSWORD = "La contraseña debera tener caracteres de los cuales minimo uno debera ser un numero";
