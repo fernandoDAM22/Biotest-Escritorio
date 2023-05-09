@@ -47,50 +47,50 @@ mysql -u usuario -p base_de_datos < /ruta/a/mi/archivo.sql
 ### Configuracion
 Para configurar el proyecto dirigase al siguiente archivo:
 
-`./src/controller/baseDeDatos/configuracion.java`
+`./configuracion.json`
 
 Sustituya el host y la base de datos por los datos correspondientes
 con su host y su base de datos
-```java
-String DBHOST = "localhost";
+```json lines
+"host" : "localhost"
 ````
-```java
-String DBNAME = "preguntas";
+```json lines
+"name" : "preguntas"
 ````
 Despues sustituya el nombre y la contraseña del usuario administrador
 por el nombre y la contraseña de su usuario con permisos de administrador en la base de datos
-```java
-String ADMIN = "name";
+```json lines
+"admin" : "name"
 ````
-```java
-String PASSWORD_ADMIN = "password";
+```json lines
+"adminPassword" : ""
 ````
 Una vez echo esto sustituya la ruta de instalacion de la carpeta mysql de su xampp
-```java
-String XAMPP_PATH = "C:/xampp/mysql/";
+```json lines
+"xamppPath" : "C:/xampp/mysql/"
 ````
 La ruta de instalacion por defecto suele ser:
 `C:/xampp/mysql/`
 
 Despues sustituya el email por el email desde el cual se van a mandar los correos
-```java
-String  EMAIL = "BioTestProyecto@gmail.com";
+```json lines
+"sender" : "BioTestProyecto@gmail.com"
 ````
 Genere la clave que le permite enviar correos desde aplicaciones de terceros en su gmail
 ,si no sabe como hacerlo visite el siguiente enlace: 
 [Generado de claves en gmail](https://megacity20.com/support/106).
 
 Despues sustituye la clave por la suya
-```java
-String EMAIL_PASSWORD = "xxxxxxxxx";
+```json liness
+ "password" : "exrsdgkstaivnerh"
 ````
 Por ultimo coloque el puerto y el host del servidor de correo en caso de que fuera 
 necesario, en este caso se usa smtp y no se recomienda cambiarlo
-```java
-String SMTP_HOST  = "smtp.gmail.com";
+```json lines
+"smtpHost" : "smtp.gmail.com"
 ````
-```java
-int SMTP_PORT = 587;
+```json lines
+"smtpPort" : 587
 ````
 
 
