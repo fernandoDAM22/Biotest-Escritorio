@@ -446,12 +446,11 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
                     tipoPartida = TipoPartida.CUESTIONARIOS;
                 }
             }
+            VentanaJugar frame = new VentanaJugar(tipoPartida);
+            frame.setSize(1000, 600);
+            frame.setVisible(true);
+            dispose();
         }
-        VentanaJugar frame = new VentanaJugar(tipoPartida);
-        frame.setSize(1000, 600);
-        frame.setVisible(true);
-        dispose();
-
     }
 
     private void opcionCerrarSesionActionListener(ActionEvent evt) {

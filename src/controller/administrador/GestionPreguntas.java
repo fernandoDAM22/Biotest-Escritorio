@@ -395,6 +395,23 @@ public class GestionPreguntas {
             ConexionBD.cerrar(resultSet,sentencia,conexionBD);
         }
         return false;
+    }    /**
+     * Este metodo permite comprobar que las 4 respuestas de una partida sean distintas
+     * @param respuesta1 es la primera respuesta de la pregunta
+     * @param respuesta2 es la segunda respuesta de la pregunta
+     * @param respuesta3 es la tercera respuesta de la pregunta
+     * @param respuesta4 es la cuarta respuesta de la pregunta
+     * @return true en caso de que las respuestas sean distintas, false si alguna se repite
+     * @author Fernando
+     */
+
+    public static boolean respuestasDistintas(String respuesta1, String respuesta2, String respuesta3, String respuesta4) {
+        if (respuesta1.equals(respuesta2) || respuesta1.equals(respuesta3) || respuesta1.equals(respuesta4) ||
+                respuesta2.equals(respuesta3) || respuesta2.equals(respuesta4) || respuesta3.equals(respuesta4)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
 }

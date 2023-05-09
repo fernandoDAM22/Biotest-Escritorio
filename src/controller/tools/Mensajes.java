@@ -66,6 +66,10 @@ public interface Mensajes {
     String ERROR_MISMO_USUARIO = "Error, no puedes borrar tu mismo usuario";
     Object MENSAJE_EMAIL_CORRECTO = "Email enviado correctamente, si no lo ha recibido, compruebe que su email es correcto y consulte el manual";
     Object MENSAJE_ERROR_EMAIL = "Error al enviar el email";
+    String ERROR_RESPUESTAS_REPETIDAS = "Error, no puede haber dos o mas respuestas repetidas";
+    String ERROR_ABRIR_NAVEGADOR = "Error al abrir el navegador, la url a sido copiada en el portapapeles";
+    String ERROR_RUTA_INFORME = "Error al crear el informe, comprueba que la ruta (informes/templates) existe y contiene las plantillas necesarias, de lo contrario ponte en contacto con el administrador";
+
     //----------------------------------BOTONES---------------------------------------------//
     String MENSAJE_BORRAR = "Eliminar";
     //-----------------------------------LOGGER--------------------------------------------//
@@ -90,6 +94,5 @@ public interface Mensajes {
 
     String CONSEJO_TELEFONO = "El telefono debera contener 9 numeros";
     String CONSEJO_CANCELAR_VENTANA_REGISTRO = "Volver a la ventana de login";
-    String ERROR_ABRIR_NAVEGADOR = "Error al abrir el navegador, la url a sido copiada en el portapapeles";
-    Object ERROR_RUTA_INFORME = "Error al crear el informe, comprueba que la ruta (informes/templates) existe y contiene las plantillas necesarias, de lo contrario ponte en contacto con el administrador";
+
 }

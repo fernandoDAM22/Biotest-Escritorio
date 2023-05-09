@@ -779,7 +779,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     }// </editor-fold>
 
     private void opcionLicenciaActionPerformed(ActionEvent evt) {
-        if(!Browser.openURL(Browser.URL_LICENCIA)){
+        if (!Browser.openURL(Browser.URL_LICENCIA)) {
             JOptionPane.showMessageDialog(null, Mensajes.ERROR_ABRIR_NAVEGADOR);
             Browser.copyURL(Browser.URL_LICENCIA);
         }
@@ -794,9 +794,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     /**
      * Este metodo permite limpiar los campos que contienen los datos
      * de la pregunta que esta seleccionada
+     *
      * @author Fernando
      */
-    private void limpiarCampos(){
+    private void limpiarCampos() {
         txtEnunciado.setText("");
         txtRespuestaCorrecta.setText("");
         txtRespuestaIncorrecta1.setText("");
@@ -945,6 +946,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             for (int i = 0; i < filas; i++) {
                 modelo.removeRow(0);
             }
+            txtNombreCuestionario.setText("");
+            txtDescripcionCuestionario.setText("");
+
         }
         tintarTabla();
 
@@ -1144,6 +1148,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             GestionCuestionarios.colocarPreguntas(tablaPreguntas, (String) listaCuestionarios.getSelectedItem());
             tintarTabla();
+            limpiarCampos();
         } else {
             //en caso de que no se borre
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
@@ -1187,6 +1192,10 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         try {
             //se obtiene el id del cuestionario que se quiere borrar
             int id = GestionCuestionarios.obtenerId((String) listaCuestionarios.getSelectedItem());
+            //nos aseguramos de que los campos no esten vacios
+            if (txtNombreCuestionario.getText().equals("") || txtDescripcionCuestionario.getText().equals("")) {
+                return;
+            }
             //nos aseguramos de que el usuario quiere realizar la accion
             if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
                 return;
@@ -1204,6 +1213,15 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
         }
 
+    }
+
+    private void vaciarTabla() {
+        modelo = (DefaultTableModel) tablaPreguntas.getModel();
+        int numero = tablaPreguntas.getSelectedRow();
+        for (int i = 0; i < numero; i++) {
+            modelo.removeRow(0);
+        }
+        tablaPreguntas.setModel(modelo);
     }
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {

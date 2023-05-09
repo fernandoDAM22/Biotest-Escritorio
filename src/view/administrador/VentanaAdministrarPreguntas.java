@@ -679,6 +679,11 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             return;
         }
+        //nos asegurados de que las respuestas sean distintas
+        if(!GestionPreguntas.respuestasDistintas(txtRespuestaCorrecta.getText(),txtRespuestaIncorrecta1.getText(),txtRespuestaIncorrecta2.getText(),txtRespuestaIncorrecta3.getText())){
+            JOptionPane.showMessageDialog(this, Mensajes.ERROR_RESPUESTAS_REPETIDAS, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         //nos aseguramos de que el usuario quiere realizar la accion
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
             return;
@@ -700,7 +705,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
             String enunciado = txtEnunciado.getText();
             //Si no hay nada escrito en la casilla del enunciado cortamos la ejecucion del metodo
             if (enunciado.equals("")) {
-                throw new NullPointerException();
+              return;
             }
             //nos aseguramos de que el usuario quiere realizar la accion
             if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {
@@ -714,7 +719,6 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
         } catch (NullPointerException npe) {
-            logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
             /*
             En caso de que ocurra la excepcion limpiamos las cajas porque
             significa que la tabla de preguntas esta vacia y no hay ninguna

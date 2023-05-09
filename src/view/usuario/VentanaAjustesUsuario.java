@@ -65,7 +65,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
         //panel para cambiar el nombre de usuario
         panelCambiarNombreUsuario = new PanelCambiarNombreUsuario(txtUser);
         panelCambios.add(panelCambiarNombreUsuario,"user");
-
+        setLocationRelativeTo(null);
         //colocar los datos del usuario
         colocarDatos();
     }
