@@ -46,9 +46,11 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Nombre de usuario");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -116,6 +118,8 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(307, Short.MAX_VALUE)))
         );
+        txtPassword.setForeground(Colores.COLOR_BLANCO);
+        txtUsername.setForeground(Colores.COLOR_BLANCO);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

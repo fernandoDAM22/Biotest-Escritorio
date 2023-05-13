@@ -47,9 +47,11 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Telefono");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -114,6 +116,8 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
+        txtTelefono.setForeground(Colores.COLOR_BLANCO);
+        txtPassword.setForeground(Colores.COLOR_BLANCO);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

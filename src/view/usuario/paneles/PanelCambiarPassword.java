@@ -54,14 +54,21 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         txtNewPassword.addFocusListener(new EventoFoco());
         txtOldPassword.addFocusListener(new EventoFoco());
 
+        txtNewPassword.setForeground(Colores.COLOR_BLANCO);
+        txtNewPassword2.setForeground(Colores.COLOR_BLANCO);
+        txtOldPassword.setForeground(Colores.COLOR_BLANCO);
+
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setText("Contraseña Antigua");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Contraseña nueva");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Contraseña nueva 2");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");

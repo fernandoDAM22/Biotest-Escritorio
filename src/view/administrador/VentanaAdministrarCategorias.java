@@ -117,6 +117,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
 
         panelPrincipal.setLayout(new java.awt.BorderLayout());
         labelTitulo.setText("Categorias");
+        labelTitulo.setForeground(Colores.COLOR_BLANCO);
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         panelTitulo.add(labelTitulo);
         panelPrincipal.add(panelTitulo,BorderLayout.PAGE_START);
@@ -130,10 +131,14 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         panelDatosCategoria.setPreferredSize(new java.awt.Dimension(180, 250));
 
         jLabel1.setText("Nombre");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
 
         jLabel12.setText("Descripcion");
+        jLabel12.setForeground(Colores.COLOR_BLANCO);
         txtNombreCategoria.addFocusListener(new EventoFoco());
+        txtNombreCategoria.setForeground(Colores.COLOR_BLANCO);
         txtDescripcionCategoria.addFocusListener(new EventoFoco());
+        txtDescripcionCategoria.setForeground(Colores.COLOR_BLANCO);
         panelDatosCategoria.setLayout(new FlowLayout());
 
 
@@ -225,6 +230,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         listaCategorias.setForeground(new java.awt.Color(0, 0, 0));
         listaCategorias.setPreferredSize(new java.awt.Dimension(200, 50));
         listaCategorias.setForeground(Colores.COLOR_LISTAS);
+
         listaCategorias.setEditable(false);
         listaCategorias.addItemListener(new ItemListener() {
             @Override
@@ -305,14 +311,19 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         jpanelInformacionPreguntas.setPreferredSize(new java.awt.Dimension(861, 230));
 
         jLabel7.setText("Enunciado");
+        jLabel7.setForeground(Colores.COLOR_BLANCO);
 
         jLabel8.setText("Respuesta Correcta");
+        jLabel8.setForeground(Colores.COLOR_BLANCO);
 
         jLabel9.setText("Respuesta Incorrecta 1");
+        jLabel9.setForeground(Colores.COLOR_BLANCO);
 
         jLabel10.setText("Respuesta Incorrecta 2");
+        jLabel10.setForeground(Colores.COLOR_BLANCO);
 
         jLabel11.setText("Respuesta Incorrecta 3");
+        jLabel11.setForeground(Colores.COLOR_BLANCO);
 
         txtEnunciado.setMaximumSize(new java.awt.Dimension(2147483647, 22));
         txtEnunciado.setDisabledTextColor(Colores.COLOR_BLANCO);
@@ -621,6 +632,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         } catch (JRException | FileNotFoundException ignored) {
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_RUTA_INFORME,"Error",JOptionPane.ERROR_MESSAGE);
         }
+
     }
 
     private void borrarPreguntaMenuEmergente() {

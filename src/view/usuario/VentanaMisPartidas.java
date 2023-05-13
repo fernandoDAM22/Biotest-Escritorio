@@ -117,6 +117,7 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
         listaPartidas.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         listaPartidas.setMinimumSize(new java.awt.Dimension(200, 22));
         listaPartidas.setPreferredSize(new java.awt.Dimension(1000, 50));
+        listaPartidas.setForeground(Colores.COLOR_LISTAS);
         listaPartidas.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent evt) {
@@ -131,46 +132,62 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(1299, 250));
 
         jLabel1.setText("Enunciado");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
 
         jLabel2.setText("Respuesta Correcta");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel3.setText("Respuesta Incorrecta 1");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         jLabel4.setText("Respuesta Incorrecta 2");
+        jLabel4.setForeground(Colores.COLOR_BLANCO);
 
         jLabel5.setText("Respuesta Incorrecta 3");
+        jLabel5.setForeground(Colores.COLOR_BLANCO);
 
         jLabel6.setText("Categoria");
+        jLabel6.setForeground(Colores.COLOR_BLANCO);
 
         jLabel7.setText("Modo");
+        jLabel7.setForeground(Colores.COLOR_BLANCO);
 
         jLabel8.setText("Fecha");
+        jLabel8.setForeground(Colores.COLOR_BLANCO);
 
         jLabel9.setText("Puntuacion");
+        jLabel9.setForeground(Colores.COLOR_BLANCO);
 
         txtModo.setText("");
+        txtModo.setForeground(Colores.COLOR_BLANCO);
         txtModo.setEditable(false);
 
         txtPuntuacion.setText("");
         txtPuntuacion.setEditable(false);
 
         txtEnunciado.setEditable(false);
-        txtCategoria.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtEnunciado.setForeground(Colores.COLOR_BLANCO);
+        txtEnunciado.setDisabledTextColor(Colores.COLOR_BLANCO);
 
         txtRespuestaCorrecta.setEditable(false);
         txtRespuestaCorrecta.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaCorrecta.setForeground(Colores.COLOR_BLANCO);
 
         txtRespuestaIncorrecta1.setEditable(false);
         txtRespuestaIncorrecta1.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta1.setForeground(Colores.COLOR_BLANCO);
 
         txtRespuestaIncorrecta2.setEditable(false);
         txtRespuestaIncorrecta2.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta2.setForeground(Colores.COLOR_BLANCO);
 
         txtRespuestaIncorrecta3.setEditable(false);
         txtRespuestaIncorrecta3.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta3.setForeground(Colores.COLOR_BLANCO);
 
         txtCategoria.setEditable(false);
         txtCategoria.setDisabledTextColor(Colores.COLOR_BLANCO);
+        txtCategoria.setForeground(Colores.COLOR_BLANCO);
 
 
         datePicker.setEnabled(false);

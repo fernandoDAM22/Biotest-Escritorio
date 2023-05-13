@@ -51,9 +51,11 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Contraseña");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Email");
+        jLabel4.setForeground(Colores.COLOR_BLANCO);
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -119,6 +121,9 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
                         .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(307, Short.MAX_VALUE)))
         );
+
+        txtEmail.setForeground(Colores.COLOR_BLANCO);
+        txtPassword.setForeground(Colores.COLOR_BLANCO);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

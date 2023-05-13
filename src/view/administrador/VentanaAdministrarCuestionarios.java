@@ -23,6 +23,8 @@ import view.usuario.VentanaAjustesUsuario;
 import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -160,6 +162,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         panelDialogoFila6.add(listaPreguntasDialogo);
 
         listaCategoriasDialogo.setForeground(new Color(255, 255, 255));
+        listaCategoriasDialogo.setForeground(Colores.COLOR_BLANCO);
         listaCategoriasDialogo.setPreferredSize(new java.awt.Dimension(200, 40));
 
         listaCategoriasDialogo.addItemListener(new ItemListener() {
@@ -169,6 +172,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             }
         });
 
+        listaCategorias.setForeground(Colores.COLOR_BLANCO);
         listaCategorias.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent evt) {
@@ -494,16 +498,22 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         txtEnunciado.setEnabled(false);
 
         jLabel7.setText("Enunciado");
+        jLabel7.setForeground(Colores.COLOR_BLANCO);
 
         jLabel8.setText("Respuesta Correcta");
+        jLabel8.setForeground(Colores.COLOR_BLANCO);
 
         jLabel9.setText("Respuesta Incorrecta 1");
+        jLabel9.setForeground(Colores.COLOR_BLANCO);
 
         jLabel10.setText("Respuesta Incorrecta 2");
+        jLabel10.setForeground(Colores.COLOR_BLANCO);
 
         jLabel11.setText("Respuesta Incorrecta 3");
+        jLabel11.setForeground(Colores.COLOR_BLANCO);
 
         jLabel13.setText("Categoria");
+        jLabel13.setForeground(Colores.COLOR_BLANCO);
 
         txtNombreCuestionario.addFocusListener(new EventoFoco());
         txtDescripcionCuestionario.addFocusListener(new EventoFoco());
@@ -579,9 +589,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del cuestionario"));
 
+
         jLabel6.setText("Nombre");
+        jLabel6.setForeground(Colores.COLOR_BLANCO);
 
         jLabel12.setText("Descripcion");
+        jLabel12.setForeground(Colores.COLOR_BLANCO);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -770,6 +783,17 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                                 .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
                                 .addContainerGap())
         );
+
+        txtEnunciado.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaCorrecta.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta1.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta2.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta3.setForeground(Colores.COLOR_BLANCO);
+        txtCategoriaPregunta.setForeground(Colores.COLOR_BLANCO);
+
+        txtNombreCuestionario.setForeground(Colores.COLOR_BLANCO);
+        txtDescripcionCuestionario.setForeground(Colores.COLOR_BLANCO);
+
         modelo = (DefaultTableModel) tablaPreguntas.getModel();
         colocarCategorias();
         actualizarCuestionarios();
@@ -1158,6 +1182,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private void btnInsertarPreguntaActionPerformed(java.awt.event.ActionEvent evt) {
         dialogoPreguntas2.setSize(1000, 500);
         dialogoPreguntas2.setVisible(true);
+        dialogoPreguntas2.setLocationRelativeTo(null);
     }
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {

@@ -108,6 +108,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setText("Usuarios");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
         panelTitulo.add(jLabel1);
 
         panelPrincipal.add(panelTitulo, java.awt.BorderLayout.PAGE_START);
@@ -185,14 +186,19 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         panelDatosUsuarios.setPreferredSize(new java.awt.Dimension(1000, 300));
 
         jLabel2.setText("Nombre");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel3.setText("Email");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         jLabel4.setText("Telefono");
+        jLabel4.setForeground(Colores.COLOR_BLANCO);
 
         jLabel5.setText("Tipo");
+        jLabel5.setForeground(Colores.COLOR_BLANCO);
 
         labelTextoPassword.setText("Contraseña");
+        labelTextoPassword.setForeground(Colores.COLOR_BLANCO);
         labelTextoPassword.setCursor(new Cursor(Cursor.HAND_CURSOR));
         labelTextoPassword.addMouseListener(new MouseAdapter() {
             @Override
@@ -203,9 +209,11 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         });
 
         radioButtonUser.setText("Usuario");
+        radioButtonUser.setForeground(Colores.COLOR_BLANCO);
         grupoBotones.add(radioButtonUser);
 
         radioButtonAdmin.setText("Administrador");
+        radioButtonAdmin.setForeground(Colores.COLOR_BLANCO);
         grupoBotones.add(radioButtonAdmin);
 
         javax.swing.GroupLayout panelDatosUsuariosLayout = new javax.swing.GroupLayout(panelDatosUsuarios);
@@ -457,6 +465,12 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
         );
         txtPassword.setEnabled(false);
         modelo = (DefaultTableModel) tablaUsuarios.getModel();
+
+        txtNombre.setForeground(Colores.COLOR_BLANCO);
+        txtEmail.setForeground(Colores.COLOR_BLANCO);
+        txtTelefono.setForeground(Colores.COLOR_BLANCO);
+        txtPassword.setForeground(Colores.COLOR_BLANCO);
+        txtPassword.setDisabledTextColor(Colores.COLOR_BLANCO);
         cargarTabla();
         tintarTabla();
         pack();

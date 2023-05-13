@@ -137,6 +137,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel1.setText("Ajustes de usuario");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
         paneTitulo.add(jLabel1);
 
         jPanel1.add(paneTitulo, java.awt.BorderLayout.PAGE_START);
@@ -205,15 +206,19 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Nombre de usuario");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Correo electronico");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Telefono");
+        jLabel4.setForeground(Colores.COLOR_BLANCO);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Tipo de usuario");
+        jLabel5.setForeground(Colores.COLOR_BLANCO);
 
         txtUser.setPreferredSize(new java.awt.Dimension(300, 30));
         txtUser.setEnabled(false);

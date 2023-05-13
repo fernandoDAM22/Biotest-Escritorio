@@ -61,5 +61,5 @@ public interface Colores {
      * Este es el color que se les da a las listas desplegables
      */
     Color COLOR_LISTAS = Color.white;
-    Color COLOR_BLANCO = new Color(187, 187, 187);
+    Color COLOR_BLANCO = Color.white;
 }

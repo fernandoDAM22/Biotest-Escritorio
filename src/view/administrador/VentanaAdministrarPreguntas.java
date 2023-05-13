@@ -242,6 +242,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         labelTitulo.setText("Preguntas");
+        labelTitulo.setForeground(Colores.COLOR_BLANCO);
         panelTitulo.add(labelTitulo);
 
         panelPrincipal.add(panelTitulo, java.awt.BorderLayout.PAGE_START);
@@ -368,14 +369,19 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         panelDatosPregunta.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos"));
 
         jLabel1.setText("Enunciado");
+        jLabel1.setForeground(Colores.COLOR_BLANCO);
 
         jLabel2.setText("Respuesta Correcta");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel3.setText("Respuesta Incorrecta 1");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         jLabel4.setText("Respuesta Incorrecta 2");
+        jLabel4.setForeground(Colores.COLOR_BLANCO);
 
         jLabel5.setText("Respuesta Incorrecta 3");
+        jLabel5.setForeground(Colores.COLOR_BLANCO);
 
         javax.swing.GroupLayout panelDatosPreguntaLayout = new javax.swing.GroupLayout(panelDatosPregunta);
         panelDatosPregunta.setLayout(panelDatosPreguntaLayout);
@@ -466,6 +472,12 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
                 opcionLicenciaActionPerformed(evt);
             }
         });
+        txtEnunciado.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaCorrecta.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta1.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta2.setForeground(Colores.COLOR_BLANCO);
+        txtRespuestaIncorrecta3.setForeground(Colores.COLOR_BLANCO);
+
         menuLicencia.add(opcionLicencia);
         barraMenu.add(menuLicencia);
         colocarCategorias();

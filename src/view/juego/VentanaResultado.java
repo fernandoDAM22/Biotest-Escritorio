@@ -228,16 +228,22 @@ public class VentanaResultado extends javax.swing.JFrame {
         jPanel6.setPreferredSize(new java.awt.Dimension(900, 300));
 
         jLabel2.setText("Enunciado");
+        jLabel2.setForeground(Colores.COLOR_BLANCO);
 
         jLabel3.setText("Respuesta correcta");
+        jLabel3.setForeground(Colores.COLOR_BLANCO);
 
         jLabel4.setText("Respuesta incorrecta 1");
+        jLabel4.setForeground(Colores.COLOR_BLANCO);
 
         jLabel5.setText("Respuesta incorrecta 2");
+        jLabel5.setForeground(Colores.COLOR_BLANCO);
 
         jLabel6.setText("Respuesta incorrecta 3");
+        jLabel6.setForeground(Colores.COLOR_BLANCO);
 
         jLabel7.setText("Categoria");
+        jLabel7.setForeground(Colores.COLOR_BLANCO);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -432,11 +438,22 @@ public class VentanaResultado extends javax.swing.JFrame {
                         .addComponent(panelPrincipal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE)
         );
         txtEnunciado.setEditable(false);
+        txtEnunciado.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaCorrecta.setEditable(false);
+        txtRespuestaCorrecta.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaIncorrecta1.setEditable(false);
+        txtRespuestaIncorrecta1.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaIncorrecta2.setEditable(false);
+        txtRespuestaIncorrecta2.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtRespuestaIncorrecta3.setEditable(false);
+        txtRespuestaIncorrecta3.setDisabledTextColor(Colores.COLOR_BLANCO);
+
         txtCategoria.setEditable(false);
+        txtCategoria.setDisabledTextColor(Colores.COLOR_BLANCO);
         ponerPreguntas();
         ponerPuntuacion();
         ConfiguracionUsuario.desactivarMenu(barraMenu,menuAdministrador);
