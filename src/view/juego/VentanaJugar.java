@@ -228,6 +228,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         labelPregunta.setFont(new java.awt.Font("Segoe UI", Font.BOLD, 18)); // NOI18N
         labelPregunta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelPregunta.setText("Aqui va el texto de la pregunta");
+        labelPregunta.setForeground(Colores.COLOR_BLANCO);
         labelPregunta.setPreferredSize(new java.awt.Dimension(1000, 50));
         panelPregunta.add(labelPregunta);
 

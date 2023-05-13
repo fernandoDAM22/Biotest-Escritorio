@@ -193,6 +193,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
 
         labelDescripcion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         labelDescripcion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelDescripcion.setForeground(Colores.COLOR_BLANCO);
         panelDescripcion.add(labelDescripcion);
 
         panelCentro.add(panelDescripcion);

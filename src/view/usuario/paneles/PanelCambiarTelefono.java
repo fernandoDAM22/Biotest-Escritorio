@@ -148,6 +148,7 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
             if(GestionUsuarios.cambiarTelefono(ConfiguracionUsuario.getNombreUsuario(),txtTelefono.getText())){
                 JOptionPane.showMessageDialog(this, Mensajes.TELEFONO_CAMBIADO,Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 campoTelefono.setText(txtTelefono.getText());
+                limpiarCampos();
             }else{
                 JOptionPane.showMessageDialog(this, ERROR_CAMBIAR_TELEFONO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }

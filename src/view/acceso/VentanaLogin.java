@@ -79,8 +79,10 @@ public class VentanaLogin extends javax.swing.JFrame {
         labelPassword.setText("Password");
 
         inputPassword.setBorder(null);
+        inputPassword.addFocusListener(new EventoFoco());
 
         inputUsername.setBorder(null);
+        inputUsername.addFocusListener(new EventoFoco());
 
         btnLogin.setBackground(new java.awt.Color(72, 219, 251));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
