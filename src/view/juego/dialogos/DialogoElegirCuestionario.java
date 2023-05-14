@@ -24,6 +24,7 @@ public class DialogoElegirCuestionario extends javax.swing.JDialog {
     public DialogoElegirCuestionario(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setResizable(false);
         //en caso de que cierre el dialogo en la x no pasara a jugar ningun cuestionario
         addWindowListener(new WindowAdapter() {
             @Override

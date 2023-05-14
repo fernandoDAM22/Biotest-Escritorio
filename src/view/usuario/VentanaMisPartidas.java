@@ -41,6 +41,7 @@ public class VentanaMisPartidas extends javax.swing.JFrame {
         cargarLista();
         setTitle("Mis partidas");
         setLocationRelativeTo(null);
+        setResizable(false);
         jLabel1.setBorder(BorderFactory.createEmptyBorder(0,15,0,0));
         jLabel2.setBorder(BorderFactory.createEmptyBorder(0,15,0,0));
     }

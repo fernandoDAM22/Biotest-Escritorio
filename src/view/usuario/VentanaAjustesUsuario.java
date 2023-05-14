@@ -52,6 +52,7 @@ public class VentanaAjustesUsuario extends javax.swing.JFrame {
      */
     public VentanaAjustesUsuario() {
         initComponents();
+        setResizable(false);
         cardLayout = (CardLayout) panelCambios.getLayout();
         //panel para cambiar la contraseña
         panelCambiarPassword = new PanelCambiarPassword();

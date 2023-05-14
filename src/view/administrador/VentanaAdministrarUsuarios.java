@@ -44,6 +44,7 @@ public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
      */
     public VentanaAdministrarUsuarios() {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
     }
 

@@ -39,6 +39,7 @@ public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
      */
     public VentanaSeleccionarModoJuego() {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
     }
 

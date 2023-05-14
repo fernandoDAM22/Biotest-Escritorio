@@ -52,6 +52,7 @@ public class VentanaResultado extends javax.swing.JFrame {
     public VentanaResultado(int idPartida) {
         this.idPartida = idPartida;
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
     }
 

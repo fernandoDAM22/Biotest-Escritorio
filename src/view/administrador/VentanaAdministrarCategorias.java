@@ -46,6 +46,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
      */
     public VentanaAdministrarCategorias() {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
         setSize(new Dimension(1300, 700));
         setTitle("Categorias");

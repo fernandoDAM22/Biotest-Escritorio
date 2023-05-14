@@ -86,6 +86,7 @@ public class VentanaJugar extends javax.swing.JFrame {
         bandera = true;
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
         jugar();
     }
 

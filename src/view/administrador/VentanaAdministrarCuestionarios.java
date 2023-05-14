@@ -51,6 +51,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
      */
     public VentanaAdministrarCuestionarios() {
         initComponents();
+        setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Cuestionarios");
     }
