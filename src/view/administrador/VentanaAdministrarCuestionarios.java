@@ -859,6 +859,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());
             tintarTabla();
+            limpiarCampos();
         } else {
             //en caso de que no se borre
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
@@ -962,6 +963,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
     private void listaCuestionariosItemListener(ItemEvent evt) {
         limpiarCampos();
+        vaciarTabla();
         actualizarCuestionarios(); //actualizamos los cuestionarios
         if (listaCuestionarios.getSelectedItem() != null) {//se comprueba que haya algun elemento seleccionado
             modelo = GestionCuestionarios.colocarPreguntas(tablaPreguntas, listaCuestionarios.getSelectedItem().toString());

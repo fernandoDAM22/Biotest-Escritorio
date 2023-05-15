@@ -4,10 +4,7 @@
  */
 package view.usuario.paneles;
 
-import controller.tools.Colores;
-import controller.tools.ComprobarDatos;
-import controller.tools.LoggerUtil;
-import controller.tools.Mensajes;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
@@ -124,6 +121,8 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
 
         txtEmail.setForeground(Colores.COLOR_BLANCO);
         txtPassword.setForeground(Colores.COLOR_BLANCO);
+        txtEmail.addFocusListener(new EventoFoco());
+        txtPassword.addFocusListener(new EventoFoco());
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

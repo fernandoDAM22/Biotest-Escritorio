@@ -6,6 +6,7 @@ package view.usuario.paneles;
 
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
+import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
@@ -118,6 +119,8 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
                         .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addContainerGap(307, Short.MAX_VALUE)))
         );
+        txtUsername.addFocusListener(new EventoFoco());
+        txtPassword.addFocusListener(new EventoFoco());
         txtPassword.setForeground(Colores.COLOR_BLANCO);
         txtUsername.setForeground(Colores.COLOR_BLANCO);
     }// </editor-fold>//GEN-END:initComponents

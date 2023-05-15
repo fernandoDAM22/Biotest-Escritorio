@@ -52,7 +52,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
 
         txtOldPassword.addFocusListener(new EventoFoco());
         txtNewPassword.addFocusListener(new EventoFoco());
-        txtOldPassword.addFocusListener(new EventoFoco());
+        txtNewPassword2.addFocusListener(new EventoFoco());
 
         txtNewPassword.setForeground(Colores.COLOR_BLANCO);
         txtNewPassword2.setForeground(Colores.COLOR_BLANCO);

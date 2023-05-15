@@ -766,6 +766,7 @@ public class VentanaAdministrarCategorias extends javax.swing.JFrame {
         //en caso de que ya exista esa categoria
         else if (GestionCategorias.existeCategoria(txtNombreCategoria.getText())) {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_EXISTE_CATEGORIA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
+            return;
         }
         //se pide al usuario que confirme que quiere realizar la accion
         if (JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) != 0) {

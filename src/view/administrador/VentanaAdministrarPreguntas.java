@@ -533,6 +533,7 @@ public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
         if (GestionPreguntas.borrarPregunta((String) modelo.getValueAt(posicion, 0))) {
             JOptionPane.showMessageDialog(this, Mensajes.PREGUNTA_BORRADA, Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
             actualizarTabla();
+            vaciarCajas();
         } else {
             JOptionPane.showMessageDialog(this, Mensajes.ERROR_BORRAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
         }

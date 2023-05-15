@@ -6,6 +6,7 @@ package view.usuario.paneles;
 
 import controller.tools.Colores;
 import controller.tools.ComprobarDatos;
+import controller.tools.EventoFoco;
 import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
@@ -116,6 +117,9 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
                     .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(127, Short.MAX_VALUE))
         );
+
+        txtPassword.addFocusListener(new EventoFoco());
+        txtTelefono.addFocusListener(new EventoFoco());
         txtTelefono.setForeground(Colores.COLOR_BLANCO);
         txtPassword.setForeground(Colores.COLOR_BLANCO);
     }// </editor-fold>//GEN-END:initComponents
@@ -140,8 +144,8 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
         }
         //ahora pasamos a realizar todas las comprobaciones necesarias antes de modificar el nombre de usuario
         if(Login.login(ConfiguracionUsuario.getNombreUsuario(), String.valueOf(txtPassword.getPassword())) == Codigos.ERROR_PASSWORD_INCORRECTA){
-            //primero se comprueba que la contraseña antigua sea correcta
-            JOptionPane.showMessageDialog(this, Mensajes.ERROR_TELEFONO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+            //primero se comprueba que la contraseña sea correcta
+            JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_INCORRECTA,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(!ComprobarDatos.comprobarTelefono(txtTelefono.getText())){
             JOptionPane.showMessageDialog(this,Mensajes.ERROR_TELEFONO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
         }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
