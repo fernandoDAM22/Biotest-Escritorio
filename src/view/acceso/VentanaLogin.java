@@ -20,6 +20,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 import static controller.usuario.Codigos.CORRECTO;
@@ -30,7 +33,7 @@ import static controller.usuario.Codigos.ERROR_NO_EXISTE_USUARIO;
  * @author Fernando
  */
 public class VentanaLogin extends javax.swing.JFrame {
-
+    private static final Logger logger = LoggerUtil.getLogger(VentanaLogin.class);
     /**
      * Creates new form VentanaLogin
      */
@@ -189,8 +192,15 @@ public class VentanaLogin extends javax.swing.JFrame {
         }
         //si no ha habido errores lanzamos la ventana de seleccionar modo de juego
         if(resultado == CORRECTO){
+            //guardamos el tipo del usuario conectado
             ConfiguracionUsuario.setTipoUsuario(Login.obtenerDatos(nombre,Codigos.OBTENER_TIPO));
+            //guardamos el nombre del usuario conectado
             ConfiguracionUsuario.setNombreUsuario(nombre);
+            //registramos en el log el usurario y la fecha en la que se conecto
+            LocalDateTime fecha = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss");
+            logger.info("El usuario " + ConfiguracionUsuario.getNombreUsuario() + " Inicio sesion en la fecha: " + formatter.format(fecha));
+            //lanzamos la ventana seleccionar modo de juego
             VentanaSeleccionarModoJuego frame = new VentanaSeleccionarModoJuego();
             frame.setVisible(true);
             dispose();

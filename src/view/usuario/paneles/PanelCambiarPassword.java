@@ -4,18 +4,19 @@
  */
 package view.usuario.paneles;
 
-import controller.tools.Colores;
-import controller.tools.ComprobarDatos;
-import controller.tools.EventoFoco;
-import controller.tools.Mensajes;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
+import view.acceso.VentanaLogin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Handler;
+import java.util.logging.Logger;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su password
@@ -23,7 +24,7 @@ import java.util.logging.Handler;
  */
 public class PanelCambiarPassword extends javax.swing.JPanel {
 
-
+    private static final Logger logger = LoggerUtil.getLogger(PanelCambiarPassword.class);
 
     /**
      * Creates new form PanelCambiarContraseña
@@ -170,6 +171,7 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
                 //aqui se entra en caso de que la contraseña se cambie correctamente
                 JOptionPane.showMessageDialog(this, Mensajes.PASSWORD_CAMBIADA,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
                 limpiarCampos();
+                registrarCambio();
             }else{ //aqui se llega en caso de que la contraseña no se cambie
                 JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_PASSWORD,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }
@@ -184,6 +186,21 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         txtOldPassword.setText("");
         txtNewPassword.setText("");
         txtNewPassword2.setText("");
+    }
+
+    /**
+     * Este metodo permite registrar en el log que el usuario cambio su password
+     * @author Fernando
+     */
+    private void registrarCambio(){
+        StringBuilder cadena = new StringBuilder();
+        cadena.append("El usuario ");
+        cadena.append(ConfiguracionUsuario.getNombreUsuario());
+        cadena.append(" cambio su contraseña en la fecha: ");
+        LocalDateTime fecha = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss");
+        cadena.append(formatter.format(fecha));
+        logger.info(cadena.toString());
     }
 
 

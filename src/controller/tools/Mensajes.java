@@ -61,6 +61,7 @@ public interface Mensajes {
     String USUARIO_CAMBIADO = "Usuario cambiado correctamente";
     String ERROR_CAMBIAR_USERNAME = "No se ha podido cambiar el nombre de usuario";
     String TELEFONO_CAMBIADO = "Telefono cambiado correctamente";
+    String ERROR_CAMBIAR_TELEFONO = "No se ha podido cambiar el nombre";
     String SELECCIONE_MODO_JUEGO = "Seleccione un modo de juego";
     String USUARIO_REGISTRADO = "Usuario registrado correctamente";
     String ERROR_MISMO_USUARIO = "Error, no puedes borrar tu mismo usuario";

@@ -4,16 +4,16 @@
  */
 package view.usuario.paneles;
 
-import controller.tools.Colores;
-import controller.tools.ComprobarDatos;
-import controller.tools.EventoFoco;
-import controller.tools.Mensajes;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su nombre de usuario
@@ -21,6 +21,7 @@ import javax.swing.*;
  */
 public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
     JTextField txtNombreUsuario;
+    private static final Logger logger = LoggerUtil.getLogger(PanelCambiarNombreUsuario.class);
     /**
      * Creates new form panelCambiarNombreUsuario
      */
@@ -154,6 +155,7 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         }else if(JOptionPane.showConfirmDialog(null, Mensajes.MENSAJE_CONFIRMACION, Mensajes.TITULO_CONFIRMACION, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == 0){
             if(GestionUsuarios.cambiarNombre(ConfiguracionUsuario.getNombreUsuario(), txtUsername.getText())){
                 JOptionPane.showMessageDialog(this, Mensajes.USUARIO_CAMBIADO,Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
+                registrarCambio();
                 txtNombreUsuario.setText(txtUsername.getText());
                 limpiarCampos();
             }else{
@@ -162,6 +164,21 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+    /**
+     * Este metodo permite registrar en el log que el usuario cambio su nombre de usuario
+     * @author Fernando
+     */
+    private void registrarCambio(){
+        StringBuilder cadena = new StringBuilder();
+        cadena.append("El usuario ");
+        cadena.append(ConfiguracionUsuario.getNombreUsuario());
+        cadena.append(" cambio su nombre de usuario en la fecha: ");
+        LocalDateTime fecha = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss");
+        cadena.append(formatter.format(fecha));
+        logger.info(cadena.toString());
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

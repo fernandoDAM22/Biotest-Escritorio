@@ -13,6 +13,8 @@ import view.administrador.VentanaAdministrarCuestionarios;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,6 +23,7 @@ import java.util.logging.Logger;
  * @author Fernando
  */
 public class PanelCambiarEmail extends javax.swing.JPanel {
+    private static final Logger logger = LoggerUtil.getLogger(PanelCambiarEmail.class);
     private JTextField campoEmail;
     /**
      * Creates new form PanelCambiarEmail
@@ -154,12 +157,28 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, Mensajes.EMAIL_CAMBIADO,Mensajes.CORRECTO,JOptionPane.INFORMATION_MESSAGE);
                 campoEmail.setText(txtEmail.getText());
                 limpiarCampos();
+                registrarCambio();
             }else{
                 JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_EMAIL,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }
 
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+    /**
+     * Este metodo permite registrar en el log que el usuario cambio su email
+     * @author Fernando
+     */
+    private void registrarCambio(){
+        StringBuilder cadena = new StringBuilder();
+        cadena.append("El usuario ");
+        cadena.append(ConfiguracionUsuario.getNombreUsuario());
+        cadena.append(" cambio su nombre de usuario en la fecha: ");
+        LocalDateTime fecha = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss");
+        cadena.append(formatter.format(fecha));
+        logger.info(cadena.toString());
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

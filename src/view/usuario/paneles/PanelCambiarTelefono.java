@@ -4,24 +4,25 @@
  */
 package view.usuario.paneles;
 
-import controller.tools.Colores;
-import controller.tools.ComprobarDatos;
-import controller.tools.EventoFoco;
-import controller.tools.Mensajes;
+import controller.tools.*;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su telefono
  * @author Fernando
  */
 public class PanelCambiarTelefono extends javax.swing.JPanel {
-    public static final String ERROR_CAMBIAR_TELEFONO = "No se ha podido cambiar el nombre";
+
     private JTextField campoTelefono;
+    private static final Logger logger = LoggerUtil.getLogger(PanelCambiarTelefono.class);
     /**
      * Creates new form PanelCambiarTelefono
      */
@@ -153,12 +154,28 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, Mensajes.TELEFONO_CAMBIADO,Mensajes.CORRECTO, JOptionPane.INFORMATION_MESSAGE);
                 campoTelefono.setText(txtTelefono.getText());
                 limpiarCampos();
+                registrarCambio();
             }else{
-                JOptionPane.showMessageDialog(this, ERROR_CAMBIAR_TELEFONO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, Mensajes.ERROR_CAMBIAR_TELEFONO,Mensajes.ERROR,JOptionPane.ERROR_MESSAGE);
             }
-
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
+
+    /**
+     * Este metodo permite registrar en el log que el usuario cambio su telefono
+     * @author Fernando
+     */
+    private void registrarCambio(){
+        StringBuilder cadena = new StringBuilder();
+        cadena.append("El usuario ");
+        cadena.append(ConfiguracionUsuario.getNombreUsuario());
+        cadena.append(" cambio su telefono en la fecha: ");
+        LocalDateTime fecha = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss");
+        cadena.append(formatter.format(fecha));
+        logger.info(cadena.toString());
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
