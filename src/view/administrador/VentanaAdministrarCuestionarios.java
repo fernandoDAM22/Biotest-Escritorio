@@ -17,6 +17,7 @@ import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.*;
 import controller.usuario.Codigos;
 import model.Cuestionario;
+import org.w3c.dom.Document;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -26,6 +27,11 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.PlainDocument;
+
+import static java.lang.reflect.Array.getLength;
 
 /**
  * Esta clase permite al usuario gestionar los cuestionarios, sus funciones son:
@@ -54,6 +60,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         setResizable(false);
         setLocationRelativeTo(null);
         setTitle("Cuestionarios");
+        setMaximumSize(new Dimension(1300, 700));
     }
 
     /**
@@ -589,6 +596,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del cuestionario"));
+        jPanel2.setMaximumSize(new Dimension(410,167));
 
 
         jLabel6.setText("Nombre");
@@ -794,6 +802,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         txtNombreCuestionario.setForeground(Colores.COLOR_BLANCO);
         txtDescripcionCuestionario.setForeground(Colores.COLOR_BLANCO);
+        txtDescripcionCuestionario.setMaximumSize(new Dimension(400,22));
+        txtDescripcionCuestionario.setCaretPosition(0);
+        txtDescripcionCuestionario.setHorizontalAlignment(JTextField.LEFT);
 
         modelo = (DefaultTableModel) tablaPreguntas.getModel();
         colocarCategorias();
@@ -975,9 +986,9 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
             }
             txtNombreCuestionario.setText("");
             txtDescripcionCuestionario.setText("");
-
         }
         tintarTabla();
+        txtDescripcionCuestionario.setCaretPosition(0);
 
     }
 
