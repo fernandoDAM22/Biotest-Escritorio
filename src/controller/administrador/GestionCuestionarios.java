@@ -318,7 +318,7 @@ public class GestionCuestionarios {
         Connection conexion;
         ResultSet resultSet = null;
         ArrayList<String> cuestionarios = new ArrayList<>();
-        String sql = "SELECT c.nombre from cuestionarios c join preguntas_cuestionarios p on c.id = p.id_cuestionario GROUP by c.id HAVING COUNT(id_pregunta) > 10";
+        String sql = "SELECT c.nombre from cuestionarios c join preguntas_cuestionarios p on c.id = p.id_cuestionario GROUP by c.id HAVING COUNT(id_pregunta) >= 10";
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();
