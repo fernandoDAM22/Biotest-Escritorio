@@ -158,6 +158,13 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         listaPreguntasDialogo.setForeground(Colores.COLOR_LISTAS);
         listaPreguntasDialogo.setMaximumRowCount(50);
         listaPreguntasDialogo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        listaPreguntasDialogo.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                listaPreguntasDialogoKeyPressed(evt);
+            }
+        });
 
         listaPreguntasDialogo.setPreferredSize(new java.awt.Dimension(600, 40));
 
@@ -596,7 +603,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del cuestionario"));
-        jPanel2.setMaximumSize(new Dimension(410,167));
+        jPanel2.setMaximumSize(new Dimension(410, 167));
 
 
         jLabel6.setText("Nombre");
@@ -802,7 +809,7 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
 
         txtNombreCuestionario.setForeground(Colores.COLOR_BLANCO);
         txtDescripcionCuestionario.setForeground(Colores.COLOR_BLANCO);
-        txtDescripcionCuestionario.setMaximumSize(new Dimension(400,22));
+        txtDescripcionCuestionario.setMaximumSize(new Dimension(400, 22));
         txtDescripcionCuestionario.setCaretPosition(0);
         txtDescripcionCuestionario.setHorizontalAlignment(JTextField.LEFT);
 
@@ -813,6 +820,12 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
         tintarTabla();
         pack();
     }// </editor-fold>
+
+    private void listaPreguntasDialogoKeyPressed(KeyEvent evt) {
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            btnInsertar.doClick();
+        }
+    }
 
     private void opcionLicenciaActionPerformed(ActionEvent evt) {
         if (!Browser.openURL(Browser.URL_LICENCIA)) {
@@ -920,7 +933,6 @@ public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
                 //en caso de que no se inserte
                 JOptionPane.showMessageDialog(null, Mensajes.ERROR_INSERTAR_PREGUNTA, Mensajes.ERROR, JOptionPane.ERROR_MESSAGE);
             }
-            dialogoPreguntas2.dispose();
 
         } catch (NullPointerException npe) {
             logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);

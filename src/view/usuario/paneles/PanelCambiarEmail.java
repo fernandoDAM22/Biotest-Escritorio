@@ -13,6 +13,8 @@ import view.administrador.VentanaAdministrarCuestionarios;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
@@ -123,9 +125,23 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         );
 
         txtEmail.setForeground(Colores.COLOR_BLANCO);
-        txtPassword.setForeground(Colores.COLOR_BLANCO);
         txtEmail.addFocusListener(new EventoFoco());
+        txtEmail.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
+        txtPassword.setForeground(Colores.COLOR_BLANCO);
         txtPassword.addFocusListener(new EventoFoco());
+        txtPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -178,6 +194,18 @@ public class PanelCambiarEmail extends javax.swing.JPanel {
         cadena.append(formatter.format(fecha));
         logger.info(cadena.toString());
     }
+    /**
+     * Este metodo permite intertar cambiar el email del usuario cuando
+     * se pulsa la tecla de enter teniendo el foco alguno de los campos
+     * @param evt es la tecla que se pulsa
+     * @author Fernando
+     */
+    private void pressEnter(KeyEvent evt){
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnAceptar.doClick();
+        }
+    }
+
 
 
 

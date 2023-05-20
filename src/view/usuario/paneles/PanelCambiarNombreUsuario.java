@@ -11,6 +11,8 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
@@ -121,9 +123,23 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
                     .addContainerGap(307, Short.MAX_VALUE)))
         );
         txtUsername.addFocusListener(new EventoFoco());
+        txtUsername.setForeground(Colores.COLOR_BLANCO);
+        txtUsername.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
         txtPassword.addFocusListener(new EventoFoco());
         txtPassword.setForeground(Colores.COLOR_BLANCO);
-        txtUsername.setForeground(Colores.COLOR_BLANCO);
+        txtPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -178,6 +194,18 @@ public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
         cadena.append(formatter.format(fecha));
         logger.info(cadena.toString());
     }
+    /**
+     * Este metodo permite intertar cambiar el nombre del usuario cuando
+     * se pulsa la tecla de enter teniendo el foco alguno de los campos
+     * @param evt es la tecla que se pulsa
+     * @author Fernando
+     */
+    private void pressEnter(KeyEvent evt){
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnAceptar.doClick();
+        }
+    }
+
 
 
 

@@ -11,16 +11,12 @@ import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.Login;
-import view.administrador.VentanaAdministrarPreguntas;
 import view.juego.VentanaSeleccionarModoJuego;
 
 
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
@@ -83,9 +79,23 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         inputPassword.setBorder(null);
         inputPassword.addFocusListener(new EventoFoco());
+        inputPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
 
         inputUsername.setBorder(null);
         inputUsername.addFocusListener(new EventoFoco());
+        inputUsername.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
 
         btnLogin.setBackground(new java.awt.Color(72, 219, 251));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -174,6 +184,18 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    /**
+     * Este metodo permite realizar la funcion de login cuando se pulsa
+     * la tecla enter teniendo el foco el campo de la password o del username
+     * @param evt es la tecla que se pulsa
+     * @author Fernando
+     */
+    private void pressEnter(KeyEvent evt) {
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnLogin.doClick();
+        }
+    }
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {
         //guardamos el nombre porque lo necesitamos despues;

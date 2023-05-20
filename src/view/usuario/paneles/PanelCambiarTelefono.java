@@ -11,6 +11,8 @@ import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
 
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
@@ -120,9 +122,23 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
         );
 
         txtPassword.addFocusListener(new EventoFoco());
+        txtPassword.setForeground(Colores.COLOR_BLANCO);
+        txtPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
         txtTelefono.addFocusListener(new EventoFoco());
         txtTelefono.setForeground(Colores.COLOR_BLANCO);
-        txtPassword.setForeground(Colores.COLOR_BLANCO);
+        txtTelefono.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -176,6 +192,17 @@ public class PanelCambiarTelefono extends javax.swing.JPanel {
         logger.info(cadena.toString());
     }
 
+    /**
+     * Este metodo permite intertar cambiar el telefono del usuario cuando
+     * se pulsa la tecla de enter teniendo el foco alguno de los campos
+     * @param evt es la tecla que se pulsa
+     * @author Fernando
+     */
+    private void pressEnter(KeyEvent evt){
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnAceptar.doClick();
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

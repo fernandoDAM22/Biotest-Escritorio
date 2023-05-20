@@ -13,6 +13,8 @@ import view.acceso.VentanaLogin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Handler;
@@ -52,8 +54,29 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         btnAceptar = new javax.swing.JButton();
 
         txtOldPassword.addFocusListener(new EventoFoco());
+        txtOldPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
         txtNewPassword.addFocusListener(new EventoFoco());
+        txtNewPassword.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
         txtNewPassword2.addFocusListener(new EventoFoco());
+        txtNewPassword2.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent evt) {
+                super.keyPressed(evt);
+                pressEnter(evt);
+            }
+        });
 
         txtNewPassword.setForeground(Colores.COLOR_BLANCO);
         txtNewPassword2.setForeground(Colores.COLOR_BLANCO);
@@ -201,6 +224,18 @@ public class PanelCambiarPassword extends javax.swing.JPanel {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd:HH:mm:ss");
         cadena.append(formatter.format(fecha));
         logger.info(cadena.toString());
+    }
+
+    /**
+     * Este metodo permite intertar cambiar la password del usuario cuando
+     * se pulsa la tecla de enter teniendo el foco alguno de los campos
+     * @param evt es la tecla que se pulsa
+     * @author Fernando
+     */
+    private void pressEnter(KeyEvent evt){
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            btnAceptar.doClick();
+        }
     }
 
 
