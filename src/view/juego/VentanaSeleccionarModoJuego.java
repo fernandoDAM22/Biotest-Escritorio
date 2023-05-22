@@ -18,8 +18,6 @@ import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -31,8 +29,8 @@ import java.util.Enumeration;
  *
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class VentanaSeleccionarModoJuego extends javax.swing.JFrame {
-    // boolean puedeContinuar = true;
 
     /**
      * Creates new form VentanaSeleccionarModoJuego

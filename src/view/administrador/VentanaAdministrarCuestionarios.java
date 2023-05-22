@@ -17,21 +17,13 @@ import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.*;
 import controller.usuario.Codigos;
 import model.Cuestionario;
-import org.w3c.dom.Document;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
 import view.usuario.VentanaMisPartidas;
 
 import javax.swing.*;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.AttributeSet;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.PlainDocument;
-
-import static java.lang.reflect.Array.getLength;
 
 /**
  * Esta clase permite al usuario gestionar los cuestionarios, sus funciones son:
@@ -48,6 +40,8 @@ import static java.lang.reflect.Array.getLength;
  *
  * @author fernando
  */
+@SuppressWarnings("all")
+
 public class VentanaAdministrarCuestionarios extends javax.swing.JFrame {
     private static final Logger logger = LoggerUtil.getLogger(VentanaAdministrarCuestionarios.class);
     DefaultTableModel modelo;

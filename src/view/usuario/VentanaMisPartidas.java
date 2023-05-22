@@ -30,6 +30,7 @@ import java.util.ArrayList;
  * y las preguntas respondidas en ellas
  * @author fernando
  */
+@SuppressWarnings("all")
 public class VentanaMisPartidas extends javax.swing.JFrame {
     DefaultTableModel modelo;
     /**

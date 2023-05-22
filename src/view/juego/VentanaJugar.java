@@ -34,6 +34,8 @@ import javax.swing.*;
  * <hr>
  * @author Fernando
  */
+@SuppressWarnings("all")
+
 public class VentanaJugar extends javax.swing.JFrame {
     /**
      * Tipo de la partida que se esta jugando

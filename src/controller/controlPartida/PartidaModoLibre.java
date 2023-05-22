@@ -20,7 +20,7 @@ public class PartidaModoLibre extends GestionPartida {
     /**
      * Contienen los ids de todas las preguntas de la base de datos
      */
-    private ArrayList<Integer> idPreguntas;
+    private final ArrayList<Integer> idPreguntas;
     /**
      * Es la estructura de datos que usaremos para seleccionar las preguntas
      */

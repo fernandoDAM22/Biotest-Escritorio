@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Clase modelo del cuestionario
  * @author Fernando
- */
+ */@SuppressWarnings("all")
 public class Cuestionario {
     /**
      * Id del cuestionario

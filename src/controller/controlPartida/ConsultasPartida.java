@@ -152,11 +152,13 @@ public class ConsultasPartida {
         ResultSet resultSet = null;
         String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3,categoria;
         ArrayList<String[]> preguntas = new ArrayList<>();
-        String sql = "SELECT p.enunciado,p.respuesta_correcta,p.respuesta_incorrecta1,p.respuesta_incorrecta2,p.respuesta_incorrecta3,c.nombre as categoria\n" +
-                "from (((preguntas p join preguntas_partida pr on p.id = pr.id_pregunta) \n" +
-                "      join partidas pa on pr.id_partida = pa.id)\n" +
-                "      JOIN categoria c on c.id = p.id_categoria)\n" +
-                "      WHERE pa.id = ?;\n";
+        String sql = """
+                SELECT p.enunciado,p.respuesta_correcta,p.respuesta_incorrecta1,p.respuesta_incorrecta2,p.respuesta_incorrecta3,c.nombre as categoria
+                from (((preguntas p join preguntas_partida pr on p.id = pr.id_pregunta)\s
+                      join partidas pa on pr.id_partida = pa.id)
+                      JOIN categoria c on c.id = p.id_categoria)
+                      WHERE pa.id = ?;
+                """;
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();
@@ -220,11 +222,13 @@ public class ConsultasPartida {
         String enunciado, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3;
         int id_categoria;
         ArrayList<Pregunta> preguntas = new ArrayList<>();
-        String sql = "SELECT p.enunciado,p.respuesta_correcta,p.respuesta_incorrecta1,p.respuesta_incorrecta2,p.respuesta_incorrecta3,p.id_categoria as categoria\n" +
-                "from (((preguntas p join preguntas_partida pr on p.id = pr.id_pregunta) \n" +
-                "      join partidas pa on pr.id_partida = pa.id)\n" +
-                "      JOIN categoria c on c.id = p.id_categoria)\n" +
-                "      WHERE pa.id = ?;\n";
+        String sql = """
+                SELECT p.enunciado,p.respuesta_correcta,p.respuesta_incorrecta1,p.respuesta_incorrecta2,p.respuesta_incorrecta3,p.id_categoria as categoria
+                from (((preguntas p join preguntas_partida pr on p.id = pr.id_pregunta)\s
+                      join partidas pa on pr.id_partida = pa.id)
+                      JOIN categoria c on c.id = p.id_categoria)
+                      WHERE pa.id = ?;
+                """;
         conexionBD = new ConexionBD();
         try {
             conexion = conexionBD.abrirConexion();

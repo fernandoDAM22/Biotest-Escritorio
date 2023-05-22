@@ -36,6 +36,7 @@ import static controller.usuario.Codigos.*;
  * </ul>
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class VentanaAdministrarUsuarios extends javax.swing.JFrame {
     DefaultTableModel modelo;
 

@@ -5,13 +5,11 @@ package view.administrador;/*
 
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
-import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.*;
 import controller.usuario.Codigos;
 import model.Pregunta;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.view.JasperViewer;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -25,11 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * Esta clase permite al usuario gestionar las preguntas, sus funciones son:
  * <ul>
@@ -41,11 +35,10 @@ import java.util.logging.Logger;
  *
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class VentanaAdministrarPreguntas extends javax.swing.JFrame {
 
-
     DefaultTableModel modelo;
-    private static final Logger logger = LoggerUtil.getLogger(VentanaAdministrarPreguntas.class);
 
     /**
      * Creates new form VentanaAdministrarPreguntas

@@ -7,18 +7,13 @@ package view.administrador;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
 
 import controller.administrador.GestionCategorias;
 import controller.administrador.GestionPreguntas;
-import controller.baseDeDatos.ConexionBD;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.*;
 import controller.usuario.Codigos;
 import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.view.JasperViewer;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;
@@ -38,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author fernando
  */
+@SuppressWarnings("all")
 public class VentanaAdministrarCategorias extends javax.swing.JFrame {
     DefaultTableModel modelo;
 

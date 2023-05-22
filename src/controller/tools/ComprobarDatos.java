@@ -3,8 +3,6 @@ package controller.tools;
 import controller.baseDeDatos.ConexionBD;
 import controller.usuario.Codigos;
 
-import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,7 +82,7 @@ public class ComprobarDatos implements Patrones{
         int resultado = Codigos.ERROR;
         PreparedStatement sentencia = null;
         ConexionBD conexionBD = null;
-        Connection conexion = null;
+        Connection conexion;
         /*
           Tenemos que usar la clausula BINARY para poder obtener el usuario que se llame exactamente
           igual al que estamos buscando, ya que con el igual o con el like no distingue entre mayusculas
@@ -106,11 +104,8 @@ public class ComprobarDatos implements Patrones{
             throw new RuntimeException(e);
         }finally {
             try {
-                sentencia.close();
-                conexionBD.cerrarConexion();
-            } catch (SQLException e) {
-                logger.log(Level.SEVERE, Mensajes.ERROR_SQL_EXCEPTION, e);
-            }catch (NullPointerException npe){
+                ConexionBD.cerrar(sentencia,conexionBD);
+            } catch (NullPointerException npe){
                 logger.log(Level.SEVERE, Mensajes.ERROR_NULL_POINTER_EXCEPCION, npe);
             }
         }

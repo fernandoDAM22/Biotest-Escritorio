@@ -75,6 +75,4 @@ public interface Codigos {
      * que queremos obtener el tipo del usuario
      */
     String OBTENER_TIPO = "tipo";
-
-    String EMAIL = "Email";
 }

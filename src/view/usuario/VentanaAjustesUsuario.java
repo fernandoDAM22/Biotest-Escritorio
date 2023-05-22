@@ -40,6 +40,7 @@ import java.awt.event.KeyEvent;
  * </ul>
  * @author fernando
  */
+@SuppressWarnings("all")
 public class VentanaAjustesUsuario extends javax.swing.JFrame {
     CardLayout cardLayout;
     PanelCambiarPassword panelCambiarPassword;

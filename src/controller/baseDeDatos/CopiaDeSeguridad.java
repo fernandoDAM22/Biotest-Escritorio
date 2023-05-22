@@ -87,6 +87,7 @@ public class CopiaDeSeguridad implements Codigos {
      * Este metodo permite comprobar si la carpeta de backups existe o no,
      * si existe no hace nada, y si no existe la crea
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void comprobarCarpeta(){
         File carpeta = new File(RUTA_COPIA);
         if (!carpeta.exists()) {

@@ -9,7 +9,6 @@ import controller.usuario.Codigos;
 import controller.usuario.ConfiguracionUsuario;
 import controller.usuario.GestionUsuarios;
 import controller.usuario.Login;
-import view.administrador.VentanaAdministrarCuestionarios;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,13 +16,13 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Esta clase pinta el panel que permite al usuario cambiar su email
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class PanelCambiarEmail extends javax.swing.JPanel {
     private static final Logger logger = LoggerUtil.getLogger(PanelCambiarEmail.class);
     private JTextField campoEmail;

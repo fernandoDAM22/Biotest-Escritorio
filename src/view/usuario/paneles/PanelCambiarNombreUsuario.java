@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  * Esta clase pinta el panel que permite al usuario cambiar su nombre de usuario
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class PanelCambiarNombreUsuario extends javax.swing.JPanel {
     JTextField txtNombreUsuario;
     private static final Logger logger = LoggerUtil.getLogger(PanelCambiarNombreUsuario.class);

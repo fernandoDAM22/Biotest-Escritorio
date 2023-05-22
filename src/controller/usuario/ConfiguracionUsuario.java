@@ -1,8 +1,6 @@
 package controller.usuario;
 
 import javax.swing.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  * Esta clase guarda algunos datos que nos seran necesarios para

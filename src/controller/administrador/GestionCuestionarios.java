@@ -262,7 +262,6 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD;
         Connection conexion;
-        ResultSet resultSet = null;
         String sql = "update cuestionarios set nombre = ?, descripcion = ? where id = ?";
         conexionBD = new ConexionBD();
         try {
@@ -275,7 +274,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
+            ConexionBD.cerrar(sentencia, conexionBD);
         }
     }
 
@@ -290,7 +289,6 @@ public class GestionCuestionarios {
         PreparedStatement sentencia = null;
         ConexionBD conexionBD;
         Connection conexion;
-        ResultSet resultSet = null;
         String sql = "delete from cuestionarios where id = ?";
         conexionBD = new ConexionBD();
         try {
@@ -301,7 +299,7 @@ public class GestionCuestionarios {
         } catch (SQLException e) {
             return false;
         } finally {
-            ConexionBD.cerrar(resultSet, sentencia, conexionBD);
+            ConexionBD.cerrar(sentencia, conexionBD);
         }
     }
 

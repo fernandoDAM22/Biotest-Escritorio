@@ -19,7 +19,7 @@ public class PartidaModoSinFallos extends GestionPartida {
     /**
      * Contienen los ids de todas las preguntas de la base de datos
      */
-    private ArrayList<Integer> idPreguntas;
+    private final ArrayList<Integer> idPreguntas;
 
     Pregunta pregunta;
     private int contadorPreguntasCorrectas;

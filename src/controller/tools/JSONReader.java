@@ -2,7 +2,6 @@ package controller.tools;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import view.administrador.VentanaAdministrarPreguntas;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -43,6 +42,7 @@ public class JSONReader {
         } catch (FileNotFoundException e) {
            logger.log(Level.SEVERE,Mensajes.ERROR_ENTRADA_SALIDA,e);
         }
+        assert jsonObject != null;
         JsonObject object = jsonObject.getAsJsonObject(objectName);
         return object.get(propertyName).getAsString();
     }

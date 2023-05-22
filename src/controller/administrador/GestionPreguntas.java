@@ -405,6 +405,7 @@ public class GestionPreguntas {
      * @author Fernando
      */
 
+    @SuppressWarnings("all") //para suprimir el warning que indica que se puede simplificar el if
     public static boolean respuestasDistintas(String respuesta1, String respuesta2, String respuesta3, String respuesta4) {
         if (respuesta1.equals(respuesta2) || respuesta1.equals(respuesta3) || respuesta1.equals(respuesta4) ||
                 respuesta2.equals(respuesta3) || respuesta2.equals(respuesta4) || respuesta3.equals(respuesta4)) {

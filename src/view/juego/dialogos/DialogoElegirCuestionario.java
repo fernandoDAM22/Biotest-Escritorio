@@ -14,6 +14,7 @@ import java.awt.event.*;
  * Esta clase pinta la interfaz al usuario que permite seleccionar un cuestionario
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class DialogoElegirCuestionario extends javax.swing.JDialog {
     private static boolean puedeContinuar = true;
     private static String cuestionarioElegido;

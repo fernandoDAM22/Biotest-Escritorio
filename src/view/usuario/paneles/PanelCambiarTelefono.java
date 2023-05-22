@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  * Esta clase pinta el panel que permite al usuario cambiar su telefono
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class PanelCambiarTelefono extends javax.swing.JPanel {
 
     private JTextField campoTelefono;

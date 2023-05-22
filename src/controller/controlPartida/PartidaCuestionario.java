@@ -23,7 +23,7 @@ public class PartidaCuestionario extends GestionPartida{
     /**
      * Contienen los ids de todas las preguntas de la base de datos
      */
-    private ArrayList<Integer> idPreguntas;
+    private final ArrayList<Integer> idPreguntas;
     /**
      * Objeto de la clase pregunta donde guardamos los datos de la pregunta
      */

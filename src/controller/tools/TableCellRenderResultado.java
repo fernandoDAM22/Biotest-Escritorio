@@ -13,7 +13,7 @@ import java.awt.*;
  * @author Fernando
  */
 public class TableCellRenderResultado  extends DefaultTableCellRenderer {
-    private int idPartida;
+    private final int idPartida;
 
     public TableCellRenderResultado(int idPartida) {
         this.idPartida = idPartida;

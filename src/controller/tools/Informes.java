@@ -82,7 +82,7 @@ public class Informes {
         String reportSource = "templatesInformes/informacionPreguntas.jrxml";
         String reportDest = "resultadosInformes/preguntas.html";
         //Crear un mapa para guardar parametros que podemos pasar al informe
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("id_categoria", GestionCategorias.obtenerIdCategoria(categoria));
         //Compilamos el informe .jrxml  para generar el .jasper
         JasperReport jasperReport = JasperCompileManager.compileReport(reportSource);
@@ -93,6 +93,7 @@ public class Informes {
         JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, params, conn);
         //Exportamos el informe
         JasperExportManager.exportReportToHtmlFile(jasperPrint, reportDest);
+
         //Y lo visualizamos
         JasperViewer viewer = new JasperViewer(jasperPrint, false);
         viewer.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -133,6 +134,7 @@ public class Informes {
      * en caso de no existir la crea
      * @author Fernando
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     private static void comprobarCarpeta(){
         File file = new File("resultadosInformes");
         if(!file.exists()){

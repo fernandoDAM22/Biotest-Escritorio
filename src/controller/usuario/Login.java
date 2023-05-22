@@ -3,16 +3,12 @@ package controller.usuario;
 import controller.baseDeDatos.Cifrado;
 import controller.baseDeDatos.ConexionBD;
 import controller.tools.ComprobarDatos;
-import controller.tools.LoggerUtil;
-import controller.tools.Mensajes;
-import view.administrador.VentanaAdministrarPreguntas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 /**
  * Esta clase contiene los metodos necesarios para permitir al usuario
@@ -28,6 +24,7 @@ public class Login implements Codigos {
      * @return el codigo de error correspondiente
      * @author Fernando
      */
+    @SuppressWarnings("all")
     public static int login(String nombre, String password) {
         if (ComprobarDatos.existeUsuario(nombre) == ERROR) {
             return ERROR_NO_EXISTE_USUARIO;

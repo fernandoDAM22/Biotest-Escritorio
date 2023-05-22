@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Fernando
  *
  */
+@SuppressWarnings("unchecked")
 public class VentanaResultado extends javax.swing.JFrame {
     /**
      * Es el id de la partida que se acaba de jugar

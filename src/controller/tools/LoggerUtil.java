@@ -10,6 +10,7 @@ import java.util.logging.*;
 public class LoggerUtil {
     private static FileHandler fileHandler;
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static Logger getLogger(Class<?> clazz) {
         Logger logger = Logger.getLogger(clazz.getName());
 

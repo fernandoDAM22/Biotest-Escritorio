@@ -20,6 +20,7 @@ import java.awt.event.MouseEvent;
  * Esta clase pinta la ventana que permite al usuario registrarse en el sistema
  * @author Fernando
  */
+@SuppressWarnings("all")
 public class VentanaRegistro extends javax.swing.JFrame implements Codigos {
 
 
