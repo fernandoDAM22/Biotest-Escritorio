@@ -8,7 +8,6 @@ import java.awt.Color;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import controller.administrador.GestionCuestionarios;
 import controller.administrador.GestionPreguntas;
 import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.controlPartida.ConsultasPartida;

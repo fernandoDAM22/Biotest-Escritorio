@@ -9,7 +9,7 @@ import controller.baseDeDatos.CopiaDeSeguridad;
 import controller.tools.*;
 import controller.usuario.Codigos;
 import model.Pregunta;
-import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.JRException;
 import view.acceso.VentanaLogin;
 import view.juego.VentanaSeleccionarModoJuego;
 import view.usuario.VentanaAjustesUsuario;

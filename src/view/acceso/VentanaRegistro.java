@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view.acceso;
 
 import controller.tools.Colores;
@@ -10,7 +7,6 @@ import controller.tools.Mensajes;
 import controller.usuario.Codigos;
 import controller.usuario.Registro;
 
-import javax.print.attribute.standard.MediaName;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;

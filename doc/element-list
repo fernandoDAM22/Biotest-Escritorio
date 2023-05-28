@@ -1,0 +1,12 @@
+controller.administrador
+controller.baseDeDatos
+controller.controlPartida
+controller.tools
+controller.usuario
+model
+view.acceso
+view.administrador
+view.juego
+view.juego.dialogos
+view.usuario
+view.usuario.paneles
